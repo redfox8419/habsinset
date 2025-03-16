@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Use AI in Education?</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --tertiary: #f43f5e;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --neutral: #64748b;
+            --neutral-light: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--neutral);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 50vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 50px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 50px 0 100px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-heading h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-heading p {
+            font-size: 1.2rem;
+            color: var(--neutral);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .benefit-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .benefit-header {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 20px;
+        }
+
+        .time-saving .benefit-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .creative-partner .benefit-header {
+            background: linear-gradient(135deg, var(--secondary), #0d9488);
+        }
+
+        .expanded-possibilities .benefit-header {
+            background: linear-gradient(135deg, var(--tertiary), #be123c);
+        }
+
+        .benefit-body {
+            padding: 30px;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .creative-partner .benefit-icon {
+            color: var(--secondary);
+        }
+
+        .expanded-possibilities .benefit-icon {
+            color: var(--tertiary);
+        }
+
+        .benefit-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .benefit-body p {
+            font-size: 1.1rem;
+            color: var(--neutral);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .benefit-examples {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .benefit-examples h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .example-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .example-item i {
+            color: var(--primary);
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .creative-partner .example-item i {
+            color: var(--secondary);
+        }
+
+        .expanded-possibilities .example-item i {
+            color: var(--tertiary);
+        }
+
+        .example-item span {
+            color: var(--neutral);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Quote Section */
+        .quote-container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 6rem;
+            color: var(--light);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--dark);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .quote-author {
+            font-size: 1.1rem;
+            color: var(--neutral);
+            font-weight: 600;
+        }
+
+        /* Misconceptions Section */
+        .misconceptions-container {
+            margin-top: 50px;
+        }
+
+        .misconception {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .misconception-header {
+            background-color: var(--light);
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .misconception-header h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .misconception-header i {
+            color: var(--tertiary);
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .misconception-body {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .myth {
+            padding: 15px;
+            background-color: rgba(244, 63, 94, 0.1);
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 1.1rem;
+            border-left: 4px solid var(--tertiary);
+        }
+
+        .reality {
+            padding: 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 1.1rem;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .reality-heading {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .reality-heading i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+
+        /* Teacher Role Section */
+        .role-container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .role-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .role-icon {
+            width: 100px;
+            height: 100px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .role-card:nth-child(2) .role-icon {
+            color: var(--secondary);
+        }
+
+        .role-card:nth-child(3) .role-icon {
+            color: var(--tertiary);
+        }
+
+        .role-card h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .role-card p {
+            font-size: 1rem;
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+
+        /* Call to Action */
+        .cta-container {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 16px;
+            padding: 50px;
+            color: white;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .cta-container h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-container p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--light);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--neutral-light);
+        }
+
+        .home-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Floating Objects Animation */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .element-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            right: 5%;
+            animation-duration: 35s;
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .element-2 {
+            width: 150px;
+            height: 150px;
+            bottom: 5%;
+            left: 10%;
+            animation-duration: 45s;
+            animation-delay: 2s;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, 30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 60px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-30px, 30px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .cta-container {
+                padding: 30px 20px;
+            }
+
+            .benefit-header {
+                height: auto;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#benefits" class="nav-link">Benefits</a>
+                <a href="#misconceptions" class="nav-link">Addressing Concerns</a>
+                <a href="#teacher-role" class="nav-link">Your Expertise</a>
+                <a href="#cta" class="nav-link">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Why Use AI in Education?</h1>
+            <p>Discover how artificial intelligence can enhance your teaching practice, save precious time, and enable new possibilities for your students—without replacing the irreplaceable: you.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <section class="section" id="introduction">
+                <div class="section-heading">
+                    <h2>AI as Your Educational Assistant</h2>
+                    <p>In an era of increasing workloads and limited time, AI tools can serve as valuable assistants that help you focus on what truly matters: supporting your students and delivering exceptional education.</p>
+                </div>
+            </section>
+
+            <section class="section" id="benefits">
+                <div class="section-heading">
+                    <h2>Key Benefits for Busy Educators</h2>
+                    <p>AI offers practical advantages that can transform your daily teaching practice while respecting your professional expertise and judgment.</p>
+                </div>
+                <div class="benefits-container">
+                    <!-- Time Saving Card -->
+                    <div class="benefit-card time-saving">
+                        <div class="benefit-header">
+                            <h3>Time-Saving Assistant</h3>
+                        </div>
+                        <div class="benefit-body">
+                            <div class="benefit-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <p>Reclaim precious hours by delegating routine, time-consuming tasks to AI. Focus your energy and expertise where it matters most: on your students.</p>
+                            <div class="benefit-examples">
+                                <h4>Examples:</h4>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Generate draft lesson plans and resources that you can personalize</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Proofread and polish student feedback or reports</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Create differentiated versions of existing materials</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Develop quick formative assessments without starting from scratch</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Creative Partner Card -->
+                    <div class="benefit-card creative-partner">
+                        <div class="benefit-header">
+                            <h3>Creative Thinking Partner</h3>
+                        </div>
+                        <div class="benefit-body">
+                            <div class="benefit-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <p>Teaching demands constant creativity, often when we're most depleted. AI serves as an always-fresh thinking partner that can help spark ideas and overcome creative blocks.</p>
+                            <div class="benefit-examples">
+                                <h4>Examples:</h4>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Brainstorm engaging lesson hooks and activities</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Generate fresh approaches to teaching challenging concepts</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Develop cross-curricular connections you might not have considered</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Suggest alternative assessment strategies for diverse learners</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Expanded Possibilities Card -->
+                    <div class="benefit-card expanded-possibilities">
+                        <div class="benefit-header">
+                            <h3>Expanded Possibilities</h3>
+                        </div>
+                        <div class="benefit-body">
+                            <div class="benefit-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <p>AI enables you to create resources that would be impractical to develop manually, opening new possibilities for enriched learning experiences and deeper differentiation.</p>
+                            <div class="benefit-examples">
+                                <h4>Examples:</h4>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Generate 30+ tailored practice questions with worked solutions</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Create personalized reading materials at multiple difficulty levels</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Develop custom simulations or interactive content for complex topics</span>
+                                </div>
+                                <div class="example-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Craft scaffolded resources with multiple layers of support</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="creative-process">
+                <div class="quote-container" style="padding-left: 40px; padding-right: 40px;">
+                    <div class="quote-content" style="text-align: center;">
+                        <div style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--dark);">Enhancing Your Creative Process</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.8; color: var(--neutral);">
+                            While AI rarely delivers the perfect final product on its first attempt, it excels at accelerating the creative process when you need it most. As educators, we often face creative challenges when we're already tired and mentally drained—precisely when fresh ideas are hardest to generate. AI provides a reliable thinking partner that can help you quickly explore possibilities, overcome creative blocks, and jumpstart your planning when inspiration feels distant.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="misconceptions">
+                <div class="section-heading">
+                    <h2>Addressing Common Concerns</h2>
+                    <p>Many educators have valid concerns about AI in education. Let's examine some common misconceptions and provide a balanced perspective.</p>
+                </div>
+                <div class="misconceptions-container">
+                    <!-- Misconception 1 -->
+                    <div class="misconception">
+                        <div class="misconception-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> "Using AI is cheating"</h3>
+                        </div>
+                        <div class="misconception-body">
+                            <p class="myth">"Teachers shouldn't use AI to create resources because it's taking shortcuts and not putting in the proper effort."</p>
+                            <div class="reality">
+                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                <p>AI is simply another tool in a teacher's toolkit, like textbooks, educational websites, or colleague collaboration. The value lies in how you apply your professional judgment to select, modify, and implement AI-generated content for your specific students' needs. Using AI efficiently allows you to dedicate more time and energy to high-impact teaching activities that cannot be automated, such as building relationships with students or providing personalized feedback.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Misconception 2 -->
+                    <div class="misconception">
+                        <div class="misconception-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> "AI will make teachers lazy"</h3>
+                        </div>
+                        <div class="misconception-body">
+                            <p class="myth">"Teachers will stop creating original content and just rely on AI for everything, diminishing the quality of education."</p>
+                            <div class="reality">
+                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                <p>Effective use of AI actually requires significant professional expertise and judgment. Teachers must still provide the prompt engineering, subject knowledge, contextual understanding, and quality control. Far from making teachers lazy, AI frees them from repetitive tasks to focus on the creative, interpersonal, and analytical aspects of teaching that require human intelligence and empathy. Think of it as redirecting your professional energy more efficiently.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Misconception 3 -->
+                    <div class="misconception">
+                        <div class="misconception-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> "AI produces incorrect information"</h3>
+                        </div>
+                        <div class="misconception-body">
+                            <p class="myth">"AI often fabricates facts or provides wrong answers, making it unreliable for educational use."</p>
+                            <div class="reality">
+                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                <p>While AI systems can sometimes produce inaccuracies (known as "hallucinations"), a teacher's subject expertise serves as a crucial quality filter. Your professional knowledge allows you to quickly identify and correct any errors. This is why AI works best as an assistant rather than an authority. Additionally, AI tools are rapidly improving in accuracy, and you can significantly reduce errors by providing clear context and checking outputs against your own knowledge. The same critical evaluation we apply to textbooks or online resources applies to AI-generated content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Misconception 4 -->
+                    <div class="misconception">
+                        <div class="misconception-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> "AI will replace teachers"</h3>
+                        </div>
+                        <div class="misconception-body">
+                            <p class="myth">"If we start using AI, eventually schools won't need as many teachers, or the role will be diminished."</p>
+                            <div class="reality">
+                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                <p>AI lacks the critical human elements that define great teaching: empathy, relationship-building, moral guidance, cultural understanding, and the ability to truly know each student as an individual. AI tools are designed to handle routine tasks that consume teachers' time, allowing them to enhance and deepen their uniquely human contributions. Throughout history, new technologies have transformed teaching (from books to computers) without replacing teachers. Instead, these tools have enabled teachers to focus on more meaningful aspects of education.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Misconception 5 -->
+                    <div class="misconception">
+                        <div class="misconception-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> "Students will use AI to cheat"</h3>
+                        </div>
+                        <div class="misconception-body">
+                            <p class="myth">"If teachers use AI, it sends the message that students can also use it to complete their assignments without learning."</p>
+                            <div class="reality">
+                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                <p>Understanding AI tools is essential precisely because students already have access to them. By becoming AI-literate, teachers can design assessments that evaluate deeper learning rather than easily generated content. The best approach is to openly discuss appropriate vs. inappropriate uses of AI with students, adapt assignments to focus on process and unique perspectives, and teach students how to use AI as a learning tool rather than a shortcut. This represents an opportunity to help students develop digital literacy for a world where AI will be part of their future careers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="teacher-role">
+                <div class="section-heading">
+                    <h2>You Remain the Expert</h2>
+                    <p>AI is designed to complement your expertise and professionalism, not replace it. Here's what you bring that AI cannot:</p>
+                </div>
+                <div class="role-container">
+                    <div class="role-grid">
+                        <!-- Role Card 1 -->
+                        <div class="role-card">
+                            <div class="role-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>Relationships & Empathy</h3>
+                            <p>You build meaningful connections with students, understand their emotional needs, and create a classroom culture that AI simply cannot replicate. Your ability to notice when a student is having a bad day or needs encouragement is irreplaceable.</p>
+                        </div>
+                        
+                        <!-- Role Card 2 -->
+                        <div class="role-card">
+                            <div class="role-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>Professional Judgment</h3>
+                            <p>Your years of training and classroom experience inform countless decisions you make daily. You understand the nuances of your subject, your students' individual needs, and your school context in ways AI cannot comprehend.</p>
+                        </div>
+                        
+                        <!-- Role Card 3 -->
+                        <div class="role-card">
+                            <div class="role-icon">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <h3>Creative Adaptation</h3>
+                            <p>You skillfully adapt and combine ideas to create meaningful learning experiences tailored to your specific students. AI may generate content, but you transform it into effective education through your expertise and intuition.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 40px; padding: 20px; background-color: var(--light); border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <p style="font-size: 1.1rem; line-height: 1.6; color: var(--dark);">AI should enhance what you already do well, not replace your expertise. Think of it as having a teaching assistant who can handle routine tasks, allowing you to focus your professional skills where they have the greatest impact on student learning and wellbeing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="cta">
+                <div class="cta-container">
+                    <h2>Ready to Explore?</h2>
+                    <p>Start small with one area where AI could save you time or enhance your teaching. Experiment, evaluate, and gradually integrate what works for you and your students.</p>
+                    <a href="beginner-module.html" class="cta-btn">Learn Prompting Basics</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Remember that technology should serve your teaching goals, not define them. You decide how and when to use AI.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="index.html" class="home-btn">Back to Main Page</a>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', function() {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.scrollY;
+            
+            const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+            
+            // Back to Top Button
+            if (scrollTop > 300) {
+                document.getElementById('backToTopBtn').classList.add('active');
+            } else {
+                document.getElementById('backToTopBtn').classList.remove('active');
+            }
+        });
+
+        // Back to Top Button
+        document.getElementById('backToTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navigation Smooth Scroll
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

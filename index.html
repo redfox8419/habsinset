@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Inset Day - Discover, Learn, Create</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --tertiary: #f43f5e;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --neutral: #64748b;
+            --neutral-light: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+
+        /* Animation Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .element-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 5%;
+            animation-duration: 35s;
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .element-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 5%;
+            left: 10%;
+            animation-duration: 45s;
+            animation-delay: 2s;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+
+        .element-3 {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            left: 15%;
+            animation-duration: 30s;
+            animation-delay: 1s;
+            background-color: rgba(244, 63, 94, 0.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, 50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-50px, 50px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Pathway Section */
+        .pathways {
+            padding: 100px 0;
+            background-color: white;
+            position: relative;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-heading h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-heading p {
+            font-size: 1.25rem;
+            color: var(--neutral);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .pathway-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .pathway-header {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .beginner .pathway-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .intermediate .pathway-header {
+            background: linear-gradient(135deg, var(--secondary), #0d9488);
+        }
+
+        .advanced .pathway-header {
+            background: linear-gradient(135deg, var(--tertiary), #be123c);
+        }
+
+        .pathway-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pathway-desc {
+            font-size: 1rem;
+            color: var(--neutral);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .pathway-features {
+            margin-bottom: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--dark);
+        }
+
+        .feature i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .pathway-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--light);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--neutral-light);
+        }
+
+        .beginner .pathway-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .intermediate .pathway-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .advanced .pathway-btn:hover {
+            background-color: var(--tertiary);
+            color: white;
+            border-color: var(--tertiary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--neutral-light);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--neutral);
+        }
+
+        .pathway-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .pathway-content h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: var(--dark);
+        }
+
+        .pathway-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--neutral);
+            margin-bottom: 15px;
+        }
+
+        .modal-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-top: 20px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .modal-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .pathway-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .element-1, .element-2, .element-3 {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        /* Loading screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s infinite ease-in-out;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Discover the Power of AI in Education</h1>
+            <p>Welcome to our AI Inset Day! This interactive session will help you explore artificial intelligence and its applications in teaching and learning. Choose your learning pathway below to begin your AI journey.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Pathways Section -->
+    <section class="pathways" id="pathways">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Choose Your Learning Pathway</h2>
+                <p>Select the pathway that best matches your experience level with AI tools and technologies.</p>
+            </div>
+            <div class="pathway-grid">
+                <!-- Beginner Pathway -->
+                <div class="pathway-card beginner" data-pathway="beginner">
+                    <div class="pathway-header">
+                        <h3>AI Foundations</h3>
+                    </div>
+                    <div class="pathway-body">
+                        <p class="pathway-desc">New to AI? Start here to learn effective prompting techniques and create your first AI-generated teaching resources.</p>
+                        <div class="pathway-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Effective prompt writing</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Creating teaching materials with AI</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Text-based resource generation</span>
+                            </div>
+                        </div>
+                        <a href="#" class="pathway-btn">Begin This Pathway</a>
+                    </div>
+                </div>
+
+                <!-- Intermediate Pathway -->
+                <div class="pathway-card intermediate" data-pathway="intermediate">
+                    <div class="pathway-header">
+                        <h3>Resource Builder</h3>
+                    </div>
+                    <div class="pathway-body">
+                        <p class="pathway-desc">Discover how to use pre-made AI tools to create interactive quizzes, games, and engaging resources for your classroom.</p>
+                        <div class="pathway-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Interactive quiz creation</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Educational game development</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Using AI-powered teaching tools</span>
+                            </div>
+                        </div>
+                        <a href="#" class="pathway-btn">Begin This Pathway</a>
+                    </div>
+                </div>
+
+                <!-- Advanced Pathway -->
+                <div class="pathway-card advanced" data-pathway="advanced">
+                    <div class="pathway-header">
+                        <h3>Code Creator</h3>
+                    </div>
+                    <div class="pathway-body">
+                        <p class="pathway-desc">Learn how to use AI to create custom HTML applications, interactive quizzes, and games by generating and modifying code.</p>
+                        <div class="pathway-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>AI code generation</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Custom HTML quiz builders</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Interactive game development</span>
+                            </div>
+                        </div>
+                        <a href="#" class="pathway-btn">Begin This Pathway</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modals for each pathway -->
+    <div class="modal" id="beginner-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <h2 class="pathway-title">AI Foundations Pathway</h2>
+            <div class="pathway-content">
+                <p>Welcome to the AI Foundations pathway! This track is designed for educators who are new to AI and want to learn how to create effective prompts and generate useful teaching resources.</p>
+                
+                <h3>Learning Objectives:</h3>
+                <p>By the end of this pathway, you will:</p>
+                <ul>
+                    <li>Understand the principles of effective prompt writing</li>
+                    <li>Create clear, specific prompts that generate useful responses</li>
+                    <li>Use AI to generate lesson plans, worksheets, and teaching materials</li>
+                    <li>Learn to refine and iterate on AI-generated content</li>
+                </ul>
+                
+                <h3>Activities:</h3>
+                <p>Your pathway includes:</p>
+                <ul>
+                    <li>Introduction to AI prompt writing techniques (30 minutes)</li>
+                    <li>Hands-on practice with ChatGPT and Claude (45 minutes)</li>
+                    <li>Creating subject-specific teaching resources (60 minutes)</li>
+                    <li>Sharing and refining AI-generated materials (30 minutes)</li>
+                </ul>
+                
+                <button class="modal-btn">Start Learning</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="intermediate-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <h2 class="pathway-title">Resource Builder Pathway</h2>
+            <div class="pathway-content">
+                <p>Welcome to the Resource Builder pathway! This track is designed for educators who want to create interactive learning materials using pre-made AI tools and platforms.</p>
+                
+                <h3>Learning Objectives:</h3>
+                <p>By the end of this pathway, you will:</p>
+                <ul>
+                    <li>Create interactive quizzes using AI-powered platforms</li>
+                    <li>Design engaging educational games for your classroom</li>
+                    <li>Develop multimedia learning resources with AI assistance</li>
+                    <li>Customize existing tools to fit your teaching needs</li>
+                </ul>
+                
+                <h3>Activities:</h3>
+                <p>Your pathway includes:</p>
+                <ul>
+                    <li>Introduction to AI-powered educational platforms (30 minutes)</li>
+                    <li>Creating interactive quizzes with AI tools (45 minutes)</li>
+                    <li>Designing educational games and activities (60 minutes)</li>
+                    <li>Collaborative resource development workshop (45 minutes)</li>
+                </ul>
+                
+                <button class="modal-btn">Start Learning</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="advanced-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <h2 class="pathway-title">Code Creator Pathway</h2>
+            <div class="pathway-content">
+                <p>Welcome to the Code Creator pathway! This track is designed for educators who want to leverage AI to create custom HTML applications, interactive quizzes, and games by generating and modifying code.</p>
+                
+                <h3>Learning Objectives:</h3>
+                <p>By the end of this pathway, you will:</p>
+                <ul>
+                    <li>Use AI to generate functional HTML, CSS, and JavaScript code</li>
+                    <li>Create custom interactive quizzes with multimedia elements</li>
+                    <li>Develop educational games tailored to your subject area</li>
+                    <li>Learn to modify and troubleshoot AI-generated code</li>
+                </ul>
+                
+                <h3>Activities:</h3>
+                <p>Your pathway includes:</p>
+                <ul>
+                    <li>Introduction to AI code generation (30 minutes)</li>
+                    <li>Creating custom HTML quizzes with AI (60 minutes)</li>
+                    <li>Developing interactive educational games (60 minutes)</li>
+                    <li>Troubleshooting and modifying code workshop (45 minutes)</li>
+                </ul>
+                
+                <button class="modal-btn">Start Learning</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Open modal when pathway card is clicked
+            const pathwayCards = document.querySelectorAll('.pathway-card');
+            pathwayCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const pathway = this.dataset.pathway;
+                    const modal = document.getElementById(`${pathway}-modal`);
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Close modal when close button is clicked
+            const closeButtons = document.querySelectorAll('.close-modal');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+
+            // Close modal when clicking outside of modal content
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Navigate to section when nav link is clicked
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

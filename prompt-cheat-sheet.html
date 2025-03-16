@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompting Cheat Sheet for Teachers</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --tertiary: #f43f5e;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --neutral: #64748b;
+            --neutral-light: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--neutral);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            padding-top: 120px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px 0 100px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-heading h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-heading p {
+            font-size: 1.2rem;
+            color: var(--neutral);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* How to Use Section */
+        .how-to-use {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 50px;
+        }
+
+        .how-to-use h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .step:nth-child(2) .step-number {
+            background-color: var(--secondary);
+        }
+
+        .step:nth-child(3) .step-number {
+            background-color: var(--tertiary);
+        }
+
+        .step h4 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            font-size: 1rem;
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+
+        /* Prompt Cards */
+        .prompts-category {
+            margin-bottom: 50px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .prompt-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .prompt-header {
+            padding: 15px 20px;
+            background-color: var(--primary-light);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prompt-level {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+        }
+
+        .prompt-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .prompt-text {
+            font-family: monospace;
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--dark);
+            flex-grow: 1;
+        }
+
+        .prompt-copy {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .copy-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .copied {
+            background-color: var(--secondary);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--neutral-light);
+        }
+
+        .home-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Category Colors */
+        .lesson-planning .prompt-header {
+            background-color: var(--primary);
+        }
+
+        .resource-creation .prompt-header {
+            background-color: var(--secondary);
+        }
+
+        .assessment .prompt-header {
+            background-color: var(--tertiary);
+        }
+
+        .feedback .prompt-header {
+            background-color: #8b5cf6;
+        }
+
+        .differentiation .prompt-header {
+            background-color: #ec4899;
+        }
+
+        .formatting .prompt-header {
+            background-color: #8b5cf6;
+        }
+
+        /* Floating Objects Animation */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .element-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            right: 5%;
+            animation-duration: 35s;
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .element-2 {
+            width: 150px;
+            height: 150px;
+            bottom: 5%;
+            left: 10%;
+            animation-duration: 45s;
+            animation-delay: 2s;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, 30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 60px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-30px, 30px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .prompt-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Note box */
+        .note-box {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .note-box h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#resource-creation" class="nav-link">Resource Creation</a>
+                <a href="#assessment" class="nav-link">Assessment</a>
+                <a href="#differentiation" class="nav-link">Differentiation</a>
+                <a href="#formatting" class="nav-link">Layout & Design</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Teacher's Prompting Cheat Sheet</h1>
+            <p>A collection of ready-to-use prompts to jump-start your AI journey. Simply copy, paste, and customize to fit your specific needs.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <section class="how-to-use">
+                <h3>How to Use This Cheat Sheet</h3>
+                <p>These prompts are starting points—not perfect solutions. You'll need to add your own context and refine them through iteration. Each prompt is designed to be easily customizable for your specific subject, year group, and teaching goals.</p>
+                
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Copy</h4>
+                        <p>Select a prompt that matches your resource needs and click the "Copy" button.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Customize</h4>
+                        <p>Replace the placeholder information with your specific subject, year group, and context.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Iterate</h4>
+                        <p>Refine the AI's response with follow-up prompts until you get exactly what you need.</p>
+                    </div>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-lightbulb"></i> What the difficulty levels mean:</h4>
+                    <p><strong>Basic:</strong> Simpler, routine classroom resources like worksheets or standard quizzes</p>
+                    <p><strong>Intermediate:</strong> More creative and interactive resources that go beyond standard formats</p>
+                    <p><strong>Advanced:</strong> Ambitious, complex resources that would normally require significant time to create, such as escape rooms or elaborate interactive activities</p>
+                </div>
+            </section>
+
+            <!-- Resource Creation Section -->
+            <section class="section" id="resource-creation">
+                <div class="prompts-category">
+                    <div class="category-header">
+                        <div class="category-icon resource-creation">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h2 class="category-title">Resource Creation</h2>
+                    </div>
+                    <div class="prompt-grid">
+                        <!-- Basic Worksheet -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Basic Worksheet</span>
+                                <span class="prompt-level">Basic</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a worksheet for Year [X] [SUBJECT] on [TOPIC]. The worksheet should include:
+- A brief introduction to the topic
+- 10 questions that progress from basic recall to application
+- A challenge section for advanced students
+- Key vocabulary definitions
+- A visual element (described in text form)
+
+Format this as a ready-to-print worksheet with appropriate spacing and sections. Use British English spelling and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Differentiated Reading Text -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Differentiated Reading Text</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create three versions of an informational text about [TOPIC] for Year [X], each at a different reading level:
+
+1. Lower reading level: simplified vocabulary, shorter sentences, basic concepts, reading age approximately [X] years below chronological age
+2. Age-appropriate: vocabulary and sentence structure matching Year [X] expected level
+3. Extended version: more sophisticated language, additional detail and nuance, challenging vocabulary
+
+Each text should be approximately [X] words and cover the same key information points:
+- [KEY POINT 1]
+- [KEY POINT 2]
+- [KEY POINT 3]
+
+Include a brief explanation of how each version differs in complexity. Use British English spelling and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Comprehensive Knowledge Organiser -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Knowledge Organiser</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a comprehensive knowledge organiser for [SUBJECT] on [TOPIC] for Year [X]/[EXAM LEVEL] that follows the [EXAM BOARD] specification. I've attached the specification points.
+
+The knowledge organiser should fit on a single A4 page and include:
+- Key terminology with definitions (minimum 10 terms)
+- Core knowledge and facts in concise bullet points
+- Important dates/figures/formulas as relevant
+- A visual element that clarifies a central concept (described in text form)
+- Common misconceptions and their corrections
+- Links to prior and future learning
+- Sample exam questions or knowledge check questions
+- Suggestions for additional resources or further reading
+
+Format this in a visually organised way that would be easy to follow when printed. Use British English spelling and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Revision Cards -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Revision Cards Set</span>
+                                <span class="prompt-level">Basic</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a set of 20 revision flashcards for [SUBJECT] on [TOPIC] for [EXAM LEVEL]. 
+
+For each card, create:
+1. A clear question or prompt on the front
+2. A concise, well-structured answer on the back
+
+The cards should:
+- Cover the key knowledge from the [EXAM BOARD] specification
+- Progress from foundational understanding to application and analysis
+- Include a mix of definitions, explanations, applications, and evaluations
+- Incorporate relevant examples, diagrams, or formulas where appropriate
+- Address common misconceptions or tricky concepts
+
+Format these as a table with two columns: "Card Front" and "Card Back". Use British English spelling and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Interactive Vocabulary Activity -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Interactive Vocabulary Activity</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create an engaging, interactive vocabulary activity for Year [X] [SUBJECT] focusing on terminology related to [TOPIC].
+
+The activity should:
+- Target 15-20 key terms from the [CURRICULUM/EXAM BOARD] specification
+- Include clear definitions written in age-appropriate language
+- Incorporate multiple interactive elements (e.g., matching exercises, cloze activities, word puzzles)
+- Progress from recognition to application of the terminology
+- Include a competitive or game-based element to increase engagement
+- Be designed for a [DURATION] lesson or activity
+- Be suitable for individual, pair and small group work
+- Include a self-assessment component for students to track their learning
+
+Provide clear instructions for setting up and running the activity, along with all necessary content. Format this for easy printing and classroom use. Use British English spelling and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Educational Escape Room -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Educational Escape Room</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Design a complete educational escape room activity for Year [X] [SUBJECT] on the topic of [TOPIC] that aligns with the [CURRICULUM/EXAM BOARD].
+
+The escape room should:
+- Have an engaging narrative or theme that appeals to this age group
+- Include 5-6 puzzles or challenges that test knowledge of the curriculum content
+- Incorporate a variety of puzzle types (numerical, word-based, visual, physical)
+- Be designed for teams of [X] students to complete in [DURATION]
+- Provide opportunities to apply key concepts from the curriculum
+- Include progressive difficulty with scaffolding for struggling students
+- Have clear links between each puzzle and specific learning objectives
+
+Provide:
+- Complete setup instructions for the teacher
+- All puzzle content and solutions
+- Required resources and preparation checklist
+- Suggested room layout and organisation
+- Hints system for struggling teams
+- Debriefing questions to consolidate learning after completion
+- Adaptation suggestions for different ability levels or group sizes
+
+Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Simulation or Role-Play Activity -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Simulation or Role-Play Activity</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Design a comprehensive simulation or role-play activity for Year [X] [SUBJECT] that brings the topic of [TOPIC] to life through experiential learning.
+
+The simulation should:
+- Be designed for a class of approximately [X] students
+- Run for [DURATION] (single lesson or series of lessons)
+- Create an immersive scenario relevant to the curriculum content
+- Assign specific roles with character profiles and responsibilities
+- Include authentic resources, documents or props (described in detail)
+- Require application of key knowledge and skills from the curriculum
+- Build in decision points that demonstrate understanding of concepts
+- Include a structured debrief to extract and consolidate learning points
+
+Provide:
+- Detailed teacher instructions for setup and facilitation
+- All necessary student briefing materials and role cards
+- Required resources and preparation timeline
+- Room setup guidance
+- Facilitation tips for managing the activity
+- Assessment opportunities during the simulation
+- Reflection questions for different stages
+- Adaptations for different ability levels or group dynamics
+
+Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Scaffolded Writing Framework -->
+                        <div class="prompt-card resource-creation">
+                            <div class="prompt-header">
+                                <span>Scaffolded Writing Framework</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a comprehensive scaffolded writing framework for Year [X] students to support them in writing a [TEXT TYPE: e.g., persuasive essay, scientific report, creative narrative, etc.] on the topic of [TOPIC].
+
+The framework should include:
+- Clear explanation of the text type's purpose and structure
+- Success criteria aligned with [CURRICULUM/EXAM BOARD] expectations
+- Annotated model example showing key features
+- Vocabulary bank organised by categories/paragraphs
+- Sentence starters and connectives appropriate for this text type
+- Planning templates with guided prompts
+- Paragraph-by-paragraph scaffolding with guided questions
+- Editing and proofreading checklist
+
+Create three differentiated versions:
+1. Highly scaffolded for struggling writers
+2. Moderately scaffolded for mid-level writers
+3. Lightly scaffolded for confident writers
+
+Format this as a complete resource pack that a teacher could print and use immediately. Use British English spelling, punctuation and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assessment Section -->
+            <section class="section" id="assessment">
+                <div class="prompts-category">
+                    <div class="category-header">
+                        <div class="category-icon assessment">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h2 class="category-title">Assessment & Feedback</h2>
+                    </div>
+                    <div class="prompt-grid">
+                        <!-- Multiple Choice Quiz -->
+                        <div class="prompt-card assessment">
+                            <div class="prompt-header">
+                                <span>Multiple Choice Quiz</span>
+                                <span class="prompt-level">Basic</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a 20-question multiple choice quiz for Year [X] [SUBJECT] on [TOPIC]. For each question:
+- Provide a clear question stem
+- Include 4 options (1 correct, 3 plausible distractors)
+- Mark the correct answer
+- Provide a brief explanation of why the answer is correct
+
+The questions should range from basic recall to application and analysis, covering the key knowledge points:
+- [KEY POINT 1]
+- [KEY POINT 2]
+- [KEY POINT 3]
+
+Format this as a clean, professional-looking document using British English spelling and terminology.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mock Exam -->
+                        <div class="prompt-card assessment">
+                            <div class="prompt-header">
+                                <span>Mock Exam Paper</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a [DURATION]-minute mock exam paper for [SUBJECT] [EXAM LEVEL] following the [EXAM BOARD] style and format. I've attached the specification points to be covered.
+
+The paper should include:
+- A realistic mix of question types matching the official exam structure
+- Questions covering all assessment objectives (AO1, AO2, AO3, etc.)
+- The correct mark allocation for each question
+- A range of difficulty levels progressing through the paper
+- Clear instructions for students
+- Any resource material needed (text extracts, data, etc.)
+
+Also provide:
+- A detailed mark scheme with example answers
+- A grade boundary estimation based on previous years
+- Common student misconceptions or errors to watch for
+
+Format this as an authentic-looking exam paper that follows the conventions of the examination board. Use British English spelling, punctuation and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Report Comments Generator -->
+                        <div class="prompt-card assessment">
+                            <div class="prompt-header">
+                                <span>Report Comments Generator</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a set of 12 report comment templates for [SUBJECT] that I can customise for individual students. Include 3 comments for each of these student profiles:
+
+1. High-achieving students who consistently excel
+   - Comment focusing on exceptional understanding
+   - Comment highlighting analytical/critical thinking skills
+   - Comment celebrating independent learning and research
+
+2. Students making good progress at expected level
+   - Comment acknowledging solid understanding of the curriculum
+   - Comment recognising consistent effort and engagement
+   - Comment highlighting specific strengths with areas for development
+
+3. Students who are working below expected level but trying hard
+   - Comment acknowledging effort and identifying progress made
+   - Comment highlighting specific achievements while being honest about level
+   - Comment with constructive, actionable next steps
+
+4. Students who are underachieving relative to their ability
+   - Comment addressing underperformance tactfully
+   - Comment balancing areas of concern with positive observations
+   - Comment with specific strategies for improvement
+
+Each comment should be 3-4 sentences long, use positive language, avoid clichés, and be specific enough to feel personal but adaptable to different students. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Marking Rubric -->
+                        <div class="prompt-card assessment">
+                            <div class="prompt-header">
+                                <span>Detailed Marking Rubric</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a detailed marking rubric for a Year [X] [SUBJECT] [ASSIGNMENT TYPE] on [TOPIC]. 
+
+The rubric should:
+- Include 4-5 key assessment criteria (e.g., content knowledge, analysis, communication, etc.)
+- Have 4 performance levels for each criterion (e.g., emerging, developing, secure, mastery)
+- Contain clear, specific descriptors for each level of each criterion
+- Include a points/grade allocation system
+- Be aligned with the [CURRICULUM/EXAM BOARD] expectations for this age group
+- Be written in student-friendly language so it can be shared with students before the assignment
+
+Also provide:
+- 2-3 example comments for each performance level to help me provide consistent feedback
+- Suggestions for how to use this rubric as a self-assessment tool with students
+
+Format this in a visually clear table format suitable for printing. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Formative Assessment Pack -->
+                        <div class="prompt-card assessment">
+                            <div class="prompt-header">
+                                <span>Formative Assessment Pack</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a comprehensive formative assessment pack for Year [X] [SUBJECT] on [TOPIC] that includes a variety of assessment strategies to check understanding throughout a unit of work.
+
+Include the following 5 different assessment tools:
+
+1. An entry assessment to identify prior knowledge and misconceptions
+2. A set of 10 hinge questions for key decision points during teaching
+3. A mid-unit peer assessment activity with structured feedback prompts
+4. An exit ticket system with graduated questions for 5 different lessons
+5. A self-assessment reflection tool aligned to learning objectives
+
+For each assessment tool, provide:
+- Clear teacher instructions for implementation
+- All necessary student-facing content
+- Success criteria or answers where relevant
+- Guidance on how to use the assessment data to inform teaching
+- Follow-up questions or activities based on possible outcomes
+
+Design these to be visually appealing, easy to implement, and provide meaningful data on student understanding. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Personalised Feedback Generator -->
+                        <div class="prompt-card assessment">
+                            <div class="prompt-header">
+                                <span>Personalised Feedback Generator</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a personalised feedback generator for [SUBJECT] [ASSIGNMENT TYPE] responses that will help me quickly provide quality feedback to students. 
+
+For each of these common achievement levels:
+1. Well below expected standard
+2. Approaching expected standard
+3. Meeting expected standard
+4. Exceeding expected standard
+
+Provide:
+- A bank of 5 general opening statements that acknowledge the student's effort
+- 8 specific feedback phrases addressing different aspects of the [ASSIGNMENT TYPE]
+- 5 constructive improvement suggestions with concrete examples
+- 3 encouraging closing statements
+
+Also include:
+- A structured template for combining these elements into coherent feedback
+- Guidance on maintaining a positive tone while being honest about performance
+- Suggestions for differentiating feedback based on student personality/needs
+- Examples of how to incorporate specific details from a student's work
+
+The feedback should follow good assessment practice, focusing on improvement rather than just judgement. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Differentiation Section -->
+            <section class="section" id="differentiation">
+                <div class="prompts-category">
+                    <div class="category-header">
+                        <div class="category-icon differentiation">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h2 class="category-title">Differentiation & Inclusive Resources</h2>
+                    </div>
+                    <div class="prompt-grid">
+                        <!-- Tiered Task Generator -->
+                        <div class="prompt-card differentiation">
+                            <div class="prompt-header">
+                                <span>Tiered Task Generator</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a set of differentiated learning tasks for Year [X] [SUBJECT] on [TOPIC] that allows all students to access the same key learning but with appropriate levels of challenge.
+
+Design three clearly differentiated tiers:
+1. Foundation tier - For students working below age-related expectations
+2. Core tier - For students working at age-related expectations
+3. Extension tier - For students working above age-related expectations
+
+Each tier should:
+- Focus on the same key learning objectives aligned with [CURRICULUM/EXAM BOARD]
+- Provide an appropriate level of support/challenge
+- Include clear success criteria specific to that tier
+- Build student confidence while maintaining high expectations
+
+For each tier, provide:
+- A complete set of student instructions and tasks
+- Any necessary resources or templates
+- Assessment criteria specific to that tier
+- Common misconceptions to watch for at this level
+- Guidance on how to support students at this level
+
+Also include a system for:
+- How students should be assigned to tiers
+- How to manage the different groups during the lesson
+- How students can self-select appropriate challenge
+- How to enable progression between tiers
+
+Format this as a complete teaching resource pack ready for classroom use. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Inclusive Resource Adaptation -->
+                        <div class="prompt-card differentiation">
+                            <div class="prompt-header">
+                                <span>Inclusive Resource Adaptation</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Adapt this [RESOURCE TYPE] on [TOPIC] to make it fully inclusive and accessible for a diverse class that includes students with the following needs:
+
+- Students with dyslexia or reading difficulties
+- English as an Additional Language (EAL) learners at early acquisition stage
+- Students with ADHD and focus challenges
+- Students with working memory difficulties
+- Students with visual processing challenges
+- Students with auditory processing difficulties
+
+Make adaptations that maintain the learning objectives and content, but modify presentation, instruction, and response methods to ensure all students can access the material. Include:
+
+1. Universal Design for Learning (UDL) principles applied throughout:
+   - Multiple means of representation
+   - Multiple means of action and expression
+   - Multiple means of engagement
+
+2. Specific modifications such as:
+   - Visual supports (described in detail)
+   - Simplified language options
+   - Chunked instructions
+   - Processing time accommodations
+   - Alternative recording methods
+   - Memory aids and reference materials
+
+3. A guide for implementing these adaptations in whole-class teaching
+4. Additional support strategies for teaching assistants
+5. Digital and non-digital options for adaptations
+
+The adaptations should maintain high expectations for all learners while removing barriers to participation. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Scaffolding Framework -->
+                        <div class="prompt-card differentiation">
+                            <div class="prompt-header">
+                                <span>Progressive Scaffolding Framework</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a comprehensive scaffolding framework for teaching [TOPIC] to Year [X] [SUBJECT] students with diverse learning needs, following [CURRICULUM/EXAM BOARD] requirements.
+
+Design a progressive scaffolding system that:
+1. Starts with maximum support for initial learning
+2. Gradually removes scaffolding as students develop competence
+3. Eventually leads to independent application of skills/knowledge
+
+Include the following scaffolding elements, with examples for each stage of learning:
+
+1. Cognitive scaffolds:
+   - Thinking frameworks and graphic organisers
+   - Worked examples with explanations
+   - Partial examples requiring completion
+   - Self-questioning prompts
+   - Analogies and connections to prior knowledge
+
+2. Procedural scaffolds:
+   - Step-by-step guides
+   - Checklists and success criteria
+   - Process maps or flowcharts
+   - Models of excellence with annotations
+
+3. Metacognitive scaffolds:
+   - Self-monitoring tools
+   - Reflection questions and prompts
+   - Error analysis frameworks
+   - Strategy selection guides
+
+4. Conceptual scaffolds:
+   - Key concept explanations at different levels
+   - Visual representations of abstract ideas
+   - Concrete to abstract learning progression
+   - Connections between concepts
+
+For each type of scaffold, provide:
+- The specific learning phase where it's most useful
+- Implementation guidance for teachers
+- Criteria for when to remove or reduce the scaffold
+- Alternative approaches for different learning preferences
+
+The framework should be structured to gradually transfer responsibility from teacher to student. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Learning Styles Adaptation -->
+                        <div class="prompt-card differentiation">
+                            <div class="prompt-header">
+                                <span>Multi-Modal Learning Adaptation</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Adapt this [RESOURCE/LESSON] on [TOPIC] for Year [X] [SUBJECT] to incorporate multi-modal learning approaches that engage students with diverse learning preferences and needs.
+
+Create alternative presentation and engagement methods for the same core content through:
+
+1. Visual learning approaches:
+   - Infographics or visual summaries (described in detail)
+   - Mind maps or concept maps
+   - Visual timelines or process diagrams
+   - Colour-coding systems for categorisation
+
+2. Auditory learning approaches:
+   - Discussion frameworks and questions
+   - Verbal explanation scripts with analogies
+   - Mnemonic devices and verbal patterns
+   - Debate or discussion formats
+
+3. Kinesthetic/tactile learning approaches:
+   - Hands-on activities or demonstrations
+   - Movement-based learning sequences
+   - Manipulative resources (described)
+   - Role play or simulation activities
+
+4. Reading/writing approaches:
+   - Note-taking frameworks
+   - Written reflection prompts
+   - Text organisation structures
+   - Summarising and paraphrasing activities
+
+For each approach:
+- Provide complete instructions and resources
+- Explain how it addresses the same learning objectives
+- Include assessment methods appropriate to the modality
+- Offer implementation guidance for teachers
+
+The adaptations should maintain equal rigour while offering multiple pathways to understanding. Format this as a complete teaching resource that allows flexible implementation. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Challenge Extension Pack -->
+                        <div class="prompt-card differentiation">
+                            <div class="prompt-header">
+                                <span>Challenge Extension Pack</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create a comprehensive extension pack for highly able/gifted Year [X] [SUBJECT] students who have mastered the core curriculum content on [TOPIC]. This should extend their learning horizontally (breadth) rather than simply accelerating to the next year's content.
+
+The extension pack should include:
+
+1. Depth extension activities that:
+   - Develop higher-order thinking skills (analysis, evaluation, synthesis)
+   - Explore underlying principles and concepts
+   - Examine alternative perspectives or interpretations
+   - Encourage critical evaluation of the content
+   - Promote metacognitive awareness and reflection
+
+2. Complexity extension activities that:
+   - Introduce interdisciplinary connections
+   - Present multi-step problems requiring strategic thinking
+   - Incorporate ambiguity and multiple variables
+   - Challenge students to devise their own solutions
+   - Involve systems thinking and complex relationships
+
+3. Creative application activities that:
+   - Encourage innovative problem-solving
+   - Allow for multiple correct approaches
+   - Provide opportunities for student-led inquiry
+   - Require adaptation of knowledge to novel situations
+   - Result in original student products or ideas
+
+Also include:
+- Assessment criteria that recognise sophisticated understanding
+- Guidance for teachers on facilitating rather than directing
+- Self-assessment tools for students
+- Links to advanced resources and references
+- Suggestions for authentic audiences for student work
+
+The pack should maintain connection to the core curriculum while offering significant additional challenge. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formatting & Layout Section -->
+            <section class="section" id="formatting">
+                <div class="prompts-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background-color: #8b5cf6;">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h2 class="category-title">Layout & Design Prompts</h2>
+                    </div>
+                    <div class="prompt-grid">
+                        <!-- Professional Formatting -->
+                        <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
+                            <div class="prompt-header" style="background-color: #8b5cf6;">
+                                <span>Professional Document Formatting</span>
+                                <span class="prompt-level">Basic</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Please enhance the formatting and layout of this [RESOURCE TYPE] to make it look professional and engaging. Use a clean, visually appealing design that would be suitable for a high-quality teaching resource. Include:
+
+- Clear, hierarchical headings and subheadings
+- Appropriate use of white space and margins
+- Consistent font choices (suggest specific professional fonts)
+- Thoughtful use of formatting elements like bold, italics, and bullet points
+- A unified colour scheme (suggest 2-3 complementary colours)
+- Page numbering and headers/footers if appropriate
+- Any design elements that would aid comprehension and engagement
+
+Format this for [PURPOSE: e.g., student handout, presentation, teacher reference, etc.] using A4 page size. Use British English spelling and conventions throughout.
+
+Avoid any formatting that looks obviously AI-generated – aim for a design that appears professionally created with natural variation in structure and presentation.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Age-Appropriate Design -->
+                        <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
+                            <div class="prompt-header" style="background-color: #8b5cf6;">
+                                <span>Age-Appropriate Design Transformation</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Transform this [RESOURCE TYPE] into an age-appropriate, visually engaging resource for Year [X] students studying [SUBJECT]. The current content is good but needs to be reformatted to appeal to [AGE RANGE] students while maintaining educational value.
+
+Please implement a design that includes:
+- An age-appropriate visual theme related to [SUBJECT/TOPIC]
+- Text formatting that supports readability for this age group (appropriate font size, line spacing, etc.)
+- Strategic use of colours, shapes, or design elements to organise information
+- Visual cues that highlight key information
+- Thoughtful balance between visual appeal and educational content
+- Layout elements that guide the reader through the content logically
+- Any additional features that would engage students of this age group
+
+The design should look authentic and professionally created, not like an AI-generated template. Incorporate design principles that would be found in high-quality educational resources from established publishers. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Interactive Document Design -->
+                        <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
+                            <div class="prompt-header" style="background-color: #8b5cf6;">
+                                <span>Interactive Document Design</span>
+                                <span class="prompt-level">Advanced</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Transform this [RESOURCE TYPE] into an interactive digital document that encourages active engagement from students. I want to create this using [SOFTWARE: e.g., PowerPoint, Google Slides, Word, etc.].
+
+Design a comprehensive layout that includes:
+- An intuitive navigation system with clickable elements
+- Interactive features appropriate for the software (e.g., hover effects, clickable buttons, form fields)
+- A visually cohesive design system with complementary colours, fonts, and visual elements
+- Sections that reveal additional information when clicked/interacted with
+- Strategic use of space to prevent overwhelming students
+- Accessibility considerations (clear contrast, readable fonts, alternative text suggestions)
+- Balance between text, visual elements, and interactive components
+
+Provide detailed instructions for how to implement these design elements in the specified software, including:
+- Step-by-step guidance for creating the interactive elements
+- Explanation of any features or tools I should use
+- Suggestions for specific fonts, colours, and visual elements
+- Tips for maintaining consistent design throughout the document
+
+The design should look professionally created and engage students without appearing artificial or template-driven. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Visual Learning Aids -->
+                        <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
+                            <div class="prompt-header" style="background-color: #8b5cf6;">
+                                <span>Visual Learning Aids Creator</span>
+                                <span class="prompt-level">Intermediate</span>
+                            </div>
+                            <div class="prompt-content">
+                                <div class="prompt-text">Create descriptions for 5 visual learning aids to help Year [X] students understand [TOPIC] in [SUBJECT]. For each visual aid, provide:
+
+1. A detailed description of what the visual should look like
+2. The key concepts it illustrates
+3. How to effectively incorporate it into teaching
+4. Instructions for how I could create this visual myself using [TOOL: e.g., PowerPoint, Google Drawings, Canva, etc.]
+
+The visual aids should:
+- Progress logically to build understanding
+- Use different visual formats (diagrams, flowcharts, infographics, concept maps, etc.)
+- Incorporate effective use of colour, space, and visual hierarchy
+- Be designed with accessibility in mind
+- Include appropriate labels, annotations, or explanatory text
+- Balance simplicity with comprehensive information
+
+For each visual, include specific details about:
+- Recommended colours, fonts, and layout
+- Text content for labels and explanations
+- Size and positioning of elements
+- Suggestions for making the visual engaging for this age group
+
+These should be designed to look professional and authentic, like resources from educational publishers. Use British English spelling and terminology throughout.</div>
+                                <div class="prompt-copy">
+                                    <button class="copy-btn" onclick="copyToClipboard(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="note-box">
+                <h4><i class="fas fa-lightbulb"></i> Final Tip:</h4>
+                <p>Remember that these prompts are starting points. They'll almost never give you exactly what you need on the first try. Be prepared to iterate, provide feedback, and refine the AI's output. The AI gets smarter with your guidance—think of it as training a new teaching assistant who needs clear direction to produce exactly what you want.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Use these prompts as inspiration for your own AI experiments. The more you practice, the more effective your prompting will become.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="index.html" class="home-btn">Back to Main Page</a>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', function() {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.scrollY;
+            
+            const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+            
+            // Back to Top Button
+            if (scrollTop > 300) {
+                document.getElementById('backToTopBtn').classList.add('active');
+            } else {
+                document.getElementById('backToTopBtn').classList.remove('active');
+            }
+        });
+
+        // Back to Top Button
+        document.getElementById('backToTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navigation Smooth Scroll
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Copy to Clipboard Function
+        function copyToClipboard(button) {
+            const promptText = button.parentElement.previousElementSibling.textContent;
+            navigator.clipboard.writeText(promptText).then(function() {
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
