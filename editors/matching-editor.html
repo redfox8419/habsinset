@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Pairs Activity Creator - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/matching-editor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#editor" class="nav-link">Editor</a>
+                <a href="#preview" class="nav-link">Preview</a>
+                <a href="#export" class="nav-link">Export</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-medium">
+        <div class="container hero-content">
+            <h1>Matching Pairs Activity Creator</h1>
+            <p>Design interactive learning activities where students match related concepts. Perfect for vocabulary development, connecting ideas, and reinforcing key relationships.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section" style="padding-top: 30px;">
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="editor">Editor</div>
+                <div class="tab" data-tab="preview">Preview</div>
+                <div class="tab" data-tab="export">Export</div>
+            </div>
+
+            <div class="tab-content active" id="editor">
+                <div class="card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        Activity Details
+                    </h2>
+                    <div class="input-group">
+                        <label for="activityTitle">Activity Title</label>
+                        <input type="text" id="activityTitle" value="Match AI Prompting Concepts with Examples">
+                    </div>
+                    <div class="input-group">
+                        <label for="activityInstructions">Instructions</label>
+                        <textarea id="activityInstructions" rows="2">Click on matching pairs to connect AI prompting concepts with their practical examples.</textarea>
+                    </div>
+                    
+                    <div class="settings-panel">
+                        <div class="input-group">
+                            <label for="leftColumnTitle">Left Column Title</label>
+                            <input type="text" id="leftColumnTitle" value="Prompting Concepts">
+                        </div>
+                        <div class="input-group">
+                            <label for="rightColumnTitle">Right Column Title</label>
+                            <input type="text" id="rightColumnTitle" value="Examples & Applications">
+                        </div>
+                        <div class="input-group">
+                            <label for="leftColor">Left Column Color</label>
+                            <div class="color-picker">
+                                <input type="color" id="leftColor" value="#B4C6E7">
+                                <span id="leftColorCode">#B4C6E7</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="rightColor">Right Column Color</label>
+                            <div class="color-picker">
+                                <input type="color" id="rightColor" value="#E7B4C6">
+                                <span id="rightColorCode">#E7B4C6</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        Matching Pairs
+                    </h2>
+                    <p>Add pairs of items that students need to match.</p>
+                    <div class="pair-list" id="pairsList">
+                        <!-- Pairs will be added here dynamically -->
+                    </div>
+                    <button id="addPair" class="btn btn-add">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Add New Pair
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="preview">
+                <div class="activity-header">
+                    <h1 id="previewTitle">Match AI Prompting Concepts with Examples</h1>
+                </div>
+
+                <div class="activity-container">
+                    <div class="instructions" id="previewInstructions">
+                        Click on matching pairs to connect AI prompting concepts with their practical examples.
+                    </div>
+
+                    <div id="resultMessage" class="result-message"></div>
+
+                    <div class="matching-container">
+                        <div class="matching-column" id="leftColumn">
+                            <h2 id="previewLeftTitle">Prompting Concepts</h2>
+                            <div id="leftItems"></div>
+                        </div>
+                        
+                        <div class="matching-column" id="rightColumn">
+                            <h2 id="previewRightTitle">Examples & Applications</h2>
+                            <div id="rightItems"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="checkMatches" class="btn btn-primary">Check Matches</button>
+                    <button id="resetMatches" class="btn btn-neutral">Reset</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="export">
+                <div class="card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Export Your Activity
+                    </h2>
+                    <p>Your matching pairs activity is ready to export! Click the button below to download the HTML file.</p>
+                    
+                    <div class="export-options">
+                        <button id="exportHTML" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download HTML File
+                        </button>
+                        
+                        <button id="showCodeBtn" class="btn btn-neutral">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            View HTML Code
+                        </button>
+                        
+                        <div id="codePanel" class="export-panel" style="display: none;">
+                            <p>Copy and paste this code into a text editor and save it with a .html extension:</p>
+                            <textarea id="exportCode" readonly></textarea>
+                            <button id="copyCode" class="btn btn-neutral">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Create engaging matching activities that help students make connections between key concepts and their practical applications.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="../index.html" class="home-btn">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        // Initial pairs data
+        const initialPairs = [
+            { left: "Express", right: "Write naturally as if chatting with a colleague, without overthinking" },
+            { left: "Context", right: "Include specific details about your students' age, ability levels, and curriculum" },
+            { left: "Iterate", right: "Refine the AI's output through follow-up questions and feedback" },
+            { left: "Specific Prompting", right: "\"I need a worksheet for Year 8 on linear equations with varied difficulty levels\"" },
+            { left: "Vague Prompting", right: "\"Make me a math worksheet\"" }
+        ];
+
+        let colorIndex = 0;
+        let matchingPairs = [...initialPairs];
+        let selectedItem = null;
+        let userMatches = [];
+        
+        const colorPalette = [
+            '#FF5252', // Red
+            '#4CAF50', // Green
+            '#2196F3', // Blue
+            '#FF9800', // Orange
+            '#9C27B0', // Purple
+            '#00BCD4', // Cyan
+            '#FFEB3B', // Yellow
+            '#795548', // Brown
+            '#607D8B', // Blue Grey
+            '#E91E63', // Pink
+            '#3F51B5', // Indigo
+            '#009688', // Teal
+            '#CDDC39', // Lime
+            '#FFC107', // Amber
+            '#673AB7', // Deep Purple
+            '#03A9F4', // Light Blue
+            '#8BC34A', // Light Green
+            '#FF5722', // Deep Orange
+        ];
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const targetContent = document.getElementById(tab.dataset.tab);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                    
+                    if (tab.dataset.tab === 'preview') {
+                        updatePreview();
+                    } else if (tab.dataset.tab === 'export') {
+                        generateExportCode();
+                    }
+                }
+            });
+        });
+
+        // Navigation Smooth Scroll
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                
+                // Switch to the relevant tab first
+                document.querySelectorAll('.tab').forEach(t => {
+                    if (t.dataset.tab === targetId) {
+                        t.click();
+                    }
+                });
+                
+                window.scrollTo({
+                    top: document.getElementById(targetId).offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Color pickers
+        document.getElementById('leftColor').addEventListener('input', function(e) {
+            document.getElementById('leftColorCode').textContent = e.target.value;
+            // Update preview if active
+            if (document.getElementById('preview').classList.contains('active')) {
+                updatePreview();
+            }
+        });
+
+        document.getElementById('rightColor').addEventListener('input', function(e) {
+            document.getElementById('rightColorCode').textContent = e.target.value;
+            // Update preview if active
+            if (document.getElementById('preview').classList.contains('active')) {
+                updatePreview();
+            }
+        });
+
+        // Initialize pairs list
+        function renderPairsList() {
+            const container = document.getElementById('pairsList');
+            container.innerHTML = '';
+            
+            matchingPairs.forEach((pair, index) => {
+                const pairEl = document.createElement('div');
+                pairEl.className = 'pair-item';
+                pairEl.innerHTML = `
+                    <div class="pair-part">
+                        <label for="left${index}">Left Item</label>
+                        <textarea id="left${index}" rows="2">${pair.left}</textarea>
+                    </div>
+                    <div class="pair-part">
+                        <label for="right${index}">Right Item</label>
+                        <textarea id="right${index}" rows="2">${pair.right}</textarea>
+                    </div>
+                    <div class="pair-actions">
+                        <button class="btn-delete" data-index="${index}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(pairEl);
+                
+                // Add event listeners
+                const leftTextarea = pairEl.querySelector(`#left${index}`);
+                leftTextarea.addEventListener('input', function() {
+                    matchingPairs[index].left = this.value;
+                });
+                
+                const rightTextarea = pairEl.querySelector(`#right${index}`);
+                rightTextarea.addEventListener('input', function() {
+                    matchingPairs[index].right = this.value;
+                });
+                
+                // Delete button
+                pairEl.querySelector('.btn-delete').addEventListener('click', function() {
+                    deletePair(parseInt(this.dataset.index));
+                });
+            });
+        }
+
+        // Add new pair
+        document.getElementById('addPair').addEventListener('click', function() {
+            matchingPairs.push({
+                left: "New Item",
+                right: "Matching Item"
+            });
+            renderPairsList();
+        });
+
+        // Delete pair
+        function deletePair(index) {
+            matchingPairs.splice(index, 1);
+            renderPairsList();
+        }
+
+        // Update preview
+        function updatePreview() {
+            const titleEl = document.getElementById('previewTitle');
+            const instructionsEl = document.getElementById('previewInstructions');
+            const leftTitleEl = document.getElementById('previewLeftTitle');
+            const rightTitleEl = document.getElementById('previewRightTitle');
+            const leftItemsEl = document.getElementById('leftItems');
+            const rightItemsEl = document.getElementById('rightItems');
+            const resultMessageEl = document.getElementById('resultMessage');
+            
+            if (titleEl) titleEl.textContent = document.getElementById('activityTitle').value;
+            if (instructionsEl) instructionsEl.textContent = document.getElementById('activityInstructions').value;
+            if (leftTitleEl) leftTitleEl.textContent = document.getElementById('leftColumnTitle').value;
+            if (rightTitleEl) rightTitleEl.textContent = document.getElementById('rightColumnTitle').value;
+            
+            // Set background colors for columns
+            const leftColor = document.getElementById('leftColor').value;
+            const rightColor = document.getElementById('rightColor').value;
+            
+            document.getElementById('leftColumn').style.backgroundColor = leftColor;
+            document.getElementById('rightColumn').style.backgroundColor = rightColor;
+            
+            // Reset matches and selection
+            selectedItem = null;
+            userMatches = [];
+            colorIndex = 0;
+            
+            if (resultMessageEl) {
+                resultMessageEl.className = 'result-message';
+                resultMessageEl.textContent = '';
+            }
+            
+            // Generate left column items
+            if (leftItemsEl) {
+                leftItemsEl.innerHTML = '';
+                // Shuffle the order
+                const shuffledLeftItems = [...matchingPairs].sort(() => Math.random() - 0.5);
+                
+                shuffledLeftItems.forEach((pair, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'matching-item';
+                    itemEl.textContent = pair.left;
+                    itemEl.dataset.id = index;
+                    itemEl.dataset.type = 'left';
+                    itemEl.dataset.match = pair.right;
+                    
+                    // Add indicator
+                    const indicator = document.createElement('span');
+                    indicator.className = 'match-indicator';
+                    itemEl.appendChild(indicator);
+                    
+                    leftItemsEl.appendChild(itemEl);
+                    
+                    // Add click event
+                    itemEl.addEventListener('click', handleItemClick);
+                });
+            }
+            
+            // Generate right column items
+            if (rightItemsEl) {
+                rightItemsEl.innerHTML = '';
+                // Shuffle the order
+                const shuffledRightItems = [...matchingPairs].sort(() => Math.random() - 0.5);
+                
+                shuffledRightItems.forEach((pair, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'matching-item';
+                    itemEl.textContent = pair.right;
+                    itemEl.dataset.id = index;
+                    itemEl.dataset.type = 'right';
+                    itemEl.dataset.match = pair.left;
+                    
+                    // Add indicator
+                    const indicator = document.createElement('span');
+                    indicator.className = 'match-indicator';
+                    itemEl.appendChild(indicator);
+                    
+                    rightItemsEl.appendChild(itemEl);
+                    
+                    // Add click event
+                    itemEl.addEventListener('click', handleItemClick);
+                });
+            }
+        }
+
+        // Handle item click in preview
+        function handleItemClick(e) {
+            const item = e.currentTarget;
+            
+            // If nothing selected yet
+            if (!selectedItem) {
+                selectedItem = item;
+                item.classList.add('selected');
+                return;
+            }
+            
+            // Clicked the same item - deselect
+            if (selectedItem === item) {
+                selectedItem.classList.remove('selected');
+                selectedItem = null;
+                return;
+            }
+            
+            // If clicked item is same type (left or right) as selected item
+            if (selectedItem.dataset.type === item.dataset.type) {
+                selectedItem.classList.remove('selected');
+                selectedItem = item;
+                item.classList.add('selected');
+                return;
+            }
+            
+            // Try to make a match
+            const leftItem = selectedItem.dataset.type === 'left' ? selectedItem : item;
+            const rightItem = selectedItem.dataset.type === 'right' ? selectedItem : item;
+            
+            // Assign a color to this match
+            const matchColor = colorPalette[colorIndex % colorPalette.length];
+            colorIndex++;
+            
+            // Add to user matches
+            userMatches.push({
+                left: leftItem.textContent,
+                right: rightItem.textContent,
+                leftEl: leftItem,
+                rightEl: rightItem,
+                color: matchColor
+            });
+            
+            // Update UI
+            selectedItem.classList.remove('selected');
+            selectedItem = null;
+            
+            leftItem.classList.add('matched');
+            rightItem.classList.add('matched');
+            
+            // Update indicators with matching color
+            const leftIndicator = leftItem.querySelector('.match-indicator');
+            const rightIndicator = rightItem.querySelector('.match-indicator');
+            
+            if (leftIndicator) leftIndicator.style.backgroundColor = matchColor;
+            if (rightIndicator) rightIndicator.style.backgroundColor = matchColor;
+            
+            // Disable these items
+            leftItem.removeEventListener('click', handleItemClick);
+            rightItem.removeEventListener('click', handleItemClick);
+        }
+
+        // Check matches in preview
+        document.getElementById('checkMatches').addEventListener('click', function() {
+            const resultMessage = document.getElementById('resultMessage');
+            let correctCount = 0;
+            
+            // Check each match
+            userMatches.forEach(match => {
+                // Clear previous feedback
+                match.leftEl.classList.remove('correct', 'incorrect');
+                match.rightEl.classList.remove('correct', 'incorrect');
+                
+                // Check if this is a correct match
+                if (match.leftEl.dataset.match === match.rightEl.textContent) {
+                    match.leftEl.classList.add('correct');
+                    match.rightEl.classList.add('correct');
+                    correctCount++;
+                } else {
+                    match.leftEl.classList.add('incorrect');
+                    match.rightEl.classList.add('incorrect');
+                }
+            });
+            
+            // Update result message
+            resultMessage.className = 'result-message';
+            if (correctCount === userMatches.length && correctCount === matchingPairs.length) {
+                resultMessage.textContent = 'Perfect! All pairs are correctly matched.';
+                resultMessage.classList.add('success');
+            } else {
+                resultMessage.textContent = 'You have ' + correctCount + ' out of ' + matchingPairs.length + ' correct matches. Try again!';
+                resultMessage.classList.add('partial');
+            }
+        });
+
+        // Reset matches
+        document.getElementById('resetMatches').addEventListener('click', function() {
+            updatePreview();
+        });
+
+        // Generate exported HTML
+        function generateExportCode() {
+            const activityTitle = document.getElementById('activityTitle').value;
+            const instructions = document.getElementById('activityInstructions').value;
+            const leftColumnTitle = document.getElementById('leftColumnTitle').value;
+            const rightColumnTitle = document.getElementById('rightColumnTitle').value;
+            const leftColor = document.getElementById('leftColor').value;
+            const rightColor = document.getElementById('rightColor').value;
+            
+            // Generate pairs data array
+            let pairsDataScript = 'const matchingPairs = [\n';
+            
+            matchingPairs.forEach((pair, index) => {
+                pairsDataScript += `            { left: "${escapeHTML(pair.left)}", right: "${escapeHTML(pair.right)}" }${index < matchingPairs.length - 1 ? ',' : ''}\n`;
+            });
+            
+            pairsDataScript += '        ];';
+            
+            const htmlCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${activityTitle}</title>
+    <style>
+        :root {
+            --left-color: ${leftColor};
+            --right-color: ${rightColor};
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --success: #90EE90;
+            --error: #FFB6C1;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --radius: 0.375rem;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #FAFAFA;
+        }
+
+        .header {
+            background-color: white;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #2C3E50;
+            font-size: 1.875rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .instructions {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .matching-column {
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            min-height: 400px;
+        }
+
+        #leftColumn {
+            background-color: var(--left-color);
+        }
+
+        #rightColumn {
+            background-color: var(--right-color);
+        }
+
+        .matching-column h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            text-align: center;
+            color: #2C3E50;
+        }
+
+        .matching-item {
+            background: white;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            user-select: none;
+            position: relative;
+        }
+
+        .matching-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .matching-item.selected {
+            border: 2px solid var(--primary);
+            background-color: var(--primary-light);
+        }
+
+        .matching-item.correct {
+            background: var(--success);
+            border: 2px solid #2E8B57;
+        }
+
+        .matching-item.incorrect {
+            background: var(--error);
+            border: 2px solid #CD5C5C;
+        }
+
+        .matching-item .match-indicator {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #CBD5E0;
+            border: 2px solid #A0AEC0;
+        }
+
+        .matching-item.matched .match-indicator {
+            background-color: var(--primary);
+            border: 2px solid #4F46E5;
+        }
+
+        .result-message {
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            display: none;
+        }
+
+        .result-message.success {
+            background: var(--success);
+            color: #2E8B57;
+            display: block;
+        }
+
+        .result-message.partial {
+            background: #FFF8DC;
+            color: #B8860B;
+            display: block;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: 500;
+        }
+
+        button.reset {
+            background: #E2E8F0;
+            color: #2C3E50;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .matching-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>${activityTitle}</h1>
+    </header>
+
+    <div class="container">
+        <div class="instructions">
+            ${instructions}
+        </div>
+
+        <div id="resultMessage" class="result-message"></div>
+
+        <div class="matching-container">
+            <div class="matching-column" id="leftColumn">
+                <h2>${leftColumnTitle}</h2>
+                <div id="leftItems"></div>
+            </div>
+            
+            <div class="matching-column" id="rightColumn">
+                <h2>${rightColumnTitle}</h2>
+                <div id="rightItems"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="checkMatches()">Check Matches</button>
+        <button onclick="resetActivity()" class="reset">Reset</button>
+    </div>
+
+    <script>
+        const colorPalette = [
+            '#FF5252', // Red
+            '#4CAF50', // Green
+            '#2196F3', // Blue
+            '#FF9800', // Orange
+            '#9C27B0', // Purple
+            '#00BCD4', // Cyan
+            '#FFEB3B', // Yellow
+            '#795548', // Brown
+            '#607D8B', // Blue Grey
+            '#E91E63', // Pink
+            '#3F51B5', // Indigo
+            '#009688', // Teal
+            '#CDDC39', // Lime
+            '#FFC107', // Amber
+            '#673AB7', // Deep Purple
+            '#03A9F4', // Light Blue
+            '#8BC34A', // Light Green
+            '#FF5722', // Deep Orange
+        ];
+        let colorIndex = 0;
+        ${pairsDataScript}
+        
+        let selectedItem = null;
+        let userMatches = [];
+
+        // Initialize the matching activity
+        function initializeActivity() {
+            const leftItemsEl = document.getElementById('leftItems');
+            const rightItemsEl = document.getElementById('rightItems');
+            const resultMessageEl = document.getElementById('resultMessage');
+            
+            // Reset matches and selection
+            selectedItem = null;
+            userMatches = [];
+            colorIndex = 0;
+            
+            if (resultMessageEl) {
+                resultMessageEl.className = 'result-message';
+                resultMessageEl.textContent = '';
+            }
+            
+            // Generate left column items
+            if (leftItemsEl) {
+                leftItemsEl.innerHTML = '';
+                // Shuffle the order
+                const shuffledLeftItems = [...matchingPairs].sort(() => Math.random() - 0.5);
+                
+                shuffledLeftItems.forEach((pair, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'matching-item';
+                    itemEl.textContent = pair.left;
+                    itemEl.dataset.id = index;
+                    itemEl.dataset.type = 'left';
+                    itemEl.dataset.match = pair.right;
+                    
+                    // Add indicator
+                    const indicator = document.createElement('span');
+                    indicator.className = 'match-indicator';
+                    itemEl.appendChild(indicator);
+                    
+                    leftItemsEl.appendChild(itemEl);
+                    
+                    // Add click event
+                    itemEl.addEventListener('click', handleItemClick);
+                });
+            }
+            
+            // Generate right column items
+            if (rightItemsEl) {
+                rightItemsEl.innerHTML = '';
+                // Shuffle the order
+                const shuffledRightItems = [...matchingPairs].sort(() => Math.random() - 0.5);
+                
+                shuffledRightItems.forEach((pair, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'matching-item';
+                    itemEl.textContent = pair.right;
+                    itemEl.dataset.id = index;
+                    itemEl.dataset.type = 'right';
+                    itemEl.dataset.match = pair.left;
+                    
+                    // Add indicator
+                    const indicator = document.createElement('span');
+                    indicator.className = 'match-indicator';
+                    itemEl.appendChild(indicator);
+                    
+                    rightItemsEl.appendChild(itemEl);
+                    
+                    // Add click event
+                    itemEl.addEventListener('click', handleItemClick);
+                });
+            }
+        }
+
+        // Handle item click
+        function handleItemClick(e) {
+            const item = e.currentTarget;
+            
+            // If nothing selected yet
+            if (!selectedItem) {
+                selectedItem = item;
+                item.classList.add('selected');
+                return;
+            }
+            
+            // Clicked the same item - deselect
+            if (selectedItem === item) {
+                selectedItem.classList.remove('selected');
+                selectedItem = null;
+                return;
+            }
+            
+            // If clicked item is same type (left or right) as selected item
+            if (selectedItem.dataset.type === item.dataset.type) {
+                selectedItem.classList.remove('selected');
+                selectedItem = item;
+                item.classList.add('selected');
+                return;
+            }
+            
+            // Try to make a match
+            const leftItem = selectedItem.dataset.type === 'left' ? selectedItem : item;
+            const rightItem = selectedItem.dataset.type === 'right' ? selectedItem : item;
+            
+            // Assign a color to this match
+            const matchColor = colorPalette[colorIndex % colorPalette.length];
+            colorIndex++;
+            
+            // Add to user matches
+            userMatches.push({
+                left: leftItem.textContent,
+                right: rightItem.textContent,
+                leftEl: leftItem,
+                rightEl: rightItem,
+                color: matchColor
+            });
+            
+            // Update UI
+            selectedItem.classList.remove('selected');
+            selectedItem = null;
+            
+            leftItem.classList.add('matched');
+            rightItem.classList.add('matched');
+            
+            // Update indicators with matching color
+            const leftIndicator = leftItem.querySelector('.match-indicator');
+            const rightIndicator = rightItem.querySelector('.match-indicator');
+            
+            if (leftIndicator) leftIndicator.style.backgroundColor = matchColor;
+            if (rightIndicator) rightIndicator.style.backgroundColor = matchColor;
+            
+            // Disable these items
+            leftItem.removeEventListener('click', handleItemClick);
+            rightItem.removeEventListener('click', handleItemClick);
+        }
+
+        // Check matches
+        function checkMatches() {
+            const resultMessage = document.getElementById('resultMessage');
+            let correctCount = 0;
+            
+            // Check each match
+            userMatches.forEach(match => {
+                // Clear previous feedback
+                match.leftEl.classList.remove('correct', 'incorrect');
+                match.rightEl.classList.remove('correct', 'incorrect');
+                
+                // Check if this is a correct match
+                if (match.leftEl.dataset.match === match.rightEl.textContent) {
+                    match.leftEl.classList.add('correct');
+                    match.rightEl.classList.add('correct');
+                    correctCount++;
+                } else {
+                    match.leftEl.classList.add('incorrect');
+                    match.rightEl.classList.add('incorrect');
+                }
+            });
+            
+            // Update result message
+            resultMessage.className = 'result-message';
+            if (correctCount === userMatches.length && correctCount === matchingPairs.length) {
+                resultMessage.textContent = 'Perfect! All pairs are correctly matched.';
+                resultMessage.classList.add('success');
+            } else {
+                resultMessage.textContent = 'You have ' + correctCount + ' out of ' + matchingPairs.length + ' correct matches. Try again!';
+                resultMessage.classList.add('partial');
+            }
+        }
+
+        // Reset the activity
+        function resetActivity() {
+            initializeActivity();
+        }
+
+        // Initialize on page load
+        window.onload = initializeActivity;
+    <\/script>
+</body>
+</html>`;
+            
+            document.getElementById('exportCode').value = htmlCode;
+            // Store for export
+            window.exportedHTML = htmlCode;
+        }
+
+        // Helper function to escape HTML
+        function escapeHTML(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Show/hide code panel
+        document.getElementById('showCodeBtn').addEventListener('click', function() {
+            const codePanel = document.getElementById('codePanel');
+            if (codePanel.style.display === 'none') {
+                codePanel.style.display = 'block';
+                this.textContent = 'Hide HTML Code';
+            } else {
+                codePanel.style.display = 'none';
+                this.textContent = 'View HTML Code';
+            }
+        });
+
+        // Copy code to clipboard
+        document.getElementById('copyCode').addEventListener('click', function() {
+            const codeTextarea = document.getElementById('exportCode');
+            codeTextarea.select();
+            document.execCommand('copy');
+            this.textContent = 'Copied!';
+            setTimeout(() => {
+                this.textContent = 'Copy Code';
+            }, 2000);
+        });
+
+        // Export HTML file
+        document.getElementById('exportHTML').addEventListener('click', function() {
+            generateExportCode();
+            const blob = new Blob([window.exportedHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = document.getElementById('activityTitle').value.replace(/\s+/g, '-').toLowerCase() + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Initialize
+        renderPairsList();
+    </script>
+</body>
+</html>

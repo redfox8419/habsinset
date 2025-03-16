@@ -4,11 +4,11 @@
 
 /* CSS Variables */
 :root {
-    --primary: #6366f1;
-    --primary-light: #818cf8;
-    --primary-dark: #4f46e5;
-    --secondary: #10b981;
-    --tertiary: #f43f5e;
+    --primary: #0284c7;
+    --primary-light: #38bdf8;
+    --primary-dark: #0369a1;
+    --secondary: #059669;
+    --tertiary: #dc2626;
     --dark: #1e293b;
     --light: #f8fafc;
     --neutral: #64748b;
@@ -172,7 +172,7 @@ footer {
 
 .floating-element {
     position: absolute;
-    background-color: rgba(99, 102, 241, 0.1);
+    background-color: rgba(2, 132, 199, 0.1);  /* Updated to match Ocean Blue */
     border-radius: 50%;
     animation: float 20s infinite linear;
 }
@@ -197,7 +197,7 @@ footer {
 
 /* Common Hero Section Base Styles */
 .hero {
-    min-height: 400px;
+    min-height: 300px;  /* Reduced from 400px to make banners smaller */
     display: flex;
     align-items: center;
     position: relative;
@@ -211,7 +211,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%); /* Updated to match Ocean Blue and Green */
     z-index: -1;
 }
 
@@ -221,7 +221,7 @@ footer {
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: 3.2rem;  /* Slightly reduced from 3.5rem */
     font-weight: 800;
     margin-bottom: 20px;
     background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -238,10 +238,32 @@ footer {
     line-height: 1.6;
 }
 
+/* Hero size variants */
+.hero-large {
+    min-height: 400px;
+    padding: 120px 0 60px;
+}
+
+.hero-medium {
+    min-height: 300px;
+    padding: 100px 0 50px;
+}
+
+.hero-small {
+    min-height: 200px;
+    padding: 80px 0 40px;
+}
+
+/* Home page specific hero */
+.hero-home {
+    height: 80vh;
+    min-height: 500px;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;  /* Slightly reduced from 2.5rem */
     }
     
     .nav-links {
