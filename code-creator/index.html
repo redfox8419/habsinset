@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Creator - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to this page */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .module-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .module-header {
+            padding: 25px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--tertiary), #be123c);
+        }
+        
+        .module-card:nth-child(2) .module-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        .module-card:nth-child(3) .module-header {
+            background: linear-gradient(135deg, var(--secondary), #0d9488);
+        }
+        
+        .module-card:nth-child(4) .module-header {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+        
+        .module-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--tertiary);
+            text-align: center;
+        }
+        
+        .module-card:nth-child(2) .module-icon {
+            color: var(--primary);
+        }
+        
+        .module-card:nth-child(3) .module-icon {
+            color: var(--secondary);
+        }
+        
+        .module-card:nth-child(4) .module-icon {
+            color: #8b5cf6;
+        }
+        
+        .module-desc {
+            font-size: 1rem;
+            color: var(--neutral);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .module-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--tertiary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .module-card:nth-child(2) .module-btn {
+            background-color: var(--primary);
+        }
+        
+        .module-card:nth-child(3) .module-btn {
+            background-color: var(--secondary);
+        }
+        
+        .module-card:nth-child(4) .module-btn {
+            background-color: #8b5cf6;
+        }
+        
+        .module-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+        
+        .coming-soon {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: var(--neutral-light);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        /* Examples gallery */
+        .examples-gallery {
+            margin-top: 80px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .examples-gallery h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .gallery-item {
+            background-color: var(--light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .item-preview {
+            height: 180px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--neutral);
+        }
+        
+        .item-body {
+            padding: 20px;
+        }
+        
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .item-desc {
+            font-size: 0.95rem;
+            color: var(--neutral);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .coming-soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .workflow-steps {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--tertiary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .workflow-step:nth-child(2) .step-number {
+            background-color: var(--primary);
+        }
+        
+        .workflow-step:nth-child(3) .step-number {
+            background-color: var(--secondary);
+        }
+        
+        .workflow-step:nth-child(4) .step-number {
+            background-color: #8b5cf6;
+        }
+        
+        .workflow-step h4 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .workflow-step p {
+            font-size: 1rem;
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 350px; height: auto; padding: 120px 0 60px;">
+        <div class="container hero-content">
+            <h1>Code Creator Pathway</h1>
+            <p>Learn how to use AI to create custom interactive HTML applications, quizzes, and games for your classroom. No prior coding experience required!</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Code Creator Modules</h2>
+                <p>These upcoming modules will help you learn how to use AI to create interactive resources without needing to code from scratch.</p>
+            </div>
+            
+            <div class="module-grid">
+                <!-- Module 1 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Introduction to AI Code Generation</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Learn the basics of using AI to generate HTML, CSS, and JavaScript code for educational applications without needing to be a programmer yourself.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <!-- Module 2 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Interactive HTML Quizzes</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Create custom, interactive quizzes with immediate feedback, multimedia elements, and engaging design—all generated with AI assistance.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <!-- Module 3 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Educational Games</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Design simple but engaging educational games that reinforce learning concepts through interactive play, created with AI code generation.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <!-- Module 4 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Modifying AI-Generated Code</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Learn how to troubleshoot, customize, and make simple modifications to AI-generated code to tailor it perfectly to your teaching needs.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Examples Gallery Section -->
+            <div class="examples-gallery">
+                <h3>Interactive Examples Gallery</h3>
+                <p>Explore these examples of what you'll be able to create using AI-assisted code generation. All of these interactive resources can be created by teachers with no coding background.</p>
+                
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <h4>Describe What You Need</h4>
+                        <p>Tell the AI exactly what kind of interactive resource you want to create, including subject, topic, age group, and specific features.</p>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <h4>Review Generated Code</h4>
+                        <p>The AI will create HTML, CSS, and JavaScript code for your interactive resource that you can preview and test.</p>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <h4>Request Modifications</h4>
+                        <p>Ask for specific changes or improvements to refine the resource until it perfectly matches your needs.</p>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <h4>Use and Share</h4>
+                        <p>Save the final resource to use in your classroom or share with colleagues and students.</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-grid" style="position: relative;">
+                    <!-- Example 1 -->
+                    <div class="gallery-item">
+                        <div class="item-preview">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="item-body">
+                            <h4 class="item-title">Interactive Vocabulary Quiz</h4>
+                            <div class="tag-container">
+                                <span class="tag">Languages</span>
+                                <span class="tag">Vocabulary</span>
+                                <span class="tag">Quiz</span>
+                            </div>
+                            <p class="item-desc">A drag-and-drop quiz that tests vocabulary knowledge with immediate feedback and pronunciation support.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Example 2 -->
+                    <div class="gallery-item">
+                        <div class="item-preview">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="item-body">
+                            <h4 class="item-title">Math Problem Generator</h4>
+                            <div class="tag-container">
+                                <span class="tag">Mathematics</span>
+                                <span class="tag">Practice</span>
+                            </div>
+                            <p class="item-desc">Generates unlimited math problems at various difficulty levels with step-by-step solutions and progress tracking.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Example 3 -->
+                    <div class="gallery-item">
+                        <div class="item-preview">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="item-body">
+                            <h4 class="item-title">Interactive Timeline</h4>
+                            <div class="tag-container">
+                                <span class="tag">History</span>
+                                <span class="tag">Geography</span>
+                                <span class="tag">Visual</span>
+                            </div>
+                            <p class="item-desc">An interactive timeline with clickable events, media content, and customizable categories for historical or sequential learning.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Coming Soon Overlay -->
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700;">
+                        Coming Soon!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Create engaging, interactive learning experiences without needing to be a programmer.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="../index.html" class="home-btn">Back to Pathways</a>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

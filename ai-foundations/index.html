@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Foundations - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to this page */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .module-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .module-header {
+            padding: 25px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        .module-card:nth-child(2) .module-header {
+            background: linear-gradient(135deg, var(--secondary), #0d9488);
+        }
+        
+        .module-card:nth-child(3) .module-header {
+            background: linear-gradient(135deg, var(--tertiary), #be123c);
+        }
+        
+        .module-card:nth-child(4) .module-header {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+        
+        .module-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .module-card:nth-child(2) .module-icon {
+            color: var(--secondary);
+        }
+        
+        .module-card:nth-child(3) .module-icon {
+            color: var(--tertiary);
+        }
+        
+        .module-card:nth-child(4) .module-icon {
+            color: #8b5cf6;
+        }
+        
+        .module-desc {
+            font-size: 1rem;
+            color: var(--neutral);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .module-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .module-card:nth-child(2) .module-btn {
+            background-color: var(--secondary);
+        }
+        
+        .module-card:nth-child(3) .module-btn {
+            background-color: var(--tertiary);
+        }
+        
+        .module-card:nth-child(4) .module-btn {
+            background-color: #8b5cf6;
+        }
+        
+        .module-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+        
+        .coming-soon {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: var(--neutral-light);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        /* Learning path section */
+        .learning-path {
+            margin-top: 80px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .learning-path h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .path-steps {
+            margin-top: 30px;
+            position: relative;
+        }
+        
+        .path-steps::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 24px;
+            width: 2px;
+            background-color: var(--primary-light);
+        }
+        
+        .path-step {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-right: 25px;
+            z-index: 2;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+            padding-top: 5px;
+        }
+        
+        .step-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .step-content p {
+            color: var(--neutral);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 350px; height: auto; padding: 120px 0 60px;">
+        <div class="container hero-content">
+            <h1>AI Foundations Pathway</h1>
+            <p>Start your journey into AI for education with these foundational modules. Learn why AI is valuable for teachers, how to communicate effectively with AI tools, and develop essential skills for AI-enhanced teaching.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Foundation Modules</h2>
+                <p>Choose from these modules to build your understanding of AI in education. We recommend starting with "Why Use AI?" and then moving to "Prompting Basics".</p>
+            </div>
+            
+            <div class="module-grid">
+                <!-- Module 1 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Why Use AI in Education?</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <p class="module-desc">Discover how AI can enhance your teaching practice, save time, and create new opportunities for your students. This module addresses common concerns and misconceptions about AI in the classroom.</p>
+                        <a href="../getting-started/why-use-ai.html" class="module-btn">Start Module</a>
+                    </div>
+                </div>
+                
+                <!-- Module 2 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>AI Prompting Basics</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <p class="module-desc">Learn a simple, effective approach to communicate with AI tools and create amazing resources for your classroom. This beginner-friendly guide requires no technical expertise.</p>
+                        <a href="../getting-started/prompting.html" class="module-btn">Start Module</a>
+                    </div>
+                </div>
+                
+                <!-- Module 3 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>What is AI?</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Get a teacher-friendly introduction to what AI is, how it works, and the different types of AI tools available for education. No technical background required.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <!-- Module 4 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>AI Ethics for Educators</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Explore important ethical considerations when using AI in education, including privacy, bias, transparency, and appropriate boundaries for AI use in teaching and learning.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learning Path Section -->
+            <div class="learning-path">
+                <h3>Recommended Learning Path</h3>
+                <p>Follow this suggested sequence to build your AI knowledge effectively:</p>
+                
+                <div class="path-steps">
+                    <div class="path-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Why Use AI in Education?</h4>
+                            <p>Begin by understanding the benefits and addressing common concerns about AI in teaching.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="path-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>AI Prompting Basics</h4>
+                            <p>Learn the fundamentals of effective communication with AI tools using our simple framework.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="path-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Practice with Real Teaching Needs</h4>
+                            <p>Apply what you've learned to create resources for your classroom using AI tools.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="path-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Advance to Resource Builder Pathway</h4>
+                            <p>Once comfortable with the basics, explore our Resource Builder pathway for more advanced techniques and ready-to-use templates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Learning to use AI effectively is a journey. Take your time and practice with real teaching needs.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="../index.html" class="home-btn">Back to Pathways</a>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

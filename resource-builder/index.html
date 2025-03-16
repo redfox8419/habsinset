@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Builder - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to this page */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .module-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .module-header {
+            padding: 25px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--secondary), #0d9488);
+        }
+        
+        .module-card:nth-child(2) .module-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        .module-card:nth-child(3) .module-header {
+            background: linear-gradient(135deg, var(--tertiary), #be123c);
+        }
+        
+        .module-card:nth-child(4) .module-header {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+        
+        .module-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            text-align: center;
+        }
+        
+        .module-card:nth-child(2) .module-icon {
+            color: var(--primary);
+        }
+        
+        .module-card:nth-child(3) .module-icon {
+            color: var(--tertiary);
+        }
+        
+        .module-card:nth-child(4) .module-icon {
+            color: #8b5cf6;
+        }
+        
+        .module-desc {
+            font-size: 1rem;
+            color: var(--neutral);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .module-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .module-card:nth-child(2) .module-btn {
+            background-color: var(--primary);
+        }
+        
+        .module-card:nth-child(3) .module-btn {
+            background-color: var(--tertiary);
+        }
+        
+        .module-card:nth-child(4) .module-btn {
+            background-color: #8b5cf6;
+        }
+        
+        .module-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+        
+        .coming-soon {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: var(--neutral-light);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        /* Featured resources section */
+        .featured-resources {
+            margin-top: 80px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-resources h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .resource-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .resource-example {
+            background-color: var(--light);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .resource-example:nth-child(2) {
+            border-left-color: var(--primary);
+        }
+        
+        .resource-example:nth-child(3) {
+            border-left-color: var(--tertiary);
+        }
+        
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+        
+        .resource-description {
+            color: var(--neutral);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 350px; height: auto; padding: 120px 0 60px;">
+        <div class="container hero-content">
+            <h1>Resource Builder Pathway</h1>
+            <p>Take your AI skills to the next level. Learn advanced prompting techniques and access ready-to-use templates to create high-quality educational resources quickly and efficiently.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Resource Builder Modules</h2>
+                <p>Explore these modules to enhance your ability to create effective teaching resources with AI. Start with the Prompting Cheat Sheet for ready-to-use templates.</p>
+            </div>
+            
+            <div class="module-grid">
+                <!-- Module 1 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Prompting Cheat Sheet</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <p class="module-desc">Access a collection of ready-to-use prompt templates for creating worksheets, assessments, differentiated materials, and more. Simply copy, paste, and customize.</p>
+                        <a href="../resources/prompt-cheat-sheet.html" class="module-btn">Access Templates</a>
+                    </div>
+                </div>
+                
+                <!-- Module 2 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Advanced Prompting</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Master advanced techniques for crafting effective prompts, including structured formats, specialized instructions, and strategies for complex educational needs.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <!-- Module 3 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Interactive Editors</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Use our specialized editors to create interactive quizzes, games, and resources with structured templates and AI assistance.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <!-- Module 4 (Coming Soon) -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Subject-Specific Guides</h3>
+                    </div>
+                    <div class="module-body">
+                        <div class="module-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <span class="coming-soon">Coming Soon</span>
+                        <p class="module-desc">Discover specialized prompting strategies and templates for specific subjects including Mathematics, English, Science, Humanities, and more.</p>
+                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured resources section -->
+            <div class="featured-resources">
+                <h3>What You Can Create</h3>
+                <p>Here are examples of the high-quality resources you can generate using AI with our templates and guidance:</p>
+                
+                <div class="resource-examples">
+                    <div class="resource-example">
+                        <div class="resource-title">Differentiated Worksheets</div>
+                        <div class="tag-container">
+                            <span class="tag">Differentiation</span>
+                            <span class="tag">Worksheets</span>
+                        </div>
+                        <p class="resource-description">Create multi-level worksheets tailored to different learning needs, with varied question complexity, scaffolding, and extension tasks—all from a single prompt.</p>
+                    </div>
+                    
+                    <div class="resource-example">
+                        <div class="resource-title">Comprehensive Assessment Packs</div>
+                        <div class="tag-container">
+                            <span class="tag">Assessment</span>
+                            <span class="tag">Rubrics</span>
+                        </div>
+                        <p class="resource-description">Generate complete assessment packages including questions, mark schemes, rubrics, and feedback templates aligned with curriculum standards.</p>
+                    </div>
+                    
+                    <div class="resource-example">
+                        <div class="resource-title">Visual Knowledge Organizers</div>
+                        <div class="tag-container">
+                            <span class="tag">Revision</span>
+                            <span class="tag">Visual Learning</span>
+                        </div>
+                        <p class="resource-description">Design visually structured knowledge organizers that compile key concepts, terminology, and connections for any topic or subject.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Create more effective teaching resources in less time with the help of AI and well-crafted prompts.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="../index.html" class="home-btn">Back to Pathways</a>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
