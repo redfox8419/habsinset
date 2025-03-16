@@ -284,13 +284,6 @@
             align-items: center;
         }
 
-        .prompt-level {
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-        }
-
         .prompt-content {
             padding: 20px;
             flex-grow: 1;
@@ -594,13 +587,6 @@
                         <p>Refine the AI's response with follow-up prompts until you get exactly what you need.</p>
                     </div>
                 </div>
-                
-                <div class="note-box">
-                    <h4><i class="fas fa-lightbulb"></i> What the difficulty levels mean:</h4>
-                    <p><strong>Basic:</strong> Simpler, routine classroom resources like worksheets or standard quizzes</p>
-                    <p><strong>Intermediate:</strong> More creative and interactive resources that go beyond standard formats</p>
-                    <p><strong>Advanced:</strong> Ambitious, complex resources that would normally require significant time to create, such as escape rooms or elaborate interactive activities</p>
-                </div>
             </section>
 
             <!-- Resource Creation Section -->
@@ -617,7 +603,6 @@
                         <div class="prompt-card resource-creation">
                             <div class="prompt-header">
                                 <span>Basic Worksheet</span>
-                                <span class="prompt-level">Basic</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a worksheet for Year [X] [SUBJECT] on [TOPIC]. The worksheet should include:
@@ -640,7 +625,6 @@ Format this as a ready-to-print worksheet with appropriate spacing and sections.
                         <div class="prompt-card resource-creation">
                             <div class="prompt-header">
                                 <span>Differentiated Reading Text</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create three versions of an informational text about [TOPIC] for Year [X], each at a different reading level:
@@ -667,7 +651,6 @@ Include a brief explanation of how each version differs in complexity. Use Briti
                         <div class="prompt-card resource-creation">
                             <div class="prompt-header">
                                 <span>Knowledge Organiser</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a comprehensive knowledge organiser for [SUBJECT] on [TOPIC] for Year [X]/[EXAM LEVEL] that follows the [EXAM BOARD] specification. I've attached the specification points.
@@ -695,7 +678,6 @@ Format this in a visually organised way that would be easy to follow when printe
                         <div class="prompt-card resource-creation">
                             <div class="prompt-header">
                                 <span>Revision Cards Set</span>
-                                <span class="prompt-level">Basic</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a set of 20 revision flashcards for [SUBJECT] on [TOPIC] for [EXAM LEVEL]. 
@@ -720,113 +702,10 @@ Format these as a table with two columns: "Card Front" and "Card Back". Use Brit
                             </div>
                         </div>
                         
-                        <!-- Interactive Vocabulary Activity -->
-                        <div class="prompt-card resource-creation">
-                            <div class="prompt-header">
-                                <span>Interactive Vocabulary Activity</span>
-                                <span class="prompt-level">Intermediate</span>
-                            </div>
-                            <div class="prompt-content">
-                                <div class="prompt-text">Create an engaging, interactive vocabulary activity for Year [X] [SUBJECT] focusing on terminology related to [TOPIC].
-
-The activity should:
-- Target 15-20 key terms from the [CURRICULUM/EXAM BOARD] specification
-- Include clear definitions written in age-appropriate language
-- Incorporate multiple interactive elements (e.g., matching exercises, cloze activities, word puzzles)
-- Progress from recognition to application of the terminology
-- Include a competitive or game-based element to increase engagement
-- Be designed for a [DURATION] lesson or activity
-- Be suitable for individual, pair and small group work
-- Include a self-assessment component for students to track their learning
-
-Provide clear instructions for setting up and running the activity, along with all necessary content. Format this for easy printing and classroom use. Use British English spelling and terminology.</div>
-                                <div class="prompt-copy">
-                                    <button class="copy-btn" onclick="copyToClipboard(this)">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Educational Escape Room -->
-                        <div class="prompt-card resource-creation">
-                            <div class="prompt-header">
-                                <span>Educational Escape Room</span>
-                                <span class="prompt-level">Advanced</span>
-                            </div>
-                            <div class="prompt-content">
-                                <div class="prompt-text">Design a complete educational escape room activity for Year [X] [SUBJECT] on the topic of [TOPIC] that aligns with the [CURRICULUM/EXAM BOARD].
-
-The escape room should:
-- Have an engaging narrative or theme that appeals to this age group
-- Include 5-6 puzzles or challenges that test knowledge of the curriculum content
-- Incorporate a variety of puzzle types (numerical, word-based, visual, physical)
-- Be designed for teams of [X] students to complete in [DURATION]
-- Provide opportunities to apply key concepts from the curriculum
-- Include progressive difficulty with scaffolding for struggling students
-- Have clear links between each puzzle and specific learning objectives
-
-Provide:
-- Complete setup instructions for the teacher
-- All puzzle content and solutions
-- Required resources and preparation checklist
-- Suggested room layout and organisation
-- Hints system for struggling teams
-- Debriefing questions to consolidate learning after completion
-- Adaptation suggestions for different ability levels or group sizes
-
-Use British English spelling and terminology throughout.</div>
-                                <div class="prompt-copy">
-                                    <button class="copy-btn" onclick="copyToClipboard(this)">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Simulation or Role-Play Activity -->
-                        <div class="prompt-card resource-creation">
-                            <div class="prompt-header">
-                                <span>Simulation or Role-Play Activity</span>
-                                <span class="prompt-level">Advanced</span>
-                            </div>
-                            <div class="prompt-content">
-                                <div class="prompt-text">Design a comprehensive simulation or role-play activity for Year [X] [SUBJECT] that brings the topic of [TOPIC] to life through experiential learning.
-
-The simulation should:
-- Be designed for a class of approximately [X] students
-- Run for [DURATION] (single lesson or series of lessons)
-- Create an immersive scenario relevant to the curriculum content
-- Assign specific roles with character profiles and responsibilities
-- Include authentic resources, documents or props (described in detail)
-- Require application of key knowledge and skills from the curriculum
-- Build in decision points that demonstrate understanding of concepts
-- Include a structured debrief to extract and consolidate learning points
-
-Provide:
-- Detailed teacher instructions for setup and facilitation
-- All necessary student briefing materials and role cards
-- Required resources and preparation timeline
-- Room setup guidance
-- Facilitation tips for managing the activity
-- Assessment opportunities during the simulation
-- Reflection questions for different stages
-- Adaptations for different ability levels or group dynamics
-
-Use British English spelling and terminology throughout.</div>
-                                <div class="prompt-copy">
-                                    <button class="copy-btn" onclick="copyToClipboard(this)">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Scaffolded Writing Framework -->
                         <div class="prompt-card resource-creation">
                             <div class="prompt-header">
                                 <span>Scaffolded Writing Framework</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a comprehensive scaffolded writing framework for Year [X] students to support them in writing a [TEXT TYPE: e.g., persuasive essay, scientific report, creative narrative, etc.] on the topic of [TOPIC].
@@ -872,7 +751,6 @@ Format this as a complete resource pack that a teacher could print and use immed
                         <div class="prompt-card assessment">
                             <div class="prompt-header">
                                 <span>Multiple Choice Quiz</span>
-                                <span class="prompt-level">Basic</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a 20-question multiple choice quiz for Year [X] [SUBJECT] on [TOPIC]. For each question:
@@ -899,7 +777,6 @@ Format this as a clean, professional-looking document using British English spel
                         <div class="prompt-card assessment">
                             <div class="prompt-header">
                                 <span>Mock Exam Paper</span>
-                                <span class="prompt-level">Advanced</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a [DURATION]-minute mock exam paper for [SUBJECT] [EXAM LEVEL] following the [EXAM BOARD] style and format. I've attached the specification points to be covered.
@@ -926,49 +803,10 @@ Format this as an authentic-looking exam paper that follows the conventions of t
                             </div>
                         </div>
                         
-                        <!-- Report Comments Generator -->
-                        <div class="prompt-card assessment">
-                            <div class="prompt-header">
-                                <span>Report Comments Generator</span>
-                                <span class="prompt-level">Intermediate</span>
-                            </div>
-                            <div class="prompt-content">
-                                <div class="prompt-text">Create a set of 12 report comment templates for [SUBJECT] that I can customise for individual students. Include 3 comments for each of these student profiles:
-
-1. High-achieving students who consistently excel
-   - Comment focusing on exceptional understanding
-   - Comment highlighting analytical/critical thinking skills
-   - Comment celebrating independent learning and research
-
-2. Students making good progress at expected level
-   - Comment acknowledging solid understanding of the curriculum
-   - Comment recognising consistent effort and engagement
-   - Comment highlighting specific strengths with areas for development
-
-3. Students who are working below expected level but trying hard
-   - Comment acknowledging effort and identifying progress made
-   - Comment highlighting specific achievements while being honest about level
-   - Comment with constructive, actionable next steps
-
-4. Students who are underachieving relative to their ability
-   - Comment addressing underperformance tactfully
-   - Comment balancing areas of concern with positive observations
-   - Comment with specific strategies for improvement
-
-Each comment should be 3-4 sentences long, use positive language, avoid clichés, and be specific enough to feel personal but adaptable to different students. Use British English spelling and terminology throughout.</div>
-                                <div class="prompt-copy">
-                                    <button class="copy-btn" onclick="copyToClipboard(this)">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Marking Rubric -->
                         <div class="prompt-card assessment">
                             <div class="prompt-header">
                                 <span>Detailed Marking Rubric</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a detailed marking rubric for a Year [X] [SUBJECT] [ASSIGNMENT TYPE] on [TOPIC]. 
@@ -998,7 +836,6 @@ Format this in a visually clear table format suitable for printing. Use British 
                         <div class="prompt-card assessment">
                             <div class="prompt-header">
                                 <span>Formative Assessment Pack</span>
-                                <span class="prompt-level">Advanced</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a comprehensive formative assessment pack for Year [X] [SUBJECT] on [TOPIC] that includes a variety of assessment strategies to check understanding throughout a unit of work.
@@ -1031,7 +868,6 @@ Design these to be visually appealing, easy to implement, and provide meaningful
                         <div class="prompt-card assessment">
                             <div class="prompt-header">
                                 <span>Personalised Feedback Generator</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a personalised feedback generator for [SUBJECT] [ASSIGNMENT TYPE] responses that will help me quickly provide quality feedback to students. 
@@ -1080,7 +916,6 @@ The feedback should follow good assessment practice, focusing on improvement rat
                         <div class="prompt-card differentiation">
                             <div class="prompt-header">
                                 <span>Tiered Task Generator</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a set of differentiated learning tasks for Year [X] [SUBJECT] on [TOPIC] that allows all students to access the same key learning but with appropriate levels of challenge.
@@ -1122,7 +957,6 @@ Format this as a complete teaching resource pack ready for classroom use. Use Br
                         <div class="prompt-card differentiation">
                             <div class="prompt-header">
                                 <span>Inclusive Resource Adaptation</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Adapt this [RESOURCE TYPE] on [TOPIC] to make it fully inclusive and accessible for a diverse class that includes students with the following needs:
@@ -1166,7 +1000,6 @@ The adaptations should maintain high expectations for all learners while removin
                         <div class="prompt-card differentiation">
                             <div class="prompt-header">
                                 <span>Progressive Scaffolding Framework</span>
-                                <span class="prompt-level">Advanced</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a comprehensive scaffolding framework for teaching [TOPIC] to Year [X] [SUBJECT] students with diverse learning needs, following [CURRICULUM/EXAM BOARD] requirements.
@@ -1222,7 +1055,6 @@ The framework should be structured to gradually transfer responsibility from tea
                         <div class="prompt-card differentiation">
                             <div class="prompt-header">
                                 <span>Multi-Modal Learning Adaptation</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Adapt this [RESOURCE/LESSON] on [TOPIC] for Year [X] [SUBJECT] to incorporate multi-modal learning approaches that engage students with diverse learning preferences and needs.
@@ -1272,7 +1104,6 @@ The adaptations should maintain equal rigour while offering multiple pathways to
                         <div class="prompt-card differentiation">
                             <div class="prompt-header">
                                 <span>Challenge Extension Pack</span>
-                                <span class="prompt-level">Advanced</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create a comprehensive extension pack for highly able/gifted Year [X] [SUBJECT] students who have mastered the core curriculum content on [TOPIC]. This should extend their learning horizontally (breadth) rather than simply accelerating to the next year's content.
@@ -1333,7 +1164,6 @@ The pack should maintain connection to the core curriculum while offering signif
                         <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
                             <div class="prompt-header" style="background-color: #8b5cf6;">
                                 <span>Professional Document Formatting</span>
-                                <span class="prompt-level">Basic</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Please enhance the formatting and layout of this [RESOURCE TYPE] to make it look professional and engaging. Use a clean, visually appealing design that would be suitable for a high-quality teaching resource. Include:
@@ -1361,7 +1191,6 @@ Avoid any formatting that looks obviously AI-generated – aim for a design that
                         <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
                             <div class="prompt-header" style="background-color: #8b5cf6;">
                                 <span>Age-Appropriate Design Transformation</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Transform this [RESOURCE TYPE] into an age-appropriate, visually engaging resource for Year [X] students studying [SUBJECT]. The current content is good but needs to be reformatted to appeal to [AGE RANGE] students while maintaining educational value.
@@ -1384,44 +1213,10 @@ The design should look authentic and professionally created, not like an AI-gene
                             </div>
                         </div>
                         
-                        <!-- Interactive Document Design -->
-                        <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
-                            <div class="prompt-header" style="background-color: #8b5cf6;">
-                                <span>Interactive Document Design</span>
-                                <span class="prompt-level">Advanced</span>
-                            </div>
-                            <div class="prompt-content">
-                                <div class="prompt-text">Transform this [RESOURCE TYPE] into an interactive digital document that encourages active engagement from students. I want to create this using [SOFTWARE: e.g., PowerPoint, Google Slides, Word, etc.].
-
-Design a comprehensive layout that includes:
-- An intuitive navigation system with clickable elements
-- Interactive features appropriate for the software (e.g., hover effects, clickable buttons, form fields)
-- A visually cohesive design system with complementary colours, fonts, and visual elements
-- Sections that reveal additional information when clicked/interacted with
-- Strategic use of space to prevent overwhelming students
-- Accessibility considerations (clear contrast, readable fonts, alternative text suggestions)
-- Balance between text, visual elements, and interactive components
-
-Provide detailed instructions for how to implement these design elements in the specified software, including:
-- Step-by-step guidance for creating the interactive elements
-- Explanation of any features or tools I should use
-- Suggestions for specific fonts, colours, and visual elements
-- Tips for maintaining consistent design throughout the document
-
-The design should look professionally created and engage students without appearing artificial or template-driven. Use British English spelling and terminology throughout.</div>
-                                <div class="prompt-copy">
-                                    <button class="copy-btn" onclick="copyToClipboard(this)">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Visual Learning Aids -->
                         <div class="prompt-card" style="border-top: 4px solid #8b5cf6;">
                             <div class="prompt-header" style="background-color: #8b5cf6;">
                                 <span>Visual Learning Aids Creator</span>
-                                <span class="prompt-level">Intermediate</span>
                             </div>
                             <div class="prompt-content">
                                 <div class="prompt-text">Create descriptions for 5 visual learning aids to help Year [X] students understand [TOPIC] in [SUBJECT]. For each visual aid, provide:
