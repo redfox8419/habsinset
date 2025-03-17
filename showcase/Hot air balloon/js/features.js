@@ -274,3 +274,98 @@ export function createGrassClump(x, y, z, parent) {
     parent.add(grassGroup);
     return grassGroup;
 }
+
+// Create a dramatic mountain peak with snow
+export function createMountainPeak(x, y, z, parent) {
+    const peakGroup = new THREE.Group();
+    
+    // Create the main rocky peak
+    const peakGeometry = new THREE.ConeGeometry(15 + Math.random() * 10, 40 + Math.random() * 30, 6);
+    const peakMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0x696969, // Gray rock
+        roughness: 0.9,
+        metalness: 0.1
+    });
+    const peak = new THREE.Mesh(peakGeometry, peakMaterial);
+    peak.position.y = 20;
+    peak.castShadow = true;
+    peakGroup.add(peak);
+    
+    // Add snow cap on top
+    const snowCapGeometry = new THREE.ConeGeometry(18, 20, 6);
+    const snowCapMaterial = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF, // Snow white
+        roughness: 0.7,
+        metalness: 0.1
+    });
+    const snowCap = new THREE.Mesh(snowCapGeometry, snowCapMaterial);
+    snowCap.position.y = 50;
+    snowCap.scale.set(0.8, 0.4, 0.8);
+    snowCap.castShadow = true;
+    peakGroup.add(snowCap);
+    
+    // Add some smaller snow patches on the sides
+    const patchCount = 2 + Math.floor(Math.random() * 3);
+    for (let i = 0; i < patchCount; i++) {
+        const angle = (i / patchCount) * Math.PI * 2;
+        const dist = 8 + Math.random() * 5;
+        
+        const patchGeometry = new THREE.SphereGeometry(5 + Math.random() * 3, 5, 5);
+        patchGeometry.scale(1, 0.3, 1);
+        const patch = new THREE.Mesh(patchGeometry, snowCapMaterial);
+        
+        patch.position.set(
+            Math.sin(angle) * dist,
+            25 + Math.random() * 20,
+            Math.cos(angle) * dist
+        );
+        
+        patch.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI * 2,
+            Math.random() * Math.PI
+        );
+        
+        peakGroup.add(patch);
+    }
+    
+    // Add some rocks at the base
+    const rockCount = 3 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < rockCount; i++) {
+        const angle = (i / rockCount) * Math.PI * 2;
+        const dist = 10 + Math.random() * 8;
+        
+        const rockGeometry = new THREE.DodecahedronGeometry(3 + Math.random() * 2, 0);
+        const rockMaterial = new THREE.MeshStandardMaterial({
+            color: 0x555555,
+            roughness: 0.9
+        });
+        const rock = new THREE.Mesh(rockGeometry, rockMaterial);
+        
+        rock.position.set(
+            Math.sin(angle) * dist,
+            Math.random() * 5,
+            Math.cos(angle) * dist
+        );
+        
+        rock.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI * 2,
+            Math.random() * Math.PI
+        );
+        
+        rock.scale.set(
+            1 + Math.random() * 0.5,
+            1 + Math.random() * 0.5,
+            1 + Math.random() * 0.5
+        );
+        
+        peakGroup.add(rock);
+    }
+    
+    peakGroup.position.set(x, y, z);
+    peakGroup.rotation.y = Math.random() * Math.PI * 2;
+    
+    parent.add(peakGroup);
+    return peakGroup;
+}

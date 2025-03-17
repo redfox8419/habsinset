@@ -13,6 +13,8 @@ import { updateBurnerParticles } from './balloon.js';
 function init() {
     // Set up the scene
     gameState.scene = new THREE.Scene();
+    
+    // Initial fog will be updated based on lighting
     gameState.scene.fog = new THREE.FogExp2(0xCCE0FF, 0.0005);
     
     // Set up the camera
@@ -30,6 +32,41 @@ function init() {
     // Set up minimap
     setupMinimap();
     
+    // Set up event listeners
+    setupEvents();
+    
+    // Don't create the actual game elements yet - wait for user to select options and start
+}
+
+// Start the game
+function startGame() {
+    // Hide the start screen
+    document.getElementById('start-screen').style.display = 'none';
+    
+    // Initialize game state
+    gameState.isGameRunning = true;
+    gameState.collectedKnowledge = 0;
+    updateCollectionCounter();
+    
+    // Create the environment based on selected settings
+    createGameEnvironment();
+    
+    // Initial altitude display
+    updateAltitudeDisplay();
+    
+    // Start the animation loop
+    if (!gameState.animationClock) {
+        gameState.animationClock = new THREE.Clock();
+        animate();
+    }
+}
+
+// Create the game environment with selected options
+// Update to createGameEnvironment function in main.js
+function createGameEnvironment() {
+    // Clear any existing elements
+    clearExistingGameElements();
+    
     // Create the skybox with dynamic time of day
     createSkybox();
     
@@ -45,28 +82,28 @@ function init() {
     // Create knowledge orbs
     createKnowledgeOrbs();
     
-    // Set up animation clock
-    gameState.animationClock = new THREE.Clock();
-    
-    // Set up event listeners
-    setupEvents();
-    
-    // Start the render loop
-    animate();
+    // Adjust starting position for mountain terrain
+    if (gameState.selectedTerrain === 'mountains') {
+        // Start at higher altitude in mountains
+        gameState.balloonPhysics.position.y = 200;
+    }
 }
 
-// Start the game
-function startGame() {
-    // Hide the start screen
-    document.getElementById('start-screen').style.display = 'none';
+// Clear existing game elements when changing environment
+function clearExistingGameElements() {
+    // Remove all children that aren't essential
+    const essentialObjects = [];
     
-    // Initialize game state
-    gameState.isGameRunning = true;
-    gameState.collectedKnowledge = 0;
-    updateCollectionCounter();
+    gameState.scene.children.forEach(child => {
+        // Only keep essential objects
+        if (!essentialObjects.includes(child)) {
+            gameState.scene.remove(child);
+        }
+    });
     
-    // Initial altitude display
-    updateAltitudeDisplay();
+    // Reset arrays
+    gameState.terrainChunks = [];
+    gameState.knowledgeOrbs = [];
 }
 
 // Update the collection counter

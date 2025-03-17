@@ -150,11 +150,41 @@ export function activateBurner(active) {
     gameState.burnerActive = active;
     
     if (active) {
-        // Turn on burner light
-        gameState.burnerLight.intensity = 3;
+        // Adjust burner light based on lighting mode
+        let intensity, distance, color;
+        
+        switch (gameState.selectedLighting) {
+            case 'moonlight':
+                intensity = 8;  // Brighter in darkness
+                distance = 20;
+                color = 0xFF6600; // More orange
+                break;
+            case 'sunset':
+                intensity = 5;
+                distance = 15;
+                color = 0xFF4500; // Orange-red
+                break;
+            case 'day':
+            default:
+                intensity = 3;
+                distance = 10;
+                color = 0xFFA500; // Standard orange
+                break;
+        }
+        
+        // Turn on burner light with appropriate settings
+        gameState.burnerLight.intensity = intensity;
+        gameState.burnerLight.distance = distance;
+        gameState.burnerLight.color.set(color);
         
         // Show flame particles
         gameState.burnerParticles.material.opacity = 1;
+        
+        // Make particles more visible in moonlight
+        if (gameState.selectedLighting === 'moonlight') {
+            gameState.burnerParticles.material.size = 1.0;
+            gameState.burnerParticles.material.color.set(0xFF4500);
+        }
         
         // Add audio for burner (would be added here if audio implemented)
     } else {

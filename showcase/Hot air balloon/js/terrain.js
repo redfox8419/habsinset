@@ -1,57 +1,116 @@
 import { gameState } from './gameState.js';
-import { createTree, createRock, createCactus, createSnowCap, createGrassClump } from './features.js';
+import { createTree, createRock, createCactus, createSnowCap, createGrassClump, createMountainPeak } from './features.js';
 
 // Create the terrain with multiple biomes
 export function createTerrain() {
     // Set up biome parameters
-    const biomes = {
-        forest: {
-            color: 0x2D572C,
-            height: 100,
-            roughness: 1,
-            trees: true,
-            treeColor: 0x006400,
-            treeDensity: 0.7
-        },
-        mountains: {
-            color: 0x6D6552,
-            height: 250,
-            roughness: 1.5,
-            trees: true,
-            treeColor: 0x004B00,
-            treeDensity: 0.3
-        },
-        desert: {
-            color: 0xE6C78F,
-            height: 60,
-            roughness: 0.8,
-            trees: false,
-            rocks: true,
-            rockDensity: 0.4
-        },
-        plains: {
-            color: 0x91B95E,
-            height: 40,
-            roughness: 0.6,
-            trees: true,
-            treeColor: 0x628A40,
-            treeDensity: 0.2
-        },
-        canyon: {
-            color: 0xA3623A,
-            height: 150,
-            roughness: 1.2,
-            trees: false,
-            rocks: true,
-            rockDensity: 0.6
-        },
-        water: {
-            color: 0x0077BE,
-            height: -20,
-            roughness: 0.3,
-            reflective: true
-        }
-    };
+    let biomes;
+    
+    if (gameState.selectedTerrain === 'mountains') {
+        // Himalaya-inspired mountain terrain
+        biomes = {
+            snowPeaks: {
+                color: 0xF5F5F5, // Snow white
+                height: 450,
+                roughness: 1.8,
+                trees: false,
+                rocks: true,
+                rockDensity: 0.3,
+                snow: true
+            },
+            highMountains: {
+                color: 0x9E9E9E, // Stone gray
+                height: 350,
+                roughness: 1.6,
+                trees: false,
+                rocks: true,
+                rockDensity: 0.6
+            },
+            midMountains: {
+                color: 0x757575, // Dark gray
+                height: 250,
+                roughness: 1.4,
+                trees: true,
+                treeColor: 0x2E7D32, // Dark green
+                treeDensity: 0.2
+            },
+            foothills: {
+                color: 0x558B2F, // Green
+                height: 150,
+                roughness: 1.0,
+                trees: true,
+                treeColor: 0x33691E,
+                treeDensity: 0.5
+            },
+            valleys: {
+                color: 0x7CB342, // Light green
+                height: 80,
+                roughness: 0.7,
+                trees: true,
+                treeColor: 0x558B2F,
+                treeDensity: 0.7
+            },
+            glaciers: {
+                color: 0xB3E5FC, // Light blue ice
+                height: 100,
+                roughness: 0.5,
+                trees: false,
+                rocks: true,
+                rockDensity: 0.2,
+                snow: true
+            }
+        };
+    } else {
+        // Default terrain (original)
+        biomes = {
+            forest: {
+                color: 0x2D572C,
+                height: 100,
+                roughness: 1,
+                trees: true,
+                treeColor: 0x006400,
+                treeDensity: 0.7
+            },
+            mountains: {
+                color: 0x6D6552,
+                height: 250,
+                roughness: 1.5,
+                trees: true,
+                treeColor: 0x004B00,
+                treeDensity: 0.3
+            },
+            desert: {
+                color: 0xE6C78F,
+                height: 60,
+                roughness: 0.8,
+                trees: false,
+                rocks: true,
+                rockDensity: 0.4
+            },
+            plains: {
+                color: 0x91B95E,
+                height: 40,
+                roughness: 0.6,
+                trees: true,
+                treeColor: 0x628A40,
+                treeDensity: 0.2
+            },
+            canyon: {
+                color: 0xA3623A,
+                height: 150,
+                roughness: 1.2,
+                trees: false,
+                rocks: true,
+                rockDensity: 0.6
+            },
+            water: {
+                color: 0x0077BE,
+                height: -20,
+                roughness: 0.3,
+                reflective: true
+            }
+        };
+    }
     
     // Create perlin noise generator
     const simplex = new SimplexNoise();
@@ -71,18 +130,54 @@ export function createTerrain() {
             const biomeValue = simplex.noise2D(nx * 2, nz * 2);
             
             let biomeName;
-            if (biomeValue < -0.6) {
-                biomeName = 'water';
-            } else if (biomeValue < -0.3) {
-                biomeName = 'plains';
-            } else if (biomeValue < 0.1) {
-                biomeName = 'forest';
-            } else if (biomeValue < 0.4) {
-                biomeName = 'desert';
-            } else if (biomeValue < 0.7) {
-                biomeName = 'canyon';
+            
+            if (gameState.selectedTerrain === 'mountains') {
+                // Mountain range distribution - Himalaya inspired
+                // Use distance from center to create a mountain range pattern
+                const distFromCenter = Math.sqrt(nx*nx + nz*nz) * 2;
+                
+                // Create main mountain range with a curved shape
+                const rangeOffset = Math.sin(nx * 6) * 0.2;
+                const distFromRange = Math.abs(nz - rangeOffset);
+                
+                // Combine with noise for natural variation
+                const mountainValue = biomeValue - distFromRange * 3;
+                
+                // Complex multi-biome mountain range
+                if (mountainValue > 0.8) {
+                    biomeName = 'snowPeaks';
+                } else if (mountainValue > 0.5) {
+                    biomeName = 'highMountains';
+                } else if (mountainValue > 0.2) {
+                    biomeName = 'midMountains';
+                } else if (mountainValue > -0.2) {
+                    biomeName = 'foothills';
+                } else if (mountainValue > -0.5) {
+                    biomeName = 'valleys';
+                } else {
+                    biomeName = 'valleys'; // No water, only valleys
+                }
+                
+                // Add glaciers with a different noise pattern
+                const glacierNoise = simplex.noise2D(nx * 8, nz * 8);
+                if (glacierNoise > 0.8 && mountainValue > 0.4) {
+                    biomeName = 'glaciers';
+                }
             } else {
-                biomeName = 'mountains';
+                // Original biome distribution for default terrain
+                if (biomeValue < -0.6) {
+                    biomeName = 'water';
+                } else if (biomeValue < -0.3) {
+                    biomeName = 'plains';
+                } else if (biomeValue < 0.1) {
+                    biomeName = 'forest';
+                } else if (biomeValue < 0.4) {
+                    biomeName = 'desert';
+                } else if (biomeValue < 0.7) {
+                    biomeName = 'canyon';
+                } else {
+                    biomeName = 'mountains';
+                }
             }
             
             biomeMap[z][x] = biomeName;
@@ -96,7 +191,7 @@ export function createTerrain() {
         
         // Check bounds
         if (mapX < 0 || mapX >= biomeMapResolution || mapZ < 0 || mapZ >= biomeMapResolution) {
-            return 'plains'; // Default biome
+            return gameState.selectedTerrain === 'mountains' ? 'valleys' : 'plains'; // Default biome
         }
         
         return biomeMap[mapZ][mapX];
@@ -184,10 +279,28 @@ export function createTerrain() {
             const frequency = 0.002;
             let height = 0;
             
-            // Layer multiple frequencies for more natural looking terrain
-            height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
-            height += biomeParams.height * 0.5 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
-            height += biomeParams.height * 0.25 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
+            if (gameState.selectedTerrain === 'mountains') {
+                // Enhanced mountain height generation
+                // Layer multiple frequencies for more natural looking mountains
+                height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
+                height += biomeParams.height * 0.7 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
+                height += biomeParams.height * 0.3 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
+                
+                // Add sharp ridges
+                const ridgeNoise = Math.abs(simplex.noise2D(worldX * frequency * 3, worldZ * frequency * 3));
+                height += biomeParams.height * 0.4 * Math.pow(ridgeNoise, 2);
+                
+                // Add occasional very high peaks
+                const peakNoise = simplex.noise2D(worldX * frequency * 0.5, worldZ * frequency * 0.5);
+                if (peakNoise > 0.7 && biomeParams.biomeName === 'snowPeaks') {
+                    height *= 1.3;
+                }
+            } else {
+                // Original height generation
+                height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
+                height += biomeParams.height * 0.5 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
+                height += biomeParams.height * 0.25 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
+            }
             
             // Flatten the center area for starting zone
             const distanceFromCenter = Math.sqrt(worldX * worldX + worldZ * worldZ);
@@ -234,14 +347,16 @@ export function createTerrain() {
         // Add terrain features based on biome
         addTerrainFeatures(terrainMesh, chunkX, chunkZ, biomeMap, biomes, worldOffsetX, worldOffsetZ, chunkSize, getBiomeAt);
         
-        // Add water for water biomes
-        const waterSurface = createWaterSurface(worldOffsetX, worldOffsetZ, chunkSize);
-        gameState.scene.add(waterSurface);
+        // Add water for water biomes in default terrain only
+        if (gameState.selectedTerrain !== 'mountains') {
+            const waterSurface = createWaterSurface(worldOffsetX, worldOffsetZ, chunkSize);
+            gameState.scene.add(waterSurface);
+        }
         
         // Return the chunk with mesh
         return {
             mesh: terrainMesh,
-            water: waterSurface,
+            water: gameState.selectedTerrain !== 'mountains' ? waterSurface : null,
             x: chunkX,
             z: chunkZ
         };
@@ -260,10 +375,29 @@ function createWaterSurface(worldOffsetX, worldOffsetZ, chunkSize) {
     const waterGeometry = new THREE.PlaneGeometry(chunkSize, chunkSize, 1, 1);
     waterGeometry.rotateX(-Math.PI / 2);
     
+    // Adjust water color based on lighting
+    let waterColor, waterOpacity;
+    
+    switch (gameState.selectedLighting) {
+        case 'sunset':
+            waterColor = 0x0077BE; // Keep blue for sunset
+            waterOpacity = 0.7;
+            break;
+        case 'moonlight':
+            waterColor = 0x001133; // Dark blue for night
+            waterOpacity = 0.85;
+            break;
+        case 'day':
+        default:
+            waterColor = 0x0077BE; // Standard blue
+            waterOpacity = 0.8;
+            break;
+    }
+    
     const waterMaterial = new THREE.MeshStandardMaterial({
-        color: 0x0077BE,
+        color: waterColor,
         transparent: true,
-        opacity: 0.8,
+        opacity: waterOpacity,
         metalness: 0.1,
         roughness: 0.1
     });
@@ -280,7 +414,7 @@ function addTerrainFeatures(terrainMesh, chunkX, chunkZ, biomeMap, biomes, world
     featureGroup.position.set(worldOffsetX, 0, worldOffsetZ);
     
     // Number of feature attempts
-    const featureCount = 100;
+    const featureCount = gameState.selectedTerrain === 'mountains' ? 150 : 100;
     
     // For each feature attempt
     for (let i = 0; i < featureCount; i++) {
@@ -310,28 +444,64 @@ function addTerrainFeatures(terrainMesh, chunkX, chunkZ, biomeMap, biomes, world
         if (intersects.length > 0) {
             const y = intersects[0].point.y;
             
-            // Add trees in forested biomes
-            if (biome.trees && Math.random() < biome.treeDensity) {
-                createTree(localX, y, localZ, biome.treeColor, featureGroup);
-            }
-            
-            // Add rocks in rocky biomes
-            if (biome.rocks && Math.random() < biome.rockDensity) {
-                createRock(localX, y, localZ, featureGroup);
-            }
-            
-            // Add cacti in desert
-            if (biomeName === 'desert' && Math.random() < 0.2) {
-                createCactus(localX, y, localZ, featureGroup);
-            }
-            
-            // Add special features in specific biomes
-            if (biomeName === 'mountains' && Math.random() < 0.05) {
-                createSnowCap(localX, y, localZ, featureGroup);
-            }
-            
-            if (biomeName === 'plains' && Math.random() < 0.3) {
-                createGrassClump(localX, y, localZ, featureGroup);
+            if (gameState.selectedTerrain === 'mountains') {
+                // Mountain-specific features
+                
+                // Add snow caps to high areas
+                if (biomeName === 'snowPeaks' || biomeName === 'highMountains' && y > 300) {
+                    if (Math.random() < 0.15) {
+                        createSnowCap(localX, y, localZ, featureGroup);
+                    }
+                }
+                
+                // Add mountain peaks at high elevations
+                if ((biomeName === 'snowPeaks' || biomeName === 'highMountains') && Math.random() < 0.05) {
+                    createMountainPeak(localX, y, localZ, featureGroup);
+                }
+                
+                // Add rocks to mid-high elevations
+                if ((biomeName === 'highMountains' || biomeName === 'midMountains') && Math.random() < 0.25) {
+                    createRock(localX, y, localZ, featureGroup);
+                }
+                
+                // Add trees only to lower elevations
+                if (biome.trees && Math.random() < biome.treeDensity) {
+                    // Only add trees below a certain elevation
+                    if (y < 200) {
+                        createTree(localX, y, localZ, biome.treeColor, featureGroup);
+                    }
+                }
+                
+                // Add grass to valley areas
+                if (biomeName === 'valleys' && Math.random() < 0.3) {
+                    createGrassClump(localX, y, localZ, featureGroup);
+                }
+            } else {
+                // Original feature placement logic for default terrain
+                
+                // Add trees in forested biomes
+                if (biome.trees && Math.random() < biome.treeDensity) {
+                    createTree(localX, y, localZ, biome.treeColor, featureGroup);
+                }
+                
+                // Add rocks in rocky biomes
+                if (biome.rocks && Math.random() < biome.rockDensity) {
+                    createRock(localX, y, localZ, featureGroup);
+                }
+                
+                // Add cacti in desert
+                if (biomeName === 'desert' && Math.random() < 0.2) {
+                    createCactus(localX, y, localZ, featureGroup);
+                }
+                
+                // Add special features in specific biomes
+                if (biomeName === 'mountains' && Math.random() < 0.05) {
+                    createSnowCap(localX, y, localZ, featureGroup);
+                }
+                
+                if (biomeName === 'plains' && Math.random() < 0.3) {
+                    createGrassClump(localX, y, localZ, featureGroup);
+                }
             }
         }
     }

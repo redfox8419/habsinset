@@ -20,6 +20,10 @@ export const gameState = {
     mixer: null,
     animationClock: null,
     
+    // Game settings
+    selectedTerrain: 'default',
+    selectedLighting: 'day',
+    
     // Game state
     score: 0,
     isGameRunning: false,
