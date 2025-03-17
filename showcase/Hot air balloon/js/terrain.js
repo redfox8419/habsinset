@@ -251,116 +251,118 @@ export function createTerrain() {
     const loadDistance = 2; // Number of chunks to load around player
     
     // Function to create a terrain chunk
-    function createTerrainChunk(chunkX, chunkZ) {
-        const geometry = new THREE.PlaneGeometry(chunkSize, chunkSize, chunkDetail, chunkDetail);
-        geometry.rotateX(-Math.PI / 2);
+    // Function to create a terrain chunk
+function createTerrainChunk(chunkX, chunkZ) {
+    const geometry = new THREE.PlaneGeometry(chunkSize, chunkSize, chunkDetail, chunkDetail);
+    geometry.rotateX(-Math.PI / 2);
+    
+    const positions = geometry.attributes.position.array;
+    const worldOffsetX = chunkX * chunkSize;
+    const worldOffsetZ = chunkZ * chunkSize;
+    
+    // Create array for vertex colors
+    const colors = [];
+    
+    // Apply height based on biome and noise
+    for (let i = 0; i < positions.length; i += 3) {
+        // Local position within the chunk
+        const localX = positions[i];
+        const localZ = positions[i + 2];
         
-        const positions = geometry.attributes.position.array;
-        const worldOffsetX = chunkX * chunkSize;
-        const worldOffsetZ = chunkZ * chunkSize;
+        // World position
+        const worldX = localX + worldOffsetX;
+        const worldZ = localZ + worldOffsetZ;
         
-        // Create array for vertex colors
-        const colors = [];
+        // Get biome parameters
+        const biomeParams = getBiomeParameters(worldX, worldZ);
         
-        // Apply height based on biome and noise
-        for (let i = 0; i < positions.length; i += 3) {
-            // Local position within the chunk
-            const localX = positions[i];
-            const localZ = positions[i + 2];
+        // Generate noise-based height
+        const frequency = 0.002;
+        let height = 0;
+        
+        if (gameState.selectedTerrain === 'mountains') {
+            // Enhanced mountain height generation
+            // Layer multiple frequencies for more natural looking mountains
+            height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
+            height += biomeParams.height * 0.7 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
+            height += biomeParams.height * 0.3 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
             
-            // World position
-            const worldX = localX + worldOffsetX;
-            const worldZ = localZ + worldOffsetZ;
+            // Add sharp ridges
+            const ridgeNoise = Math.abs(simplex.noise2D(worldX * frequency * 3, worldZ * frequency * 3));
+            height += biomeParams.height * 0.4 * Math.pow(ridgeNoise, 2);
             
-            // Get biome parameters
-            const biomeParams = getBiomeParameters(worldX, worldZ);
-            
-            // Generate noise-based height
-            const frequency = 0.002;
-            let height = 0;
-            
-            if (gameState.selectedTerrain === 'mountains') {
-                // Enhanced mountain height generation
-                // Layer multiple frequencies for more natural looking mountains
-                height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
-                height += biomeParams.height * 0.7 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
-                height += biomeParams.height * 0.3 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
-                
-                // Add sharp ridges
-                const ridgeNoise = Math.abs(simplex.noise2D(worldX * frequency * 3, worldZ * frequency * 3));
-                height += biomeParams.height * 0.4 * Math.pow(ridgeNoise, 2);
-                
-                // Add occasional very high peaks
-                const peakNoise = simplex.noise2D(worldX * frequency * 0.5, worldZ * frequency * 0.5);
-                if (peakNoise > 0.7 && biomeParams.biomeName === 'snowPeaks') {
-                    height *= 1.3;
-                }
-            } else {
-                // Original height generation
-                height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
-                height += biomeParams.height * 0.5 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
-                height += biomeParams.height * 0.25 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
+            // Add occasional very high peaks
+            const peakNoise = simplex.noise2D(worldX * frequency * 0.5, worldZ * frequency * 0.5);
+            if (peakNoise > 0.7 && biomeParams.biomeName === 'snowPeaks') {
+                height *= 1.3;
             }
-            
-            // Flatten the center area for starting zone
-            const distanceFromCenter = Math.sqrt(worldX * worldX + worldZ * worldZ);
-            const flattenFactor = Math.max(0, 1 - Math.max(0, (200 - distanceFromCenter) / 200));
-            
-            // Set vertex height
-            positions[i + 1] = height * flattenFactor;
-            
-            // Set vertex color
-            colors.push(biomeParams.color.r, biomeParams.color.g, biomeParams.color.b);
+        } else {
+            // Original height generation
+            height += biomeParams.height * simplex.noise2D(worldX * frequency * biomeParams.roughness, worldZ * frequency * biomeParams.roughness);
+            height += biomeParams.height * 0.5 * simplex.noise2D(worldX * frequency * 2 * biomeParams.roughness, worldZ * frequency * 2 * biomeParams.roughness);
+            height += biomeParams.height * 0.25 * simplex.noise2D(worldX * frequency * 4 * biomeParams.roughness, worldZ * frequency * 4 * biomeParams.roughness);
         }
         
-        // Update vertex positions
-        geometry.attributes.position.needsUpdate = true;
+        // Flatten the center area for starting zone
+        const distanceFromCenter = Math.sqrt(worldX * worldX + worldZ * worldZ);
+        const flattenFactor = Math.max(0, 1 - Math.max(0, (200 - distanceFromCenter) / 200));
         
-        // Add vertex colors to geometry
-        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        // Set vertex height
+        positions[i + 1] = height * flattenFactor;
         
-        // Compute normals for proper lighting
-        geometry.computeVertexNormals();
-        
-        // Create the terrain material
-        const material = new THREE.MeshStandardMaterial({
-            vertexColors: true,
-            roughness: 0.8,
-            metalness: 0.1,
-            flatShading: true
-        });
-        
-        // Create the terrain mesh
-        const terrainMesh = new THREE.Mesh(geometry, material);
-        terrainMesh.castShadow = true;
-        terrainMesh.receiveShadow = true;
-        terrainMesh.position.set(worldOffsetX, 0, worldOffsetZ);
-        
-        // Store chunk coordinates
-        terrainMesh.userData = {
-            chunkX: chunkX,
-            chunkZ: chunkZ
-        };
-        
-        gameState.scene.add(terrainMesh);
-        
-        // Add terrain features based on biome
-        addTerrainFeatures(terrainMesh, chunkX, chunkZ, biomeMap, biomes, worldOffsetX, worldOffsetZ, chunkSize, getBiomeAt);
-        
-        // Add water for water biomes in default terrain only
-        if (gameState.selectedTerrain !== 'mountains') {
-            const waterSurface = createWaterSurface(worldOffsetX, worldOffsetZ, chunkSize);
-            gameState.scene.add(waterSurface);
-        }
-        
-        // Return the chunk with mesh
-        return {
-            mesh: terrainMesh,
-            water: gameState.selectedTerrain !== 'mountains' ? waterSurface : null,
-            x: chunkX,
-            z: chunkZ
-        };
+        // Set vertex color
+        colors.push(biomeParams.color.r, biomeParams.color.g, biomeParams.color.b);
     }
+    
+    // Update vertex positions
+    geometry.attributes.position.needsUpdate = true;
+    
+    // Add vertex colors to geometry
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    
+    // Compute normals for proper lighting
+    geometry.computeVertexNormals();
+    
+    // Create the terrain material
+    const material = new THREE.MeshStandardMaterial({
+        vertexColors: true,
+        roughness: 0.8,
+        metalness: 0.1,
+        flatShading: true
+    });
+    
+    // Create the terrain mesh
+    const terrainMesh = new THREE.Mesh(geometry, material);
+    terrainMesh.castShadow = true;
+    terrainMesh.receiveShadow = true;
+    terrainMesh.position.set(worldOffsetX, 0, worldOffsetZ);
+    
+    // Store chunk coordinates
+    terrainMesh.userData = {
+        chunkX: chunkX,
+        chunkZ: chunkZ
+    };
+    
+    gameState.scene.add(terrainMesh);
+    
+    // Add terrain features based on biome
+    addTerrainFeatures(terrainMesh, chunkX, chunkZ, biomeMap, biomes, worldOffsetX, worldOffsetZ, chunkSize, getBiomeAt);
+    
+    // Create water surface for non-mountain terrain
+    let waterSurface = null;
+    if (gameState.selectedTerrain !== 'mountains') {
+        waterSurface = createWaterSurface(worldOffsetX, worldOffsetZ, chunkSize);
+        gameState.scene.add(waterSurface);
+    }
+    
+    // Return the chunk with mesh
+    return {
+        mesh: terrainMesh,
+        water: waterSurface,
+        x: chunkX,
+        z: chunkZ
+    };
+}
     
     // Add initial terrain chunks around the starting position
     for (let z = -loadDistance; z <= loadDistance; z++) {

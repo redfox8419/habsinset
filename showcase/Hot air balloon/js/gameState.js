@@ -21,7 +21,7 @@ export const gameState = {
     animationClock: null,
     
     // Game settings
-    selectedTerrain: 'default',
+    selectedTerrain: 'islands',
     selectedLighting: 'day',
     
     // Game state
