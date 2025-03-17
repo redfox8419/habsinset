@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Air Balloon Knowledge Adventure</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="score-display">Altitude: 100m</div>
+        <div id="collection-counter">Knowledge Collected: 0/20</div>
+        <div id="knowledge-panel">
+            <div id="knowledge-title">Title Goes Here</div>
+            <div id="knowledge-text">Informational text goes here.</div>
+        </div>
+        <div id="controls-info">
+            Controls: ← → keys to steer | ↑ hold to speed up | ↓ hold to slow down | W to move up | S to move down
+        </div>
+        <div id="compass">
+            <div id="compass-arrow"></div>
+            <div id="compass-center"></div>
+            <div id="compass-text">N</div>
+        </div>
+        <div id="minimap"></div>
+        <div id="start-screen">
+            <h1>Hot Air Balloon Knowledge Adventure</h1>
+            <p>Explore the beautiful landscape and collect floating knowledge orbs to learn about the world! Navigate through different biomes and discover the secrets they hold.</p>
+            <button id="start-button">Start Adventure</button>
+        </div>
+    </div>
+
+    <!-- Module imports -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

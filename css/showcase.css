@@ -1,0 +1,207 @@
+/* ===================================
+   SHOWCASE PAGE SPECIFIC STYLES
+   =================================== */
+
+   .hero-showcase {
+    min-height: 350px;
+    height: auto;
+    padding: 120px 0 60px;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.showcase-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.showcase-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+}
+
+.showcase-preview {
+    height: 200px;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.showcase-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.showcase-card:hover .showcase-image {
+    transform: scale(1.05);
+}
+
+.showcase-icon {
+    font-size: 3rem;
+    color: var(--primary);
+    z-index: 1;
+}
+
+/* Fix Font Awesome icon classes that might not exist */
+.fa-solar-system:before { content: "\f7a6"; } /* Using planet rings icon */
+.fa-hot-air-balloon:before { content: "\f97e"; } /* Using air balloon icon */
+.fa-bird:before { content: "\f535"; } /* Using dove icon */
+
+.showcase-content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.showcase-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--dark);
+}
+
+.showcase-desc {
+    font-size: 1rem;
+    color: var(--neutral);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tag {
+    background-color: #f1f5f9;
+    color: var(--neutral);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag.interactive {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.tag.activity {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.tag.resource {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.tag.game {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.tag.assessment {
+    background-color: #ddd6fe;
+    color: #5b21b6;
+}
+
+.showcase-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.showcase-link:hover {
+    background-color: var(--primary-dark);
+}
+
+.card-1 .showcase-preview {
+    background: linear-gradient(135deg, #dbeafe, #93c5fd);
+}
+
+.card-2 .showcase-preview {
+    background: linear-gradient(135deg, #dcfce7, #86efac);
+}
+
+.card-3 .showcase-preview {
+    background: linear-gradient(135deg, #fee2e2, #fca5a5);
+}
+
+.card-4 .showcase-preview {
+    background: linear-gradient(135deg, #ddd6fe, #a78bfa);
+}
+
+.card-5 .showcase-preview {
+    background: linear-gradient(135deg, #fef3c7, #fcd34d);
+}
+
+.card-6 .showcase-preview {
+    background: linear-gradient(135deg, #ffedd5, #fdba74);
+}
+
+.card-7 .showcase-preview {
+    background: linear-gradient(135deg, #f3e8ff, #d8b4fe);
+}
+
+.card-8 .showcase-preview {
+    background: linear-gradient(135deg, #e0f2fe, #7dd3fc);
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.filter-btn {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .showcase-grid {
+        grid-template-columns: 1fr;
+    }
+}

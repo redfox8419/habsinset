@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Solar System with Kepler Orbits</title>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
+    /* Subtle button style */
+    #toggleOrbits {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+  <!-- Import map to resolve bare module specifiers -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Button to toggle orbital lines -->
+  <button id="toggleOrbits">Toggle Orbits</button>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+
+    // Set up the scene, camera, and renderer.
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 2000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Set up OrbitControls.
+    const controls = new OrbitControls(camera, renderer.domElement);
+    camera.position.set(0, 50, 100);
+    controls.update();
+
+    // Add ambient light.
+    scene.add(new THREE.AmbientLight(0x333333));
+
+    // Add a point light at the Sun's position.
+    const sunLight = new THREE.PointLight(0xffffff, 2, 300);
+    scene.add(sunLight);
+
+    // Create the Sun.
+    const sunGeometry = new THREE.SphereGeometry(5, 32, 32);
+    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+    scene.add(sunMesh);
+
+    // Planet data (scaled for visualization). 
+    // "distance" represents the semi-major axis (a), "radius" is for visualization,
+    // and "eccentricity" is approximate.
+    const planets = [
+      { name: "Mercury", distance: 8,  radius: 0.5, color: 0xaaaaaa, speed: 0.04, eccentricity: 0.2056 },
+      { name: "Venus",   distance: 12, radius: 1.0, color: 0xffcc99, speed: 0.015, eccentricity: 0.0068 },
+      { name: "Earth",   distance: 16, radius: 1.0, color: 0x2233ff, speed: 0.01, eccentricity: 0.0167 },
+      { name: "Mars",    distance: 20, radius: 0.8, color: 0xff3300, speed: 0.008, eccentricity: 0.0934 },
+      { name: "Jupiter", distance: 28, radius: 2.0, color: 0xffaa00, speed: 0.005, eccentricity: 0.0489 },
+      { name: "Saturn",  distance: 34, radius: 1.7, color: 0xffcc66, speed: 0.004, eccentricity: 0.0565 },
+      { name: "Uranus",  distance: 40, radius: 1.2, color: 0x66ccff, speed: 0.003, eccentricity: 0.0463 },
+      { name: "Neptune", distance: 46, radius: 1.2, color: 0x3366cc, speed: 0.002, eccentricity: 0.0086 }
+    ];
+
+    // Array to store orbital lines.
+    const orbitLines = [];
+
+    // Initialize each planet with a mean anomaly (M) and create a mesh.
+    const planetSystems = [];
+    const orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+    const orbitSegments = 128; // number of points for the orbit ring
+
+    // Kepler solver: solve E - e*sin(E) = M using Newton-Raphson.
+    function solveKepler(M, e) {
+      let E = M;
+      for (let i = 0; i < 10; i++) {
+        let f = E - e * Math.sin(E) - M;
+        let fPrime = 1 - e * Math.cos(E);
+        E = E - f / fPrime;
+      }
+      return E;
+    }
+
+    // Compute the true anomaly from the eccentric anomaly.
+    function trueAnomaly(E, e) {
+      return 2 * Math.atan(Math.sqrt((1 + e)/(1 - e)) * Math.tan(E/2));
+    }
+
+    planets.forEach(planet => {
+      // Create the planet mesh.
+      const geometry = new THREE.SphereGeometry(planet.radius, 32, 32);
+      const material = new THREE.MeshStandardMaterial({ color: planet.color });
+      const mesh = new THREE.Mesh(geometry, material);
+      planet.mesh = mesh;
+      // Initialize mean anomaly (M) to zero.
+      planet.M = 0;
+      scene.add(mesh);
+
+      // Create an elliptical orbit ring using polar coordinates (Sun at focus).
+      const orbitGeometry = new THREE.BufferGeometry();
+      const orbitPoints = [];
+      const a = planet.distance; // semi-major axis
+      const e = planet.eccentricity;
+      for (let i = 0; i <= orbitSegments; i++) {
+        const f = (i / orbitSegments) * Math.PI * 2;
+        const r = a * (1 - e * e) / (1 + e * Math.cos(f));
+        orbitPoints.push(new THREE.Vector3(r * Math.cos(f), 0, r * Math.sin(f)));
+      }
+      orbitGeometry.setFromPoints(orbitPoints);
+      const orbitLine = new THREE.Line(orbitGeometry, orbitMaterial);
+      scene.add(orbitLine);
+      orbitLines.push(orbitLine); // store for toggling
+
+      // Save orbital parameters for use in animation.
+      planet.a = a;
+      planet.e = e;
+      planetSystems.push(planet);
+
+      // If this planet is Saturn, add a ring.
+      if (planet.name === "Saturn") {
+        const ringGeometry = new THREE.RingGeometry(planet.radius * 1.2, planet.radius * 2.5, 64);
+        const ringMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+        const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+        // Rotate the ring to lie in the planet's equatorial plane.
+        ringMesh.rotation.x = Math.PI / 2;
+        planet.mesh.add(ringMesh);
+      }
+    });
+
+    // ======================
+    // ADD MOONS TO THE PLANETS
+    // ======================
+    // Only add moons for planets that are known to have them.
+    const moonScales = {
+      "Earth": [0.27],
+      "Mars": [0.003, 0.002],  // Phobos and Deimos (very small)
+      "Jupiter": [0.026, 0.022, 0.038, 0.034],  // Io, Europa, Ganymede, Callisto approximations
+      "Saturn": [0.044],  // Titan (largest moon)
+      "Uranus": [0.03],
+      "Neptune": [0.055]
+    };
+
+    planetSystems.forEach(planet => {
+      if (!moonScales.hasOwnProperty(planet.name)) return;
+      
+      let moonFactors = moonScales[planet.name];
+      let numMoons = moonFactors.length;
+      for (let i = 0; i < numMoons; i++) {
+        const moonOrbit = new THREE.Object3D();
+        // Distribute multiple moons evenly.
+        moonOrbit.rotation.y = (i / numMoons) * Math.PI * 2;
+        let orbitSpeed = 0.05;
+        if (planet.name === "Mars") {
+          orbitSpeed = (i % 2 === 0) ? 0.06 : 0.04;
+        } else if (planet.name === "Jupiter") {
+          const speeds = [0.03, 0.025, 0.02, 0.015];
+          orbitSpeed = speeds[i];
+        } else if (planet.name === "Saturn") {
+          orbitSpeed = 0.035;
+        }
+        moonOrbit.orbitSpeed = orbitSpeed;
+        
+        const scaleFactor = moonFactors[i];
+        const moonGeometry = new THREE.SphereGeometry(planet.radius * scaleFactor, 16, 16);
+        const moonMaterial = new THREE.MeshStandardMaterial({ color: 0x888888 });
+        const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
+        const distanceFromPlanet = planet.radius + 1 + i * 0.7;
+        moonMesh.position.set(distanceFromPlanet, 0, 0);
+        moonOrbit.add(moonMesh);
+        planet.mesh.add(moonOrbit);
+      }
+    });
+
+    // ======================
+    // ADD ASTEROID BELT
+    // ======================
+    const asteroids = [];
+    const asteroidCount = 200;
+    for (let i = 0; i < asteroidCount; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = THREE.MathUtils.randFloat(22, 26);
+      const yOffset = THREE.MathUtils.randFloatSpread(2);
+      const asteroidGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+      const asteroidMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
+      const asteroidMesh = new THREE.Mesh(asteroidGeometry, asteroidMaterial);
+      asteroidMesh.position.set(radius * Math.cos(angle), yOffset, radius * Math.sin(angle));
+      asteroidMesh.userData = {
+        angle: angle,
+        radius: radius,
+        yOffset: yOffset,
+        speed: THREE.MathUtils.randFloat(0.001, 0.003)
+      };
+      scene.add(asteroidMesh);
+      asteroids.push(asteroidMesh);
+    }
+
+    // ======================
+    // ADD A FLYING UFO
+    // ======================
+    // The UFO is built from a flat disc plus a dome.
+    const ufo = new THREE.Group();
+
+    const discGeometry = new THREE.CylinderGeometry(1.5, 1.5, 0.3, 32);
+    const discMaterial = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.8, roughness: 0.2 });
+    const discMesh = new THREE.Mesh(discGeometry, discMaterial);
+    ufo.add(discMesh);
+
+    const domeGeometry = new THREE.SphereGeometry(0.8, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+    const domeMaterial = new THREE.MeshStandardMaterial({ color: 0x99ccff, metalness: 0.5, roughness: 0.3 });
+    const domeMesh = new THREE.Mesh(domeGeometry, domeMaterial);
+    domeMesh.position.y = 0.3;
+    ufo.add(domeMesh);
+
+    scene.add(ufo);
+    ufo.position.set(0, 5, 0);
+    // Scale the UFO to half its original size.
+    ufo.scale.set(0.5, 0.5, 0.5);
+
+    // UFO state variables.
+    let ufoState = "random"; // "random" or "orbiting"
+    let ufoRandomTarget = new THREE.Vector3();
+    const ufoSpeed = 0.2;
+    let ufoOrbitPlanet = null;
+    let ufoOrbitAngle = 0;
+    let ufoOrbitRadius = 0;
+    let ufoOrbitTime = 0;
+
+    function setRandomUfoTarget() {
+      ufoRandomTarget.set(
+        THREE.MathUtils.randFloatSpread(100),
+        THREE.MathUtils.randFloat(2, 10),
+        THREE.MathUtils.randFloatSpread(100)
+      );
+    }
+    setRandomUfoTarget();
+
+    // Add a star field.
+    function addStars() {
+      const starGeometry = new THREE.BufferGeometry();
+      const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
+      const starVertices = [];
+      for (let i = 0; i < 10000; i++) {
+        const x = THREE.MathUtils.randFloatSpread(2000);
+        const y = THREE.MathUtils.randFloatSpread(2000);
+        const z = THREE.MathUtils.randFloatSpread(2000);
+        starVertices.push(x, y, z);
+      }
+      starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+      const stars = new THREE.Points(starGeometry, starMaterial);
+      scene.add(stars);
+    }
+    addStars();
+
+    // Handle window resizing.
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Add event listener for the orbit toggle button.
+    const toggleButton = document.getElementById('toggleOrbits');
+    let orbitsVisible = true;
+    toggleButton.addEventListener('click', () => {
+      orbitsVisible = !orbitsVisible;
+      orbitLines.forEach(line => {
+        line.visible = orbitsVisible;
+      });
+    });
+
+    // Animation loop.
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Update each planet's position along its elliptical orbit.
+      planetSystems.forEach(planet => {
+        planet.M += planet.speed;
+        const E = solveKepler(planet.M, planet.e);
+        const f = trueAnomaly(E, planet.e);
+        const r = planet.a * (1 - planet.e * planet.e) / (1 + planet.e * Math.cos(f));
+        planet.mesh.position.set(
+          r * Math.cos(f),
+          0,
+          r * Math.sin(f)
+        );
+      });
+
+      // Update moon orbits.
+      scene.traverse(object => {
+        if (object.userData && object.userData.orbitSpeed) {
+          object.rotation.y += object.userData.orbitSpeed || 0;
+        }
+      });
+
+      // Animate asteroids.
+      asteroids.forEach(asteroid => {
+        let data = asteroid.userData;
+        data.angle += data.speed;
+        asteroid.position.set(
+          data.radius * Math.cos(data.angle),
+          data.yOffset,
+          data.radius * Math.sin(data.angle)
+        );
+      });
+
+      // UFO Movement Update.
+      if (ufoState === "random") {
+        let direction = new THREE.Vector3().subVectors(ufoRandomTarget, ufo.position);
+        let distance = direction.length();
+        if (distance < 1) {
+          setRandomUfoTarget();
+        } else {
+          direction.normalize();
+          ufo.position.add(direction.multiplyScalar(ufoSpeed));
+        }
+        for (let planet of planetSystems) {
+          let planetPos = planet.mesh.position;
+          if (ufo.position.distanceTo(planetPos) < (planet.radius + 3)) {
+            if (Math.random() < 0.005) {
+              ufoState = "orbiting";
+              ufoOrbitPlanet = planet;
+              ufoOrbitRadius = planet.radius + 3;
+              ufoOrbitAngle = Math.random() * Math.PI * 2;
+              ufoOrbitTime = 200 + Math.floor(Math.random() * 200);
+              break;
+            }
+          }
+        }
+      } else if (ufoState === "orbiting") {
+        if (ufoOrbitPlanet) {
+          let planetPos = new THREE.Vector3();
+          ufoOrbitPlanet.mesh.getWorldPosition(planetPos);
+          ufoOrbitAngle += 0.05;
+          let orbitX = planetPos.x + ufoOrbitRadius * Math.cos(ufoOrbitAngle);
+          let orbitZ = planetPos.z + ufoOrbitRadius * Math.sin(ufoOrbitAngle);
+          let orbitY = planetPos.y + 2 + Math.sin(ufoOrbitAngle * 2) * 0.5;
+          ufo.position.set(orbitX, orbitY, orbitZ);
+        }
+        ufoOrbitTime--;
+        if (ufoOrbitTime <= 0) {
+          ufoState = "random";
+          setRandomUfoTarget();
+        }
+      }
+      ufo.rotation.y += 0.02;
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
