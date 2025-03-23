@@ -675,8 +675,15 @@ export function updateDirectionArrow() {
 }
 
 // Check for collisions with challenge stations
+// Add cooldown time tracking (at the top of the file)
+let lastChallengeTime = 0;
+const CHALLENGE_COOLDOWN = 2000; // 2 seconds cooldown between challenge triggers
+
 export function checkChallengeCollisions() {
     if (gameState.challengeStations.length === 0 && !gameState.masterChallenge) return;
+    
+    // Don't check for collisions if a challenge is already active or on cooldown
+    if (isChallengeActive || (Date.now() - lastChallengeTime) < CHALLENGE_COOLDOWN) return;
     
     const balloonRadius = 5;  // Player balloon radius
     const stationRadius = 10; // Challenge station interaction radius
@@ -696,6 +703,7 @@ export function checkChallengeCollisions() {
         
         if (distance < minDistance) {
             // Collision detected - show challenge question
+            lastChallengeTime = Date.now();
             showChallengeQuestion(station.userData.data);
             break;
         }
@@ -708,15 +716,31 @@ export function checkChallengeCollisions() {
         
         if (masterDistance < masterMinDistance) {
             // Show master challenge
+            lastChallengeTime = Date.now();
             showMasterChallenge();
         }
     }
 }
 
 // Show challenge question
+// Add this at the top of the file, with other variable declarations:
+let activeChallengeTimer = null;
+let isChallengeActive = false;
+
 function showChallengeQuestion(challengeData) {
+    // Don't show a new challenge if one is already active
+    if (isChallengeActive) return;
+    
+    isChallengeActive = true;
+    
     // Create or update challenge UI
     const challengePanel = document.getElementById('challenge-panel') || createChallengePanel();
+    
+    // Clean up any existing feedback from previous challenges
+    const existingFeedback = document.getElementById('challenge-feedback');
+    if (existingFeedback && existingFeedback.parentNode) {
+        existingFeedback.parentNode.removeChild(existingFeedback);
+    }
     
     // Update content
     document.getElementById('challenge-title').textContent = challengeData.title;
@@ -728,7 +752,7 @@ function showChallengeQuestion(challengeData) {
     // Add options
     challengeData.options.forEach((option, index) => {
         const button = document.createElement('button');
-        button.className = 'challenge-option';
+        button.className = 'challenge-option'; // Reset to base class with no correct/incorrect state
         button.textContent = option;
         button.dataset.index = index;
         button.onclick = () => checkAnswer(index, challengeData);
@@ -745,12 +769,23 @@ function showChallengeQuestion(challengeData) {
 
 // Check the user's answer to a challenge question
 function checkAnswer(selectedIndex, challengeData) {
+    // Prevent multiple clicks
+    const optionsContainer = document.getElementById('challenge-options');
+    const buttons = optionsContainer.querySelectorAll('button');
+    
+    // If buttons are already disabled, a selection was already made
+    if (buttons[0] && buttons[0].disabled) return;
+    
+    // Clear any existing timers
+    if (activeChallengeTimer) {
+        clearTimeout(activeChallengeTimer);
+        activeChallengeTimer = null;
+    }
+    
     const challengePanel = document.getElementById('challenge-panel');
     const feedbackElement = document.getElementById('challenge-feedback') || createFeedbackElement();
-    const optionsContainer = document.getElementById('challenge-options');
     
     // Disable all option buttons
-    const buttons = optionsContainer.querySelectorAll('button');
     buttons.forEach(button => {
         button.disabled = true;
     });
@@ -776,10 +811,8 @@ function checkAnswer(selectedIndex, challengeData) {
         updateScoreDisplay();
         
         // Close panel after delay
-        setTimeout(() => {
-            challengePanel.style.opacity = '0';
-            challengePanel.style.pointerEvents = 'none';
-            resumeGameMovement();
+        activeChallengeTimer = setTimeout(() => {
+            closeChallenge(challengePanel);
         }, 3000);
     } else {
         // Mark the selected button as incorrect
@@ -791,6 +824,11 @@ function checkAnswer(selectedIndex, challengeData) {
         // Show error feedback
         feedbackElement.textContent = 'Incorrect. ' + challengeData.explanation;
         feedbackElement.className = 'challenge-feedback incorrect';
+        
+        // Add to completed challenges even if incorrect - prevents repeated triggering
+        if (!gameState.completedChallenges.includes(challengeData.id)) {
+            gameState.completedChallenges.push(challengeData.id);
+        }
         
         // Close panel after delay
         setTimeout(() => {
@@ -804,6 +842,27 @@ function checkAnswer(selectedIndex, challengeData) {
     if (!challengePanel.contains(feedbackElement)) {
         challengePanel.appendChild(feedbackElement);
     }
+}
+
+// Add this new function to properly close the challenge UI
+function closeChallenge(challengePanel) {
+    challengePanel.style.opacity = '0';
+    challengePanel.style.pointerEvents = 'none';
+    
+    // Reset the UI after fade out transition
+    setTimeout(() => {
+        // Remove feedback element completely
+        const feedbackElement = document.getElementById('challenge-feedback');
+        if (feedbackElement && feedbackElement.parentNode) {
+            feedbackElement.parentNode.removeChild(feedbackElement);
+        }
+        
+        // Reset challenge state
+        isChallengeActive = false;
+    }, 500); // Give time for opacity transition
+    
+    // Resume game movement
+    resumeGameMovement();
 }
 
 // Show master challenge
@@ -1261,10 +1320,18 @@ function pauseGameMovement() {
 
 // Resume game movement after challenge
 function resumeGameMovement() {
+    // Only restore movement if game is running
+    if (!gameState.isGameRunning) return;
+    
     // Restore velocity if saved
     if (gameState.pausedVelocity) {
         gameState.balloonPhysics.velocity.copy(gameState.pausedVelocity);
         gameState.pausedVelocity = null;
+    } else {
+        // If no saved velocity, ensure it's not stuck at zero
+        if (gameState.balloonPhysics.velocity.lengthSq() < 0.1) {
+            gameState.balloonPhysics.velocity.set(0, 0, 5); // Small forward momentum
+        }
     }
     
     // Re-enable keys
