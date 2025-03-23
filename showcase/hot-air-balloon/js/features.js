@@ -1,12 +1,52 @@
+// Create a generic environmental object
+export function createEnvironmentalObject(type, x, y, z, options = {}, parent) {
+    const defaultOptions = {
+        scaleFactor: 0.7 + Math.random() * 0.6,
+        rotation: Math.random() * Math.PI * 2,
+        color: null
+    };
+    
+    const settings = {...defaultOptions, ...options};
+    
+    // Create the appropriate environmental object
+    let object;
+    
+    switch(type) {
+        case 'tree':
+            object = createTree(x, y, z, settings.color, parent, settings);
+            break;
+        case 'rock':
+            object = createRock(x, y, z, parent, settings);
+            break;
+        case 'cactus':
+            object = createCactus(x, y, z, parent, settings);
+            break;
+        case 'snowCap':
+            object = createSnowCap(x, y, z, parent, settings);
+            break;
+        case 'grassClump':
+            object = createGrassClump(x, y, z, parent, settings);
+            break;
+        case 'mountainPeak':
+            object = createMountainPeak(x, y, z, parent, settings);
+            break;
+        default:
+            console.warn(`Unknown environmental object type: ${type}`);
+            return null;
+    }
+    
+    return object;
+}
+
 // Create a tree
-export function createTree(x, y, z, treeColor, parent) {
+export function createTree(x, y, z, treeColor, parent, settings = {}) {
     const treeGroup = new THREE.Group();
     
     // Vary the tree style
-    const treeType = Math.floor(Math.random() * 3);
+    const treeType = settings.treeType !== undefined ? settings.treeType : Math.floor(Math.random() * 3);
     
-    // Random scale factor
-    const scaleFactor = 0.7 + Math.random() * 0.6;
+    // Use provided scale factor or calculate one
+    const scaleFactor = settings.scaleFactor || (0.7 + Math.random() * 0.6);
     
     if (treeType === 0) {
         // Pine tree
@@ -96,26 +136,26 @@ export function createTree(x, y, z, treeColor, parent) {
     }
     
     treeGroup.position.set(x, y, z);
-    treeGroup.rotation.y = Math.random() * Math.PI * 2;
+    treeGroup.rotation.y = settings.rotation || Math.random() * Math.PI * 2;
     
     parent.add(treeGroup);
     return treeGroup;
 }
 
 // Create a rock
-export function createRock(x, y, z, parent) {
+export function createRock(x, y, z, parent, settings = {}) {
     // Create an irregular rock using multiple geometries
     const rockGroup = new THREE.Group();
     
     // Create 2-4 overlapping geometries for a more natural look
-    const numParts = 2 + Math.floor(Math.random() * 3);
-    const baseSize = 3 + Math.random() * 8;
-    const rockColor = Math.random() > 0.7 ? 0x8B8B8B : 0x696969;
+    const numParts = settings.numParts || (2 + Math.floor(Math.random() * 3));
+    const baseSize = settings.baseSize || (3 + Math.random() * 8);
+    const rockColor = settings.color || (Math.random() > 0.7 ? 0x8B8B8B : 0x696969);
     
     for (let i = 0; i < numParts; i++) {
         // Use different primitive shapes for variety
         let geometry;
-        const shapeType = Math.floor(Math.random() * 3);
+        const shapeType = settings.shapeType !== undefined ? settings.shapeType : Math.floor(Math.random() * 3);
         
         switch(shapeType) {
             case 0:
@@ -171,14 +211,14 @@ export function createRock(x, y, z, parent) {
 }
 
 // Create a cactus
-export function createCactus(x, y, z, parent) {
+export function createCactus(x, y, z, parent, settings = {}) {
     const cactusGroup = new THREE.Group();
     
     // Main cactus body
-    const bodyHeight = 10 + Math.random() * 15;
+    const bodyHeight = settings.bodyHeight || (10 + Math.random() * 15);
     const bodyGeometry = new THREE.CylinderGeometry(2, 3, bodyHeight, 8);
     const cactusMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x2E8B57,
+        color: settings.color || 0x2E8B57,
         roughness: 0.9 
     });
     const body = new THREE.Mesh(bodyGeometry, cactusMaterial);
@@ -211,15 +251,16 @@ export function createCactus(x, y, z, parent) {
     }
     
     cactusGroup.position.set(x, y, z);
-    cactusGroup.rotation.y = Math.random() * Math.PI * 2;
+    cactusGroup.rotation.y = settings.rotation || Math.random() * Math.PI * 2;
     
     parent.add(cactusGroup);
     return cactusGroup;
 }
 
 // Create a snow cap for mountains
-export function createSnowCap(x, y, z, parent) {
-    const snowGeometry = new THREE.SphereGeometry(10 + Math.random() * 20, 8, 8);
+export function createSnowCap(x, y, z, parent, settings = {}) {
+    const size = settings.size || (10 + Math.random() * 20);
+    const snowGeometry = new THREE.SphereGeometry(size, 8, 8);
     snowGeometry.scale(1, 0.3, 1);
     const snowMaterial = new THREE.MeshStandardMaterial({
         color: 0xFFFFFF,
@@ -228,7 +269,7 @@ export function createSnowCap(x, y, z, parent) {
     });
     const snow = new THREE.Mesh(snowGeometry, snowMaterial);
     snow.position.set(x, y + 1, z);
-    snow.rotation.y = Math.random() * Math.PI * 2;
+    snow.rotation.y = settings.rotation || Math.random() * Math.PI * 2;
     snow.receiveShadow = true;
     
     parent.add(snow);
@@ -236,17 +277,18 @@ export function createSnowCap(x, y, z, parent) {
 }
 
 // Create grass clumps for plains
-export function createGrassClump(x, y, z, parent) {
+export function createGrassClump(x, y, z, parent, settings = {}) {
     const grassGroup = new THREE.Group();
     
-    const bladeCount = 15 + Math.floor(Math.random() * 20);
-    const clumpSize = 5 + Math.random() * 5;
+    const bladeCount = settings.bladeCount || (15 + Math.floor(Math.random() * 20));
+    const clumpSize = settings.clumpSize || (5 + Math.random() * 5);
+    const grassColor = settings.color || 0x91E56E;
     
     for (let i = 0; i < bladeCount; i++) {
         const bladeHeight = 1 + Math.random() * 2;
         const bladeGeometry = new THREE.CylinderGeometry(0.1, 0.05, bladeHeight, 3);
         const bladeMaterial = new THREE.MeshStandardMaterial({
-            color: 0x91E56E,
+            color: grassColor,
             roughness: 0.9,
         });
         const blade = new THREE.Mesh(bladeGeometry, bladeMaterial);
@@ -276,13 +318,15 @@ export function createGrassClump(x, y, z, parent) {
 }
 
 // Create a dramatic mountain peak with snow
-export function createMountainPeak(x, y, z, parent) {
+export function createMountainPeak(x, y, z, parent, settings = {}) {
     const peakGroup = new THREE.Group();
     
     // Create the main rocky peak
-    const peakGeometry = new THREE.ConeGeometry(15 + Math.random() * 10, 40 + Math.random() * 30, 6);
+    const peakHeight = settings.peakHeight || (40 + Math.random() * 30);
+    const peakRadius = settings.peakRadius || (15 + Math.random() * 10);
+    const peakGeometry = new THREE.ConeGeometry(peakRadius, peakHeight, 6);
     const peakMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x696969, // Gray rock
+        color: settings.color || 0x696969, // Gray rock
         roughness: 0.9,
         metalness: 0.1
     });
@@ -364,7 +408,7 @@ export function createMountainPeak(x, y, z, parent) {
     }
     
     peakGroup.position.set(x, y, z);
-    peakGroup.rotation.y = Math.random() * Math.PI * 2;
+    peakGroup.rotation.y = settings.rotation || Math.random() * Math.PI * 2;
     
     parent.add(peakGroup);
     return peakGroup;

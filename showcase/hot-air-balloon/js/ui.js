@@ -58,6 +58,36 @@ function createMinimapMarker() {
     createOrbIndicators();
 }
 
+// Generic indicator creation function
+function createMinimapIndicator(position, color, size, isRing = false) {
+    // Create appropriate geometry based on type
+    const geometry = isRing 
+        ? new THREE.RingGeometry(size, size * 1.5, 16)
+        : new THREE.CircleGeometry(size, 16);
+    
+    // Create material with appropriate properties
+    const material = new THREE.MeshBasicMaterial({ 
+        color: color,
+        transparent: true,
+        opacity: isRing ? 0.5 : 0.8,
+        side: isRing ? THREE.DoubleSide : THREE.FrontSide
+    });
+    
+    // Create and configure the indicator mesh
+    const indicator = new THREE.Mesh(geometry, material);
+    indicator.rotation.x = -Math.PI / 2; // Flat facing up
+    indicator.position.set(
+        position.x,
+        isRing ? 1002 : 1003, // Different heights for ring vs beacon
+        position.z
+    );
+    
+    // Store indicator type in userData
+    indicator.userData.isRing = isRing;
+    
+    return indicator;
+}
+
 // Create indicators for orbs on the minimap
 function createOrbIndicators() {
     // Remove any existing indicators
@@ -71,41 +101,31 @@ function createOrbIndicators() {
     
     // Create an indicator for each knowledge orb
     gameState.knowledgeOrbs.forEach(orb => {
+        // Create position object for the indicators
+        const position = {
+            x: orb.position.x,
+            z: orb.position.z
+        };
+        
         // Create a glowing beacon for each orb - INCREASED SIZE
-        const beaconGeometry = new THREE.CircleGeometry(24, 16);  // Doubled size
-        const beaconMaterial = new THREE.MeshBasicMaterial({ 
-            color: orb.userData.data.color,
-            transparent: true,
-            opacity: 0.8
-        });
-        const beacon = new THREE.Mesh(beaconGeometry, beaconMaterial);
-        beacon.rotation.x = -Math.PI / 2; // Flat circle facing up
-        beacon.position.set(
-            orb.position.x,
-            1003, // Above terrain on minimap
-            orb.position.z
+        const beacon = createMinimapIndicator(
+            position,
+            orb.userData.data.color,
+            24, // Doubled size (was 12)
+            false // Not a ring
         );
         
         // Create a pulsing outer ring - INCREASED SIZE
-        const ringGeometry = new THREE.RingGeometry(24, 36, 16);  // Doubled size
-        const ringMaterial = new THREE.MeshBasicMaterial({
-            color: orb.userData.data.color,
-            transparent: true,
-            opacity: 0.5,
-            side: THREE.DoubleSide
-        });
-        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring.rotation.x = -Math.PI / 2; // Flat ring facing up
-        ring.position.set(
-            orb.position.x,
-            1002, // Above terrain on minimap but below beacon
-            orb.position.z
+        const ring = createMinimapIndicator(
+            position,
+            orb.userData.data.color,
+            24, // Inner size (was 12)
+            true // Is a ring
         );
         
         // Store reference to the corresponding orb
         beacon.userData.orb = orb;
         ring.userData.orb = orb;
-        ring.userData.isRing = true;
         
         gameState.scene.add(beacon);
         gameState.scene.add(ring);
