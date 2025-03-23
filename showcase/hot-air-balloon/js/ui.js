@@ -216,7 +216,7 @@ export function updateCamera() {
     
     // Update minimap camera - keep it centered on the balloon
     gameState.minimapCamera.position.set(
-        gameState.balloonPhysics.position.x,
+        -gameState.balloonPhysics.position.x, // Negate the X coordinate
         1000,
         -gameState.balloonPhysics.position.z
     );
@@ -224,7 +224,7 @@ export function updateCamera() {
     // Update minimap marker position and rotation
     if (gameState.minimapMarkerGroup) {
         gameState.minimapMarkerGroup.position.set(
-            gameState.balloonPhysics.position.x,
+            -gameState.balloonPhysics.position.x,
             0,
             gameState.balloonPhysics.position.z
         );
