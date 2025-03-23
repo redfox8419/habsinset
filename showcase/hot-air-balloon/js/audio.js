@@ -12,7 +12,7 @@ const audioSystem = {
     
     // Volume levels
     soundEffectVolume: 0.3,
-    backgroundVolume: 0.2,  // Lower volume for background music
+    backgroundVolume: 0.1,  // Lower volume for background music
     
     // Initialize audio system
     init: function(burnerSoundPath, musicTrackPaths) {

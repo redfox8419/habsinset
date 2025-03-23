@@ -109,7 +109,58 @@ export function showKnowledgeInfo(data) {
     const panelElement = document.getElementById('knowledge-panel');
     
     titleElement.textContent = data.title;
-    textElement.textContent = data.text;
+    
+    // Find if this knowledge unlocks any challenges
+    let challengeGuidance = '';
+    gameState.challengeData.forEach(challenge => {
+        if (challenge.requiredKnowledge.includes(data.id)) {
+            challengeGuidance = `<div class="knowledge-challenge-hint">
+                <span class="hint-icon">?</span>
+                <span>This knowledge unlocks a challenge! Look for a question mark platform with the same color.</span>
+            </div>`;
+        }
+    });
+    
+    // Display text with optional challenge guidance
+    textElement.innerHTML = `${data.text}${challengeGuidance}`;
+    
+    // Add styles for the hint if not already added
+    if (challengeGuidance && !document.getElementById('knowledge-hint-styles')) {
+        const styleElement = document.createElement('style');
+        styleElement.id = 'knowledge-hint-styles';
+        styleElement.textContent = `
+            .knowledge-challenge-hint {
+                margin-top: 15px;
+                padding: 10px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .hint-icon {
+                background-color: #FFD700;
+                color: black;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+        `;
+        document.head.appendChild(styleElement);
+        
+        // Update the hint icon color to match the knowledge orb
+        setTimeout(() => {
+            const hintIcon = document.querySelector('.hint-icon');
+            if (hintIcon) {
+                hintIcon.style.backgroundColor = `#${data.color.toString(16).padStart(6, '0')}`;
+            }
+        }, 10);
+    }
     
     // Show the panel
     panelElement.style.opacity = '1';
@@ -120,7 +171,7 @@ export function showKnowledgeInfo(data) {
     // Hide after 10 seconds
     setTimeout(() => {
         panelElement.style.opacity = '0';
-    }, 10000);
+    }, 10000); // Extended to 10 seconds to give more time to read the hint
 }
 
 // Check for collision with knowledge orbs
@@ -160,6 +211,10 @@ export function checkOrbCollisions() {
             // Update collection counter
             gameState.collectedKnowledge++;
             updateCollectionCounter();
+            
+            // Update score
+            gameState.score += 50;
+            updateScoreDisplay();
             
             // Visual effect for collecting the orb
             collectOrb(orb);
@@ -301,4 +356,27 @@ export function animateKnowledgeOrbs(delta) {
             1 + Math.sin(Date.now() * 0.001) * 0.1
         );
     });
+}
+
+// Update score display function
+function updateScoreDisplay() {
+    // Check if score element exists
+    let scoreElement = document.getElementById('score-value');
+    
+    if (!scoreElement) {
+        // Create the score display if it doesn't exist
+        const scoreDisplay = document.getElementById('score-display');
+        scoreElement = document.createElement('span');
+        scoreElement.id = 'score-value';
+        scoreDisplay.innerHTML = scoreDisplay.innerHTML.replace('Altitude:', '<span id="altitude-label">Altitude:</span>');
+        scoreDisplay.appendChild(document.createElement('br'));
+        
+        const scoreLabel = document.createElement('span');
+        scoreLabel.textContent = 'Score: ';
+        scoreDisplay.appendChild(scoreLabel);
+        scoreDisplay.appendChild(scoreElement);
+    }
+    
+    // Update the score value
+    scoreElement.textContent = gameState.score;
 }

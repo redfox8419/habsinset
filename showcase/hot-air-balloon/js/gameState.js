@@ -28,12 +28,18 @@ export const gameState = {
     score: 0,
     isGameRunning: false,
     collectedKnowledge: 0,
-    totalKnowledge: 20,
+    totalKnowledge: 10, // Reduced to 10 for focused photosynthesis theme
+    
+    // Challenge system
+    challengeStations: [],
+    completedChallenges: [],
+    masterChallenge: null,
+    masterChallengeCompleted: false,
     
     // Orbs
     knowledgeOrbs: [],
-    nearestOrbDirection: new THREE.Vector3(),
     nearestOrbDistance: Infinity,
+    nearestOrbDirection: new THREE.Vector3(),
     
     // Terrain management
     terrainChunks: [],
@@ -70,127 +76,168 @@ export const gameState = {
         currentAcceleration: 0  // Current acceleration value (builds up when keys are held)
     },
     
-    // Knowledge data for the orbs
+    // Photosynthesis knowledge data for the orbs
     knowledgeData: [
         {
-            title: "The Water Cycle",
-            text: "The water cycle is the continuous movement of water within Earth and its atmosphere. It includes processes like evaporation, condensation, precipitation, and collection. This cycle is essential for maintaining all life on our planet.",
-            type: "science",
-            color: 0x2196F3
+            title: "Light Absorption",
+            text: "Chlorophyll is the green pigment in plants that absorbs light energy. It primarily absorbs red and blue wavelengths while reflecting green, which is why plants appear green to our eyes.",
+            type: "photosynthesis",
+            color: 0x2BC537,
+            id: "light"
         },
         {
-            title: "Photosynthesis",
-            text: "Photosynthesis is how plants make their food. They use sunlight, water, and carbon dioxide to create glucose and oxygen. This process is vital for producing oxygen in our atmosphere and forms the basis of most food chains.",
-            type: "science",
-            color: 0x4CAF50
+            title: "Carbon Dioxide",
+            text: "Plants take in carbon dioxide (CO₂) from the air through tiny openings called stomata, usually found on the underside of leaves. Guard cells control the opening and closing of stomata.",
+            type: "photosynthesis",
+            color: 0x80CBC4,
+            id: "co2"
         },
         {
-            title: "Plate Tectonics",
-            text: "Earth's surface is divided into large, moving pieces called tectonic plates. Their movement causes earthquakes, volcanic eruptions, and the formation of mountains. This theory explains why continents appear to fit together like puzzle pieces.",
-            type: "science",
-            color: 0xFF9800
+            title: "Water Uptake",
+            text: "Water (H₂O) is absorbed by plants through their roots and transported up the stem through xylem vessels to the leaves where photosynthesis occurs.",
+            type: "photosynthesis",
+            color: 0x03A9F4,
+            id: "water"
         },
         {
-            title: "Gravity",
-            text: "Gravity is the force that attracts objects toward each other. On Earth, it pulls everything toward the planet's center. The strength of gravity depends on an object's mass and the distance between objects.",
-            type: "science",
-            color: 0x9C27B0
+            title: "Light-Dependent Reactions",
+            text: "These reactions occur in the thylakoid membranes of chloroplasts. Light energy is converted to chemical energy in the form of ATP and NADPH. Oxygen is produced as a waste product.",
+            type: "photosynthesis",
+            color: 0xFFEB3B,
+            id: "light-dependent"
         },
         {
-            title: "Ancient Egypt",
-            text: "Ancient Egyptian civilization flourished along the Nile River for over 3,000 years. They built massive pyramids, developed hieroglyphic writing, and made advances in medicine, mathematics, and astronomy. The Great Pyramid of Giza is the only surviving structure of the Seven Wonders of the Ancient World.",
-            type: "history",
-            color: 0xFFD700
+            title: "Calvin Cycle",
+            text: "Also known as the light-independent reactions, the Calvin cycle uses the ATP and NADPH from the light-dependent reactions to convert CO₂ into glucose. This cycle takes place in the stroma of chloroplasts.",
+            type: "photosynthesis",
+            color: 0xFF7043,
+            id: "calvin"
         },
         {
-            title: "Roman Empire",
-            text: "The Roman Empire was one of history's largest empires, controlling territories across Europe, North Africa, and Western Asia. Romans developed advanced architecture, road systems, and a legal code that influenced modern law. Latin, the Romans' language, forms the basis for Romance languages like Spanish, French, and Italian.",
-            type: "history",
-            color: 0xE91E63
+            title: "Glucose Production",
+            text: "The end product of photosynthesis is glucose (C₆H₁₂O₆), a simple sugar that plants use for energy and to build other important compounds like cellulose and starch.",
+            type: "photosynthesis",
+            color: 0xFFF59D,
+            id: "glucose"
         },
         {
-            title: "Renaissance",
-            text: "The Renaissance was a period of artistic and intellectual growth in Europe from the 14th to 17th centuries. It marked the transition from medieval to modern times. Famous figures include Leonardo da Vinci, Michelangelo, and Galileo Galilei, who made breakthroughs in art, science, and philosophy.",
-            type: "history",
-            color: 0x3F51B5
+            title: "Oxygen Release",
+            text: "During photosynthesis, plants split water molecules and release oxygen (O₂) into the atmosphere as a byproduct. This oxygen is essential for aerobic organisms, including humans.",
+            type: "photosynthesis",
+            color: 0x90CAF9,
+            id: "oxygen"
         },
         {
-            title: "Industrial Revolution",
-            text: "The Industrial Revolution began in Britain in the 18th century and spread worldwide. It transformed society from primarily agricultural to manufacturing-based. Steam power, textile machinery, and factory systems changed how people lived and worked, leading to urbanization and new social challenges.",
-            type: "history",
-            color: 0x795548
+            title: "Photosynthesis Equation",
+            text: "The balanced chemical equation for photosynthesis is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂. This summarizes how carbon dioxide and water combine with light energy to produce glucose and oxygen.",
+            type: "photosynthesis",
+            color: 0xE1BEE7,
+            id: "equation"
         },
         {
-            title: "Fractions",
-            text: "Fractions represent parts of a whole. The numerator (top number) indicates how many parts you have, while the denominator (bottom number) shows how many equal parts make up the whole. Understanding fractions is essential for advanced math concepts and everyday problem-solving.",
-            type: "math",
-            color: 0x00BCD4
+            title: "Chloroplast Structure",
+            text: "Chloroplasts are organelles where photosynthesis occurs. They contain thylakoids arranged in stacks called grana, surrounded by a fluid called stroma. A double membrane surrounds the entire chloroplast.",
+            type: "photosynthesis",
+            color: 0x1B5E20,
+            id: "chloroplast"
         },
         {
-            title: "Pythagorean Theorem",
-            text: "The Pythagorean theorem states that in a right triangle, the square of the length of the hypotenuse equals the sum of squares of the other two sides (a² + b² = c²). This fundamental principle has applications in construction, navigation, and various scientific fields.",
-            type: "math",
-            color: 0xCDDC39
-        },
-        {
-            title: "Amazon Rainforest",
-            text: "The Amazon Rainforest is Earth's largest tropical rainforest, covering much of northwestern Brazil and extending into neighboring countries. It's home to 10% of known species on Earth and produces about 20% of Earth's oxygen, earning it the nickname 'Lungs of the Planet.'",
-            type: "geography",
-            color: 0x009688
-        },
-        {
-            title: "Himalayas",
-            text: "The Himalayas form Earth's highest mountain range, containing Mount Everest (8,848m), the world's tallest peak. Created by the collision of the Indian and Eurasian tectonic plates, these mountains influence weather patterns and are home to diverse ecosystems and cultures.",
-            type: "geography",
-            color: 0x607D8B
-        },
-        {
-            title: "Great Barrier Reef",
-            text: "Australia's Great Barrier Reef is the world's largest coral reef system, visible from space and home to thousands of marine species. Made up of over 2,900 individual reefs and 900 islands, it's a critical marine ecosystem now threatened by climate change and ocean acidification.",
-            type: "geography",
-            color: 0x00BCD4
-        },
-        {
-            title: "Sahara Desert",
-            text: "The Sahara is the world's largest hot desert, covering most of North Africa. Despite its harsh conditions, it supports unique wildlife and has historically been home to nomadic peoples. The Sahara has grown significantly in the past century due to climate change and human activities.",
-            type: "geography",
-            color: 0xFFEB3B
-        },
-        {
-            title: "Cells",
-            text: "Cells are the basic building blocks of all living organisms. Plant cells have cell walls and chloroplasts for photosynthesis, while animal cells do not. Both contain DNA in a nucleus which controls the cell's activities and allows organisms to grow, reproduce, and adapt.",
-            type: "science",
-            color: 0x8BC34A
-        },
-        {
-            title: "Solar System",
-            text: "Our solar system consists of the Sun, eight planets, dwarf planets, moons, asteroids, and comets. The inner planets (Mercury, Venus, Earth, Mars) are rocky, while the outer planets (Jupiter, Saturn, Uranus, Neptune) are gas giants. Everything orbits the Sun due to its gravitational pull.",
-            type: "science",
-            color: 0xFF5722
-        },
-        {
-            title: "World War II",
-            text: "World War II (1939-1945) was the deadliest global conflict in history, involving most of the world's nations. It ended with the defeat of Nazi Germany and Imperial Japan, establishment of the United Nations, beginning of the nuclear age, and set the stage for the Cold War.",
-            type: "history",
-            color: 0x673AB7
-        },
-        {
-            title: "Renaissance Art",
-            text: "Renaissance art emerged in Italy around 1400, characterized by realistic perspective, anatomical accuracy, and classical influences. Artists like Leonardo da Vinci, Michelangelo, and Raphael created masterpieces that transformed Western art, focusing on balance, harmony, and the dignity of human subjects.",
-            type: "art",
-            color: 0xE91E63
-        },
-        {
-            title: "Classical Music",
-            text: "Classical music developed in Western culture from approximately 1750 to 1820. The Classical period featured composers like Mozart, Haydn, and early Beethoven who created structured, balanced compositions. Their works emphasized clarity, symmetry, and elegant melodies, setting standards still influential today.",
-            type: "art",
-            color: 0x9C27B0
-        },
-        {
-            title: "Biodiversity",
-            text: "Biodiversity refers to the variety of life forms on Earth, including genetic diversity within species, ecosystem diversity, and species diversity. High biodiversity increases ecosystem resilience and provides humans with resources like food, medicine, and clean water. Conservation efforts aim to protect this crucial planetary feature.",
-            type: "science",
-            color: 0x4CAF50
+            title: "Limiting Factors",
+            text: "The rate of photosynthesis is affected by limiting factors including light intensity, carbon dioxide concentration, and temperature. If any one of these is below optimal levels, it will limit the rate of photosynthesis.",
+            type: "photosynthesis",
+            color: 0xFFA726,
+            id: "factors"
         }
-    ]
+    ],
+    
+    // Challenge station data
+    challengeData: [
+        {
+            title: "Light and Pigments",
+            question: "Which wavelengths of light does chlorophyll primarily absorb?",
+            options: ["Green and yellow", "Red and blue", "All wavelengths equally", "Ultraviolet only"],
+            correctAnswer: 1,
+            explanation: "Chlorophyll primarily absorbs red and blue wavelengths while reflecting green, which is why plants appear green.",
+            requiredKnowledge: ["light"],
+            position: new THREE.Vector3(400, 100, 400),
+            id: "challenge1"
+        },
+        {
+            title: "Gas Exchange",
+            question: "Which gas do plants take in during photosynthesis?",
+            options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+            correctAnswer: 1,
+            explanation: "Plants take in carbon dioxide (CO₂) through stomata for use in the Calvin cycle.",
+            requiredKnowledge: ["co2"],
+            position: new THREE.Vector3(-400, 100, 400),
+            id: "challenge2"
+        },
+        {
+            title: "Water in Photosynthesis",
+            question: "What happens to water molecules during the light-dependent reactions?",
+            options: ["They are stored as a reserve", "They are converted directly to glucose", "They are split, releasing oxygen", "They dissolve carbon dioxide"],
+            correctAnswer: 2,
+            explanation: "In photosynthesis, water molecules are split (photolysis) during the light-dependent reactions, releasing oxygen as a byproduct.",
+            requiredKnowledge: ["water", "oxygen"],
+            position: new THREE.Vector3(400, 100, -400),
+            id: "challenge3"
+        },
+        {
+            title: "Energy Conversion",
+            question: "What is the role of light in photosynthesis?",
+            options: ["To warm the plant", "To provide energy that's converted to chemical energy", "To directly synthesize glucose", "To break down carbon dioxide"],
+            correctAnswer: 1,
+            explanation: "Light provides the energy that is converted into chemical energy (ATP and NADPH) during the light-dependent reactions.",
+            requiredKnowledge: ["light-dependent"],
+            position: new THREE.Vector3(-400, 100, -400),
+            id: "challenge4"
+        },
+        {
+            title: "Products of Photosynthesis",
+            question: "What are the main products of photosynthesis?",
+            options: ["Carbon dioxide and water", "ATP and NADPH", "Glucose and oxygen", "Amino acids and lipids"],
+            correctAnswer: 2,
+            explanation: "The main products of photosynthesis are glucose (a sugar) and oxygen (released as a byproduct).",
+            requiredKnowledge: ["glucose", "oxygen"],
+            position: new THREE.Vector3(700, 100, 0),
+            id: "challenge5"
+        }
+    ],
+    
+    // Master challenge data
+    masterChallengeData: {
+        title: "Photosynthesis Master Challenge",
+        questions: [
+            {
+                question: "Which process occurs in the thylakoid membranes of chloroplasts?",
+                options: ["Calvin cycle", "Light-dependent reactions", "Glycolysis", "Krebs cycle"],
+                correctAnswer: 1
+            },
+            {
+                question: "What is the primary pigment responsible for capturing light energy in plants?",
+                options: ["Melanin", "Hemoglobin", "Chlorophyll", "Carotene"],
+                correctAnswer: 2
+            },
+            {
+                question: "Where does the Calvin cycle take place?",
+                options: ["In the thylakoid membrane", "In the stroma of the chloroplast", "In the cytoplasm", "In the mitochondria"],
+                correctAnswer: 1
+            },
+            {
+                question: "Which of these is NOT a limiting factor for photosynthesis?",
+                options: ["Light intensity", "Carbon dioxide concentration", "Oxygen concentration", "Temperature"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is the correct balanced equation for photosynthesis?",
+                options: ["6O₂ + C₆H₁₂O₆ → 6CO₂ + 6H₂O + Energy", 
+                         "6CO₂ + 6H₂O + Light energy → C₆H₁₂O₆ + 6O₂", 
+                         "6CO₂ + 12H₂O + Light energy → C₆H₁₂O₆ + 6O₂ + 6H₂O", 
+                         "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP"],
+                correctAnswer: 1
+            }
+        ],
+        position: new THREE.Vector3(0, 100, -800),
+        requiredChallenges: ["challenge1", "challenge2", "challenge3", "challenge4", "challenge5"]
+    }
 };

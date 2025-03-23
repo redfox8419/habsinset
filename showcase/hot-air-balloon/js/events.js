@@ -46,10 +46,26 @@ function setupOptionButtons() {
             gameState.selectedLighting = button.getAttribute('data-lighting');
         });
     });
+
+    // Set default selections - first button in each category
+    if (terrainButtons.length > 0 && !document.querySelector('.terrain-button.selected')) {
+        terrainButtons[0].classList.add('selected');
+        gameState.selectedTerrain = terrainButtons[0].getAttribute('data-terrain');
+    }
+    
+    if (lightingButtons.length > 0 && !document.querySelector('.lighting-button.selected')) {
+        lightingButtons[0].classList.add('selected');
+        gameState.selectedLighting = lightingButtons[0].getAttribute('data-lighting');
+    }
 }
 
 // Handle keyboard input (keydown)
 function handleKeyDown(event) {
+    // Skip if keys are disabled (during challenges)
+    if (gameState.keysEnabled === false) {
+        return;
+    }
+    
     if (gameState.keys.hasOwnProperty(event.code)) {
         gameState.keys[event.code] = true;
         

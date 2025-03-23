@@ -8,6 +8,7 @@ import { createKnowledgeOrbs, checkOrbCollisions, animateKnowledgeOrbs } from '.
 import { setupMinimap, updateCamera, updateCompass } from './ui.js';
 import { updateClouds } from './environment.js';
 import { updateBurnerParticles } from './balloon.js';
+import { createChallengeStations, animateChallengeStations, checkChallengeCollisions, updateDirectionArrow } from './challenges.js';
 import audioSystem from './audio.js';
 
 // Initialize the game
@@ -38,6 +39,12 @@ function init() {
     
     // Initialize the audio system
     initAudio();
+    
+    // Initialize the score
+    gameState.score = 0;
+    
+    // Enable keys by default
+    gameState.keysEnabled = true;
     
     // Don't create the actual game elements yet - wait for user to select options and start
 }
@@ -107,6 +114,10 @@ function startGame() {
     gameState.collectedKnowledge = 0;
     updateCollectionCounter();
     
+    // Reset challenge system state
+    gameState.completedChallenges = [];
+    gameState.masterChallengeCompleted = false;
+    
     // Create the environment based on selected settings
     createGameEnvironment();
     
@@ -124,7 +135,6 @@ function startGame() {
 }
 
 // Create the game environment with selected options
-// Update to createGameEnvironment function in main.js
 function createGameEnvironment() {
     // Clear any existing elements
     clearExistingGameElements();
@@ -143,6 +153,9 @@ function createGameEnvironment() {
     
     // Create knowledge orbs
     createKnowledgeOrbs();
+    
+    // Create challenge stations
+    createChallengeStations();
     
     // Adjust starting position for mountain terrain
     if (gameState.selectedTerrain === 'mountains') {
@@ -166,6 +179,8 @@ function clearExistingGameElements() {
     // Reset arrays
     gameState.terrainChunks = [];
     gameState.knowledgeOrbs = [];
+    gameState.challengeStations = [];
+    gameState.masterChallenge = null;
 }
 
 // Update the collection counter
@@ -177,7 +192,17 @@ function updateCollectionCounter() {
 // Update the altitude display
 function updateAltitudeDisplay() {
     const altitude = Math.floor(gameState.balloonPhysics.position.y);
-    document.getElementById('score-display').textContent = `Altitude: ${altitude}m`;
+    
+    // Check if score-value exists before updating display
+    const scoreValueExists = document.getElementById('score-value');
+    
+    if (scoreValueExists) {
+        // If we've added the score display, just update altitude separately
+        document.getElementById('altitude-label').textContent = `Altitude: ${altitude}m`;
+    } else {
+        // Original behavior if score hasn't been added yet
+        document.getElementById('score-display').textContent = `Altitude: ${altitude}m`;
+    }
 }
 
 // Main animation loop
@@ -187,8 +212,11 @@ function animate() {
     const delta = Math.min(0.1, gameState.animationClock.getDelta());
     
     if (gameState.isGameRunning) {
-        // Update balloon physics
-        updateBalloonPhysics(delta);
+        // Only update physics if keys are enabled (not in challenge)
+        if (gameState.keysEnabled !== false) {
+            // Update balloon physics
+            updateBalloonPhysics(delta);
+        }
         
         // Update camera position
         updateCamera();
@@ -196,11 +224,17 @@ function animate() {
         // Check for collisions with knowledge orbs
         checkOrbCollisions();
         
+        // Check for collisions with challenge stations
+        checkChallengeCollisions();
+        
         // Update burner particles
         updateBurnerParticles(delta);
         
         // Animate knowledge orbs
         animateKnowledgeOrbs(delta);
+        
+        // Animate challenge stations
+        animateChallengeStations(delta);
         
         // Update clouds
         updateClouds(delta);
@@ -210,6 +244,11 @@ function animate() {
         
         // Update the compass
         updateCompass();
+        
+        // Update direction arrow if active
+        if (typeof updateDirectionArrow === 'function') {
+            updateDirectionArrow();
+        }
     }
     
     // Render the scene

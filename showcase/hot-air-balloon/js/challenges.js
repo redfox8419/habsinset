@@ -1,0 +1,1473 @@
+import { gameState } from './gameState.js';
+import { activateBurner } from './balloon.js';
+
+// Create challenge stations
+export function createChallengeStations() {
+    // Clear any existing challenge stations
+    gameState.challengeStations.forEach(station => {
+        gameState.scene.remove(station);
+    });
+    gameState.challengeStations = [];
+    
+    // Create challenge stations from challenge data
+    gameState.challengeData.forEach(challengeData => {
+        createChallengeStation(challengeData);
+    });
+    
+    // Create master challenge station
+    createMasterChallenge();
+}
+
+// Create individual challenge station
+function createChallengeStation(data) {
+    const stationGroup = new THREE.Group();
+    
+    // Question mark platform
+    const platformGeometry = new THREE.CylinderGeometry(10, 12, 3, 32);
+    const platformMaterial = new THREE.MeshStandardMaterial({
+        color: 0x4FC3F7,
+        metalness: 0.3,
+        roughness: 0.4
+    });
+    const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+    stationGroup.add(platform);
+    
+    // Floating question mark
+    const questionGroup = new THREE.Group();
+    
+    // Create the dot of the question mark
+    const dotGeometry = new THREE.SphereGeometry(3, 16, 16);
+    const questionMaterial = new THREE.MeshStandardMaterial({
+        color: 0xFFEB3B,
+        emissive: 0xFFEB3B,
+        emissiveIntensity: 0.5,
+        metalness: 0.5,
+        roughness: 0.2
+    });
+    const dot = new THREE.Mesh(dotGeometry, questionMaterial);
+    dot.position.y = -6;
+    questionGroup.add(dot);
+    
+    // Create the curved part of the question mark
+    const curvePoints = [];
+    for (let i = 0; i <= 10; i++) {
+        const t = i / 10;
+        const angle = t * Math.PI;
+        const x = 4 * Math.cos(angle);
+        const y = 4 * Math.sin(angle) + 6;
+        const z = 0;
+        curvePoints.push(new THREE.Vector3(x, y, z));
+    }
+    
+    const curveGeometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
+    const curveMaterial = new THREE.LineBasicMaterial({ color: 0xFFEB3B, linewidth: 3 });
+    const curve = new THREE.Line(curveGeometry, curveMaterial);
+    questionGroup.add(curve);
+    
+    // Add a thicker curve using small spheres
+    for (let i = 0; i <= 10; i++) {
+        const t = i / 10;
+        const angle = t * Math.PI;
+        const x = 4 * Math.cos(angle);
+        const y = 4 * Math.sin(angle) + 6;
+        const z = 0;
+        
+        const sphereGeometry = new THREE.SphereGeometry(1.2, 8, 8);
+        const sphere = new THREE.Mesh(sphereGeometry, questionMaterial);
+        sphere.position.set(x, y, z);
+        questionGroup.add(sphere);
+    }
+    
+    // Add a stem to the question mark
+    const stemGeometry = new THREE.CylinderGeometry(1.2, 1.2, 6, 8);
+    const stem = new THREE.Mesh(stemGeometry, questionMaterial);
+    stem.position.y = 0;
+    stem.position.x = -4;
+    questionGroup.add(stem);
+    
+    // Position the question mark above the platform
+    questionGroup.position.y = 12;
+    questionGroup.scale.set(1.8, 1.8, 1.8); // Make question mark larger
+    stationGroup.add(questionGroup);
+    
+    // Add a point light
+    const light = new THREE.PointLight(0xFFEB3B, 2, 100);
+    light.position.y = 20;
+    stationGroup.add(light);
+    
+    // Add vertical light beam for visibility from distance
+    const beamGeometry = new THREE.CylinderGeometry(0.5, 0.5, 200, 8);
+    const beamMaterial = new THREE.MeshBasicMaterial({
+        color: 0xFFEB3B,
+        transparent: true,
+        opacity: 0.3,
+        side: THREE.DoubleSide
+    });
+    const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+    beam.position.y = 100; // Extend high into the sky
+    stationGroup.add(beam);
+    
+    // Add expanding rings for visibility
+    const ringsGroup = new THREE.Group();
+    for (let i = 0; i < 3; i++) {
+        const ringGeometry = new THREE.TorusGeometry(15, 0.5, 8, 32);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFEB3B,
+            transparent: true,
+            opacity: 0.5
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2; // Horizontal
+        ring.userData = {
+            initialY: 5 + i * 10,
+            animationOffset: i * Math.PI * 0.5
+        };
+        ring.position.y = ring.userData.initialY;
+        ringsGroup.add(ring);
+    }
+    stationGroup.add(ringsGroup);
+    
+    // Get the color of the first required knowledge orb for this challenge
+    let knowledgeColor = 0xFFEB3B; // Default yellow
+    if (data.requiredKnowledge && data.requiredKnowledge.length > 0) {
+        const reqKnowledge = gameState.knowledgeData.find(k => k.id === data.requiredKnowledge[0]);
+        if (reqKnowledge) {
+            knowledgeColor = reqKnowledge.color;
+            // Update materials to match the knowledge orb color
+            questionMaterial.color.setHex(knowledgeColor);
+            questionMaterial.emissive.setHex(knowledgeColor);
+            light.color.setHex(knowledgeColor);
+            curveMaterial.color.setHex(knowledgeColor);
+            beam.material.color.setHex(knowledgeColor);
+            
+            // Update rings color
+            ringsGroup.children.forEach(ring => {
+                ring.material.color.setHex(knowledgeColor);
+            });
+        }
+    }
+    
+    // Add animation properties
+    stationGroup.userData = {
+        originalY: data.position.y,
+        rotationSpeed: 0.01,
+        animationPhase: Math.random() * Math.PI * 2,
+        data: data,
+        type: 'challenge',
+        active: false, // Will be set based on collected knowledge
+        knowledgeColor: knowledgeColor,
+        rings: ringsGroup
+    };
+    
+    // Position the station
+    stationGroup.position.copy(data.position);
+    
+    // Set initial visibility - hide the station until knowledge is collected
+    stationGroup.visible = false;
+    
+    // Add to scene and tracking array
+    gameState.scene.add(stationGroup);
+    gameState.challengeStations.push(stationGroup);
+    
+    return stationGroup;
+}
+
+// Create master challenge station
+function createMasterChallenge() {
+    const stationGroup = new THREE.Group();
+    
+    // Create a larger, more elaborate platform
+    const platformGeometry = new THREE.CylinderGeometry(20, 25, 5, 32);
+    const platformMaterial = new THREE.MeshStandardMaterial({
+        color: 0x7E57C2,
+        metalness: 0.5,
+        roughness: 0.3
+    });
+    const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+    stationGroup.add(platform);
+    
+    // Add decorative elements to the platform
+    const ringGeometry = new THREE.TorusGeometry(22, 2, 16, 100);
+    const ringMaterial = new THREE.MeshStandardMaterial({
+        color: 0xE040FB,
+        emissive: 0xE040FB,
+        emissiveIntensity: 0.2,
+        metalness: 0.7,
+        roughness: 0.2
+    });
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = 3;
+    stationGroup.add(ring);
+    
+    // Create docking structure
+    const dockGeometry = new THREE.CylinderGeometry(15, 15, 15, 8);
+    const dockMaterial = new THREE.MeshStandardMaterial({
+        color: 0x9C27B0,
+        transparent: true,
+        opacity: 0.7,
+        metalness: 0.5,
+        roughness: 0.3
+    });
+    const dock = new THREE.Mesh(dockGeometry, dockMaterial);
+    dock.position.y = 12.5;
+    stationGroup.add(dock);
+    
+    // Add pillars around the platform
+    const pillarCount = 6;
+    for (let i = 0; i < pillarCount; i++) {
+        const angle = (i / pillarCount) * Math.PI * 2;
+        const radius = 22;
+        
+        const pillarGeometry = new THREE.CylinderGeometry(1, 1, 12, 8);
+        const pillarMaterial = new THREE.MeshStandardMaterial({
+            color: 0x9575CD,
+            metalness: 0.4,
+            roughness: 0.6
+        });
+        const pillar = new THREE.Mesh(pillarGeometry, pillarMaterial);
+        
+        pillar.position.x = Math.cos(angle) * radius;
+        pillar.position.z = Math.sin(angle) * radius;
+        pillar.position.y = 6;
+        
+        stationGroup.add(pillar);
+        
+        // Add a glowing orb on top of each pillar
+        const orbGeometry = new THREE.SphereGeometry(2, 16, 16);
+        const orbMaterial = new THREE.MeshStandardMaterial({
+            color: 0xE040FB,
+            emissive: 0xE040FB,
+            emissiveIntensity: 0.5,
+            metalness: 0.2,
+            roughness: 0.3
+        });
+        const orb = new THREE.Mesh(orbGeometry, orbMaterial);
+        orb.position.x = Math.cos(angle) * radius;
+        orb.position.z = Math.sin(angle) * radius;
+        orb.position.y = 14;
+        
+        // Add a point light at each orb
+        const light = new THREE.PointLight(0xE040FB, 0.5, 30);
+        light.position.copy(orb.position);
+        stationGroup.add(light);
+        
+        stationGroup.add(orb);
+    }
+    
+    // Add central beacon light
+    const beaconGeometry = new THREE.ConeGeometry(3, 10, 16);
+    const beaconMaterial = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF,
+        emissive: 0xE040FB,
+        emissiveIntensity: 0.8,
+        transparent: true,
+        opacity: 0.8
+    });
+    const beacon = new THREE.Mesh(beaconGeometry, beaconMaterial);
+    beacon.position.y = 28;
+    stationGroup.add(beacon);
+    
+    // Add a strong point light at the beacon
+    const beaconLight = new THREE.PointLight(0xE040FB, 2, 100);
+    beaconLight.position.y = 33;
+    stationGroup.add(beaconLight);
+    
+    // Add animation properties
+    stationGroup.userData = {
+        originalY: gameState.masterChallengeData.position.y,
+        rotationSpeed: 0.005,
+        animationPhase: 0,
+        data: gameState.masterChallengeData,
+        type: 'masterChallenge',
+        active: false // Will only be active once all other challenges are completed
+    };
+    
+    // Position the station
+    stationGroup.position.copy(gameState.masterChallengeData.position);
+    
+    // Add to scene and store reference
+    gameState.scene.add(stationGroup);
+    gameState.masterChallenge = stationGroup;
+    
+    // Hide initially until all challenges are completed
+    stationGroup.visible = false;
+    
+    return stationGroup;
+}
+
+// Animate challenge stations
+export function animateChallengeStations(delta) {
+    // Animate regular challenge stations
+    gameState.challengeStations.forEach(station => {
+        // Rotate the question mark
+        if (station.children[1]) {
+            station.children[1].rotation.y += station.userData.rotationSpeed;
+        }
+        
+        // Bobbing motion
+        station.userData.animationPhase += delta * 0.5;
+        station.position.y = station.userData.originalY + Math.sin(station.userData.animationPhase) * 5;
+        
+        // Animate expanding rings if present
+        if (station.userData.rings) {
+            station.userData.rings.children.forEach(ring => {
+                // Scale the ring up and down
+                const scale = 1 + 0.5 * Math.sin(station.userData.animationPhase * 2 + ring.userData.animationOffset);
+                ring.scale.set(scale, scale, scale);
+                
+                // Move up and reset
+                ring.position.y = ring.userData.initialY + Math.sin(station.userData.animationPhase + ring.userData.animationOffset) * 10;
+                
+                // Adjust opacity based on scale
+                ring.material.opacity = 0.7 - (scale - 1) * 0.5;
+            });
+        }
+        
+        // Check if this challenge should be active based on collected knowledge
+        updateChallengeActiveStatus(station);
+        
+        // Update visual appearance based on active status
+        updateChallengeVisuals(station);
+    });
+    
+    // Animate master challenge station
+    if (gameState.masterChallenge) {
+        const masterStation = gameState.masterChallenge;
+        
+        // Rotate the station slowly
+        masterStation.rotation.y += masterStation.userData.rotationSpeed * delta;
+        
+        // Bobbing motion
+        masterStation.userData.animationPhase += delta * 0.3;
+        masterStation.position.y = masterStation.userData.originalY + Math.sin(masterStation.userData.animationPhase) * 3;
+        
+        // Check if master challenge should be active
+        updateMasterChallengeActiveStatus(masterStation);
+        
+        // Update visual appearance based on active status
+        updateMasterChallengeVisuals(masterStation);
+    }
+}
+
+// Update challenge station active status based on collected knowledge
+function updateChallengeActiveStatus(station) {
+    const challengeData = station.userData.data;
+    
+    // If challenge is already completed, keep it inactive
+    if (gameState.completedChallenges.includes(challengeData.id)) {
+        station.userData.active = false;
+        return;
+    }
+    
+    // Check if all required knowledge for this challenge has been collected
+    const requiredKnowledge = challengeData.requiredKnowledge;
+    const hasAllRequiredKnowledge = requiredKnowledge.every(knowledgeId => {
+        // Find the knowledge orb with this ID
+        const knowledgeData = gameState.knowledgeData.find(k => k.id === knowledgeId);
+        // If found, check if it's been collected (no longer in the knowledgeOrbs array)
+        if (knowledgeData) {
+            const orbExists = gameState.knowledgeOrbs.some(orb => 
+                orb.userData.data.id === knowledgeId
+            );
+            return !orbExists; // Return true if the orb has been collected (doesn't exist anymore)
+        }
+        return false;
+    });
+    
+    // Update active status
+    station.userData.active = hasAllRequiredKnowledge;
+    
+    // Update visibility - only show if knowledge has been collected
+    if (hasAllRequiredKnowledge && !station.visible) {
+        station.visible = true;
+        // Create a visual effect when the station appears
+        createChallengeRevealEffect(station);
+    }
+}
+
+// Update master challenge active status
+function updateMasterChallengeActiveStatus(masterStation) {
+    const requiredChallenges = masterStation.userData.data.requiredChallenges;
+    
+    // Check if all required challenges have been completed
+    const allChallengesCompleted = requiredChallenges.every(challengeId => 
+        gameState.completedChallenges.includes(challengeId)
+    );
+    
+    masterStation.userData.active = allChallengesCompleted;
+}
+
+// Update challenge visuals based on active status
+function updateChallengeVisuals(station) {
+    // Change colors and effects based on active status
+    if (station.userData.active) {
+        // Bright, glowing appearance for active challenges
+        if (station.children[0]) { // Platform
+            station.children[0].material.emissive = new THREE.Color(0x4FC3F7);
+            station.children[0].material.emissiveIntensity = 0.3;
+        }
+        
+        if (station.children[2]) { // Light
+            station.children[2].intensity = 2;
+            station.children[2].distance = 100;
+        }
+    } else {
+        // Dimmer appearance for inactive challenges
+        if (station.children[0]) { // Platform
+            station.children[0].material.emissive = new THREE.Color(0x000000);
+            station.children[0].material.emissiveIntensity = 0;
+        }
+        
+        if (station.children[2]) { // Light
+            station.children[2].intensity = 0.5;
+            station.children[2].distance = 30;
+        }
+    }
+}
+
+// Update master challenge visuals based on active status
+function updateMasterChallengeVisuals(masterStation) {
+    if (masterStation.userData.active) {
+        // Only show master challenge when active
+        if (!masterStation.visible) {
+            masterStation.visible = true;
+            createChallengeRevealEffect(masterStation);
+        }
+        
+        // Bright, pulsing appearance for active master challenge
+        if (masterStation.children[0]) { // Platform
+            masterStation.children[0].material.emissive = new THREE.Color(0x7E57C2);
+            masterStation.children[0].material.emissiveIntensity = 0.4;
+        }
+        
+        if (masterStation.children[1]) { // Ring
+            masterStation.children[1].material.emissiveIntensity = 0.5 + Math.sin(masterStation.userData.animationPhase * 2) * 0.3;
+        }
+        
+        if (masterStation.children[2]) { // Dock
+            masterStation.children[2].material.opacity = 0.7 + Math.sin(masterStation.userData.animationPhase * 3) * 0.2;
+        }
+        
+        // Beacon and beacon light
+        if (masterStation.children[masterStation.children.length - 2]) { // Beacon
+            masterStation.children[masterStation.children.length - 2].material.emissiveIntensity = 0.8 + Math.sin(masterStation.userData.animationPhase * 4) * 0.2;
+        }
+        
+        if (masterStation.children[masterStation.children.length - 1]) { // Beacon light
+            masterStation.children[masterStation.children.length - 1].intensity = 2 + Math.sin(masterStation.userData.animationPhase * 4) * 1;
+        }
+    } else {
+        // Hide master challenge until active
+        masterStation.visible = false;
+        
+        // Dimmer appearance for inactive master challenge
+        if (masterStation.children[0]) { // Platform
+            masterStation.children[0].material.emissive = new THREE.Color(0x000000);
+            masterStation.children[0].material.emissiveIntensity = 0;
+        }
+        
+        if (masterStation.children[1]) { // Ring
+            masterStation.children[1].material.emissiveIntensity = 0.1;
+        }
+        
+        if (masterStation.children[2]) { // Dock
+            masterStation.children[2].material.opacity = 0.4;
+        }
+        
+        // Beacon and beacon light
+        if (masterStation.children[masterStation.children.length - 2]) { // Beacon
+            masterStation.children[masterStation.children.length - 2].material.emissiveIntensity = 0.2;
+        }
+        
+        if (masterStation.children[masterStation.children.length - 1]) { // Beacon light
+            masterStation.children[masterStation.children.length - 1].intensity = 0.5;
+        }
+    }
+}
+
+// Create a visual effect when a challenge station appears
+function createChallengeRevealEffect(station) {
+    // Create a ripple effect
+    const rippleGeometry = new THREE.RingGeometry(1, 2, 32);
+    const rippleMaterial = new THREE.MeshBasicMaterial({
+        color: station.userData.knowledgeColor || 0xFFEB3B,
+        transparent: true,
+        opacity: 0.8,
+        side: THREE.DoubleSide
+    });
+    
+    const ripple = new THREE.Mesh(rippleGeometry, rippleMaterial);
+    ripple.rotation.x = -Math.PI / 2; // Flat facing up
+    ripple.position.y = 2;
+    station.add(ripple);
+    
+    // Add a rising effect for the station
+    station.position.y -= 50; // Start below the ground
+    station.scale.set(0.1, 0.1, 0.1); // Start small
+    
+    // Animate the station rising and growing
+    const animateReveal = function() {
+        // Move up
+        if (station.position.y < station.userData.originalY) {
+            station.position.y += 2;
+        }
+        
+        // Scale up
+        if (station.scale.x < 1) {
+            station.scale.x += 0.04;
+            station.scale.y += 0.04;
+            station.scale.z += 0.04;
+        }
+        
+        // Expand ripple
+        ripple.scale.x += 0.1;
+        ripple.scale.z += 0.1;
+        ripple.material.opacity -= 0.02;
+        
+        if (ripple.material.opacity > 0 && station.position.y < station.userData.originalY + 5) {
+            requestAnimationFrame(animateReveal);
+        } else {
+            // Remove the ripple when done
+            station.remove(ripple);
+            
+            // Create popup notification
+            createChallengeNotification(station);
+        }
+    };
+    
+    animateReveal();
+}
+
+// Create a notification when a new challenge appears
+function createChallengeNotification(station) {
+    // Get challenge data
+    const challengeData = station.userData.data;
+    
+    // Create the notification element
+    const notification = document.createElement('div');
+    notification.className = 'challenge-notification';
+    notification.innerHTML = `
+        <div class="notification-icon">?</div>
+        <div class="notification-content">
+            <div class="notification-title">New Challenge Available!</div>
+            <div class="notification-text">${challengeData.title}</div>
+        </div>
+    `;
+    
+    // Add styles for the notification
+    if (!document.getElementById('notification-styles')) {
+        const styleElement = document.createElement('style');
+        styleElement.id = 'notification-styles';
+        styleElement.textContent = `
+            .challenge-notification {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                z-index: 1000;
+                max-width: 400px;
+                border: 3px solid #FFD700;
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+                50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1); }
+                100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+            }
+            
+            .notification-icon {
+                background-color: #FFD700;
+                color: black;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                font-weight: bold;
+            }
+            
+            .notification-content {
+                flex: 1;
+            }
+            
+            .notification-title {
+                font-weight: bold;
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: #FFD700;
+            }
+            
+            .notification-text {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            
+            .notification-button {
+                background-color: #FFD700;
+                color: black;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                margin-top: 5px;
+                display: block;
+            }
+        `;
+        document.head.appendChild(styleElement);
+    }
+    
+    // Add a button to help find the challenge
+    const findButton = document.createElement('button');
+    findButton.className = 'notification-button';
+    findButton.textContent = 'Show Direction';
+    findButton.addEventListener('click', () => {
+        showDirectionToChallenge(station);
+        // Close notification when direction is shown
+        document.body.removeChild(notification);
+    });
+    notification.querySelector('.notification-content').appendChild(findButton);
+    
+    // Set the notification color based on knowledge color
+    if (station.userData.knowledgeColor) {
+        const colorHex = '#' + station.userData.knowledgeColor.toString(16).padStart(6, '0');
+        notification.style.borderColor = colorHex;
+        notification.style.boxShadow = `0 0 25px ${colorHex}`;
+        notification.querySelector('.notification-icon').style.backgroundColor = colorHex;
+        notification.querySelector('.notification-title').style.color = colorHex;
+        notification.querySelector('.notification-button').style.backgroundColor = colorHex;
+        
+        // Update animation
+        const styleSheet = document.styleSheets[document.styleSheets.length - 1];
+        for (let i = 0; i < styleSheet.cssRules.length; i++) {
+            if (styleSheet.cssRules[i].type === CSSRule.KEYFRAMES_RULE && 
+                styleSheet.cssRules[i].name === 'pulse') {
+                styleSheet.deleteRule(i);
+                const newAnimation = `
+                    @keyframes pulse {
+                        0% { box-shadow: 0 0 25px ${colorHex}80; }
+                        50% { box-shadow: 0 0 35px ${colorHex}; }
+                        100% { box-shadow: 0 0 25px ${colorHex}80; }
+                    }
+                `;
+                styleSheet.insertRule(newAnimation, i);
+                break;
+            }
+        }
+    }
+    
+    // Add to document
+    document.body.appendChild(notification);
+    
+    // Center in view with dramatic entrance
+    notification.style.transform = 'translate(-50%, -50%) scale(0.5)';
+    notification.style.opacity = '0';
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transition = 'all 0.5s ease-out';
+        notification.style.transform = 'translate(-50%, -50%) scale(1)';
+        notification.style.opacity = '1';
+    }, 100);
+    
+    // Remove after delay (longer time to ensure player sees it)
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            notification.style.transform = 'translate(-50%, -50%) scale(1.2)';
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 500);
+        }
+    }, 8000);
+    
+    // Also add the challenge to the minimap
+    addChallengeToMinimap(station);
+}
+
+// Show direction to a challenge station
+function showDirectionToChallenge(station) {
+    // Create a direction arrow that points to the challenge
+    if (!gameState.directionArrow) {
+        // Create a floating arrow above the balloon
+        const arrowGroup = new THREE.Group();
+        
+        // Arrow body
+        const arrowBodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 6, 8);
+        const arrowMaterial = new THREE.MeshStandardMaterial({ 
+            color: station.userData.knowledgeColor || 0xFFD700,
+            emissive: station.userData.knowledgeColor || 0xFFD700,
+            emissiveIntensity: 0.5
+        });
+        const arrowBody = new THREE.Mesh(arrowBodyGeometry, arrowMaterial);
+        arrowBody.position.y = 3;
+        arrowGroup.add(arrowBody);
+        
+        // Arrow head
+        const arrowHeadGeometry = new THREE.ConeGeometry(1.5, 3, 8);
+        const arrowHead = new THREE.Mesh(arrowHeadGeometry, arrowMaterial);
+        arrowHead.position.y = 7.5;
+        arrowGroup.add(arrowHead);
+        
+        // Position above the balloon
+        arrowGroup.position.y = 15;
+        
+        // Add to balloon group
+        gameState.balloonGroup.add(arrowGroup);
+        gameState.directionArrow = arrowGroup;
+        
+        // Show directional text
+        const directionText = document.createElement('div');
+        directionText.id = 'direction-text';
+        directionText.textContent = 'Following direction to challenge...';
+        directionText.style.position = 'fixed';
+        directionText.style.top = '120px';
+        directionText.style.left = '50%';
+        directionText.style.transform = 'translateX(-50%)';
+        directionText.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        directionText.style.color = 'white';
+        directionText.style.padding = '10px 20px';
+        directionText.style.borderRadius = '20px';
+        directionText.style.fontWeight = 'bold';
+        directionText.style.zIndex = '1000';
+        directionText.style.border = `2px solid #${station.userData.knowledgeColor.toString(16).padStart(6, '0')}`;
+        document.body.appendChild(directionText);
+        
+        // Target this specific challenge
+        gameState.directionArrowTarget = station;
+        
+        // Remove after 30 seconds
+        setTimeout(() => {
+            if (gameState.directionArrow) {
+                gameState.balloonGroup.remove(gameState.directionArrow);
+                gameState.directionArrow = null;
+                gameState.directionArrowTarget = null;
+                
+                if (document.getElementById('direction-text')) {
+                    document.body.removeChild(document.getElementById('direction-text'));
+                }
+            }
+        }, 45000);
+    }
+}
+
+// Update direction arrow to point toward target
+export function updateDirectionArrow() {
+    if (gameState.directionArrow && gameState.directionArrowTarget) {
+        // Get direction to target
+        const targetPosition = gameState.directionArrowTarget.position.clone();
+        const balloonPosition = gameState.balloonPhysics.position.clone();
+        
+        // Calculate direction vector
+        const direction = targetPosition.sub(balloonPosition).normalize();
+        
+        // Calculate angle to target in balloon's local space
+        const balloonForward = new THREE.Vector3(0, 0, 1).applyQuaternion(gameState.balloonGroup.quaternion);
+        const balloonRight = new THREE.Vector3(1, 0, 0).applyQuaternion(gameState.balloonGroup.quaternion);
+        
+        // Project direction onto balloon's XZ plane
+        direction.y = 0;
+        direction.normalize();
+        
+        // Get angle between balloon forward and direction
+        let angle = Math.atan2(
+            direction.dot(balloonRight),
+            direction.dot(balloonForward)
+        );
+        
+        // Rotate arrow to point in the correct direction
+        gameState.directionArrow.rotation.y = angle;
+        
+        // Update distance text
+        const distance = Math.round(gameState.balloonPhysics.position.distanceTo(gameState.directionArrowTarget.position));
+        const directionText = document.getElementById('direction-text');
+        if (directionText) {
+            directionText.textContent = `Challenge: ${distance}m away`;
+        }
+    }
+}
+
+// Add challenge to minimap
+function addChallengeToMinimap(station) {
+    // Create a distinct marker for the challenge on the minimap
+    const markerGeometry = new THREE.CircleGeometry(15, 16);
+    const markerMaterial = new THREE.MeshBasicMaterial({
+        color: station.userData.knowledgeColor || 0xFFEB3B,
+        transparent: true,
+        opacity: 0.8
+    });
+    
+    const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+    marker.rotation.x = -Math.PI / 2; // Flat circle facing up
+    marker.position.set(station.position.x, 1005, station.position.z); // Above terrain in minimap view
+    
+    // Add a question mark symbol
+    const questionGeometry = new THREE.TextGeometry('?', {
+        size: 10,
+        height: 1
+    });
+    const questionMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+    const questionMark = new THREE.Mesh(questionGeometry, questionMaterial);
+    questionMark.position.set(station.position.x - 5, 1006, station.position.z - 5);
+    
+    // If TextGeometry isn't available, use a ring instead
+    if (!THREE.TextGeometry) {
+        const ringGeometry = new THREE.RingGeometry(5, 8, 16);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+            transparent: true,
+            opacity: 0.9,
+            side: THREE.DoubleSide
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.set(station.position.x, 1006, station.position.z);
+        gameState.scene.add(ring);
+        
+        // Save reference to the ring
+        station.userData.minimapRing = ring;
+    } else {
+        gameState.scene.add(questionMark);
+        station.userData.minimapQuestionMark = questionMark;
+    }
+    
+    gameState.scene.add(marker);
+    station.userData.minimapMarker = marker;
+    
+    // Make the marker pulse
+    const startTime = Date.now();
+    function animateMarker() {
+        if (marker.parent) { // Check if marker is still in the scene
+            const time = Date.now() - startTime;
+            const scale = 1 + 0.3 * Math.sin(time * 0.003);
+            marker.scale.set(scale, scale, scale);
+            
+            // Also animate the opacity for a pulsing effect
+            marker.material.opacity = 0.4 + 0.4 * Math.sin(time * 0.003);
+            
+            requestAnimationFrame(animateMarker);
+        }
+    }
+    
+    animateMarker();
+}
+
+// Check for collisions with challenge stations
+export function checkChallengeCollisions() {
+    if (gameState.challengeStations.length === 0 && !gameState.masterChallenge) return;
+    
+    const balloonRadius = 5;  // Player balloon radius
+    const stationRadius = 10; // Challenge station interaction radius
+    const minDistance = balloonRadius + stationRadius;
+    
+    // Check regular challenge stations
+    for (let i = 0; i < gameState.challengeStations.length; i++) {
+        const station = gameState.challengeStations[i];
+        
+        // Skip if not active or already completed
+        if (!station.userData.active || gameState.completedChallenges.includes(station.userData.data.id)) {
+            continue;
+        }
+        
+        // Calculate distance between player balloon and station
+        const distance = gameState.balloonPhysics.position.distanceTo(station.position);
+        
+        if (distance < minDistance) {
+            // Collision detected - show challenge question
+            showChallengeQuestion(station.userData.data);
+            break;
+        }
+    }
+    
+    // Check master challenge
+    if (gameState.masterChallenge && gameState.masterChallenge.userData.active && !gameState.masterChallengeCompleted) {
+        const masterDistance = gameState.balloonPhysics.position.distanceTo(gameState.masterChallenge.position);
+        const masterMinDistance = balloonRadius + 20; // Larger radius for master challenge
+        
+        if (masterDistance < masterMinDistance) {
+            // Show master challenge
+            showMasterChallenge();
+        }
+    }
+}
+
+// Show challenge question
+function showChallengeQuestion(challengeData) {
+    // Create or update challenge UI
+    const challengePanel = document.getElementById('challenge-panel') || createChallengePanel();
+    
+    // Update content
+    document.getElementById('challenge-title').textContent = challengeData.title;
+    document.getElementById('challenge-question').textContent = challengeData.question;
+    
+    const optionsContainer = document.getElementById('challenge-options');
+    optionsContainer.innerHTML = '';
+    
+    // Add options
+    challengeData.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'challenge-option';
+        button.textContent = option;
+        button.dataset.index = index;
+        button.onclick = () => checkAnswer(index, challengeData);
+        optionsContainer.appendChild(button);
+    });
+    
+    // Show the panel
+    challengePanel.style.opacity = '1';
+    challengePanel.style.pointerEvents = 'auto';
+    
+    // Pause game movement
+    pauseGameMovement();
+}
+
+// Check the user's answer to a challenge question
+function checkAnswer(selectedIndex, challengeData) {
+    const challengePanel = document.getElementById('challenge-panel');
+    const feedbackElement = document.getElementById('challenge-feedback') || createFeedbackElement();
+    const optionsContainer = document.getElementById('challenge-options');
+    
+    // Disable all option buttons
+    const buttons = optionsContainer.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
+    
+    // Check if answer is correct
+    const isCorrect = selectedIndex === challengeData.correctAnswer;
+    
+    if (isCorrect) {
+        // Mark the selected button as correct
+        buttons[selectedIndex].classList.add('correct');
+        
+        // Show success feedback
+        feedbackElement.textContent = 'Correct! ' + challengeData.explanation;
+        feedbackElement.className = 'challenge-feedback correct';
+        
+        // Add to completed challenges
+        if (!gameState.completedChallenges.includes(challengeData.id)) {
+            gameState.completedChallenges.push(challengeData.id);
+        }
+        
+        // Update score
+        gameState.score += 100;
+        updateScoreDisplay();
+        
+        // Close panel after delay
+        setTimeout(() => {
+            challengePanel.style.opacity = '0';
+            challengePanel.style.pointerEvents = 'none';
+            resumeGameMovement();
+        }, 3000);
+    } else {
+        // Mark the selected button as incorrect
+        buttons[selectedIndex].classList.add('incorrect');
+        
+        // Mark the correct answer
+        buttons[challengeData.correctAnswer].classList.add('correct');
+        
+        // Show error feedback
+        feedbackElement.textContent = 'Incorrect. ' + challengeData.explanation;
+        feedbackElement.className = 'challenge-feedback incorrect';
+        
+        // Close panel after delay
+        setTimeout(() => {
+            challengePanel.style.opacity = '0';
+            challengePanel.style.pointerEvents = 'none';
+            resumeGameMovement();
+        }, 4000);
+    }
+    
+    // Add feedback element to panel if not already added
+    if (!challengePanel.contains(feedbackElement)) {
+        challengePanel.appendChild(feedbackElement);
+    }
+}
+
+// Show master challenge
+function showMasterChallenge() {
+    // Create or update master challenge UI
+    const masterPanel = document.getElementById('master-challenge-panel') || createMasterChallengePanel();
+    
+    // Set title
+    document.getElementById('master-challenge-title').textContent = 'Photosynthesis Master Challenge';
+    
+    // Initialize master challenge state
+    if (!gameState.masterChallengeState) {
+        gameState.masterChallengeState = {
+            currentQuestion: 0,
+            correctAnswers: 0,
+            totalQuestions: gameState.masterChallengeData.questions.length
+        };
+    }
+    
+    // Show the current question
+    showMasterQuestion();
+    
+    // Show the panel
+    masterPanel.style.opacity = '1';
+    masterPanel.style.pointerEvents = 'auto';
+    
+    // Pause game movement
+    pauseGameMovement();
+}
+
+// Show current master challenge question
+function showMasterQuestion() {
+    const state = gameState.masterChallengeState;
+    const questions = gameState.masterChallengeData.questions;
+    
+    // If all questions have been answered, show results
+    if (state.currentQuestion >= questions.length) {
+        showMasterResults();
+        return;
+    }
+    
+    const question = questions[state.currentQuestion];
+    const questionContainer = document.getElementById('master-question');
+    const progressElement = document.getElementById('master-progress');
+    
+    // Update progress display
+    progressElement.textContent = `Question ${state.currentQuestion + 1} of ${state.totalQuestions}`;
+    
+    // Clear previous content
+    questionContainer.innerHTML = '';
+    
+    // Add question text
+    const questionText = document.createElement('div');
+    questionText.className = 'master-question-text';
+    questionText.textContent = question.question;
+    questionContainer.appendChild(questionText);
+    
+    // Add options
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'master-options';
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'master-option';
+        button.textContent = option;
+        button.onclick = () => checkMasterAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+    
+    questionContainer.appendChild(optionsContainer);
+}
+
+// Check answer for master challenge
+function checkMasterAnswer(selectedIndex) {
+    const state = gameState.masterChallengeState;
+    const question = gameState.masterChallengeData.questions[state.currentQuestion];
+    const questionContainer = document.getElementById('master-question');
+    
+    // Disable all option buttons
+    const buttons = questionContainer.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
+    
+    // Check if answer is correct
+    const isCorrect = selectedIndex === question.correctAnswer;
+    
+    if (isCorrect) {
+        // Mark the selected button as correct
+        buttons[selectedIndex].classList.add('correct');
+        
+        // Add to correct answers count
+        state.correctAnswers++;
+    } else {
+        // Mark the selected button as incorrect
+        buttons[selectedIndex].classList.add('incorrect');
+        
+        // Mark the correct answer
+        buttons[question.correctAnswer].classList.add('correct');
+    }
+    
+    // Add feedback
+    const feedback = document.createElement('div');
+    feedback.className = `master-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedback.textContent = isCorrect ? 'Correct!' : 'Incorrect';
+    questionContainer.appendChild(feedback);
+    
+    // Move to the next question after delay
+    setTimeout(() => {
+        state.currentQuestion++;
+        showMasterQuestion();
+    }, 2000);
+}
+
+// Show master challenge results
+function showMasterResults() {
+    const state = gameState.masterChallengeState;
+    const questionContainer = document.getElementById('master-question');
+    const progressElement = document.getElementById('master-progress');
+    
+    // Clear the container
+    questionContainer.innerHTML = '';
+    progressElement.textContent = 'Challenge Complete!';
+    
+    // Calculate score percentage
+    const scorePercent = Math.round((state.correctAnswers / state.totalQuestions) * 100);
+    
+    // Create results display
+    const resultsElement = document.createElement('div');
+    resultsElement.className = 'master-results';
+    
+    let resultsHTML = `
+        <div class="master-score">Your Score: ${state.correctAnswers}/${state.totalQuestions} (${scorePercent}%)</div>
+    `;
+    
+    if (scorePercent >= 80) {
+        resultsHTML += `
+            <div class="master-message success">
+                Excellent! You have mastered photosynthesis concepts.
+            </div>
+        `;
+        
+        // Mark master challenge as completed
+        gameState.masterChallengeCompleted = true;
+        
+        // Give a big score bonus
+        gameState.score += 500;
+        updateScoreDisplay();
+    } else if (scorePercent >= 60) {
+        resultsHTML += `
+            <div class="master-message partial">
+                Good work! You understand the basics of photosynthesis, but there's room for improvement.
+            </div>
+        `;
+        
+        // Give a moderate score bonus
+        gameState.score += 200;
+        updateScoreDisplay();
+    } else {
+        resultsHTML += `
+            <div class="master-message fail">
+                You need to review the photosynthesis concepts. Try collecting more knowledge and answering the challenges again.
+            </div>
+        `;
+        
+        // Give a small score bonus for effort
+        gameState.score += 50;
+        updateScoreDisplay();
+    }
+    
+    // Add close button
+    resultsHTML += `
+        <button class="master-close-button">Close</button>
+    `;
+    
+    resultsElement.innerHTML = resultsHTML;
+    questionContainer.appendChild(resultsElement);
+    
+    // Add close button event
+    const closeButton = questionContainer.querySelector('.master-close-button');
+    closeButton.onclick = () => {
+        const masterPanel = document.getElementById('master-challenge-panel');
+        masterPanel.style.opacity = '0';
+        masterPanel.style.pointerEvents = 'none';
+        
+        // Reset master challenge state
+        gameState.masterChallengeState = null;
+        
+        // Resume game movement
+        resumeGameMovement();
+    };
+}
+
+// Create challenge panel UI
+function createChallengePanel() {
+    const panel = document.createElement('div');
+    panel.id = 'challenge-panel';
+    panel.className = 'game-panel';
+    
+    const titleElement = document.createElement('h2');
+    titleElement.id = 'challenge-title';
+    
+    const questionElement = document.createElement('div');
+    questionElement.id = 'challenge-question';
+    
+    const optionsContainer = document.createElement('div');
+    optionsContainer.id = 'challenge-options';
+    
+    panel.appendChild(titleElement);
+    panel.appendChild(questionElement);
+    panel.appendChild(optionsContainer);
+    
+    document.getElementById('game-container').appendChild(panel);
+    
+    // Add challenge panel styles
+    addChallengeStyles();
+    
+    return panel;
+}
+
+// Create master challenge panel UI
+function createMasterChallengePanel() {
+    const panel = document.createElement('div');
+    panel.id = 'master-challenge-panel';
+    panel.className = 'game-panel master';
+    
+    const titleElement = document.createElement('h2');
+    titleElement.id = 'master-challenge-title';
+    
+    const progressElement = document.createElement('div');
+    progressElement.id = 'master-progress';
+    
+    const questionContainer = document.createElement('div');
+    questionContainer.id = 'master-question';
+    
+    panel.appendChild(titleElement);
+    panel.appendChild(progressElement);
+    panel.appendChild(questionContainer);
+    
+    document.getElementById('game-container').appendChild(panel);
+    
+    return panel;
+}
+
+// Create feedback element for challenges
+function createFeedbackElement() {
+    const feedback = document.createElement('div');
+    feedback.id = 'challenge-feedback';
+    return feedback;
+}
+
+// Add challenge styles to document
+function addChallengeStyles() {
+    // Check if styles already exist
+    if (document.getElementById('challenge-styles')) return;
+    
+    const styleElement = document.createElement('style');
+    styleElement.id = 'challenge-styles';
+    
+    styleElement.textContent = `
+        .game-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 3px solid #4FC3F7;
+        }
+        
+        .game-panel.master {
+            border-color: #E040FB;
+        }
+        
+        #challenge-title, #master-challenge-title {
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #4FC3F7;
+        }
+        
+        #master-challenge-title {
+            color: #E040FB;
+        }
+        
+        #challenge-question, .master-question-text {
+            font-size: 20px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        #challenge-options, .master-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .challenge-option, .master-option {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            text-align: left;
+        }
+        
+        .challenge-option:hover, .master-option:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .challenge-option.correct, .master-option.correct {
+            background-color: rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+        }
+        
+        .challenge-option.incorrect, .master-option.incorrect {
+            background-color: rgba(244, 67, 54, 0.3);
+            border-color: #F44336;
+        }
+        
+        .challenge-feedback, .master-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        .challenge-feedback.correct, .master-feedback.correct {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #A5D6A7;
+        }
+        
+        .challenge-feedback.incorrect, .master-feedback.incorrect {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 1px solid #F44336;
+            color: #EF9A9A;
+        }
+        
+        #master-progress {
+            font-size: 16px;
+            color: #B39DDB;
+            margin-bottom: 20px;
+        }
+        
+        .master-score {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #E040FB;
+        }
+        
+        .master-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        .master-message.success {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #A5D6A7;
+        }
+        
+        .master-message.partial {
+            background-color: rgba(255, 152, 0, 0.2);
+            border: 1px solid #FF9800;
+            color: #FFCC80;
+        }
+        
+        .master-message.fail {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 1px solid #F44336;
+            color: #EF9A9A;
+        }
+        
+        .master-close-button {
+            background-color: rgba(224, 64, 251, 0.3);
+            border: 2px solid #E040FB;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .master-close-button:hover {
+            background-color: rgba(224, 64, 251, 0.5);
+        }
+    `;
+    
+    document.head.appendChild(styleElement);
+}
+
+// Update score display
+function updateScoreDisplay() {
+    // Check if score element exists
+    let scoreElement = document.getElementById('score-value');
+    
+    if (!scoreElement) {
+        // Create the score display if it doesn't exist
+        const scoreDisplay = document.getElementById('score-display');
+        scoreElement = document.createElement('span');
+        scoreElement.id = 'score-value';
+        scoreDisplay.innerHTML = scoreDisplay.innerHTML.replace('Altitude:', '<span id="altitude-label">Altitude:</span>');
+        scoreDisplay.appendChild(document.createElement('br'));
+        
+        const scoreLabel = document.createElement('span');
+        scoreLabel.textContent = 'Score: ';
+        scoreDisplay.appendChild(scoreLabel);
+        scoreDisplay.appendChild(scoreElement);
+    }
+    
+    // Update the score value
+    scoreElement.textContent = gameState.score;
+}
+
+// Pause game movement while in challenge
+function pauseGameMovement() {
+    // Store current velocity
+    gameState.pausedVelocity = gameState.balloonPhysics.velocity.clone();
+    
+    // Stop all movement
+    gameState.balloonPhysics.velocity.set(0, 0, 0);
+    
+    // Disable keys temporarily
+    gameState.keysEnabled = false;
+    
+    // Store burner state and turn it off if active
+    if (gameState.burnerActive) {
+        gameState.burnerWasActive = true;
+        // Call the function from balloon.js to properly turn off burner with sound
+        activateBurner(false);
+    }
+}
+
+// Resume game movement after challenge
+function resumeGameMovement() {
+    // Restore velocity if saved
+    if (gameState.pausedVelocity) {
+        gameState.balloonPhysics.velocity.copy(gameState.pausedVelocity);
+        gameState.pausedVelocity = null;
+    }
+    
+    // Re-enable keys
+    gameState.keysEnabled = true;
+    
+    // Restore burner if it was active
+    if (gameState.burnerWasActive) {
+        // Only restart if W key is still pressed
+        if (gameState.keys.KeyW) {
+            activateBurner(true);
+        }
+        gameState.burnerWasActive = false;
+    }
+}
