@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="game-container">
@@ -26,29 +27,37 @@
         </div>
         <div id="minimap"></div>
         <div id="start-screen">
-            <h1>Hot Air Balloon Knowledge Adventure</h1>
-            <p>Explore the beautiful landscape and collect floating knowledge orbs to learn about the world! Navigate through different biomes and discover the secrets they hold.</p>
-            
-            <div class="option-container">
-                <div class="option-section">
-                    <h2>Choose Terrain</h2>
-                    <div class="option-buttons terrain-options">
-                        <button class="option-button terrain-button" data-terrain="islands">Islands</button>
-                        <button class="option-button terrain-button" data-terrain="mountains">Mountains</button>
+            <div class="start-content">
+                <div class="logo-container">
+                    <h1>Hot Air Balloon</h1>
+                    <div class="subtitle">Knowledge Adventure</div>
+                </div>
+                
+                <div class="description">
+                    <p>Drift through atmospheric landscapes and collect knowledge orbs about photosynthesis. Experience different biomes and lighting conditions as you explore and learn.</p>
+                </div>
+                
+                <div class="settings-container">
+                    <div class="settings-row">
+                        <div class="setting-label">Terrain</div>
+                        <div class="setting-options terrain-options">
+                            <button class="setting-button terrain-button selected" data-terrain="islands">Islands</button>
+                            <button class="setting-button terrain-button" data-terrain="mountains">Mountains</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div class="setting-label">Lighting</div>
+                        <div class="setting-options lighting-options">
+                            <button class="setting-button lighting-button selected" data-lighting="day">Day</button>
+                            <button class="setting-button lighting-button" data-lighting="sunset">Sunset</button>
+                            <button class="setting-button lighting-button" data-lighting="moonlight">Moonlight</button>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="option-section">
-                    <h2>Choose Lighting</h2>
-                    <div class="option-buttons lighting-options">
-                        <button class="option-button lighting-button selected" data-lighting="day">Day</button>
-                        <button class="option-button lighting-button" data-lighting="sunset">Sunset</button>
-                        <button class="option-button lighting-button" data-lighting="moonlight">Moonlight</button>
-                    </div>
-                </div>
+                <button id="start-button">Begin Journey</button>
             </div>
-            
-            <button id="start-button">Start Adventure</button>
         </div>
     </div>
 
