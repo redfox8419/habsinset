@@ -16,10 +16,10 @@ export const creatureSystem = {
     },
     whales: {
         pods: [],
-        maxWhales: 3,
+        maxWhales: 8,
         initialized: false,
         lastUpdate: 0,
-        breachChance: 0.005 // Chance per second for a whale to breach
+        breachChance: 0.03 // Chance per second for a whale to breach
     },
     active: true
 };
@@ -573,15 +573,17 @@ function createWhale() {
     
     // Position whale under water
     const centerX = (Math.random() - 0.5) * 4000;
-    const centerY = -20 - Math.random() * 30; // Deep underwater
+    const centerY = -10 - Math.random() * 15; // Closer to surface
     const centerZ = (Math.random() - 0.5) * 4000;
     
     // Create the whale body
-    const bodyGeometry = new THREE.CapsuleGeometry(5, 15, 8, 8);
-    const bodyMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x334455,
-        roughness: 0.8
-    });
+    const bodyGeometry = new THREE.CapsuleGeometry(8, 25, 8, 8); // Larger dimensions
+const bodyMaterial = new THREE.MeshStandardMaterial({ 
+    color: 0x3366AA, // Brighter blue color
+    roughness: 0.8,
+    emissive: 0x112233, // Add slight emissive quality for better visibility
+    emissiveIntensity: 0.2
+});
     const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
     body.rotation.z = Math.PI / 2; // Orient horizontally
     whaleGroup.add(body);
