@@ -1,4 +1,5 @@
 import { gameState } from './gameState.js';
+import audioSystem from './audio.js';
 
 // Create the hot air balloon
 export function createBalloon() {
@@ -186,7 +187,8 @@ export function activateBurner(active) {
             gameState.burnerParticles.material.color.set(0xFF4500);
         }
         
-        // Add audio for burner (would be added here if audio implemented)
+        // Play burner sound effect
+        audioSystem.playBurnerSound();
     } else {
         // Turn off burner light
         gameState.burnerLight.intensity = 0;
@@ -194,7 +196,8 @@ export function activateBurner(active) {
         // Hide flame particles
         gameState.burnerParticles.material.opacity = 0;
         
-        // Stop audio
+        // Stop burner sound
+        audioSystem.stopBurnerSound();
     }
 }
 

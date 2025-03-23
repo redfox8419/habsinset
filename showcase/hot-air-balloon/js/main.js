@@ -8,6 +8,7 @@ import { createKnowledgeOrbs, checkOrbCollisions, animateKnowledgeOrbs } from '.
 import { setupMinimap, updateCamera, updateCompass } from './ui.js';
 import { updateClouds } from './environment.js';
 import { updateBurnerParticles } from './balloon.js';
+import audioSystem from './audio.js';
 
 // Initialize the game
 function init() {
@@ -35,7 +36,65 @@ function init() {
     // Set up event listeners
     setupEvents();
     
+    // Initialize the audio system
+    initAudio();
+    
     // Don't create the actual game elements yet - wait for user to select options and start
+}
+
+// Initialize audio
+function initAudio() {
+    // Define the path to the burner sound effect
+    const burnerSoundPath = 'sounds/burner.mp3';
+    
+    // Define paths to background music tracks
+    const musicTrackPaths = [
+        'sounds/track1.mp3',
+        'sounds/track2.mp3',
+        'sounds/track3.mp3',
+        'sounds/track4.mp3',
+        // Add more tracks as needed
+    ];
+    
+    // Initialize the audio system
+    audioSystem.init(burnerSoundPath, musicTrackPaths);
+    
+    // Add a sound toggle button to the UI (optional)
+    addSoundControls();
+}
+
+// Add sound controls to the UI
+function addSoundControls() {
+    // Create a container for sound controls
+    const soundControlsContainer = document.createElement('div');
+    soundControlsContainer.id = 'sound-controls';
+    soundControlsContainer.style.position = 'absolute';
+    soundControlsContainer.style.top = '20px';
+    soundControlsContainer.style.right = '140px';
+    soundControlsContainer.style.zIndex = '100';
+    
+    // Create a mute/unmute button
+    const soundToggleButton = document.createElement('button');
+    soundToggleButton.id = 'sound-toggle';
+    soundToggleButton.textContent = '🔊';
+    soundToggleButton.style.background = 'rgba(0, 0, 0, 0.5)';
+    soundToggleButton.style.color = 'white';
+    soundToggleButton.style.border = 'none';
+    soundToggleButton.style.borderRadius = '50%';
+    soundToggleButton.style.width = '40px';
+    soundToggleButton.style.height = '40px';
+    soundToggleButton.style.fontSize = '20px';
+    soundToggleButton.style.cursor = 'pointer';
+    
+    let muted = false;
+    soundToggleButton.addEventListener('click', () => {
+        muted = !muted;
+        audioSystem.setMute(muted);
+        soundToggleButton.textContent = muted ? '🔇' : '🔊';
+    });
+    
+    soundControlsContainer.appendChild(soundToggleButton);
+    document.getElementById('game-container').appendChild(soundControlsContainer);
 }
 
 // Start the game
@@ -53,6 +112,9 @@ function startGame() {
     
     // Initial altitude display
     updateAltitudeDisplay();
+    
+    // Start the background music
+    audioSystem.startBackgroundMusic();
     
     // Start the animation loop
     if (!gameState.animationClock) {
