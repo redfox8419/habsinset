@@ -14,8 +14,78 @@ export function setupMinimap() {
     gameState.minimapCamera.position.set(0, 1000, 0);
     gameState.minimapCamera.lookAt(new THREE.Vector3(0, 0, 0));
     
-    // Create a player marker for the minimap
+    // Create a player marker for the minimap (3D objects still created for compatibility)
     createMinimapMarker();
+    
+    // Add HTML overlay markers on top of the minimap
+    createMinimapOverlay();
+}
+
+// Create HTML overlay for player marker
+function createMinimapOverlay() {
+    // Get the minimap container
+    const minimapContainer = document.getElementById('minimap');
+    
+    // Create player marker dot element
+    const playerMarker = document.createElement('div');
+    playerMarker.id = 'minimap-player-marker';
+    playerMarker.style.position = 'absolute';
+    playerMarker.style.width = '14px';
+    playerMarker.style.height = '14px';
+    playerMarker.style.backgroundColor = 'red';
+    playerMarker.style.border = '2px solid white';
+    playerMarker.style.borderRadius = '50%';
+    playerMarker.style.top = '50%';
+    playerMarker.style.left = '50%';
+    playerMarker.style.transform = 'translate(-50%, -50%)';
+    playerMarker.style.zIndex = '100';
+    playerMarker.style.boxShadow = '0 0 4px rgba(0,0,0,0.5)';
+    
+    // Create a container that's perfectly centered on the red dot
+    const arrowContainer = document.createElement('div');
+    arrowContainer.id = 'minimap-arrow-container';
+    arrowContainer.style.position = 'absolute';
+    arrowContainer.style.width = '0';
+    arrowContainer.style.height = '0';
+    arrowContainer.style.top = '50%';
+    arrowContainer.style.left = '50%';
+    arrowContainer.style.transform = 'translate(-50%, -50%)'; // Center perfectly
+    arrowContainer.style.zIndex = '101';
+
+    // Create the direction line
+    const directionLine = document.createElement('div');
+    directionLine.id = 'minimap-direction-arrow'; // Keep the same ID for compatibility
+    directionLine.style.position = 'absolute';
+    directionLine.style.width = '15px'; // Length of the direction line
+    directionLine.style.height = '3px'; // Thickness of the line
+    directionLine.style.backgroundColor = 'white';
+    directionLine.style.left = '0'; // Start exactly at center
+    directionLine.style.top = '-1.5px'; // Vertically center (-height/2)
+    directionLine.style.transformOrigin = 'left center'; // Rotate around left point (center)
+    directionLine.style.boxShadow = '0 0 3px rgba(0,0,0,0.8)';
+
+    // Create arrowhead at the end of the line
+    const arrowHead = document.createElement('div');
+    arrowHead.style.position = 'absolute';
+    arrowHead.style.width = '0';
+    arrowHead.style.height = '0';
+    arrowHead.style.borderTop = '5px solid transparent';
+    arrowHead.style.borderBottom = '5px solid transparent';
+    arrowHead.style.borderLeft = '7px solid white'; // Arrow points right
+    arrowHead.style.right = '-7px'; // Position at the end of the line
+    arrowHead.style.top = '-3.5px'; // Center vertically
+
+    // Add everything together
+    directionLine.appendChild(arrowHead);
+    arrowContainer.appendChild(directionLine);
+    minimapContainer.appendChild(arrowContainer);
+    
+    // Add elements to minimap container
+    minimapContainer.appendChild(playerMarker);
+    
+    // Store references for rotation updates
+    gameState.minimapPlayerMarker = playerMarker;
+    gameState.minimapDirectionArrow = directionLine;
 }
 
 // Create a marker to represent the player on the minimap
@@ -148,7 +218,7 @@ export function updateCamera() {
     gameState.minimapCamera.position.set(
         gameState.balloonPhysics.position.x,
         1000,
-        gameState.balloonPhysics.position.z
+        -gameState.balloonPhysics.position.z
     );
     
     // Update minimap marker position and rotation
@@ -161,6 +231,16 @@ export function updateCamera() {
         
         // Rotate arrow to match balloon direction
         gameState.minimapArrow.rotation.z = -gameState.balloonGroup.rotation.y;
+    }
+    
+    // Update the HTML overlay direction arrow
+    if (gameState.minimapDirectionArrow) {
+        // Get balloon's rotation angle and convert to degrees
+        // Add 90 degrees to correct the alignment
+        const angle = (-gameState.balloonGroup.rotation.y * (180 / Math.PI)) - 90;
+        
+        // Only apply rotation, no translation needed
+        gameState.minimapDirectionArrow.style.transform = `rotate(${angle}deg)`;
     }
     
     // Update orb indicators (make them pulse/flash)
