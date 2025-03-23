@@ -425,57 +425,14 @@ function updateMasterChallengeVisuals(masterStation) {
 }
 
 // Create a visual effect when a challenge station appears
+// Show a challenge station without animation
 export function createChallengeRevealEffect(station) {
-    // Create a ripple effect
-    const rippleGeometry = new THREE.RingGeometry(1, 2, 32);
-    const rippleMaterial = new THREE.MeshBasicMaterial({
-        color: station.userData.knowledgeColor || 0xFFEB3B,
-        transparent: true,
-        opacity: 0.8,
-        side: THREE.DoubleSide
-    });
+    // Set to final position and scale immediately
+    station.position.y = station.userData.originalY;
+    station.scale.set(1, 1, 1);
     
-    const ripple = new THREE.Mesh(rippleGeometry, rippleMaterial);
-    ripple.rotation.x = -Math.PI / 2; // Flat facing up
-    ripple.position.y = 2;
-    station.add(ripple);
-    
-    // Add a rising effect for the station
-    const originalPosition = station.position.y;
-    station.position.y -= 50; // Start below the ground
-    station.scale.set(0.1, 0.1, 0.1); // Start small
-    
-    // Animate the station rising and growing
-    const animateReveal = function() {
-        // Move up
-        if (station.position.y < originalPosition) {
-            station.position.y += 2;
-        }
-        
-        // Scale up
-        if (station.scale.x < 1) {
-            station.scale.x += 0.04;
-            station.scale.y += 0.04;
-            station.scale.z += 0.04;
-        }
-        
-        // Expand ripple
-        ripple.scale.x += 0.1;
-        ripple.scale.z += 0.1;
-        ripple.material.opacity -= 0.02;
-        
-        if (ripple.material.opacity > 0 && station.position.y < originalPosition + 5) {
-            requestAnimationFrame(animateReveal);
-        } else {
-            // Remove the ripple when done
-            station.remove(ripple);
-            
-            // Create popup notification
-            createChallengeNotification(station);
-        }
-    };
-    
-    animateReveal();
+    // Create popup notification immediately
+    createChallengeNotification(station);
 }
 
 // Function to activate a challenge from outside this module
