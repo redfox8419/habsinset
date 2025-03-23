@@ -119,7 +119,7 @@ function createBirdFlock() {
         // Create a simple bird body - small, thin box
          // Create a capsule-shaped bird body
          const bodyRadius = 0.1;    // Controls width of the body
-         const bodyLength = 0.6;    // Controls length of the body
+         const bodyLength = 0.4;    // Controls length of the body
          const bodyGeometry = new THREE.CapsuleGeometry(
              bodyRadius,            // radius
              bodyLength,            // length
@@ -132,7 +132,7 @@ function createBirdFlock() {
         
         // Create left wing - thin 3D plane with some curvature
         // For the curved shape like in your drawing, we'll use a custom shape
-        const wingLength = 1.8;    // Controls wing length (distance from body)
+        const wingLength = 1.5;    // Controls wing length (distance from body)
         const wingHeight = 0.4;    // Controls wing curve height
         const wingWidth = 0.2;     // Controls wing width
 
@@ -150,6 +150,7 @@ function createBirdFlock() {
         leftWing.position.set(-0.1, 0, 0);
         // Rotate to be horizontal
         leftWing.rotation.x = -Math.PI / 2;
+        leftWing.rotation.z = Math.PI; // Add this line to flip the wing
         birdGroup.add(leftWing);
         
         // Create right wing with more width (mirrored)
@@ -166,6 +167,7 @@ function createBirdFlock() {
         rightWing.position.set(0.1, 0, 0);
         // Rotate to be horizontal
         rightWing.rotation.x = -Math.PI / 2;
+        rightWing.rotation.z = Math.PI; // Add this line to flip the wing
         birdGroup.add(rightWing);
         
         // Scale the bird to appropriate size
@@ -282,10 +284,10 @@ function updateBirdFlocks(delta) {
                 const wingFlapAmount = Math.sin(bird.wingPhase) * 0.4;
                 
                 // Left wing goes up when value is positive
-                bird.leftWing.rotation.z = wingFlapAmount;
+                bird.leftWing.rotation.y = wingFlapAmount;
                 
                 // Right wing goes down when left goes up (opposite movement)
-                bird.rightWing.rotation.z = -wingFlapAmount;
+                bird.rightWing.rotation.y = -wingFlapAmount;
             }
         });
         
