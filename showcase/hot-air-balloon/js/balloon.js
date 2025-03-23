@@ -15,23 +15,72 @@ export function createBalloon() {
     gameState.balloon.position.y = 5;
     gameState.balloonGroup.add(gameState.balloon);
     
-    // Balloon basket
-    const basketGeometry = new THREE.BoxGeometry(3, 2, 3);
+    // Create a more realistic basket
+    const basketGroup = new THREE.Group();
+    basketGroup.position.y = -3;
+    
+    // Main basket cylinder (slightly tapered for realism)
+    const basketMainGeometry = new THREE.CylinderGeometry(1.5, 1.3, 2, 8, 1, false);
     const basketMaterial = new THREE.MeshStandardMaterial({ 
         color: 0x8B4513,
         roughness: 1 
     });
-    const basket = new THREE.Mesh(basketGeometry, basketMaterial);
-    basket.position.y = -3;
-    gameState.balloonGroup.add(basket);
+    const basketMain = new THREE.Mesh(basketMainGeometry, basketMaterial);
+    basketGroup.add(basketMain);
     
-    // Ropes connecting balloon to basket
+    // Basket rim - add a torus at the top for the rim
+    const basketRimGeometry = new THREE.TorusGeometry(1.5, 0.2, 8, 16);
+    const basketRim = new THREE.Mesh(basketRimGeometry, basketMaterial);
+    basketRim.position.y = 1;
+    basketRim.rotation.x = Math.PI / 2;
+    basketGroup.add(basketRim);
+    
+    // Basket floor - add a circle for the bottom
+    const basketFloorGeometry = new THREE.CircleGeometry(1.3, 8);
+    const basketFloor = new THREE.Mesh(basketFloorGeometry, basketMaterial);
+    basketFloor.position.y = -1;
+    basketFloor.rotation.x = -Math.PI / 2;
+    basketGroup.add(basketFloor);
+    
+    // Add vertical ribs for wicker effect
+    const ribMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0x6B4513,
+        roughness: 0.8 
+    });
+    
+    for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * Math.PI * 2;
+        const ribGeometry = new THREE.BoxGeometry(0.1, 2, 0.1);
+        const rib = new THREE.Mesh(ribGeometry, ribMaterial);
+        
+        rib.position.x = Math.cos(angle) * 1.5;
+        rib.position.z = Math.sin(angle) * 1.5;
+        
+        basketGroup.add(rib);
+    }
+    
+    // Add horizontal bands for wicker effect
+    for (let j = 0; j < 4; j++) {
+        const heightPosition = -0.8 + j * 0.5;
+        const bandRadius = 1.45 - j * 0.05;  // Decreasing radius for the taper
+        const torusGeometry = new THREE.TorusGeometry(bandRadius, 0.05, 8, 8);
+        const torus = new THREE.Mesh(torusGeometry, ribMaterial);
+        
+        torus.position.y = heightPosition;
+        torus.rotation.x = Math.PI / 2;
+        
+        basketGroup.add(torus);
+    }
+    
+    gameState.balloonGroup.add(basketGroup);
+    
+    // Ropes connecting balloon to basket - updated to connect to the cylindrical basket
     const ropeMaterial = new THREE.LineBasicMaterial({ color: 0x8B4513 });
     
     for (let i = 0; i < 4; i++) {
         const angle = (i / 4) * Math.PI * 2;
-        const x = Math.cos(angle) * 2;
-        const z = Math.sin(angle) * 2;
+        const x = Math.cos(angle) * 1.5;
+        const z = Math.sin(angle) * 1.5;
         
         const ropeGeometry = new THREE.BufferGeometry().setFromPoints([
             new THREE.Vector3(x, -2, z),

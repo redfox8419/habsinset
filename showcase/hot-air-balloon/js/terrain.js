@@ -427,7 +427,7 @@ function addTerrainFeatures(terrainMesh, chunkX, chunkZ, biomeMap, biomes, world
                 // Original feature placement logic for default terrain
                 
                 // Add trees in forested biomes
-                if (biome.trees && Math.random() < biome.treeDensity) {
+                if (biome.trees && Math.random() < biome.treeDensity && y > 20) {
                     createEnvironmentalObject('tree', localX, y, localZ, { 
                         color: biome.treeColor,
                         quality: geometryQuality
