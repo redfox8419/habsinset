@@ -9,6 +9,7 @@ import { setupMinimap, updateCamera, updateCompass } from './ui.js';
 import { updateClouds } from './environment.js';
 import { updateBurnerParticles } from './balloon.js';
 import { createChallengeStations, animateChallengeStations, checkChallengeCollisions, updateDirectionArrow } from './challenges.js';
+import { initCreatures, updateCreatures, cleanupCreatures } from './creatures.js';
 import audioSystem from './audio.js';
 
 // Initialize the game
@@ -156,6 +157,9 @@ function createGameEnvironment() {
     
     // Create challenge stations
     createChallengeStations();
+
+    // Initialize creatures
+    initCreatures();
     
     // Adjust starting position for mountain terrain
     if (gameState.selectedTerrain === 'mountains') {
@@ -175,6 +179,9 @@ function clearExistingGameElements() {
             gameState.scene.remove(child);
         }
     });
+
+    // Clean up creature system
+    cleanupCreatures();
     
     // Reset arrays
     gameState.terrainChunks = [];
@@ -238,6 +245,9 @@ function animate() {
         
         // Update clouds
         updateClouds(delta);
+
+        // Update creatures
+        updateCreatures(delta);
         
         // Update altitude display
         updateAltitudeDisplay();
