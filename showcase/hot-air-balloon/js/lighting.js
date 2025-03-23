@@ -83,12 +83,14 @@ export function setupLights() {
 
 // Configure standard shadow settings
 function configureShadows(light) {
-    light.shadow.mapSize.width = 2048;
-    light.shadow.mapSize.height = 2048;
+    light.shadow.mapSize.width = 1024;
+    light.shadow.mapSize.height = 1024;
     light.shadow.camera.near = 10;
     light.shadow.camera.far = 1000;
     light.shadow.camera.left = -500;
     light.shadow.camera.right = 500;
     light.shadow.camera.top = 500;
     light.shadow.camera.bottom = -500;
+
+    light.shadow.bias = -0.001;
 }
