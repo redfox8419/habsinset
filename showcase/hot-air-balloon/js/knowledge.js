@@ -1,5 +1,6 @@
 import { gameState } from './gameState.js';
 import { updateCollectionCounter } from './main.js';
+import { activateChallenge } from './challenges.js';
 
 // Create knowledge orbs
 export function createKnowledgeOrbs() {
@@ -102,76 +103,32 @@ export function createKnowledgeOrb(x, y, z, data) {
     return orbGroup;
 }
 
-// Show knowledge information when an orb is collected
+// Show knowledge information when an orb is collected - displays knowledge in sequence
 export function showKnowledgeInfo(data) {
+    // Get the right knowledge data to display based on collection order
+    // Rather than displaying the collected orb's data, we'll display based on the number collected
+    const knowledgeIndex = gameState.collectedKnowledge; // 0-based index
+    const orderedData = gameState.knowledgeData[knowledgeIndex];
+    
     const titleElement = document.getElementById('knowledge-title');
     const textElement = document.getElementById('knowledge-text');
     const panelElement = document.getElementById('knowledge-panel');
     
-    titleElement.textContent = data.title;
+    titleElement.textContent = orderedData.title;
     
-    // Find if this knowledge unlocks any challenges
-    let challengeGuidance = '';
-    gameState.challengeData.forEach(challenge => {
-        if (challenge.requiredKnowledge.includes(data.id)) {
-            challengeGuidance = `<div class="knowledge-challenge-hint">
-                <span class="hint-icon">?</span>
-                <span>This knowledge unlocks a challenge! Look for a question mark platform with the same color.</span>
-            </div>`;
-        }
-    });
-    
-    // Display text with optional challenge guidance
-    textElement.innerHTML = `${data.text}${challengeGuidance}`;
-    
-    // Add styles for the hint if not already added
-    if (challengeGuidance && !document.getElementById('knowledge-hint-styles')) {
-        const styleElement = document.createElement('style');
-        styleElement.id = 'knowledge-hint-styles';
-        styleElement.textContent = `
-            .knowledge-challenge-hint {
-                margin-top: 15px;
-                padding: 10px;
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .hint-icon {
-                background-color: #FFD700;
-                color: black;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-            }
-        `;
-        document.head.appendChild(styleElement);
-        
-        // Update the hint icon color to match the knowledge orb
-        setTimeout(() => {
-            const hintIcon = document.querySelector('.hint-icon');
-            if (hintIcon) {
-                hintIcon.style.backgroundColor = `#${data.color.toString(16).padStart(6, '0')}`;
-            }
-        }, 10);
-    }
+    // Display text without challenge hint
+    textElement.innerHTML = orderedData.text;
     
     // Show the panel
     panelElement.style.opacity = '1';
     
     // Change the panel border color to match the orb
-    panelElement.style.borderColor = `#${data.color.toString(16).padStart(6, '0')}`;
+    panelElement.style.borderColor = `#${orderedData.color.toString(16).padStart(6, '0')}`;
     
     // Hide after 10 seconds
     setTimeout(() => {
         panelElement.style.opacity = '0';
-    }, 10000); // Extended to 10 seconds to give more time to read the hint
+    }, 10000);
 }
 
 // Check for collision with knowledge orbs
@@ -243,6 +200,17 @@ export function checkOrbCollisions() {
             }
             
             i--; // Adjust for the removed element
+            
+            // Check if we should trigger a challenge (every 2 orbs)
+            if (gameState.collectedKnowledge % 2 === 0 && gameState.collectedKnowledge <= 10) {
+                // Trigger the appropriate challenge based on collection count
+                const challengeIndex = (gameState.collectedKnowledge / 2) - 1; // 0-based index
+                if (challengeIndex >= 0 && challengeIndex < gameState.challengeData.length) {
+                    const challengeData = gameState.challengeData[challengeIndex];
+                    // Set this challenge to be activated
+                    activateChallenge(challengeData.id);
+                }
+            }
             
             // Break to prevent multiple collisions in one frame
             break;

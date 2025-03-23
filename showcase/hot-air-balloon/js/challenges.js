@@ -32,71 +32,38 @@ function createChallengeStation(data) {
     const platform = new THREE.Mesh(platformGeometry, platformMaterial);
     stationGroup.add(platform);
     
-    // Floating question mark
-    const questionGroup = new THREE.Group();
+    // Floating C shape for challenge (replacing question mark)
+    const cShapeGroup = new THREE.Group();
     
-    // Create the dot of the question mark
-    const dotGeometry = new THREE.SphereGeometry(3, 16, 16);
-    const questionMaterial = new THREE.MeshStandardMaterial({
+    // Create the C shape using a TorusGeometry (partial ring)
+    const cGeometry = new THREE.TorusGeometry(5, 1.5, 16, 32, Math.PI * 1.5); // C shape covers 270 degrees (1.5π)
+    const cMaterial = new THREE.MeshStandardMaterial({
         color: 0xFFEB3B,
         emissive: 0xFFEB3B,
         emissiveIntensity: 0.5,
         metalness: 0.5,
         roughness: 0.2
     });
-    const dot = new THREE.Mesh(dotGeometry, questionMaterial);
-    dot.position.y = -6;
-    questionGroup.add(dot);
+    const cShape = new THREE.Mesh(cGeometry, cMaterial);
     
-    // Create the curved part of the question mark
-    const curvePoints = [];
-    for (let i = 0; i <= 10; i++) {
-        const t = i / 10;
-        const angle = t * Math.PI;
-        const x = 4 * Math.cos(angle);
-        const y = 4 * Math.sin(angle) + 6;
-        const z = 0;
-        curvePoints.push(new THREE.Vector3(x, y, z));
-    }
+    // Rotate to make it a 'C' shape
+    cShape.rotation.y = Math.PI / 2;
+    cShape.rotation.z = Math.PI / 2;
     
-    const curveGeometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
-    const curveMaterial = new THREE.LineBasicMaterial({ color: 0xFFEB3B, linewidth: 3 });
-    const curve = new THREE.Line(curveGeometry, curveMaterial);
-    questionGroup.add(curve);
+    cShapeGroup.add(cShape);
     
-    // Add a thicker curve using small spheres
-    for (let i = 0; i <= 10; i++) {
-        const t = i / 10;
-        const angle = t * Math.PI;
-        const x = 4 * Math.cos(angle);
-        const y = 4 * Math.sin(angle) + 6;
-        const z = 0;
-        
-        const sphereGeometry = new THREE.SphereGeometry(1.2, 8, 8);
-        const sphere = new THREE.Mesh(sphereGeometry, questionMaterial);
-        sphere.position.set(x, y, z);
-        questionGroup.add(sphere);
-    }
-    
-    // Add a stem to the question mark
-    const stemGeometry = new THREE.CylinderGeometry(1.2, 1.2, 6, 8);
-    const stem = new THREE.Mesh(stemGeometry, questionMaterial);
-    stem.position.y = 0;
-    stem.position.x = -4;
-    questionGroup.add(stem);
-    
-    // Position the question mark above the platform
-    questionGroup.position.y = 12;
-    questionGroup.scale.set(1.8, 1.8, 1.8); // Make question mark larger
-    stationGroup.add(questionGroup);
+    // Position the C shape above the platform
+    cShapeGroup.position.y = 12;
+    cShapeGroup.scale.set(1.8, 1.8, 1.8); // Make C larger
+    stationGroup.add(cShapeGroup);
     
     // Add a point light
     const light = new THREE.PointLight(0xFFEB3B, 2, 100);
     light.position.y = 20;
     stationGroup.add(light);
     
-    // Add vertical light beam for visibility from distance
-    const beamGeometry = new THREE.CylinderGeometry(0.5, 0.5, 200, 8);
+    // Add vertical light beam for visibility from distance - WIDER BEAM
+    const beamGeometry = new THREE.CylinderGeometry(3, 3, 200, 16); // Increased diameter from 0.5 to 3
     const beamMaterial = new THREE.MeshBasicMaterial({
         color: 0xFFEB3B,
         transparent: true,
@@ -107,45 +74,25 @@ function createChallengeStation(data) {
     beam.position.y = 100; // Extend high into the sky
     stationGroup.add(beam);
     
-    // Add expanding rings for visibility
-    const ringsGroup = new THREE.Group();
-    for (let i = 0; i < 3; i++) {
-        const ringGeometry = new THREE.TorusGeometry(15, 0.5, 8, 32);
-        const ringMaterial = new THREE.MeshBasicMaterial({
-            color: 0xFFEB3B,
-            transparent: true,
-            opacity: 0.5
-        });
-        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring.rotation.x = Math.PI / 2; // Horizontal
-        ring.userData = {
-            initialY: 5 + i * 10,
-            animationOffset: i * Math.PI * 0.5
-        };
-        ring.position.y = ring.userData.initialY;
-        ringsGroup.add(ring);
-    }
-    stationGroup.add(ringsGroup);
-    
     // Get the color of the first required knowledge orb for this challenge
     let knowledgeColor = 0xFFEB3B; // Default yellow
-    if (data.requiredKnowledge && data.requiredKnowledge.length > 0) {
-        const reqKnowledge = gameState.knowledgeData.find(k => k.id === data.requiredKnowledge[0]);
-        if (reqKnowledge) {
-            knowledgeColor = reqKnowledge.color;
-            // Update materials to match the knowledge orb color
-            questionMaterial.color.setHex(knowledgeColor);
-            questionMaterial.emissive.setHex(knowledgeColor);
-            light.color.setHex(knowledgeColor);
-            curveMaterial.color.setHex(knowledgeColor);
-            beam.material.color.setHex(knowledgeColor);
-            
-            // Update rings color
-            ringsGroup.children.forEach(ring => {
-                ring.material.color.setHex(knowledgeColor);
-            });
+    
+    // Modify to use color based on challenge index instead of knowledge orb
+    // Get the index of this challenge in the challenge data array
+    const challengeIndex = gameState.challengeData.findIndex(c => c.id === data.id);
+    if (challengeIndex >= 0) {
+        // Calculate which knowledge orbs this challenge is associated with
+        const knowledgeIndex = challengeIndex * 2; // First associated orb (e.g. challenge 0 -> orbs 0,1)
+        if (knowledgeIndex < gameState.knowledgeData.length) {
+            knowledgeColor = gameState.knowledgeData[knowledgeIndex].color;
         }
     }
+    
+    // Update materials to match the knowledge orb color
+    cMaterial.color.setHex(knowledgeColor);
+    cMaterial.emissive.setHex(knowledgeColor);
+    light.color.setHex(knowledgeColor);
+    beamMaterial.color.setHex(knowledgeColor);
     
     // Add animation properties
     stationGroup.userData = {
@@ -154,9 +101,8 @@ function createChallengeStation(data) {
         animationPhase: Math.random() * Math.PI * 2,
         data: data,
         type: 'challenge',
-        active: false, // Will be set based on collected knowledge
-        knowledgeColor: knowledgeColor,
-        rings: ringsGroup
+        active: false, // Will be set based on collected knowledge count
+        knowledgeColor: knowledgeColor
     };
     
     // Position the station
@@ -300,32 +246,42 @@ function createMasterChallenge() {
 export function animateChallengeStations(delta) {
     // Animate regular challenge stations
     gameState.challengeStations.forEach(station => {
-        // Rotate the question mark
-        if (station.children[1]) {
-            station.children[1].rotation.y += station.userData.rotationSpeed;
+        // First check if completed - if so, make sure it's hidden
+        if (gameState.completedChallenges.includes(station.userData.data.id)) {
+            // Make sure the challenge is hidden when completed
+            if (station.visible) {
+                station.visible = false;
+                
+                // Also remove minimap indicators for completed challenges
+                if (station.userData.minimapMarker) {
+                    gameState.scene.remove(station.userData.minimapMarker);
+                    station.userData.minimapMarker = null;
+                }
+                
+                if (station.userData.minimapRing) {
+                    gameState.scene.remove(station.userData.minimapRing);
+                    station.userData.minimapRing = null;
+                }
+                
+                if (station.userData.minimapCShape) {
+                    gameState.scene.remove(station.userData.minimapCShape);
+                    station.userData.minimapCShape = null;
+                }
+            }
+            return; // Skip animation for completed challenges
         }
         
-        // Bobbing motion
-        station.userData.animationPhase += delta * 0.5;
-        station.position.y = station.userData.originalY + Math.sin(station.userData.animationPhase) * 5;
-        
-        // Animate expanding rings if present
-        if (station.userData.rings) {
-            station.userData.rings.children.forEach(ring => {
-                // Scale the ring up and down
-                const scale = 1 + 0.5 * Math.sin(station.userData.animationPhase * 2 + ring.userData.animationOffset);
-                ring.scale.set(scale, scale, scale);
-                
-                // Move up and reset
-                ring.position.y = ring.userData.initialY + Math.sin(station.userData.animationPhase + ring.userData.animationOffset) * 10;
-                
-                // Adjust opacity based on scale
-                ring.material.opacity = 0.7 - (scale - 1) * 0.5;
-            });
+        // Only animate visible challenges
+        if (station.visible) {
+            // Rotate the C shape
+            if (station.children[1]) {
+                station.children[1].rotation.y += station.userData.rotationSpeed;
+            }
+            
+            // Bobbing motion
+            station.userData.animationPhase += delta * 0.5;
+            station.position.y = station.userData.originalY + Math.sin(station.userData.animationPhase) * 5;
         }
-        
-        // Check if this challenge should be active based on collected knowledge
-        updateChallengeActiveStatus(station);
         
         // Update visual appearance based on active status
         updateChallengeVisuals(station);
@@ -335,12 +291,23 @@ export function animateChallengeStations(delta) {
     if (gameState.masterChallenge) {
         const masterStation = gameState.masterChallenge;
         
-        // Rotate the station slowly
-        masterStation.rotation.y += masterStation.userData.rotationSpeed * delta;
+        // Check if master challenge is completed
+        if (gameState.masterChallengeCompleted) {
+            if (masterStation.visible) {
+                masterStation.visible = false;
+            }
+            return; // Skip animation for completed master challenge
+        }
         
-        // Bobbing motion
-        masterStation.userData.animationPhase += delta * 0.3;
-        masterStation.position.y = masterStation.userData.originalY + Math.sin(masterStation.userData.animationPhase) * 3;
+        // Only animate if visible
+        if (masterStation.visible) {
+            // Rotate the station slowly
+            masterStation.rotation.y += masterStation.userData.rotationSpeed * delta;
+            
+            // Bobbing motion
+            masterStation.userData.animationPhase += delta * 0.3;
+            masterStation.position.y = masterStation.userData.originalY + Math.sin(masterStation.userData.animationPhase) * 3;
+        }
         
         // Check if master challenge should be active
         updateMasterChallengeActiveStatus(masterStation);
@@ -350,56 +317,13 @@ export function animateChallengeStations(delta) {
     }
 }
 
-// Update challenge station active status based on collected knowledge
-function updateChallengeActiveStatus(station) {
-    const challengeData = station.userData.data;
-    
-    // If challenge is already completed, keep it inactive
-    if (gameState.completedChallenges.includes(challengeData.id)) {
-        station.userData.active = false;
+// Update challenge visuals based on active status
+function updateChallengeVisuals(station) {
+    // Skip if challenge is completed - it should be hidden entirely
+    if (gameState.completedChallenges.includes(station.userData.data.id)) {
         return;
     }
     
-    // Check if all required knowledge for this challenge has been collected
-    const requiredKnowledge = challengeData.requiredKnowledge;
-    const hasAllRequiredKnowledge = requiredKnowledge.every(knowledgeId => {
-        // Find the knowledge orb with this ID
-        const knowledgeData = gameState.knowledgeData.find(k => k.id === knowledgeId);
-        // If found, check if it's been collected (no longer in the knowledgeOrbs array)
-        if (knowledgeData) {
-            const orbExists = gameState.knowledgeOrbs.some(orb => 
-                orb.userData.data.id === knowledgeId
-            );
-            return !orbExists; // Return true if the orb has been collected (doesn't exist anymore)
-        }
-        return false;
-    });
-    
-    // Update active status
-    station.userData.active = hasAllRequiredKnowledge;
-    
-    // Update visibility - only show if knowledge has been collected
-    if (hasAllRequiredKnowledge && !station.visible) {
-        station.visible = true;
-        // Create a visual effect when the station appears
-        createChallengeRevealEffect(station);
-    }
-}
-
-// Update master challenge active status
-function updateMasterChallengeActiveStatus(masterStation) {
-    const requiredChallenges = masterStation.userData.data.requiredChallenges;
-    
-    // Check if all required challenges have been completed
-    const allChallengesCompleted = requiredChallenges.every(challengeId => 
-        gameState.completedChallenges.includes(challengeId)
-    );
-    
-    masterStation.userData.active = allChallengesCompleted;
-}
-
-// Update challenge visuals based on active status
-function updateChallengeVisuals(station) {
     // Change colors and effects based on active status
     if (station.userData.active) {
         // Bright, glowing appearance for active challenges
@@ -426,15 +350,29 @@ function updateChallengeVisuals(station) {
     }
 }
 
+// Update master challenge active status
+function updateMasterChallengeActiveStatus(masterStation) {
+    // Check if all 5 regular challenges have been completed
+    const allChallengesCompleted = gameState.completedChallenges.length >= 5;
+    
+    masterStation.userData.active = allChallengesCompleted;
+    
+    // Show the master challenge if all challenges are completed and it's not visible
+    if (allChallengesCompleted && !masterStation.visible) {
+        masterStation.visible = true;
+        createChallengeRevealEffect(masterStation);
+    }
+}
+
 // Update master challenge visuals based on active status
 function updateMasterChallengeVisuals(masterStation) {
+    // Skip if master challenge is completed - it should be hidden entirely
+    if (gameState.masterChallengeCompleted) {
+        masterStation.visible = false;
+        return;
+    }
+    
     if (masterStation.userData.active) {
-        // Only show master challenge when active
-        if (!masterStation.visible) {
-            masterStation.visible = true;
-            createChallengeRevealEffect(masterStation);
-        }
-        
         // Bright, pulsing appearance for active master challenge
         if (masterStation.children[0]) { // Platform
             masterStation.children[0].material.emissive = new THREE.Color(0x7E57C2);
@@ -487,7 +425,7 @@ function updateMasterChallengeVisuals(masterStation) {
 }
 
 // Create a visual effect when a challenge station appears
-function createChallengeRevealEffect(station) {
+export function createChallengeRevealEffect(station) {
     // Create a ripple effect
     const rippleGeometry = new THREE.RingGeometry(1, 2, 32);
     const rippleMaterial = new THREE.MeshBasicMaterial({
@@ -503,13 +441,14 @@ function createChallengeRevealEffect(station) {
     station.add(ripple);
     
     // Add a rising effect for the station
+    const originalPosition = station.position.y;
     station.position.y -= 50; // Start below the ground
     station.scale.set(0.1, 0.1, 0.1); // Start small
     
     // Animate the station rising and growing
     const animateReveal = function() {
         // Move up
-        if (station.position.y < station.userData.originalY) {
+        if (station.position.y < originalPosition) {
             station.position.y += 2;
         }
         
@@ -525,7 +464,7 @@ function createChallengeRevealEffect(station) {
         ripple.scale.z += 0.1;
         ripple.material.opacity -= 0.02;
         
-        if (ripple.material.opacity > 0 && station.position.y < station.userData.originalY + 5) {
+        if (ripple.material.opacity > 0 && station.position.y < originalPosition + 5) {
             requestAnimationFrame(animateReveal);
         } else {
             // Remove the ripple when done
@@ -539,8 +478,25 @@ function createChallengeRevealEffect(station) {
     animateReveal();
 }
 
+// Function to activate a challenge from outside this module
+export function activateChallenge(challengeId) {
+    // Find the challenge station by ID
+    const challengeStation = gameState.challengeStations.find(station => 
+        station.userData.data.id === challengeId
+    );
+    
+    if (challengeStation) {
+        // Force the challenge to be active
+        challengeStation.userData.active = true;
+        challengeStation.visible = true;
+        
+        // Use our reveal effect
+        createChallengeRevealEffect(challengeStation);
+    }
+}
+
 // Create a notification when a new challenge appears
-function createChallengeNotification(station) {
+export function createChallengeNotification(station) {
     // Get challenge data
     const challengeData = station.userData.data;
     
@@ -548,7 +504,7 @@ function createChallengeNotification(station) {
     const notification = document.createElement('div');
     notification.className = 'challenge-notification';
     notification.innerHTML = `
-        <div class="notification-icon">?</div>
+        <div class="notification-icon">C</div>
         <div class="notification-content">
             <div class="notification-title">New Challenge Available!</div>
             <div class="notification-text">${challengeData.title}</div>
@@ -629,17 +585,6 @@ function createChallengeNotification(station) {
         document.head.appendChild(styleElement);
     }
     
-    // Add a button to help find the challenge
-    const findButton = document.createElement('button');
-    findButton.className = 'notification-button';
-    findButton.textContent = 'Show Direction';
-    findButton.addEventListener('click', () => {
-        showDirectionToChallenge(station);
-        // Close notification when direction is shown
-        document.body.removeChild(notification);
-    });
-    notification.querySelector('.notification-content').appendChild(findButton);
-    
     // Set the notification color based on knowledge color
     if (station.userData.knowledgeColor) {
         const colorHex = '#' + station.userData.knowledgeColor.toString(16).padStart(6, '0');
@@ -647,7 +592,6 @@ function createChallengeNotification(station) {
         notification.style.boxShadow = `0 0 25px ${colorHex}`;
         notification.querySelector('.notification-icon').style.backgroundColor = colorHex;
         notification.querySelector('.notification-title').style.color = colorHex;
-        notification.querySelector('.notification-button').style.backgroundColor = colorHex;
         
         // Update animation
         const styleSheet = document.styleSheets[document.styleSheets.length - 1];
@@ -699,108 +643,6 @@ function createChallengeNotification(station) {
     addChallengeToMinimap(station);
 }
 
-// Show direction to a challenge station
-function showDirectionToChallenge(station) {
-    // Create a direction arrow that points to the challenge
-    if (!gameState.directionArrow) {
-        // Create a floating arrow above the balloon
-        const arrowGroup = new THREE.Group();
-        
-        // Arrow body
-        const arrowBodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 6, 8);
-        const arrowMaterial = new THREE.MeshStandardMaterial({ 
-            color: station.userData.knowledgeColor || 0xFFD700,
-            emissive: station.userData.knowledgeColor || 0xFFD700,
-            emissiveIntensity: 0.5
-        });
-        const arrowBody = new THREE.Mesh(arrowBodyGeometry, arrowMaterial);
-        arrowBody.position.y = 3;
-        arrowGroup.add(arrowBody);
-        
-        // Arrow head
-        const arrowHeadGeometry = new THREE.ConeGeometry(1.5, 3, 8);
-        const arrowHead = new THREE.Mesh(arrowHeadGeometry, arrowMaterial);
-        arrowHead.position.y = 7.5;
-        arrowGroup.add(arrowHead);
-        
-        // Position above the balloon
-        arrowGroup.position.y = 15;
-        
-        // Add to balloon group
-        gameState.balloonGroup.add(arrowGroup);
-        gameState.directionArrow = arrowGroup;
-        
-        // Show directional text
-        const directionText = document.createElement('div');
-        directionText.id = 'direction-text';
-        directionText.textContent = 'Following direction to challenge...';
-        directionText.style.position = 'fixed';
-        directionText.style.top = '120px';
-        directionText.style.left = '50%';
-        directionText.style.transform = 'translateX(-50%)';
-        directionText.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-        directionText.style.color = 'white';
-        directionText.style.padding = '10px 20px';
-        directionText.style.borderRadius = '20px';
-        directionText.style.fontWeight = 'bold';
-        directionText.style.zIndex = '1000';
-        directionText.style.border = `2px solid #${station.userData.knowledgeColor.toString(16).padStart(6, '0')}`;
-        document.body.appendChild(directionText);
-        
-        // Target this specific challenge
-        gameState.directionArrowTarget = station;
-        
-        // Remove after 30 seconds
-        setTimeout(() => {
-            if (gameState.directionArrow) {
-                gameState.balloonGroup.remove(gameState.directionArrow);
-                gameState.directionArrow = null;
-                gameState.directionArrowTarget = null;
-                
-                if (document.getElementById('direction-text')) {
-                    document.body.removeChild(document.getElementById('direction-text'));
-                }
-            }
-        }, 45000);
-    }
-}
-
-// Update direction arrow to point toward target
-export function updateDirectionArrow() {
-    if (gameState.directionArrow && gameState.directionArrowTarget) {
-        // Get direction to target
-        const targetPosition = gameState.directionArrowTarget.position.clone();
-        const balloonPosition = gameState.balloonPhysics.position.clone();
-        
-        // Calculate direction vector
-        const direction = targetPosition.sub(balloonPosition).normalize();
-        
-        // Calculate angle to target in balloon's local space
-        const balloonForward = new THREE.Vector3(0, 0, 1).applyQuaternion(gameState.balloonGroup.quaternion);
-        const balloonRight = new THREE.Vector3(1, 0, 0).applyQuaternion(gameState.balloonGroup.quaternion);
-        
-        // Project direction onto balloon's XZ plane
-        direction.y = 0;
-        direction.normalize();
-        
-        // Get angle between balloon forward and direction
-        let angle = Math.atan2(
-            direction.dot(balloonRight),
-            direction.dot(balloonForward)
-        );
-        
-        // Rotate arrow to point in the correct direction
-        gameState.directionArrow.rotation.y = angle;
-        
-        // Update distance text
-        const distance = Math.round(gameState.balloonPhysics.position.distanceTo(gameState.directionArrowTarget.position));
-        const directionText = document.getElementById('direction-text');
-        if (directionText) {
-            directionText.textContent = `Challenge: ${distance}m away`;
-        }
-    }
-}
-
 // Add challenge to minimap
 function addChallengeToMinimap(station) {
     // Create a distinct marker for the challenge on the minimap
@@ -815,18 +657,9 @@ function addChallengeToMinimap(station) {
     marker.rotation.x = -Math.PI / 2; // Flat circle facing up
     marker.position.set(station.position.x, 1005, station.position.z); // Above terrain in minimap view
     
-    // Add a question mark symbol
-    const questionGeometry = new THREE.TextGeometry('?', {
-        size: 10,
-        height: 1
-    });
-    const questionMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
-    const questionMark = new THREE.Mesh(questionGeometry, questionMaterial);
-    questionMark.position.set(station.position.x - 5, 1006, station.position.z - 5);
-    
-    // If TextGeometry isn't available, use a ring instead
+    // Add a C shape symbol
     if (!THREE.TextGeometry) {
-        const ringGeometry = new THREE.RingGeometry(5, 8, 16);
+        const ringGeometry = new THREE.RingGeometry(5, 8, 16, 8, 0, Math.PI * 1.5); // Using ring geometry for C shape
         const ringMaterial = new THREE.MeshBasicMaterial({
             color: 0xFFFFFF,
             transparent: true,
@@ -841,8 +674,20 @@ function addChallengeToMinimap(station) {
         // Save reference to the ring
         station.userData.minimapRing = ring;
     } else {
-        gameState.scene.add(questionMark);
-        station.userData.minimapQuestionMark = questionMark;
+        // If TextGeometry available, we could use it, but using ring for consistency
+        const cGeometry = new THREE.RingGeometry(5, 8, 16, 8, 0, Math.PI * 1.5);
+        const cMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+            transparent: true,
+            opacity: 0.9,
+            side: THREE.DoubleSide
+        });
+        const cShape = new THREE.Mesh(cGeometry, cMaterial);
+        cShape.rotation.x = -Math.PI / 2;
+        cShape.position.set(station.position.x, 1006, station.position.z);
+        gameState.scene.add(cShape);
+        
+        station.userData.minimapCShape = cShape;
     }
     
     gameState.scene.add(marker);
@@ -864,6 +709,12 @@ function addChallengeToMinimap(station) {
     }
     
     animateMarker();
+}
+
+// Update direction arrow to point toward target - kept for compatibility but not used
+export function updateDirectionArrow() {
+    // Function is kept but doesn't do anything now
+    return;
 }
 
 // Check for collisions with challenge stations

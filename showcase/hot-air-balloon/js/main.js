@@ -255,7 +255,8 @@ function animate() {
         // Update the compass
         updateCompass();
         
-        // Update direction arrow if active
+        // Note: Direction arrow functionality has been removed but
+        // we keep the function (empty) for compatibility
         if (typeof updateDirectionArrow === 'function') {
             updateDirectionArrow();
         }
