@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Tools for Teachers - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* AI Tools page specific styles */
+        .section-container {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+        
+        .check {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .cross {
+            color: var(--tertiary);
+            margin-right: 8px;
+        }
+        
+        .tools-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tools-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .tools-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .tools-table tr {
+            background-color: white;
+        }
+        
+        .tools-table tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        .tools-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .tool-name {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tool-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 15px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+        }
+        
+        .tool-title {
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .tool-title:hover {
+            text-decoration: underline;
+        }
+        
+        .tool-provider {
+            font-size: 12px;
+            color: var(--neutral);
+        }
+        
+        .feature-cell {
+            text-align: center;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 15px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .card-title-section {
+            flex-grow: 1;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .card-category {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: rgba(2, 132, 199, 0.1);
+            color: var(--primary);
+        }
+        
+        .card-description {
+            color: var(--neutral);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .free-tag {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .card-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .card-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#language-models" class="nav-link">Language Models</a>
+                <a href="#specialized-tools" class="nav-link">Specialized Tools</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-medium">
+        <div class="container hero-content">
+            <h1>Free AI Tools for Teachers</h1>
+            <p>Enhance your teaching with these AI-powered tools. From generating content to providing feedback, these resources can save time and expand your educational capabilities.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="container">
+            <!-- LLM Tools Section -->
+            <div id="language-models" class="section-container">
+                <div class="section-heading">
+                    <h2>Large Language Models</h2>
+                    <p>These AI assistants can help with lesson planning, creating materials, answering questions, and more. Compare features to find the best option for your classroom needs.</p>
+                </div>
+                
+                <div class="table-container">
+                    <table class="tools-table">
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>Description</th>
+                                <th>Requires Sign-In</th>
+                                <th>Enhanced Features with Sign-In</th>
+                                <th>Frontier Models</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-robot"></i></div>
+                                        <div>
+                                            <a href="https://claude.ai" target="_blank" class="tool-title">Claude</a>
+                                            <div class="tool-provider">Anthropic</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Powerful AI assistant known for thoughtful, nuanced responses and longer context windows. Great for content generation, research assistance, and lesson planning.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-comment-dots"></i></div>
+                                        <div>
+                                            <a href="https://chat.openai.com" target="_blank" class="tool-title">ChatGPT</a>
+                                            <div class="tool-provider">OpenAI</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Versatile AI assistant that can help with brainstorming lesson ideas, creating educational content, answering student questions, and simplifying complex topics.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-brain"></i></div>
+                                        <div>
+                                            <a href="https://gemini.google.com" target="_blank" class="tool-title">Gemini</a>
+                                            <div class="tool-provider">Google</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Multimodal AI that excels at processing both text and images. Useful for creating learning materials, explaining concepts with visual examples, and research tasks.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-window-maximize"></i></div>
+                                        <div>
+                                            <a href="https://copilot.microsoft.com" target="_blank" class="tool-title">Copilot</a>
+                                            <div class="tool-provider">Microsoft</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>AI assistant integrated with Microsoft products. Helps with creating presentations, documents, and spreadsheets for classroom use.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-search"></i></div>
+                                        <div>
+                                            <a href="https://perplexity.ai" target="_blank" class="tool-title">Perplexity</a>
+                                            <div class="tool-provider">Perplexity AI</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Research-focused AI with real-time search capabilities. Excellent for fact-checking, exploring topics in depth, and discovering teaching resources with citations.</td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-rocket"></i></div>
+                                        <div>
+                                            <a href="https://grok.com" target="_blank" class="tool-title">Grok</a>
+                                            <div class="tool-provider">xAI</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Conversational AI known for its unique personality and creative approach. Good for brainstorming novel ideas and unconventional teaching approaches.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-cube"></i></div>
+                                        <div>
+                                            <a href="https://www.deepseek.com" target="_blank" class="tool-title">Deepseek</a>
+                                            <div class="tool-provider">Deepseek AI</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Specialized AI for in-depth research and technical topics. Particularly strong for computer science, mathematics, and coding applications in education.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tool-name">
+                                        <div class="tool-logo"><i class="fas fa-code"></i></div>
+                                        <div>
+                                            <a href="https://ai.google.dev/" target="_blank" class="tool-title">Google AI Studio</a>
+                                            <div class="tool-provider">Google</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Developer-focused platform for accessing Google's AI models. Useful for creating custom educational applications and experimenting with different prompting techniques.</td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="check">✓</span></td>
+                                <td class="feature-cell"><span class="cross">✗</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Other AI Tools Section -->
+            <div id="specialized-tools" class="section-container">
+                <div class="section-heading">
+                    <h2>Specialized AI Tools for Education</h2>
+                    <p>Beyond language models, these specialized AI tools can help with specific educational tasks from creating visuals to assessing student work.</p>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Canva AI -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-palette"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Canva AI</div>
+                                    <span class="card-category">Design</span>
+                                </div>
+                            </div>
+                            <p class="card-description">Create professional-looking educational materials, presentations, and visual aids with AI-assisted design tools.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://www.canva.com/ai-image-generator/" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quillbot -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-pen-fancy"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Quillbot</div>
+                                    <span class="card-category">Writing</span>
+                                </div>
+                            </div>
+                            <p class="card-description">Paraphrase and rewrite text to improve clarity, adjust reading levels, or provide alternative explanations for students.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://quillbot.com" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gamma -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-file-powerpoint"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Gamma</div>
+                                    <span class="card-category">Presentations</span>
+                                </div>
+                            </div>
+                            <p class="card-description">Generate engaging, professional presentations from text prompts. Great for quickly creating lesson materials.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://gamma.app" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mote -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-microphone"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Mote</div>
+                                    <span class="card-category">Audio</span>
+                                </div>
+                            </div>
+                            <p class="card-description">Add voice notes and audio feedback to documents and assignments. Includes speech-to-text for accessibility.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://www.mote.com" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teachable Machine -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-cogs"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Teachable Machine</div>
+                                    <span class="card-category">Machine Learning</span>
+                                </div>
+                            </div>
+                            <p class="card-description">Create custom machine learning models without code. Perfect for teaching AI concepts or building classroom projects.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://teachablemachine.withgoogle.com" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wordtune -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-file-alt"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Wordtune</div>
+                                    <span class="card-category">Writing</span>
+                                </div>
+                            </div>
+                            <p class="card-description">AI writing assistant that helps rephrase sentences, adjust tone, and suggest improvements for better communication.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://www.wordtune.com" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lumen5 -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-video"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Lumen5</div>
+                                    <span class="card-category">Video</span>
+                                </div>
+                            </div>
+                            <p class="card-description">Create engaging educational videos from text content. Automatically suggests relevant images and transitions.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://lumen5.com" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formative -->
+                    <div class="tool-card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-logo"><i class="fas fa-tasks"></i></div>
+                                <div class="card-title-section">
+                                    <div class="card-title">Formative</div>
+                                    <span class="card-category">Assessment</span>
+                                </div>
+                            </div>
+                            <p class="card-description">AI-enhanced formative assessment tool that helps create interactive assignments and provides instant feedback.</p>
+                            <div class="card-footer">
+                                <span class="free-tag">Free option available</span>
+                                <a href="https://goformative.com" target="_blank" class="card-link">Visit Site →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Last updated: March 2025</p>
+            <p>Note: Features and availability of these tools may change. Always check the official websites for the most current information.</p>
+            <a href="../index.html" class="home-btn">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+        
+        // Back to Top Button functionality
+        window.addEventListener('scroll', function() {
+            // Back to Top Button
+            if (window.scrollY > 300) {
+                document.getElementById('backToTopBtn').classList.add('active');
+            } else {
+                document.getElementById('backToTopBtn').classList.remove('active');
+            }
+        });
+
+        document.getElementById('backToTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navigation Smooth Scroll
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
