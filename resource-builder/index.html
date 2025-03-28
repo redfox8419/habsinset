@@ -3,16 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resource Builder - AI Inset Day</title>
+    <title>Resource Builder Pathway - AI Inset Day</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Additional styles specific to this page */
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        /* Sequential learning pathway styles */
+        .pathway-progress {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .progress-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin: 0;
+        }
+        
+        .progress-stats {
+            font-size: 1rem;
+            color: var(--neutral);
+            font-weight: 500;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background-color: var(--light);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 5px;
+            width: 0%; /* Will be updated with JavaScript */
+            transition: width 0.5s ease;
+        }
+        
+        /* Sequential module cards */
+        .modules-sequential {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             margin-top: 40px;
         }
         
@@ -22,12 +66,12 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transition: all 0.3s ease;
-            height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         
-        .module-card:hover {
+        .module-card:hover:not(.locked) {
             transform: translateY(-10px);
             box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
         }
@@ -38,18 +82,50 @@
             font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--secondary), #0d9488);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .module-card:nth-child(1) .module-header {
+            background: linear-gradient(135deg, var(--tertiary), #be123c);
         }
         
         .module-card:nth-child(2) .module-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, var(--secondary), #0d9488);
         }
         
         .module-card:nth-child(3) .module-header {
-            background: linear-gradient(135deg, var(--tertiary), #be123c);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         }
         
         .module-card:nth-child(4) .module-header {
             background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+        
+        .module-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .step-status {
+            font-size: 1rem;
+            color: white;
         }
         
         .module-body {
@@ -62,16 +138,16 @@
         .module-icon {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: var(--secondary);
+            color: var(--tertiary);
             text-align: center;
         }
         
         .module-card:nth-child(2) .module-icon {
-            color: var(--primary);
+            color: var(--secondary);
         }
         
         .module-card:nth-child(3) .module-icon {
-            color: var(--tertiary);
+            color: var(--primary);
         }
         
         .module-card:nth-child(4) .module-icon {
@@ -89,7 +165,7 @@
         .module-btn {
             display: inline-block;
             padding: 12px 25px;
-            background-color: var(--secondary);
+            background-color: var(--tertiary);
             color: white;
             text-decoration: none;
             border-radius: 8px;
@@ -100,20 +176,34 @@
         }
         
         .module-card:nth-child(2) .module-btn {
-            background-color: var(--primary);
+            background-color: var(--secondary);
         }
         
         .module-card:nth-child(3) .module-btn {
-            background-color: var(--tertiary);
+            background-color: var(--primary);
         }
         
         .module-card:nth-child(4) .module-btn {
             background-color: #8b5cf6;
         }
         
-        .module-btn:hover {
+        .module-btn:hover:not(.locked) {
             opacity: 0.9;
             transform: translateY(-3px);
+        }
+        
+        .module-btn.completed {
+            background-color: var(--neutral);
+        }
+        
+        .module-btn.locked {
+            background-color: var(--neutral-light);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .module-btn.locked:hover {
+            transform: none;
         }
         
         .coming-soon {
@@ -124,7 +214,55 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-left: 10px;
+        }
+        
+        /* Locked module overlay */
+        .module-card.locked {
+            opacity: 0.7;
+        }
+        
+        .module-card.locked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+        
+        .module-card.completed .step-status i {
+            color: #4ade80;
+        }
+        
+        /* Access denied alert */
+        .access-alert {
+            background-color: rgba(244, 63, 94, 0.1);
+            border-left: 4px solid var(--tertiary);
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .access-alert.visible {
+            display: block;
+        }
+        
+        .access-alert h3 {
+            color: var(--tertiary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .access-alert p {
+            color: var(--neutral);
+            margin: 0;
         }
         
         /* Featured resources section */
@@ -194,6 +332,15 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -228,70 +375,31 @@
     <!-- Main Content -->
     <section class="main-content" style="padding: 60px 0;">
         <div class="container">
-            <div class="section-heading">
-                <h2>Resource Builder Modules</h2>
-                <p>Explore these modules to enhance your ability to create effective teaching resources with AI. Start with the Prompting Cheat Sheet for ready-to-use templates.</p>
+            <!-- Access Denied Alert -->
+            <div class="access-alert" id="access-alert">
+                <h3><i class="fas fa-exclamation-triangle"></i> Module Access Restricted</h3>
+                <p>You need to complete the previous modules in sequence before accessing this content. Please follow the learning pathway in order.</p>
             </div>
             
-            <div class="module-grid">
-                <!-- Module 1 -->
-                <div class="module-card">
-                    <div class="module-header">
-                        <h3>Prompting Cheat Sheet</h3>
-                    </div>
-                    <div class="module-body">
-                        <div class="module-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <p class="module-desc">Access a collection of ready-to-use prompt templates for creating worksheets, assessments, differentiated materials, and more. Simply copy, paste, and customize.</p>
-                        <a href="../resources/prompt-cheat-sheet.html" class="module-btn">Access Templates</a>
-                    </div>
+            <div class="section-heading">
+                <h2>Your Learning Pathway</h2>
+                <p>Complete these modules in sequence to enhance your ability to create effective teaching resources with AI. Each module unlocks after you've completed the previous one.</p>
+            </div>
+            
+            <!-- Pathway Progress -->
+            <div class="pathway-progress">
+                <div class="progress-header">
+                    <h3>Your Progress</h3>
+                    <div class="progress-stats" id="pathway-progress-text">0 of 4 modules completed</div>
                 </div>
-                
-                <!-- Module 2 (Coming Soon) -->
-                <div class="module-card">
-                    <div class="module-header">
-                        <h3>Advanced Prompting</h3>
-                    </div>
-                    <div class="module-body">
-                        <div class="module-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <span class="coming-soon">Coming Soon</span>
-                        <p class="module-desc">Master advanced techniques for crafting effective prompts, including structured formats, specialized instructions, and strategies for complex educational needs.</p>
-                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
-                    </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pathway-progress-bar"></div>
                 </div>
-                
-                <!-- Module 3 (Coming Soon) -->
-                <div class="module-card">
-                    <div class="module-header">
-                        <h3>Interactive Editors</h3>
-                    </div>
-                    <div class="module-body">
-                        <div class="module-icon">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <span class="coming-soon">Coming Soon</span>
-                        <p class="module-desc">Use our specialized editors to create interactive quizzes, games, and resources with structured templates and AI assistance.</p>
-                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
-                    </div>
-                </div>
-                
-                <!-- Module 4 (Coming Soon) -->
-                <div class="module-card">
-                    <div class="module-header">
-                        <h3>Subject-Specific Guides</h3>
-                    </div>
-                    <div class="module-body">
-                        <div class="module-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <span class="coming-soon">Coming Soon</span>
-                        <p class="module-desc">Discover specialized prompting strategies and templates for specific subjects including Mathematics, English, Science, Humanities, and more.</p>
-                        <a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>
-                    </div>
-                </div>
+            </div>
+            
+            <!-- Sequential Modules -->
+            <div class="modules-sequential" id="modules-container">
+                <!-- Modules will be dynamically created by JavaScript -->
             </div>
             
             <!-- Featured resources section -->
@@ -340,12 +448,21 @@
         </div>
     </footer>
 
+    <script src="../js/module-progression.js"></script>
     <script>
         // Loading screen
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.querySelector('.loading-screen').classList.add('fade-out');
             }, 1000);
+            
+            // Check for access denied parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('access_denied') === 'true') {
+                document.getElementById('access-alert').classList.add('visible');
+                // Scroll to the alert
+                document.getElementById('access-alert').scrollIntoView();
+            }
         });
     </script>
 </body>

@@ -822,20 +822,19 @@ function checkAnswer(selectedIndex, challengeData) {
         buttons[challengeData.correctAnswer].classList.add('correct');
         
         // Show error feedback
-        feedbackElement.textContent = 'Incorrect. ' + challengeData.explanation;
-        feedbackElement.className = 'challenge-feedback incorrect';
-        
-        // Add to completed challenges even if incorrect - prevents repeated triggering
-        if (!gameState.completedChallenges.includes(challengeData.id)) {
-            gameState.completedChallenges.push(challengeData.id);
-        }
-        
-        // Close panel after delay
-        setTimeout(() => {
-            challengePanel.style.opacity = '0';
-            challengePanel.style.pointerEvents = 'none';
-            resumeGameMovement();
-        }, 4000);
+        // Show error feedback
+feedbackElement.textContent = 'Incorrect. ' + challengeData.explanation;
+feedbackElement.className = 'challenge-feedback incorrect';
+
+// Add to completed challenges even if incorrect - prevents repeated triggering
+if (!gameState.completedChallenges.includes(challengeData.id)) {
+    gameState.completedChallenges.push(challengeData.id);
+}
+
+// Close panel after delay - USING closeChallenge FUNCTION INSTEAD
+activeChallengeTimer = setTimeout(() => {
+    closeChallenge(challengePanel);
+}, 4000);
     }
     
     // Add feedback element to panel if not already added

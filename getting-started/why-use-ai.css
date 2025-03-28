@@ -434,12 +434,17 @@ header {
 }
 
 .cta-container p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px; /* Less rounded corners */
+    font-weight: 500; /* Slightly lighter weight */
+    text-align: center;
+    transition: all 0.2s ease;
+    border: none;
+    letter-spacing: 0.01em; /* Subtle letter spacing for refined look */
 }
 
 .cta-btn {

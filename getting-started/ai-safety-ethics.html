@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Safety & Ethics - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Progress indicator styles */
+        .module-progress {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .progress-step {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--light);
+            color: var(--neutral);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .step-number.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step-number.completed {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--neutral);
+            font-weight: 500;
+        }
+        
+        .step-connector {
+            height: 2px;
+            background-color: var(--light);
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+        
+        .pathway-name {
+            font-weight: 600;
+            color: var(--primary);
+            padding-left: 15px;
+            border-left: 2px solid var(--light);
+        }
+        
+        /* Content section styles */
+        .content-section {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .section-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: var(--neutral);
+        }
+        
+        .guidance-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .guidance-card h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .guidance-card h3 i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        .guidance-card p {
+            margin-bottom: 15px;
+        }
+        
+        .guidance-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .guidance-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .guidance-list li:before {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+        
+        .alert-box {
+            background-color: rgba(244, 63, 94, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--tertiary);
+        }
+        
+        .alert-box h3 {
+            font-size: 1.3rem;
+            color: var(--tertiary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-box h3 i {
+            margin-right: 10px;
+        }
+        
+        .alert-list {
+            list-style: none;
+        }
+        
+        .alert-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .alert-list li:before {
+            content: "\f071";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--tertiary);
+        }
+        
+        .quiz-section {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+        
+        .quiz-question h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--light);
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--primary-light);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+        
+        .quiz-option.correct {
+            border-color: var(--secondary);
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        
+        .quiz-option.incorrect {
+            border-color: var(--tertiary);
+            background-color: rgba(244, 63, 94, 0.1);
+        }
+        
+        .quiz-option-marker {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neutral-light);
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quiz-option.selected .quiz-option-marker {
+            border-color: var(--primary);
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .quiz-option.correct .quiz-option-marker {
+            border-color: var(--secondary);
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .quiz-option.incorrect .quiz-option-marker {
+            border-color: var(--tertiary);
+            background-color: var(--tertiary);
+            color: white;
+        }
+        
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .quiz-feedback.correct {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--secondary);
+            display: block;
+        }
+        
+        .quiz-feedback.incorrect {
+            background-color: rgba(244, 63, 94, 0.1);
+            border-left: 4px solid var(--tertiary);
+            display: block;
+        }
+        
+        /* Next button styles */
+        .next-module-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .next-module-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .next-module-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-robot"></i></span>
+                <span>AI Inset Day</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-medium">
+        <div class="container hero-content">
+            <h1>AI Safety & Ethics for Educators</h1>
+            <p>Learn essential guidelines for using AI responsibly in educational settings. This mandatory module covers data privacy, understanding AI limitations, avoiding bias, and ethical considerations for classroom use.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <!-- Module Progress -->
+            <div class="module-progress">
+                <div class="progress-steps">
+                    <div class="progress-step">
+                        <div class="step-number active">1</div>
+                        <span class="step-label">Safety & Ethics</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">2</div>
+                        <span class="step-label">Module 2</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <span class="step-label">Module 3</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <span class="step-label">Module 4</span>
+                    </div>
+                </div>
+                <!-- This will be dynamically updated with JavaScript -->
+                <div class="pathway-name" id="pathwayName">AI Foundations</div>
+            </div>
+
+            <!-- Introduction Section -->
+            <div class="content-section">
+                <h2 class="section-title">Understanding AI in Education: Benefits and Responsibilities</h2>
+                <div class="section-content">
+                    <p>Artificial Intelligence offers powerful tools for enhancing teaching and learning, from saving time on administrative tasks to creating personalized learning experiences. However, with these benefits come important responsibilities to ensure AI is used ethically, safely, and effectively in educational settings.</p>
+                    
+                    <p>This module will help you develop a foundational understanding of AI safety and ethics specifically for educational contexts. By completing this module, you'll be better prepared to use AI tools confidently while protecting student data, avoiding potential pitfalls, and modeling responsible digital citizenship.</p>
+                    
+                    <div class="guidance-card">
+                        <h3><i class="fas fa-lightbulb"></i>Why AI Safety Matters in Education</h3>
+                        <p>As educators, we have unique responsibilities when introducing AI into our teaching practice:</p>
+                        <ul class="guidance-list">
+                            <li>We serve as role models for responsible technology use</li>
+                            <li>We work with vulnerable populations (minors) whose data requires special protection</li>
+                            <li>We make decisions that can impact students' educational outcomes and opportunities</li>
+                            <li>We need to ensure AI tools enhance rather than detract from learning objectives</li>
+                            <li>We must maintain academic integrity while embracing new technologies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Understanding AI Limitations Section -->
+            <div class="content-section">
+                <h2 class="section-title">Understanding AI Limitations</h2>
+                <div class="section-content">
+                    <p>AI tools like large language models are remarkable, but they have important limitations that educators should understand. Being aware of these limitations helps you use AI more effectively and responsibly.</p>
+                    
+                    <div class="alert-box">
+                        <h3><i class="fas fa-exclamation-triangle"></i>Key AI Limitations to Be Aware Of</h3>
+                        <ul class="alert-list">
+                            <li><strong>AI can generate plausible-sounding but incorrect information</strong> (sometimes called "hallucinations"). Never assume AI-generated content is factually accurate without verification.</li>
+                            <li><strong>AI has limited knowledge cutoff dates</strong> and may not be aware of recent events, curriculum changes, or educational standards updates.</li>
+                            <li><strong>AI lacks true understanding of educational contexts</strong> and cannot fully grasp your specific classroom dynamics or student needs.</li>
+                            <li><strong>AI can reflect and amplify biases</strong> present in its training data, including stereotypes about different groups or outdated educational approaches.</li>
+                            <li><strong>AI cannot replace your professional judgment</strong> as an educator. It's a tool to enhance your teaching, not make decisions for you.</li>
+                        </ul>
+                    </div>
+                    
+                    <p>Always apply your professional expertise when reviewing AI-generated content. Your subject knowledge, understanding of your students, and educational experience are essential filters for using AI effectively.</p>
+                    
+                    <!-- Quiz Question 1 -->
+                    <div class="quiz-section">
+                        <div class="quiz-question" id="question1">
+                            <h3>Quick Check: Which of the following statements about AI is correct?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>AI-generated information is always factually accurate because it's based on data.</div>
+                                </div>
+                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question1')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>AI can present incorrect information convincingly, requiring human verification.</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>AI should be trusted to make educational decisions because it processes more information than humans can.</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>AI has complete knowledge of all current educational standards and recent curriculum changes.</div>
+                                </div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback1">
+                                <p><strong>Correct!</strong> AI can generate content that sounds convincing but contains errors or fabrications (sometimes called "hallucinations"). Always verify important information using your professional knowledge or trusted sources.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Privacy Section -->
+            <div class="content-section">
+                <h2 class="section-title">Protecting Student Data & Privacy</h2>
+                <div class="section-content">
+                    <p>When using AI tools in educational settings, protecting student data and privacy must be a top priority. Many AI tools process data on external servers, which creates potential privacy concerns, especially when working with data from minors.</p>
+                    
+                    <div class="guidance-card">
+                        <h3><i class="fas fa-shield-alt"></i>Best Practices for Data Privacy</h3>
+                        <ul class="guidance-list">
+                            <li><strong>Never share personally identifiable student information</strong> with AI tools, including names, ID numbers, contact details, or any data that could identify a specific student.</li>
+                            <li><strong>Anonymize student work</strong> before using it with AI tools by removing names and other identifying information.</li>
+                            <li><strong>Be cautious with sensitive topics</strong> in student work that might reveal personal information even when anonymized.</li>
+                            <li><strong>Check your school's policies</strong> regarding the use of external AI tools and data processing.</li>
+                            <li><strong>Consider using AI tools specifically designed for education</strong> that have appropriate privacy protections and compliance with educational data regulations.</li>
+                            <li><strong>Be transparent with students and parents</strong> about how AI tools are being used in your teaching practice.</li>
+                        </ul>
+                    </div>
+                    
+                    <p>Remember that many educational settings have specific legal requirements regarding student data (such as GDPR in Europe, FERPA in the US, or similar regulations in your region). Ensure your use of AI tools complies with these requirements.</p>
+                    
+                    <!-- Quiz Question 2 -->
+                    <div class="quiz-section">
+                        <div class="quiz-question" id="question2">
+                            <h3>Quick Check: Which of the following is an appropriate practice when using AI with student work?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Uploading a class list with student names and grades to get AI feedback on performance patterns</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Sharing student essays exactly as written with names included so the AI can provide personalized feedback</div>
+                                </div>
+                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question2')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Removing student names and any identifying information before asking AI to analyze patterns in work samples</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Using AI to evaluate student behavioral issues by providing detailed descriptions of specific student incidents</div>
+                                </div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback2">
+                                <p><strong>Correct!</strong> Always anonymize student work by removing names and other identifying information before sharing with AI tools. This helps protect student privacy while still allowing you to benefit from AI assistance with assessment or feedback.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bias & Fairness Section -->
+            <div class="content-section">
+                <h2 class="section-title">Recognizing & Addressing Bias</h2>
+                <div class="section-content">
+                    <p>AI systems can reflect and sometimes amplify biases present in their training data. This is particularly important in educational settings, where we aim to provide equitable learning experiences for all students.</p>
+                    
+                    <div class="alert-box">
+                        <h3><i class="fas fa-balance-scale"></i>Potential Bias Concerns in Educational AI</h3>
+                        <ul class="alert-list">
+                            <li><strong>Cultural and geographical biases</strong> - AI may favor certain cultural perspectives or have limited knowledge of non-Western or non-dominant cultural contexts</li>
+                            <li><strong>Language biases</strong> - AI often performs better with standard English and may struggle with different dialects, accents, or non-English languages</li>
+                            <li><strong>Representation biases</strong> - AI might generate examples or content that reinforces stereotypes about different groups</li>
+                            <li><strong>Subject-specific biases</strong> - AI may have stronger performance in some subject areas than others</li>
+                            <li><strong>Assessment biases</strong> - Using AI to evaluate student work might disadvantage students with different writing styles or approaches</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="guidance-card">
+                        <h3><i class="fas fa-lightbulb"></i>Mitigating Bias When Using AI</h3>
+                        <ul class="guidance-list">
+                            <li><strong>Critically review AI-generated content</strong> for representation of diverse perspectives, examples, and approaches</li>
+                            <li><strong>Provide specific instructions</strong> about inclusivity and diverse representation when prompting AI</li>
+                            <li><strong>Be especially vigilant</strong> when generating content related to social issues, history, or topics involving different cultural groups</li>
+                            <li><strong>Use AI as one tool among many</strong>, not the sole source for content or assessment</li>
+                            <li><strong>Involve diverse perspectives</strong> in reviewing AI-generated educational materials when possible</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Quiz Question 3 -->
+                    <div class="quiz-section">
+                        <div class="quiz-question" id="question3">
+                            <h3>Quick Check: How can educators best address potential bias in AI-generated educational content?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Assume AI-generated content is unbiased since AI is objective and data-driven</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Only use AI for STEM subjects where bias is less likely to be an issue</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Tell students to disregard any biased content they might notice in AI-generated materials</div>
+                                </div>
+                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question3')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Critically review AI outputs for diverse representation and provide specific instructions for inclusivity</div>
+                                </div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback3">
+                                <p><strong>Correct!</strong> Always review AI-generated content with a critical eye for potential biases, and provide specific instructions about inclusivity when prompting AI systems. Your professional judgment is essential for ensuring educational materials are appropriate and representative.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Integrity Section -->
+            <div class="content-section">
+                <h2 class="section-title">Modeling Appropriate AI Use & Academic Integrity</h2>
+                <div class="section-content">
+                    <p>As educators, we not only use AI tools ourselves but also model appropriate use for our students. Establishing clear guidelines around AI use helps maintain academic integrity while embracing the benefits these tools can offer.</p>
+                    
+                    <div class="guidance-card">
+                        <h3><i class="fas fa-graduation-cap"></i>Balancing AI Use and Academic Integrity</h3>
+                        <ul class="guidance-list">
+                            <li><strong>Be transparent with students</strong> about when and how you use AI in your teaching practice</li>
+                            <li><strong>Establish clear guidelines</strong> for when and how students can use AI tools in their learning</li>
+                            <li><strong>Design assessments that evaluate deeper understanding</strong> rather than easily generated content</li>
+                            <li><strong>Teach information literacy skills</strong> including the critical evaluation of AI-generated content</li>
+                            <li><strong>Emphasize the importance of attribution</strong> when using AI-generated content, just as with any other source</li>
+                            <li><strong>Discuss ethical AI use</strong> as part of digital citizenship education</li>
+                        </ul>
+                    </div>
+                    
+                    <p>Rather than focusing solely on preventing AI use, consider how to integrate appropriate AI use into your teaching and assessment approaches. This prepares students for a world where AI tools will be part of their academic and professional futures.</p>
+                    
+                    <!-- Quiz Question 4 -->
+                    <div class="quiz-section">
+                        <div class="quiz-question" id="question4">
+                            <h3>Quick Check: Which approach best balances academic integrity with the reality of AI tools?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Banning all AI use for students while using it privately as a teacher</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Allowing unlimited AI use without guidelines or discussion about appropriate use</div>
+                                </div>
+                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question4')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Establishing clear guidelines for appropriate AI use and designing assessments that evaluate deeper understanding</div>
+                                </div>
+                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
+                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                    <div>Focusing exclusively on detecting AI-generated student work rather than teaching appropriate use</div>
+                                </div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback4">
+                                <p><strong>Correct!</strong> Instead of an all-or-nothing approach, establishing clear guidelines and designing assessments that focus on deeper learning helps students develop appropriate AI literacy while maintaining academic integrity. This prepares them for a future where AI tools will be commonplace.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary & Next Steps Section -->
+            <div class="content-section">
+                <h2 class="section-title">Summary & Safe AI Use Pledge</h2>
+                <div class="section-content">
+                    <p>In this module, we've covered the fundamental aspects of AI safety and ethics in educational settings:</p>
+                    
+                    <ul class="guidance-list">
+                        <li>Understanding AI limitations and the importance of human oversight</li>
+                        <li>Protecting student data and privacy when using AI tools</li>
+                        <li>Recognizing and addressing potential biases in AI-generated content</li>
+                        <li>Modeling appropriate AI use and maintaining academic integrity</li>
+                    </ul>
+                    
+                    <p>By keeping these principles in mind, you can harness the benefits of AI while using it responsibly and ethically in your educational practice.</p>
+                    
+                    <div class="guidance-card" style="background-color: rgba(99, 102, 241, 0.1); border-left-color: var(--primary);">
+                        <h3><i class="fas fa-hand-paper"></i>Safe AI Use Pledge</h3>
+                        <p>As an educator using AI tools, I commit to:</p>
+                        <ul class="guidance-list">
+                            <li>Apply my professional judgment to review and verify AI-generated content</li>
+                            <li>Protect student privacy and comply with data protection regulations</li>
+                            <li>Critically evaluate AI outputs for potential bias and ensure diverse representation</li>
+                            <li>Model appropriate and ethical AI use for my students</li>
+                            <li>Continually learn about best practices for educational AI as the technology evolves</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="next-module-container">
+                        <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
+                            <i class="fas fa-check-circle"></i> Complete Module & Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>Responsible AI use in education starts with understanding both the possibilities and limitations.</p>
+            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
+            <a href="../index.html" class="home-btn">Back to Pathways</a>
+        </div>
+    </footer>
+
+    <script>
+        // Function to check quiz answers
+        function checkAnswer(option, questionId) {
+            const options = document.querySelectorAll(`#${questionId} .quiz-option`);
+            const feedback = document.getElementById(`feedback${questionId.slice(-1)}`);
+            
+            // Remove any previous selections
+            options.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark this option as selected
+            option.classList.add('selected');
+            
+            // Check if correct
+            if (option.getAttribute('data-correct') === 'true') {
+                option.classList.add('correct');
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+            } else {
+                option.classList.add('incorrect');
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                
+                // Highlight the correct answer
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            // Show feedback
+            feedback.style.display = 'block';
+        }
+        
+        // Function to handle module completion
+        function completeModule() {
+            // Determine which pathway the user is on
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'ai-foundations';
+            
+            // Mark this module as completed in localStorage
+            localStorage.setItem('aiSafetyCompleted', 'true');
+            localStorage.setItem(`${pathway}_module1_completed`, 'true');
+            
+            // Redirect to the appropriate next module
+            switch (pathway) {
+                case 'ai-foundations':
+                    window.location.href = '../getting-started/why-use-ai.html?pathway=ai-foundations&module=2';
+                    break;
+                case 'resource-builder':
+                    window.location.href = '../resources/prompt-cheat-sheet.html?pathway=resource-builder&module=2';
+                    break;
+                case 'code-creator':
+                    window.location.href = '../editors/index.html?pathway=code-creator&module=2';
+                    break;
+                default:
+                    window.location.href = '../ai-foundations/index.html';
+            }
+        }
+        
+        // Update pathway name in progress bar
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'ai-foundations';
+            
+            // Update the pathway name display
+            const pathwayNameElement = document.getElementById('pathwayName');
+            
+            switch (pathway) {
+                case 'ai-foundations':
+                    pathwayNameElement.textContent = 'AI Foundations';
+                    break;
+                case 'resource-builder':
+                    pathwayNameElement.textContent = 'Resource Builder';
+                    break;
+                case 'code-creator':
+                    pathwayNameElement.textContent = 'Code Creator';
+                    break;
+                default:
+                    pathwayNameElement.textContent = 'AI Foundations';
+            }
+        });
+    </script>
+</body>
+</html>

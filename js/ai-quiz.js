@@ -76,6 +76,7 @@ const pathways = [
         range: [0, 7],
         description: "Perfect for beginners! Start with the fundamentals of AI in education, learn basic prompting techniques, and discover how AI can enhance your teaching practice.",
         link: "ai-foundations/index.html",
+        firstModule: "../getting-started/ai-safety-ethics.html?pathway=ai-foundations&module=1",
         icon: "fas fa-seedling"
     },
     {
@@ -83,6 +84,7 @@ const pathways = [
         range: [8, 14],
         description: "Great for teachers with some AI experience! Learn advanced prompting techniques and access ready-to-use templates to create high-quality educational resources quickly.",
         link: "resource-builder/index.html",
+        firstModule: "../getting-started/ai-safety-ethics.html?pathway=resource-builder&module=1",
         icon: "fas fa-tools"
     },
     {
@@ -90,6 +92,7 @@ const pathways = [
         range: [15, 21],
         description: "For tech-savvy educators! Learn to use AI to generate interactive HTML applications, quizzes, and games for your classroom - no programming experience required.",
         link: "code-creator/index.html",
+        firstModule: "../getting-started/ai-safety-ethics.html?pathway=code-creator&module=1",
         icon: "fas fa-code"
     }
 ];
@@ -297,8 +300,8 @@ function createQuizModal() {
                 <div class="quiz-results-pathway">${recommendedPathway.name}</div>
                 <p class="quiz-results-description">${recommendedPathway.description}</p>
                 <div class="quiz-results-actions">
-                    <a href="${recommendedPathway.link}" class="quiz-btn quiz-btn-primary">Start Learning</a>
-                    <button class="quiz-btn quiz-btn-secondary quiz-close-btn">Explore on My Own</button>
+                    <a href="${recommendedPathway.firstModule}" class="quiz-btn quiz-btn-primary">Start Learning</a>
+                    <button class="quiz-btn quiz-btn-secondary quiz-close-btn">Choose Another Pathway</button>
                 </div>
             </div>
         `;
