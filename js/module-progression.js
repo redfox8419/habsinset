@@ -14,7 +14,7 @@ const pathwayModules = {
         },
         {
             id: 'module2',
-            name: 'Why Use AI in Education?',
+            name: 'What is AI and why use it in Education?',
             url: '../getting-started/why-use-ai.html?pathway=ai-foundations&module=2',
             required: 'module1' // Requires module1 to be completed
         },
@@ -23,13 +23,6 @@ const pathwayModules = {
             name: 'AI Prompting Basics',
             url: '../getting-started/prompting.html?pathway=ai-foundations&module=3',
             required: 'module2' // Requires module2 to be completed
-        },
-        {
-            id: 'module4',
-            name: 'What is AI?',
-            url: '#', // Coming soon
-            required: 'module3', // Requires module3 to be completed
-            comingSoon: true
         }
     ],
     'resource-builder': [
@@ -231,7 +224,7 @@ function getModuleDescription(pathway, index) {
     const pathwayDescriptions = {
         'ai-foundations': [
             null, // index 0 is handled above
-            "Discover how AI can enhance your teaching practice, save time, and create new opportunities for your students while addressing common concerns.",
+            "Discover the basics of what AI actually is and how it can enhance your teaching practice, save time, and create new opportunities for your students while addressing common concerns.",
             "Learn a simple, effective approach to communicate with AI tools and create amazing resources for your classroom, no technical expertise required.",
             "Get a teacher-friendly introduction to what AI is, how it works, and the different types of AI tools available for education."
         ],
