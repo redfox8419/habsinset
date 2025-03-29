@@ -5,9 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
       footerPlaceholder.innerHTML = `
         <footer>
           <div class="container footer-content">
-            <p>Create engaging, interactive learning experiences with AI assistance.</p>
             <p>2025 Habs Innovation AI Inset Day</p>
-            <a href="../index.html" class="home-btn">Back to Home</a>
+            <a href="../index.html" class="home-btn">Home</a>
           </div>
         </footer>
       `;

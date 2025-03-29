@@ -358,146 +358,6 @@
 }
 
 
-
-/* Module Cards */
-.module-card {
-    background-color: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-    transition: var(--transition-normal);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border-top: 4px solid var(--primary);
-}
-
-.module-card:hover:not(.locked) {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-xl);
-}
-
-.module-header {
-    padding: var(--spacing-6);
-    color: var(--dark);
-    font-size: 1.5rem;
-    font-weight: 600;
-    background-color: white;
-    border-bottom: 1px solid var(--accent-light);
-}
-
-.module-body {
-    padding: var(--spacing-6);
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.module-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-5);
-    text-align: center;
-}
-
-.module-desc {
-    font-size: 1rem;
-    color: var(--neutral);
-    margin-bottom: var(--spacing-6);
-    line-height: 1.6;
-    flex-grow: 1;
-}
-
-.module-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    background-color: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius-lg);
-    font-weight: 600;
-    text-align: center;
-    transition: var(--transition-normal);
-    border: none;
-}
-
-.module-btn:hover:not(.locked) {
-    opacity: 0.9;
-    transform: translateY(-3px);
-}
-
-.module-btn.completed {
-    background-color: var(--neutral);
-}
-
-.module-btn.locked {
-    background-color: var(--neutral-light);
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.module-btn.locked:hover {
-    transform: none;
-}
-
-/* Pathway Cards */
-.pathway-card {
-    background-color: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    overflow: hidden;
-    transition: var(--transition-normal);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--accent-light);
-    border-top: 4px solid var(--primary);
-}
-
-.pathway-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-}
-
-.pathway-header {
-    padding: var(--spacing-6);
-    color: var(--dark);
-    font-size: 1.5rem;
-    font-weight: 600;
-    background-color: white;
-    border-bottom: 1px solid var(--accent-light);
-    text-align: center;
-}
-
-.pathway-body {
-    padding: var(--spacing-6);
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.pathway-desc {
-    color: var(--neutral);
-    margin-bottom: var(--spacing-6);
-    line-height: 1.6;
-    flex-grow: 1;
-}
-
-.pathway-btn {
-    display: inline-block;
-    width: 100%;
-    padding: 12px;
-    background-color: white;
-    color: var(--dark);
-    text-decoration: none;
-    border: 1px solid var(--accent-light);
-    border-radius: var(--radius);
-    font-weight: 500;
-    text-align: center;
-    transition: var(--transition-fast);
-    margin-top: auto;
-    cursor: pointer;
-}
-
 /* Alert Boxes */
 .alert-box {
     background-color: rgba(244, 63, 94, 0.1);
@@ -945,4 +805,60 @@
     .two-column-container {
         grid-template-columns: 1fr;
     }
+}
+
+/* Set grid layout for modules container */
+.modules-sequential {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Module-specific styles for cards */
+.card .module-step {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.card .step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--light);
+    color: var(--neutral);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin: 0 auto 5px;
+}
+
+.card.completed .step-status i {
+    color: var(--secondary);
+}
+
+.card.locked {
+    opacity: 0.7;
+}
+
+.btn-card.locked {
+    background-color: var(--neutral-light);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-card.completed {
+    background-color: var(--neutral);
+}
+
+.coming-soon {
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: var(--neutral-light);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 10px;
 }

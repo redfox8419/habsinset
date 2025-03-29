@@ -169,14 +169,23 @@ function initPathwayModules(pathway) {
         const isCompleted = isModuleCompleted(pathway, module.id);
         const isAvailable = isModuleAvailable(pathway, module.id);
         
-        // Create module card
+        // Create module card with card classes
         const moduleCard = document.createElement('div');
-        moduleCard.className = `module-card ${isCompleted ? 'completed' : ''} ${!isAvailable ? 'locked' : ''}`;
+        moduleCard.className = `card ${isCompleted ? 'completed' : ''} ${!isAvailable ? 'locked' : ''}`;
         
-        // Create module content
+        // Add appropriate card color class based on index
+        const colorClasses = ['card-primary', 'card-secondary', 'card-tertiary', 'card-quaternary'];
+        moduleCard.classList.add(colorClasses[index % colorClasses.length]);
+        
+        // Create module content with card structure
         moduleCard.innerHTML = `
-            <div class="module-header">
-                <div class="module-step">
+            <div class="card-header"></div>
+            <div class="card-title">
+                <h3>${module.name}</h3>
+                ${module.comingSoon ? '<span class="coming-soon">Coming Soon</span>' : ''}
+            </div>
+            <div class="card-body">
+                <div class="module-step text-center mb-4">
                     <div class="step-number">${index + 1}</div>
                     <div class="step-status">
                         ${isCompleted ? '<i class="fas fa-check-circle"></i>' : 
@@ -184,25 +193,17 @@ function initPathwayModules(pathway) {
                           '<i class="fas fa-circle"></i>'}
                     </div>
                 </div>
-                <h3>${module.name}</h3>
-                ${module.comingSoon ? '<span class="coming-soon">Coming Soon</span>' : ''}
-            </div>
-            <div class="module-body">
-                <div class="module-icon">
-                    ${index === 0 ? '<i class="fas fa-shield-alt"></i>' : 
-                      index === 1 ? '<i class="fas fa-lightbulb"></i>' : 
-                      index === 2 ? '<i class="fas fa-comments"></i>' : 
-                      '<i class="fas fa-graduation-cap"></i>'}
+                <p>${getModuleDescription(pathway, index)}</p>
+                <div class="card-footer">
+                    ${module.comingSoon ? 
+                        `<a href="#" class="btn-card" style="cursor: not-allowed;">Coming Soon</a>` : 
+                        isAvailable ? 
+                            `<a href="${module.url}" class="btn-card ${isCompleted ? 'completed' : ''}">${isCompleted ? 'Review Module' : 'Start Module'}</a>` : 
+                            `<a href="#" class="btn-card locked" disabled>
+                                <i class="fas fa-lock"></i> Complete Previous Module
+                             </a>`
+                    }
                 </div>
-                <p class="module-desc">${getModuleDescription(pathway, index)}</p>
-                ${module.comingSoon ? 
-                    `<a href="#" class="module-btn" style="background-color: var(--neutral); cursor: not-allowed;">Coming Soon</a>` : 
-                    isAvailable ? 
-                        `<a href="${module.url}" class="module-btn ${isCompleted ? 'completed' : ''}">${isCompleted ? 'Review Module' : 'Start Module'}</a>` : 
-                        `<a href="#" class="module-btn locked" disabled>
-                            <i class="fas fa-lock"></i> Complete Previous Module
-                         </a>`
-                }
             </div>
         `;
         
