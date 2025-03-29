@@ -291,6 +291,72 @@
     color: var(--tertiary);
 }
 
+/* Quaternary (Purple) */
+.card-quaternary .card-header {
+    background-color: var(--purple);
+}
+
+.text-quaternary,
+.card-quaternary .card-icon i,
+.card-quaternary .card-icon svg {
+    color: var(--purple);
+    fill: var(--purple);
+}
+
+.card-quaternary .btn-card:hover {
+    background-color: var(--purple);
+    border-color: var(--purple);
+    color: white;
+}
+
+.card-quaternary .feature i {
+    color: var(--purple);
+}
+
+/* Quinary (Orange) */
+.card-quinary .card-header {
+    background-color: var(--orange, #f97316); /* Falls back to hex if var isn't defined */
+}
+
+.text-quinary,
+.card-quinary .card-icon i,
+.card-quinary .card-icon svg {
+    color: var(--orange, #f97316);
+    fill: var(--orange, #f97316);
+}
+
+.card-quinary .btn-card:hover {
+    background-color: var(--orange, #f97316);
+    border-color: var(--orange, #f97316);
+    color: white;
+}
+
+.card-quinary .feature i {
+    color: var(--orange, #f97316);
+}
+
+/* Senary (Teal) */
+.card-senary .card-header {
+    background-color: var(--teal, #0d9488); /* Falls back to hex if var isn't defined */
+}
+
+.text-senary,
+.card-senary .card-icon i,
+.card-senary .card-icon svg {
+    color: var(--teal, #0d9488);
+    fill: var(--teal, #0d9488);
+}
+
+.card-senary .btn-card:hover {
+    background-color: var(--teal, #0d9488);
+    border-color: var(--teal, #0d9488);
+    color: white;
+}
+
+.card-senary .feature i {
+    color: var(--teal, #0d9488);
+}
+
 
 
 /* Module Cards */

@@ -265,73 +265,6 @@
             margin: 0;
         }
         
-        /* Featured resources section */
-        .featured-resources {
-            margin-top: 80px;
-            padding: 40px;
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .featured-resources h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .resource-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .resource-example {
-            background-color: var(--light);
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 4px solid var(--secondary);
-        }
-        
-        .resource-example:nth-child(2) {
-            border-left-color: var(--primary);
-        }
-        
-        .resource-example:nth-child(3) {
-            border-left-color: var(--tertiary);
-        }
-        
-        .resource-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--dark);
-        }
-        
-        .resource-description {
-            color: var(--neutral);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .tag {
-            display: inline-block;
-            padding: 4px 10px;
-            background-color: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
         
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -402,40 +335,7 @@
                 <!-- Modules will be dynamically created by JavaScript -->
             </div>
             
-            <!-- Featured resources section -->
-            <div class="featured-resources">
-                <h3>What You Can Create</h3>
-                <p>Here are examples of the high-quality resources you can generate using AI with our templates and guidance:</p>
-                
-                <div class="resource-examples">
-                    <div class="resource-example">
-                        <div class="resource-title">Differentiated Worksheets</div>
-                        <div class="tag-container">
-                            <span class="tag">Differentiation</span>
-                            <span class="tag">Worksheets</span>
-                        </div>
-                        <p class="resource-description">Create multi-level worksheets tailored to different learning needs, with varied question complexity, scaffolding, and extension tasks—all from a single prompt.</p>
-                    </div>
-                    
-                    <div class="resource-example">
-                        <div class="resource-title">Comprehensive Assessment Packs</div>
-                        <div class="tag-container">
-                            <span class="tag">Assessment</span>
-                            <span class="tag">Rubrics</span>
-                        </div>
-                        <p class="resource-description">Generate complete assessment packages including questions, mark schemes, rubrics, and feedback templates aligned with curriculum standards.</p>
-                    </div>
-                    
-                    <div class="resource-example">
-                        <div class="resource-title">Visual Knowledge Organizers</div>
-                        <div class="tag-container">
-                            <span class="tag">Revision</span>
-                            <span class="tag">Visual Learning</span>
-                        </div>
-                        <p class="resource-description">Design visually structured knowledge organizers that compile key concepts, terminology, and connections for any topic or subject.</p>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </section>
 
