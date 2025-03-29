@@ -12,13 +12,7 @@
 
 
 /* Examples Section */
-.examples-container {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin-top: 50px;
-}
+
 
 .example {
     margin-bottom: 40px;

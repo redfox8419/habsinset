@@ -1,33 +1,11 @@
 /* Main Content */
-.main-content {
-    padding: 50px 0 100px;
-}
 
 
-.section-heading h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 15px;
-}
 
-.section-heading p {
-    font-size: 1.2rem;
-    color: var(--neutral);
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
+
 
 /* Quote Section */
-.quote-container {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin-top: 50px;
-    position: relative;
-}
+
 
 .quote-icon {
     font-size: 6rem;
@@ -58,9 +36,7 @@
 }
 
 /* Misconceptions Section */
-.misconceptions-container {
-    margin-top: 50px;
-}
+
 
 .misconception {
     background-color: white;
@@ -127,13 +103,6 @@
 }
 
 /* Teacher Role Section */
-.role-container {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin-top: 50px;
-}
 
 .role-grid {
     display: grid;

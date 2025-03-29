@@ -895,3 +895,54 @@
     border-left: 4px solid var(--tertiary);
     display: block;
 }
+
+/* Content Container - for main content sections with white background and shadow */
+.content-container {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+}
+
+/* Feature Container - for highlighting important content */
+.feature-container {
+    background-color: var(--light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+    border-left: 4px solid var(--primary);
+}
+
+/* Quote Container - for testimonials or highlighted quotes */
+.quote-container {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-8);
+    margin: var(--spacing-8) 0;
+    position: relative;
+}
+
+/* Info Section - for informational blocks with icons */
+.info-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-8);
+    margin: var(--spacing-10) 0;
+}
+
+/* Two-column layout container */
+.two-column-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-6);
+}
+
+/* Responsive adjustment for two-column layout */
+@media (max-width: 768px) {
+    .two-column-container {
+        grid-template-columns: 1fr;
+    }
+}
