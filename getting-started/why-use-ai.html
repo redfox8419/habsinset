@@ -6,6 +6,7 @@
     <title>Why Use AI in Education?</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="why-use-ai.css">
+    <link rel="stylesheet" href="../css/module-steps.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -14,337 +15,686 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <a href="index.html" class="logo">
-                <span class="logo-icon"><i class="fas fa-robot"></i></span>
-                <span>AI Inset Day</span>
-            </a>
-            <nav class="nav-links">
-                <a href="#benefits" class="nav-link">Benefits</a>
-                <a href="#misconceptions" class="nav-link">Addressing Concerns</a>
-                <a href="#teacher-role" class="nav-link">Your Expertise</a>
-                <a href="#cta" class="nav-link">Get Started</a>
-            </nav>
-        </div>
-    </header>
+        <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <!-- Module Progress -->
+            <div class="module-progress">
+                <div class="progress-steps">
+                    <div class="progress-step">
+                        <div class="step-number active">1</div>
+                        <span class="step-label">Why Use AI</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">2</div>
+                        <span class="step-label">Module 2</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <span class="step-label">Module 3</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <span class="step-label">Module 4</span>
+                    </div>
+                </div>
+                <!-- This will be dynamically updated with JavaScript -->
+                <div class="pathway-name" id="pathwayName">AI Foundations</div>
+            </div>
 
-    <!-- Hero Section -->
-    <section class="hero hero-medium">
-        <div class="container hero-content">
-            <h1>Why Use AI in Education?</h1>
-            <p>Discover how artificial intelligence can enhance your teaching practice, save precious time, and enable new possibilities for your students—without replacing the irreplaceable: you.</p>
-        </div>
-        <div class="floating-elements">
-            <div class="floating-element element-1"></div>
-            <div class="floating-element element-2"></div>
+            <!-- Step 1: Introduction -->
+            <div class="module-step" data-step="1">
+                <div class="content-section">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--dark);">Why Use AI in Education?</h1>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--neutral); margin-bottom: 30px;">Discover how artificial intelligence can enhance your teaching practice, save precious time, and enable new possibilities for your students—without replacing the irreplaceable: you.</p>
+                    
+                    <h2 class="section-title">AI as Your Educational Assistant</h2>
+                    <div class="section-content">
+                        <p>In an era of increasing workloads and limited time, AI tools can serve as valuable assistants that help you focus on what truly matters: supporting your students and delivering exceptional education.</p>
+                        
+                        <div class="quote-container" style="padding-left: 40px; padding-right: 40px;">
+                            <div class="quote-content" style="text-align: center;">
+                                <div style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--dark);">Enhancing Your Creative Process</h3>
+                                <p style="font-size: 1.2rem; line-height: 1.8; color: var(--neutral);">
+                                    While AI rarely delivers the perfect final product on its first attempt, it excels at accelerating the creative process when you need it most. As educators, we often face creative challenges when we're already tired and mentally drained—precisely when fresh ideas are hardest to generate. AI provides a reliable thinking partner that can help you quickly explore possibilities, overcome creative blocks, and jumpstart your planning when inspiration feels distant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 1 of 5</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Key Benefits -->
+            <div class="module-step" data-step="2">
+                <div class="content-section">
+                    <h2 class="section-title">Key Benefits for Busy Educators</h2>
+                    <div class="section-content">
+                        <p>AI offers practical advantages that can transform your daily teaching practice while respecting your professional expertise and judgment.</p>
+                        
+                        <div class="cards-grid">
+                            <!-- Time Saving Card -->
+                            <div class="card card-primary">
+                                <div class="card-header"></div>
+                                <div class="card-title">
+                                    <h3>Time-Saving Assistant</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-4">
+                                        <i class="fas fa-clock text-primary fa-3x"></i>
+                                    </div>
+                                    <p>Reclaim precious hours by delegating routine, time-consuming tasks to AI. Focus your energy and expertise where it matters most: on your students.</p>
+                                    
+                                    <div class="feature-list">
+                                        <h4>Examples:</h4>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Generate draft lesson plans and resources that you can personalize</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Proofread and polish student feedback or reports</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Create differentiated versions of existing materials</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Develop quick formative assessments without starting from scratch</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Creative Partner Card -->
+                            <div class="card card-secondary">
+                                <div class="card-header"></div>
+                                <div class="card-title">
+                                    <h3>Creative Thinking Partner</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-4">
+                                        <i class="fas fa-lightbulb text-secondary fa-3x"></i>
+                                    </div>
+                                    <p>Teaching demands constant creativity, often when we're most depleted. AI serves as an always-fresh thinking partner that can help spark ideas and overcome creative blocks.</p>
+                                    
+                                    <div class="feature-list">
+                                        <h4>Examples:</h4>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Brainstorm engaging lesson hooks and activities</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Generate fresh approaches to teaching challenging concepts</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Develop cross-curricular connections you might not have considered</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Suggest alternative assessment strategies for diverse learners</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Expanded Possibilities Card -->
+                            <div class="card card-tertiary">
+                                <div class="card-header"></div>
+                                <div class="card-title">
+                                    <h3>Expanded Possibilities</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-4">
+                                        <i class="fas fa-rocket text-tertiary fa-3x"></i>
+                                    </div>
+                                    <p>AI enables you to create resources that would be impractical to develop manually, opening new possibilities for enriched learning experiences and deeper differentiation.</p>
+                                    
+                                    <div class="feature-list">
+                                        <h4>Examples:</h4>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Generate 30+ tailored practice questions with worked solutions</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Create personalized reading materials at multiple difficulty levels</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Develop custom simulations or interactive content for complex topics</span>
+                                        </div>
+                                        <div class="feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Craft scaffolded resources with multiple layers of support</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 2 of 5</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Addressing Concerns -->
+            <div class="module-step" data-step="3">
+                <div class="content-section">
+                    <h2 class="section-title">Addressing Common Concerns</h2>
+                    <div class="section-content">
+                        <p>Many educators have valid concerns about AI in education. Let's examine some common misconceptions and provide a balanced perspective.</p>
+                        
+                        <div class="content-container">
+                            <!-- Misconception 1 -->
+                            <div class="misconception">
+                                <div class="misconception-header">
+                                    <h3><i class="fas fa-exclamation-circle"></i> "Using AI is cheating"</h3>
+                                </div>
+                                <div class="misconception-body">
+                                    <p class="myth">"Teachers shouldn't use AI to create resources because it's taking shortcuts and not putting in the proper effort."</p>
+                                    <div class="reality">
+                                        <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                        <p>AI is simply another tool in a teacher's toolkit, like textbooks, educational websites, or colleague collaboration. The value lies in how you apply your professional judgment to select, modify, and implement AI-generated content for your specific students' needs. Using AI efficiently allows you to dedicate more time and energy to high-impact teaching activities that cannot be automated, such as building relationships with students or providing personalized feedback.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Misconception 2 -->
+                            <div class="misconception">
+                                <div class="misconception-header">
+                                    <h3><i class="fas fa-exclamation-circle"></i> "AI will make teachers lazy"</h3>
+                                </div>
+                                <div class="misconception-body">
+                                    <p class="myth">"Teachers will stop creating original content and just rely on AI for everything, diminishing the quality of education."</p>
+                                    <div class="reality">
+                                        <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                        <p>Effective use of AI actually requires significant professional expertise and judgment. Teachers must still provide the prompt engineering, subject knowledge, contextual understanding, and quality control. Far from making teachers lazy, AI frees them from repetitive tasks to focus on the creative, interpersonal, and analytical aspects of teaching that require human intelligence and empathy. Think of it as redirecting your professional energy more efficiently.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Misconception 3 -->
+                            <div class="misconception">
+                                <div class="misconception-header">
+                                    <h3><i class="fas fa-exclamation-circle"></i> "AI produces incorrect information"</h3>
+                                </div>
+                                <div class="misconception-body">
+                                    <p class="myth">"AI often fabricates facts or provides wrong answers, making it unreliable for educational use."</p>
+                                    <div class="reality">
+                                        <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
+                                        <p>While AI systems can sometimes produce inaccuracies (known as "hallucinations"), a teacher's subject expertise serves as a crucial quality filter. Your professional knowledge allows you to quickly identify and correct any errors. This is why AI works best as an assistant rather than an authority. Additionally, AI tools are rapidly improving in accuracy, and you can significantly reduce errors by providing clear context and checking outputs against your own knowledge. The same critical evaluation we apply to textbooks or online resources applies to AI-generated content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quiz Question 1 -->
+                            <div class="quiz-section">
+                                <div class="quiz-question" id="question1">
+                                    <h3>Quick Check: Which statement best summarizes the benefits of using AI for teachers?</h3>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                            <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                            <div>AI will eventually replace teachers, allowing schools to operate with minimal staff.</div>
+                                        </div>
+                                        <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question1')">
+                                            <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                            <div>AI allows teachers to automate routine tasks so they can focus more time and energy on high-impact teaching activities.</div>
+                                        </div>
+                                        <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                            <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                            <div>AI handles lesson planning and resource creation perfectly, requiring no teacher input or modifications.</div>
+                                        </div>
+                                        <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                            <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                            <div>AI is only useful for STEM subjects where facts can be easily verified.</div>
+                                        </div>
+                                    </div>
+                                    <div class="quiz-feedback" id="feedback1">
+                                        <p><strong>Correct!</strong> AI is most valuable when it handles routine, time-consuming tasks, allowing teachers to focus their expertise and energy on the aspects of teaching that require human connection, creativity, and professional judgment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 3 of 5</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Teacher's Role -->
+            <div class="module-step" data-step="4">
+                <div class="content-section">
+                    <h2 class="section-title">You Remain the Expert</h2>
+                    <div class="section-content">
+                        <p>AI is designed to complement your expertise and professionalism, not replace it. Here's what you bring that AI cannot:</p>
+                        
+                        <div class="content-container">
+                            <div class="role-grid">
+                                <!-- Role Card 1 -->
+                                <div class="role-card">
+                                    <div class="role-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <h3>Relationships & Empathy</h3>
+                                    <p>You build meaningful connections with students, understand their emotional needs, and create a classroom culture that AI simply cannot replicate. Your ability to notice when a student is having a bad day or needs encouragement is irreplaceable.</p>
+                                </div>
+                                
+                                <!-- Role Card 2 -->
+                                <div class="role-card">
+                                    <div class="role-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <h3>Professional Judgment</h3>
+                                    <p>Your years of training and classroom experience inform countless decisions you make daily. You understand the nuances of your subject, your students' individual needs, and your school context in ways AI cannot comprehend.</p>
+                                </div>
+                                
+                                <!-- Role Card 3 -->
+                                <div class="role-card">
+                                    <div class="role-icon">
+                                        <i class="fas fa-puzzle-piece"></i>
+                                    </div>
+                                    <h3>Creative Adaptation</h3>
+                                    <p>You skillfully adapt and combine ideas to create meaningful learning experiences tailored to your specific students. AI may generate content, but you transform it into effective education through your expertise and intuition.</p>
+                                </div>
+                            </div>
+                            <div style="margin-top: 40px; padding: 20px; background-color: var(--light); border-radius: 8px; border-left: 4px solid var(--primary);">
+                                <p style="font-size: 1.1rem; line-height: 1.6; color: var(--dark);">AI should enhance what you already do well, not replace your expertise. Think of it as having a teaching assistant who can handle routine tasks, allowing you to focus your professional skills where they have the greatest impact on student learning and wellbeing.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Quiz Question 2 -->
+                        <div class="quiz-section">
+                            <div class="quiz-question" id="question2">
+                                <h3>Quick Check: Which of the following is a unique human quality that AI cannot replace?</h3>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>The ability to process large amounts of data quickly</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Generating multiple content variations efficiently</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Building authentic emotional connections with students and understanding their unique needs</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Creating structured learning materials with consistent formatting</div>
+                                    </div>
+                                </div>
+                                <div class="quiz-feedback" id="feedback2">
+                                    <p><strong>Correct!</strong> While AI excels at data processing and content generation, it cannot replicate the emotional intelligence, empathy, and relationship-building abilities that are central to effective teaching. These human qualities remain irreplaceable in education.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 4 of 5</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 5: Summary & Next Steps -->
+            <div class="module-step" data-step="5">
+                <div class="content-section">
+                    <h2 class="section-title">Summary & Next Steps</h2>
+                    <div class="section-content">
+                        <p>In this module, we've explored why AI is a valuable tool for educators:</p>
+                        
+                        <ul class="guidance-list">
+                            <li>AI can save you significant time on routine tasks, allowing you to focus on high-impact teaching activities</li>
+                            <li>AI serves as a creative thinking partner that can help overcome blocks and generate fresh ideas</li>
+                            <li>AI enables the creation of resources that would be impractical to develop manually</li>
+                            <li>While AI has limitations, your professional expertise is the perfect complement to address them</li>
+                            <li>You bring irreplaceable human qualities to teaching that AI cannot replicate</li>
+                        </ul>
+                        
+                        <p>Now that you understand the value of AI in education, your next step is to learn practical prompting techniques to communicate effectively with AI tools.</p>
+                        
+                        <div class="guidance-card" style="background-color: rgba(99, 102, 241, 0.1); border-left-color: var(--primary);">
+                            <h3><i class="fas fa-lightbulb"></i> Remember</h3>
+                            <p>Technology should serve your teaching goals, not define them. You are in control of how and when to use AI, and your professional judgment remains the most important factor in creating exceptional learning experiences.</p>
+                        </div>
+                        
+                        <div class="next-module-container">
+                            <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
+                                <i class="fas fa-check-circle"></i> Complete Module & Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 5 of 5</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <section class="section" id="introduction">
-                <div class="section-heading">
-                    <h2>AI as Your Educational Assistant</h2>
-                    <p>In an era of increasing workloads and limited time, AI tools can serve as valuable assistants that help you focus on what truly matters: supporting your students and delivering exceptional education.</p>
-                </div>
-            </section>
-
-            <section class="section" id="benefits">
-                <div class="section-heading">
-                    <h2>Key Benefits for Busy Educators</h2>
-                    <p>AI offers practical advantages that can transform your daily teaching practice while respecting your professional expertise and judgment.</p>
-                </div>
-                <div class="cards-grid">
-                    <!-- Time Saving Card -->
-                    <div class="card card-primary">
-                        <div class="card-header"></div>
-                        <div class="card-title">
-                            <h3>Time-Saving Assistant</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-4">
-                                <i class="fas fa-clock text-primary fa-3x"></i>
-                            </div>
-                            <p>Reclaim precious hours by delegating routine, time-consuming tasks to AI. Focus your energy and expertise where it matters most: on your students.</p>
-                            
-                            <div class="feature-list">
-                                <h4>Examples:</h4>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Generate draft lesson plans and resources that you can personalize</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Proofread and polish student feedback or reports</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Create differentiated versions of existing materials</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Develop quick formative assessments without starting from scratch</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Creative Partner Card -->
-                    <div class="card card-secondary">
-                        <div class="card-header"></div>
-                        <div class="card-title">
-                            <h3>Creative Thinking Partner</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-4">
-                                <i class="fas fa-lightbulb text-secondary fa-3x"></i>
-                            </div>
-                            <p>Teaching demands constant creativity, often when we're most depleted. AI serves as an always-fresh thinking partner that can help spark ideas and overcome creative blocks.</p>
-                            
-                            <div class="feature-list">
-                                <h4>Examples:</h4>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Brainstorm engaging lesson hooks and activities</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Generate fresh approaches to teaching challenging concepts</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Develop cross-curricular connections you might not have considered</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Suggest alternative assessment strategies for diverse learners</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Expanded Possibilities Card -->
-                    <div class="card card-tertiary">
-                        <div class="card-header"></div>
-                        <div class="card-title">
-                            <h3>Expanded Possibilities</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-4">
-                                <i class="fas fa-rocket text-tertiary fa-3x"></i>
-                            </div>
-                            <p>AI enables you to create resources that would be impractical to develop manually, opening new possibilities for enriched learning experiences and deeper differentiation.</p>
-                            
-                            <div class="feature-list">
-                                <h4>Examples:</h4>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Generate 30+ tailored practice questions with worked solutions</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Create personalized reading materials at multiple difficulty levels</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Develop custom simulations or interactive content for complex topics</span>
-                                </div>
-                                <div class="feature">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>Craft scaffolded resources with multiple layers of support</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="creative-process">
-                <div class="quote-container" style="padding-left: 40px; padding-right: 40px;">
-                    <div class="quote-content" style="text-align: center;">
-                        <div style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--dark);">Enhancing Your Creative Process</h3>
-                        <p style="font-size: 1.2rem; line-height: 1.8; color: var(--neutral);">
-                            While AI rarely delivers the perfect final product on its first attempt, it excels at accelerating the creative process when you need it most. As educators, we often face creative challenges when we're already tired and mentally drained—precisely when fresh ideas are hardest to generate. AI provides a reliable thinking partner that can help you quickly explore possibilities, overcome creative blocks, and jumpstart your planning when inspiration feels distant.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="misconceptions">
-                <div class="section-heading">
-                    <h2>Addressing Common Concerns</h2>
-                    <p>Many educators have valid concerns about AI in education. Let's examine some common misconceptions and provide a balanced perspective.</p>
-                </div>
-                <div class="content-container">
-                    <!-- Misconception 1 -->
-                    <div class="misconception">
-                        <div class="misconception-header">
-                            <h3><i class="fas fa-exclamation-circle"></i> "Using AI is cheating"</h3>
-                        </div>
-                        <div class="misconception-body">
-                            <p class="myth">"Teachers shouldn't use AI to create resources because it's taking shortcuts and not putting in the proper effort."</p>
-                            <div class="reality">
-                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
-                                <p>AI is simply another tool in a teacher's toolkit, like textbooks, educational websites, or colleague collaboration. The value lies in how you apply your professional judgment to select, modify, and implement AI-generated content for your specific students' needs. Using AI efficiently allows you to dedicate more time and energy to high-impact teaching activities that cannot be automated, such as building relationships with students or providing personalized feedback.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Misconception 2 -->
-                    <div class="misconception">
-                        <div class="misconception-header">
-                            <h3><i class="fas fa-exclamation-circle"></i> "AI will make teachers lazy"</h3>
-                        </div>
-                        <div class="misconception-body">
-                            <p class="myth">"Teachers will stop creating original content and just rely on AI for everything, diminishing the quality of education."</p>
-                            <div class="reality">
-                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
-                                <p>Effective use of AI actually requires significant professional expertise and judgment. Teachers must still provide the prompt engineering, subject knowledge, contextual understanding, and quality control. Far from making teachers lazy, AI frees them from repetitive tasks to focus on the creative, interpersonal, and analytical aspects of teaching that require human intelligence and empathy. Think of it as redirecting your professional energy more efficiently.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Misconception 3 -->
-                    <div class="misconception">
-                        <div class="misconception-header">
-                            <h3><i class="fas fa-exclamation-circle"></i> "AI produces incorrect information"</h3>
-                        </div>
-                        <div class="misconception-body">
-                            <p class="myth">"AI often fabricates facts or provides wrong answers, making it unreliable for educational use."</p>
-                            <div class="reality">
-                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
-                                <p>While AI systems can sometimes produce inaccuracies (known as "hallucinations"), a teacher's subject expertise serves as a crucial quality filter. Your professional knowledge allows you to quickly identify and correct any errors. This is why AI works best as an assistant rather than an authority. Additionally, AI tools are rapidly improving in accuracy, and you can significantly reduce errors by providing clear context and checking outputs against your own knowledge. The same critical evaluation we apply to textbooks or online resources applies to AI-generated content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Misconception 4 -->
-                    <div class="misconception">
-                        <div class="misconception-header">
-                            <h3><i class="fas fa-exclamation-circle"></i> "AI will replace teachers"</h3>
-                        </div>
-                        <div class="misconception-body">
-                            <p class="myth">"If we start using AI, eventually schools won't need as many teachers, or the role will be diminished."</p>
-                            <div class="reality">
-                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
-                                <p>AI lacks the critical human elements that define great teaching: empathy, relationship-building, moral guidance, cultural understanding, and the ability to truly know each student as an individual. AI tools are designed to handle routine tasks that consume teachers' time, allowing them to enhance and deepen their uniquely human contributions. Throughout history, new technologies have transformed teaching (from books to computers) without replacing teachers. Instead, these tools have enabled teachers to focus on more meaningful aspects of education.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Misconception 5 -->
-                    <div class="misconception">
-                        <div class="misconception-header">
-                            <h3><i class="fas fa-exclamation-circle"></i> "Students will use AI to cheat"</h3>
-                        </div>
-                        <div class="misconception-body">
-                            <p class="myth">"If teachers use AI, it sends the message that students can also use it to complete their assignments without learning."</p>
-                            <div class="reality">
-                                <p class="reality-heading"><i class="fas fa-check-circle"></i> Reality:</p>
-                                <p>Understanding AI tools is essential precisely because students already have access to them. By becoming AI-literate, teachers can design assessments that evaluate deeper learning rather than easily generated content. The best approach is to openly discuss appropriate vs. inappropriate uses of AI with students, adapt assignments to focus on process and unique perspectives, and teach students how to use AI as a learning tool rather than a shortcut. This represents an opportunity to help students develop digital literacy for a world where AI will be part of their future careers.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="teacher-role">
-                <div class="section-heading">
-                    <h2>You Remain the Expert</h2>
-                    <p>AI is designed to complement your expertise and professionalism, not replace it. Here's what you bring that AI cannot:</p>
-                </div>
-                <div class="content-container">
-                    <div class="role-grid">
-                        <!-- Role Card 1 -->
-                        <div class="role-card">
-                            <div class="role-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <h3>Relationships & Empathy</h3>
-                            <p>You build meaningful connections with students, understand their emotional needs, and create a classroom culture that AI simply cannot replicate. Your ability to notice when a student is having a bad day or needs encouragement is irreplaceable.</p>
-                        </div>
-                        
-                        <!-- Role Card 2 -->
-                        <div class="role-card">
-                            <div class="role-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h3>Professional Judgment</h3>
-                            <p>Your years of training and classroom experience inform countless decisions you make daily. You understand the nuances of your subject, your students' individual needs, and your school context in ways AI cannot comprehend.</p>
-                        </div>
-                        
-                        <!-- Role Card 3 -->
-                        <div class="role-card">
-                            <div class="role-icon">
-                                <i class="fas fa-puzzle-piece"></i>
-                            </div>
-                            <h3>Creative Adaptation</h3>
-                            <p>You skillfully adapt and combine ideas to create meaningful learning experiences tailored to your specific students. AI may generate content, but you transform it into effective education through your expertise and intuition.</p>
-                        </div>
-                    </div>
-                    <div style="margin-top: 40px; padding: 20px; background-color: var(--light); border-radius: 8px; border-left: 4px solid var(--primary);">
-                        <p style="font-size: 1.1rem; line-height: 1.6; color: var(--dark);">AI should enhance what you already do well, not replace your expertise. Think of it as having a teaching assistant who can handle routine tasks, allowing you to focus your professional skills where they have the greatest impact on student learning and wellbeing.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
 
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTopBtn">
         <i class="fas fa-arrow-up"></i>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <p>Remember that technology should serve your teaching goals, not define them. You decide how and when to use AI.</p>
-            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
-            <a href="index.html" class="home-btn">Back to Main Page</a>
-        </div>
-    </footer>
+
 
     <script>
-        // Progress Bar
-        window.addEventListener('scroll', function() {
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            const scrollTop = window.scrollY;
+        // Function to check quiz answers
+        function checkAnswer(option, questionId) {
+            const options = document.querySelectorAll(`#${questionId} .quiz-option`);
+            const feedback = document.getElementById(`feedback${questionId.slice(-1)}`);
             
-            const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
+            // Remove any previous selections
+            options.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
             
-            // Back to Top Button
-            if (scrollTop > 300) {
-                document.getElementById('backToTopBtn').classList.add('active');
+            // Mark this option as selected
+            option.classList.add('selected');
+            
+            // Check if correct
+            if (option.getAttribute('data-correct') === 'true') {
+                option.classList.add('correct');
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
             } else {
-                document.getElementById('backToTopBtn').classList.remove('active');
+                option.classList.add('incorrect');
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                
+                // Highlight the correct answer
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            // Show feedback
+            feedback.style.display = 'block';
+        }
+        
+        // Function to handle module completion
+        function completeModule() {
+            // Determine which pathway the user is on
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'ai-foundations';
+            
+            // Mark this module as completed in localStorage
+            localStorage.setItem('whyUseAICompleted', 'true');
+            localStorage.setItem(`${pathway}_module2_completed`, 'true');
+            
+            // Redirect to the appropriate next module
+            switch (pathway) {
+                case 'ai-foundations':
+                    window.location.href = '../getting-started/prompting.html?pathway=ai-foundations&module=3';
+                    break;
+                case 'resource-builder':
+                    window.location.href = '../resources/prompt-cheat-sheet.html?pathway=resource-builder&module=3';
+                    break;
+                case 'code-creator':
+                    window.location.href = '../editors/index.html?pathway=code-creator&module=3';
+                    break;
+                default:
+                    window.location.href = '../ai-foundations/index.html';
+            }
+        }
+        
+        // Update pathway name in progress bar
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'ai-foundations';
+            
+            // Update the pathway name display
+            const pathwayNameElement = document.getElementById('pathwayName');
+            
+            switch (pathway) {
+                case 'ai-foundations':
+                    pathwayNameElement.textContent = 'AI Foundations';
+                    break;
+                case 'resource-builder':
+                    pathwayNameElement.textContent = 'Resource Builder';
+                    break;
+                case 'code-creator':
+                    pathwayNameElement.textContent = 'Code Creator';
+                    break;
+                default:
+                    pathwayNameElement.textContent = 'AI Foundations';
             }
         });
-
-        // Back to Top Button
-        document.getElementById('backToTopBtn').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Navigation Smooth Scroll
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
+    </script>
+    
+    <script>
+        /**
+         * Initialize step navigation for a module
+         * @param {string} moduleId - Identifier for the module (used for localStorage)
+         * @param {number} totalSteps - Total number of steps in the module
+         */
+        function initModuleSteps(moduleId, totalSteps) {
+            // Get all step elements
+            const steps = document.querySelectorAll('.module-step');
+            
+            // Current step tracking
+            let currentStep = 1;
+            const savedStep = localStorage.getItem(`${moduleId}_currentStep`);
+            if (savedStep) {
+                currentStep = parseInt(savedStep);
+            }
+            
+            // Create indicators and set up navigation for each step
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                const prevBtn = step.querySelector('.prev-step-btn');
+                const nextBtn = step.querySelector('.next-step-btn');
+                const indicators = step.querySelector('.step-indicators');
                 
+                // Create indicators if they exist
+                if (indicators) {
+                    indicators.innerHTML = '';
+                    for (let i = 0; i < totalSteps; i++) {
+                        const indicator = document.createElement('div');
+                        indicator.className = 'step-indicator';
+                        if (i + 1 === stepNumber) {
+                            indicator.classList.add('active');
+                        } else if (i + 1 < stepNumber) {
+                            indicator.classList.add('completed');
+                        }
+                        indicators.appendChild(indicator);
+                    }
+                }
+                
+                // Set up previous button
+                if (prevBtn) {
+                    prevBtn.disabled = stepNumber === 1;
+                    prevBtn.addEventListener('click', function() {
+                        if (stepNumber > 1) {
+                            showStep(stepNumber - 1);
+                        }
+                    });
+                }
+                
+                // Set up next button
+                if (nextBtn) {
+                    if (stepNumber === totalSteps) {
+                        // If last step, set up completion
+                        nextBtn.addEventListener('click', function() {
+                            completeModule();
+                        });
+                    } else {
+                        // Otherwise navigate to next step
+                        nextBtn.addEventListener('click', function() {
+                            showStep(stepNumber + 1);
+                        });
+                    }
+                }
+            });
+            
+            // Initialize first view
+            showStep(currentStep);
+            
+            /**
+             * Show a specific step and hide others
+             * @param {number} stepNumber - The step to show
+             */
+            function showStep(stepNumber) {
+                // Validate step number
+                if (stepNumber < 1 || stepNumber > totalSteps) {
+                    return;
+                }
+                
+                // Get current scroll position and viewport dimensions
+                const currentScrollPosition = window.scrollY;
+                const viewportHeight = window.innerHeight;
+                
+                // Update current step
+                currentStep = stepNumber;
+                localStorage.setItem(`${moduleId}_currentStep`, currentStep);
+                
+                // Hide all steps
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                
+                // Show current step
+                const currentStepElement = document.querySelector(`.module-step[data-step="${currentStep}"]`);
+                if (currentStepElement) {
+                    currentStepElement.classList.add('active');
+                    
+                    // Get position info about the new step
+                    const stepTop = currentStepElement.getBoundingClientRect().top + window.scrollY;
+                    const stepHeight = currentStepElement.offsetHeight;
+                    
+                    // Determine if scrolling is needed:
+                    // 1. If new step is already mostly visible, don't scroll
+                    // 2. If new step is far out of view, scroll to a reasonable position
+                    const isStepVisible = (
+                        currentScrollPosition < stepTop + (stepHeight * 0.3) &&
+                        currentScrollPosition + viewportHeight > stepTop + 200
+                    );
+                    
+                    if (!isStepVisible) {
+                        // Scroll to just above the step content - enough to see the header and beginning
+                        window.scrollTo({
+                            top: document.querySelector('.module-progress').offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Update indicators
+                    document.querySelectorAll('.step-indicators').forEach(indicatorSet => {
+                        const indicators = indicatorSet.querySelectorAll('.step-indicator');
+                        indicators.forEach((indicator, index) => {
+                            indicator.classList.remove('active', 'completed');
+                            if (index + 1 === currentStep) {
+                                indicator.classList.add('active');
+                            } else if (index + 1 < currentStep) {
+                                indicator.classList.add('completed');
+                            }
+                        });
+                    });
+                    
+                    // Update progress texts
+                    document.querySelectorAll('.step-progress-text').forEach(textEl => {
+                        textEl.textContent = `Step ${currentStep} of ${totalSteps}`;
+                    });
+                }
+            }
+        }
+        
+        // Save reference to the original complete function
+        window.completeModuleOriginal = completeModule;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initModuleSteps('why-use-ai', 5);
+            
+            // Progress Bar for scrolling
+            window.addEventListener('scroll', function() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.scrollY;
+                
+                const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+                
+                // Back to Top Button
+                if (scrollTop > 300) {
+                    document.getElementById('backToTopBtn').classList.add('active');
+                } else {
+                    document.getElementById('backToTopBtn').classList.remove('active');
+                }
+            });
+
+            // Back to Top Button
+            document.getElementById('backToTopBtn').addEventListener('click', function() {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: 0,
                     behavior: 'smooth'
                 });
             });

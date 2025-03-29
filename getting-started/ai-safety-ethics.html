@@ -8,269 +8,12 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/module-steps.css">
-    <style>
-        /* Progress indicator styles */
-        
-        .progress-steps {
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
-        }
-        
-        .progress-step {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: var(--light);
-            color: var(--neutral);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-        
-        .step-number.active {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .step-number.completed {
-            background-color: var(--secondary);
-            color: white;
-        }
-        
-        .step-label {
-            font-size: 0.9rem;
-            color: var(--neutral);
-            font-weight: 500;
-        }
-        
-        .step-connector {
-            height: 2px;
-            background-color: var(--light);
-            flex-grow: 1;
-            margin: 0 10px;
-        }
-        
-        .pathway-name {
-            font-weight: 600;
-            color: var(--primary);
-            padding-left: 15px;
-            border-left: 2px solid var(--light);
-        }
-        
-        /* Content section styles */
-        .content-section {
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-            color: var(--dark);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--light);
-        }
-        
-        .section-content p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            color: var(--neutral);
-        }
-        
-        .guidance-card {
-            background-color: var(--light);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--primary);
-        }
-        
-        .guidance-card h3 {
-            font-size: 1.3rem;
-            color: var(--dark);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .guidance-card h3 i {
-            color: var(--primary);
-            margin-right: 10px;
-        }
-        
-        .guidance-card p {
-            margin-bottom: 15px;
-        }
-        
-        .guidance-list {
-            list-style: none;
-            margin-bottom: 15px;
-        }
-        
-        .guidance-list li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .guidance-list li:before {
-            content: "\f00c";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--secondary);
-        }
-        
-        .alert-box {
-            background-color: rgba(244, 63, 94, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--tertiary);
-        }
-        
-        .alert-box h3 {
-            font-size: 1.3rem;
-            color: var(--tertiary);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .alert-box h3 i {
-            margin-right: 10px;
-        }
-        
-        .alert-list {
-            list-style: none;
-        }
-        
-        .alert-list li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .alert-list li:before {
-            content: "\f071";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--tertiary);
-        }
-        
-        
-        .quiz-option-marker {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--neutral-light);
-            border-radius: 50%;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .quiz-option.selected .quiz-option-marker {
-            border-color: var(--primary);
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .quiz-option.correct .quiz-option-marker {
-            border-color: var(--secondary);
-            background-color: var(--secondary);
-            color: white;
-        }
-        
-        .quiz-option.incorrect .quiz-option-marker {
-            border-color: var(--tertiary);
-            background-color: var(--tertiary);
-            color: white;
-        }
-        
-        .quiz-feedback {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .quiz-feedback.correct {
-            background-color: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid var(--secondary);
-            display: block;
-        }
-        
-        .quiz-feedback.incorrect {
-            background-color: rgba(244, 63, 94, 0.1);
-            border-left: 4px solid var(--tertiary);
-            display: block;
-        }
-        
-        /* Next button styles */
-        .next-module-container {
-            margin-top: 40px;
-            text-align: center;
-        }
-        
-        .next-module-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px 30px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .next-module-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
-        }
-    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <a href="../index.html" class="logo">
-                <span class="logo-icon"><i class="fas fa-robot"></i></span>
-                <span>AI Inset Day</span>
-            </a>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero hero-medium">
-        <div class="container hero-content">
-            <h1>AI Safety & Ethics for Educators</h1>
-            <p>Learn essential guidelines for using AI responsibly in educational settings. This mandatory module covers data privacy, understanding AI limitations, avoiding bias, and ethical considerations for classroom use.</p>
-        </div>
-        <div class="floating-elements">
-            <div class="floating-element element-1"></div>
-            <div class="floating-element element-2"></div>
-        </div>
-    </section>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 
     <!-- Main Content -->
     <section class="main-content" style="padding: 60px 0;">
@@ -306,6 +49,9 @@
             <div class="module-step" data-step="1">
                 <!-- Introduction Section -->
                 <div class="content-section">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--dark);">AI Safety & Ethics for Educators</h1>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--neutral); margin-bottom: 30px;">Learn essential guidelines for using AI responsibly in educational settings. This mandatory module covers data privacy, understanding AI limitations, avoiding bias, and ethical considerations for classroom use.</p>
+                    
                     <h2 class="section-title">Understanding AI in Education: Benefits and Responsibilities</h2>
                     <div class="section-content">
                         <p>Artificial Intelligence offers powerful tools for enhancing teaching and learning, from saving time on administrative tasks to creating personalized learning experiences. However, with these benefits come important responsibilities to ensure AI is used ethically, safely, and effectively in educational settings.</p>
@@ -658,22 +404,15 @@
                         <div class="step-indicators"></div>
                         <div class="step-progress-text">Step 6 of 6</div>
                     </div>
-                    <button class="step-btn next-step-btn">
-                        <i class="fas fa-check-circle"></i> Complete Module
-                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <p>Responsible AI use in education starts with understanding both the possibilities and limitations.</p>
-            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
-            <a href="../index.html" class="home-btn">Back to Pathways</a>
-        </div>
-    </footer>
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <script>
         // Function to check quiz answers
@@ -837,69 +576,69 @@
              * Show a specific step and hide others
              * @param {number} stepNumber - The step to show
              */
-             function showStep(stepNumber) {
-    // Validate step number
-    if (stepNumber < 1 || stepNumber > totalSteps) {
-        return;
-    }
-    
-    // Get current scroll position and viewport dimensions
-    const currentScrollPosition = window.scrollY;
-    const viewportHeight = window.innerHeight;
-    
-    // Update current step
-    currentStep = stepNumber;
-    localStorage.setItem(`${moduleId}_currentStep`, currentStep);
-    
-    // Hide all steps
-    steps.forEach(step => {
-        step.classList.remove('active');
-    });
-    
-    // Show current step
-    const currentStepElement = document.querySelector(`.module-step[data-step="${currentStep}"]`);
-    if (currentStepElement) {
-        currentStepElement.classList.add('active');
-        
-        // Get position info about the new step
-        const stepTop = currentStepElement.getBoundingClientRect().top + window.scrollY;
-        const stepHeight = currentStepElement.offsetHeight;
-        
-        // Determine if scrolling is needed:
-        // 1. If new step is already mostly visible, don't scroll
-        // 2. If new step is far out of view, scroll to a reasonable position
-        const isStepVisible = (
-            currentScrollPosition < stepTop + (stepHeight * 0.3) &&
-            currentScrollPosition + viewportHeight > stepTop + 200
-        );
-        
-        if (!isStepVisible) {
-            // Scroll to just above the step content - enough to see the header and beginning
-            window.scrollTo({
-                top: document.querySelector('.module-progress').offsetTop,
-                behavior: 'smooth'
-            });
-        }
-        
-        // Update indicators
-        document.querySelectorAll('.step-indicators').forEach(indicatorSet => {
-            const indicators = indicatorSet.querySelectorAll('.step-indicator');
-            indicators.forEach((indicator, index) => {
-                indicator.classList.remove('active', 'completed');
-                if (index + 1 === currentStep) {
-                    indicator.classList.add('active');
-                } else if (index + 1 < currentStep) {
-                    indicator.classList.add('completed');
+            function showStep(stepNumber) {
+                // Validate step number
+                if (stepNumber < 1 || stepNumber > totalSteps) {
+                    return;
                 }
-            });
-        });
-        
-        // Update progress texts
-        document.querySelectorAll('.step-progress-text').forEach(textEl => {
-            textEl.textContent = `Step ${currentStep} of ${totalSteps}`;
-        });
-    }
-}
+                
+                // Get current scroll position and viewport dimensions
+                const currentScrollPosition = window.scrollY;
+                const viewportHeight = window.innerHeight;
+                
+                // Update current step
+                currentStep = stepNumber;
+                localStorage.setItem(`${moduleId}_currentStep`, currentStep);
+                
+                // Hide all steps
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                
+                // Show current step
+                const currentStepElement = document.querySelector(`.module-step[data-step="${currentStep}"]`);
+                if (currentStepElement) {
+                    currentStepElement.classList.add('active');
+                    
+                    // Get position info about the new step
+                    const stepTop = currentStepElement.getBoundingClientRect().top + window.scrollY;
+                    const stepHeight = currentStepElement.offsetHeight;
+                    
+                    // Determine if scrolling is needed:
+                    // 1. If new step is already mostly visible, don't scroll
+                    // 2. If new step is far out of view, scroll to a reasonable position
+                    const isStepVisible = (
+                        currentScrollPosition < stepTop + (stepHeight * 0.3) &&
+                        currentScrollPosition + viewportHeight > stepTop + 200
+                    );
+                    
+                    if (!isStepVisible) {
+                        // Scroll to just above the step content - enough to see the header and beginning
+                        window.scrollTo({
+                            top: document.querySelector('.module-progress').offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Update all indicator sets to show the current step
+                    document.querySelectorAll('.step-indicators').forEach(indicatorSet => {
+                        const indicators = indicatorSet.querySelectorAll('.step-indicator');
+                        indicators.forEach((indicator, index) => {
+                            indicator.classList.remove('active', 'completed');
+                            if (index + 1 === currentStep) {
+                                indicator.classList.add('active');
+                            } else if (index + 1 < currentStep) {
+                                indicator.classList.add('completed');
+                            }
+                        });
+                    });
+                    
+                    // Update all progress texts
+                    document.querySelectorAll('.step-progress-text').forEach(textEl => {
+                        textEl.textContent = `Step ${currentStep} of ${totalSteps}`;
+                    });
+                }
+            }
         }
         
         // Save reference to the original complete function
@@ -907,6 +646,31 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             initModuleSteps('ai-safety-ethics', 6);
+            
+            // Progress Bar for scrolling
+            window.addEventListener('scroll', function() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.scrollY;
+                
+                const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+                
+                // Back to Top Button
+                if (scrollTop > 300) {
+                    document.getElementById('backToTopBtn').classList.add('active');
+                } else {
+                    document.getElementById('backToTopBtn').classList.remove('active');
+                }
+            });
+
+            // Back to Top Button
+            document.getElementById('backToTopBtn').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
