@@ -1,0 +1,369 @@
+/* ===================================
+   BASE STYLES
+   Shared base styles across the site
+   =================================== */
+
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--light);
+    color: var(--dark);
+    overflow-x: hidden;
+}
+
+/* Basic Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--dark);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+p {
+    color: var(--neutral);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* Container */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-5);
+}
+
+/* Header */
+header {
+    padding: var(--spacing-5) 0;
+    background-color: var(--dark);
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-content::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 64px;
+    height: 2px;
+    background-color: var(--primary);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--primary-light);
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-8);
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #D1D5DB;
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: white;
+}
+
+/* Section */
+.section {
+    margin-bottom: var(--spacing-20);
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: var(--spacing-10);
+}
+
+.section-heading h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--spacing-4);
+    position: relative;
+    padding-bottom: var(--spacing-4);
+}
+
+.section-heading h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary);
+}
+
+.section-heading p {
+    font-size: 1.2rem;
+    color: var(--neutral);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Hero Section (base) */
+.hero {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: var(--dark);
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 800px;
+    z-index: 1;
+    position: relative;
+}
+
+.hero-content::before {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    background-color: var(--primary);
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-4);
+    color: white;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-8);
+    color: #D1D5DB;
+    line-height: 1.6;
+    max-width: 42rem;
+}
+
+/* Hero size variants */
+.hero-large {
+    min-height: 400px;
+    padding: 120px 0 60px;
+}
+
+.hero-medium {
+    min-height: 300px;
+    padding: 100px 0 50px;
+}
+
+.hero-small {
+    min-height: 200px;
+    padding: 80px 0 40px;
+}
+
+/* Home page specific hero */
+.hero-home {
+    height: 80vh;
+    min-height: 500px;
+}
+
+/* Main Content */
+.main-content {
+    padding: var(--spacing-16) 0;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    margin-bottom: var(--spacing-5);
+    font-size: 1rem;
+    color: var(--neutral-light);
+}
+
+/* Floating Elements Animation */
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    opacity: 0.03;
+}
+
+.floating-element {
+    position: absolute;
+    background-color: rgba(2, 132, 199, 0.1);
+    border-radius: 50%;
+    animation: float 20s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(30px, 30px) rotate(90deg);
+    }
+    50% {
+        transform: translate(0, 60px) rotate(180deg);
+    }
+    75% {
+        transform: translate(-30px, 30px) rotate(270deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}
+
+/* Loading screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgba(3, 105, 161, 0.15);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s infinite ease-in-out;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-normal);
+    z-index: 99;
+}
+
+.back-to-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Progress Bar */
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width 0.2s ease;
+}
+
+/* Basic Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.3rem;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .section-heading h2 {
+        font-size: 1.8rem;
+    }
+}

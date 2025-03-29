@@ -1,9 +1,10 @@
 /* ===================================
    INDEX PAGE SPECIFIC STYLES
+   Keeping unique styling while removing duplicates
    =================================== */
 
-/* Home Page Hero - overrides global hero */
-.hero {
+/* Home Page Hero - specific overrides */
+.hero-home {
     height: 80vh;
     min-height: 500px;
 }
@@ -31,25 +32,7 @@
     margin-top: 40px;
 }
 
-.pathway-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: all 0.25s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--accent-light);
-    border-top: 4px solid var(--primary);
-}
-
-.pathway-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px -10px rgba(0,0,0,0.15);
-}
-
-/* Different top border colors for each card */
+/* Pathway Card Specific Styling */
 .pathway-card:nth-child(1) {
     border-top-color: var(--primary);
 }
@@ -62,48 +45,9 @@
     border-top-color: var(--tertiary);
 }
 
-.pathway-header {
-    padding: 24px;
-    color: var(--dark);
-    font-size: 1.5rem;
-    font-weight: 600;
-    background-color: white;
-    border-bottom: 1px solid var(--accent-light);
-    text-align: center;
-}
-
-.pathway-body {
-    padding: 24px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.pathway-desc {
-    color: var(--neutral);
-    margin-bottom: 24px;
-    line-height: 1.6;
-    flex-grow: 1;
-}
-
+/* Pathway Features */
 .pathway-features {
     margin-bottom: 30px;
-}
-
-/* List items with checkmarks */
-.feature {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 12px;
-    color: var(--dark);
-}
-
-.feature i {
-    color: var(--primary);
-    margin-right: 12px;
-    font-size: 1rem;
-    margin-top: 3px;
-    flex-shrink: 0;
 }
 
 /* For different color icons per pathway */
@@ -119,24 +63,7 @@
     color: var(--tertiary);
 }
 
-/* Style pathway buttons */
-.pathway-btn, 
-.begin-btn {
-    display: inline-block;
-    width: 100%;
-    padding: 12px;
-    background-color: white;
-    color: var(--dark);
-    text-decoration: none;
-    border: 1px solid var(--accent-light);
-    border-radius: 4px;
-    font-weight: 500;
-    text-align: center;
-    transition: all 0.2s ease;
-    margin-top: auto;
-    cursor: pointer;
-}
-
+/* Specific hover effects for pathway buttons */
 .pathway-card:nth-child(1) .pathway-btn:hover,
 .pathway-card:nth-child(1) .begin-btn:hover {
     background-color: var(--primary);
@@ -158,7 +85,24 @@
     color: white;
 }
 
-/* Modal */
+/* Begin button specific styles */
+.begin-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    color: var(--dark);
+    text-decoration: none;
+    border: 1px solid var(--accent-light);
+    border-radius: 4px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s ease;
+    margin-top: auto;
+    cursor: pointer;
+}
+
+/* Modal styles - specific to homepage */
 .modal {
     position: fixed;
     top: 0;
@@ -249,57 +193,4 @@
 
 .modal-btn:hover {
     background-color: var(--primary-dark);
-}
-
-/* Loading screen */
-.loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.loading-screen.fade-out {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.loader {
-    width: 80px;
-    height: 80px;
-    border: 8px solid rgba(3, 105, 161, 0.15);
-    border-radius: 50%;
-    border-top-color: var(--primary);
-    animation: spin 1s infinite ease-in-out;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Responsive adjustments for this page */
-@media (max-width: 768px) {
-    .pathway-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .modal-content {
-        padding: 30px 20px;
-    }
-    
-    .pathway-title {
-        font-size: 1.6rem;
-    }
 }
