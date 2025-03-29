@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/module-steps.css">
     <style>
         /* Progress indicator styles */
         .module-progress {
@@ -363,267 +364,365 @@
                 <div class="pathway-name" id="pathwayName">AI Foundations</div>
             </div>
 
-            <!-- Introduction Section -->
-            <div class="content-section">
-                <h2 class="section-title">Understanding AI in Education: Benefits and Responsibilities</h2>
-                <div class="section-content">
-                    <p>Artificial Intelligence offers powerful tools for enhancing teaching and learning, from saving time on administrative tasks to creating personalized learning experiences. However, with these benefits come important responsibilities to ensure AI is used ethically, safely, and effectively in educational settings.</p>
-                    
-                    <p>This module will help you develop a foundational understanding of AI safety and ethics specifically for educational contexts. By completing this module, you'll be better prepared to use AI tools confidently while protecting student data, avoiding potential pitfalls, and modeling responsible digital citizenship.</p>
-                    
-                    <div class="guidance-card">
-                        <h3><i class="fas fa-lightbulb"></i>Why AI Safety Matters in Education</h3>
-                        <p>As educators, we have unique responsibilities when introducing AI into our teaching practice:</p>
-                        <ul class="guidance-list">
-                            <li>We serve as role models for responsible technology use</li>
-                            <li>We work with vulnerable populations (minors) whose data requires special protection</li>
-                            <li>We make decisions that can impact students' educational outcomes and opportunities</li>
-                            <li>We need to ensure AI tools enhance rather than detract from learning objectives</li>
-                            <li>We must maintain academic integrity while embracing new technologies</li>
-                        </ul>
+            <!-- Step 1: Introduction -->
+            <div class="module-step" data-step="1">
+                <!-- Introduction Section -->
+                <div class="content-section">
+                    <h2 class="section-title">Understanding AI in Education: Benefits and Responsibilities</h2>
+                    <div class="section-content">
+                        <p>Artificial Intelligence offers powerful tools for enhancing teaching and learning, from saving time on administrative tasks to creating personalized learning experiences. However, with these benefits come important responsibilities to ensure AI is used ethically, safely, and effectively in educational settings.</p>
+                        
+                        <p>This module will help you develop a foundational understanding of AI safety and ethics specifically for educational contexts. By completing this module, you'll be better prepared to use AI tools confidently while protecting student data, avoiding potential pitfalls, and modeling responsible digital citizenship.</p>
+                        
+                        <div class="guidance-card">
+                            <h3><i class="fas fa-lightbulb"></i>Why AI Safety Matters in Education</h3>
+                            <p>As educators, we have unique responsibilities when introducing AI into our teaching practice:</p>
+                            <ul class="guidance-list">
+                                <li>We serve as role models for responsible technology use</li>
+                                <li>We work with vulnerable populations (minors) whose data requires special protection</li>
+                                <li>We make decisions that can impact students' educational outcomes and opportunities</li>
+                                <li>We need to ensure AI tools enhance rather than detract from learning objectives</li>
+                                <li>We must maintain academic integrity while embracing new technologies</li>
+                            </ul>
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 1 of 6</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Understanding AI Limitations Section -->
-            <div class="content-section">
-                <h2 class="section-title">Understanding AI Limitations</h2>
-                <div class="section-content">
-                    <p>AI tools like large language models are remarkable, but they have important limitations that educators should understand. Being aware of these limitations helps you use AI more effectively and responsibly.</p>
-                    
-                    <div class="alert-box">
-                        <h3><i class="fas fa-exclamation-triangle"></i>Key AI Limitations to Be Aware Of</h3>
-                        <ul class="alert-list">
-                            <li><strong>AI can generate plausible-sounding but incorrect information</strong> (sometimes called "hallucinations"). Never assume AI-generated content is factually accurate without verification.</li>
-                            <li><strong>AI has limited knowledge cutoff dates</strong> and may not be aware of recent events, curriculum changes, or educational standards updates.</li>
-                            <li><strong>AI lacks true understanding of educational contexts</strong> and cannot fully grasp your specific classroom dynamics or student needs.</li>
-                            <li><strong>AI can reflect and amplify biases</strong> present in its training data, including stereotypes about different groups or outdated educational approaches.</li>
-                            <li><strong>AI cannot replace your professional judgment</strong> as an educator. It's a tool to enhance your teaching, not make decisions for you.</li>
-                        </ul>
-                    </div>
-                    
-                    <p>Always apply your professional expertise when reviewing AI-generated content. Your subject knowledge, understanding of your students, and educational experience are essential filters for using AI effectively.</p>
-                    
-                    <!-- Quiz Question 1 -->
-                    <div class="quiz-section">
-                        <div class="quiz-question" id="question1">
-                            <h3>Quick Check: Which of the following statements about AI is correct?</h3>
-                            <div class="quiz-options">
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>AI-generated information is always factually accurate because it's based on data.</div>
+            <!-- Step 2: Understanding AI Limitations -->
+            <div class="module-step" data-step="2">
+                <!-- Understanding AI Limitations Section -->
+                <div class="content-section">
+                    <h2 class="section-title">Understanding AI Limitations</h2>
+                    <div class="section-content">
+                        <p>AI tools like large language models are remarkable, but they have important limitations that educators should understand. Being aware of these limitations helps you use AI more effectively and responsibly.</p>
+                        
+                        <div class="alert-box">
+                            <h3><i class="fas fa-exclamation-triangle"></i>Key AI Limitations to Be Aware Of</h3>
+                            <ul class="alert-list">
+                                <li><strong>AI can generate plausible-sounding but incorrect information</strong> (sometimes called "hallucinations"). Never assume AI-generated content is factually accurate without verification.</li>
+                                <li><strong>AI has limited knowledge cutoff dates</strong> and may not be aware of recent events, curriculum changes, or educational standards updates.</li>
+                                <li><strong>AI lacks true understanding of educational contexts</strong> and cannot fully grasp your specific classroom dynamics or student needs.</li>
+                                <li><strong>AI can reflect and amplify biases</strong> present in its training data, including stereotypes about different groups or outdated educational approaches.</li>
+                                <li><strong>AI cannot replace your professional judgment</strong> as an educator. It's a tool to enhance your teaching, not make decisions for you.</li>
+                            </ul>
+                        </div>
+                        
+                        <p>Always apply your professional expertise when reviewing AI-generated content. Your subject knowledge, understanding of your students, and educational experience are essential filters for using AI effectively.</p>
+                        
+                        <!-- Quiz Question 1 -->
+                        <div class="quiz-section">
+                            <div class="quiz-question" id="question1">
+                                <h3>Quick Check: Which of the following statements about AI is correct?</h3>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>AI-generated information is always factually accurate because it's based on data.</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question1')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>AI can present incorrect information convincingly, requiring human verification.</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>AI should be trusted to make educational decisions because it processes more information than humans can.</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>AI has complete knowledge of all current educational standards and recent curriculum changes.</div>
+                                    </div>
                                 </div>
-                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question1')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>AI can present incorrect information convincingly, requiring human verification.</div>
+                                <div class="quiz-feedback" id="feedback1">
+                                    <p><strong>Correct!</strong> AI can generate content that sounds convincing but contains errors or fabrications (sometimes called "hallucinations"). Always verify important information using your professional knowledge or trusted sources.</p>
                                 </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>AI should be trusted to make educational decisions because it processes more information than humans can.</div>
-                                </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question1')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>AI has complete knowledge of all current educational standards and recent curriculum changes.</div>
-                                </div>
-                            </div>
-                            <div class="quiz-feedback" id="feedback1">
-                                <p><strong>Correct!</strong> AI can generate content that sounds convincing but contains errors or fabrications (sometimes called "hallucinations"). Always verify important information using your professional knowledge or trusted sources.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 2 of 6</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Data Privacy Section -->
-            <div class="content-section">
-                <h2 class="section-title">Protecting Student Data & Privacy</h2>
-                <div class="section-content">
-                    <p>When using AI tools in educational settings, protecting student data and privacy must be a top priority. Many AI tools process data on external servers, which creates potential privacy concerns, especially when working with data from minors.</p>
-                    
-                    <div class="guidance-card">
-                        <h3><i class="fas fa-shield-alt"></i>Best Practices for Data Privacy</h3>
-                        <ul class="guidance-list">
-                            <li><strong>Never share personally identifiable student information</strong> with AI tools, including names, ID numbers, contact details, or any data that could identify a specific student.</li>
-                            <li><strong>Anonymize student work</strong> before using it with AI tools by removing names and other identifying information.</li>
-                            <li><strong>Be cautious with sensitive topics</strong> in student work that might reveal personal information even when anonymized.</li>
-                            <li><strong>Check your school's policies</strong> regarding the use of external AI tools and data processing.</li>
-                            <li><strong>Consider using AI tools specifically designed for education</strong> that have appropriate privacy protections and compliance with educational data regulations.</li>
-                            <li><strong>Be transparent with students and parents</strong> about how AI tools are being used in your teaching practice.</li>
-                        </ul>
-                    </div>
-                    
-                    <p>Remember that many educational settings have specific legal requirements regarding student data (such as GDPR in Europe, FERPA in the US, or similar regulations in your region). Ensure your use of AI tools complies with these requirements.</p>
-                    
-                    <!-- Quiz Question 2 -->
-                    <div class="quiz-section">
-                        <div class="quiz-question" id="question2">
-                            <h3>Quick Check: Which of the following is an appropriate practice when using AI with student work?</h3>
-                            <div class="quiz-options">
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Uploading a class list with student names and grades to get AI feedback on performance patterns</div>
+            <!-- Step 3: Data Privacy Section -->
+            <div class="module-step" data-step="3">
+                <div class="content-section">
+                    <h2 class="section-title">Protecting Student Data & Privacy</h2>
+                    <div class="section-content">
+                        <p>When using AI tools in educational settings, protecting student data and privacy must be a top priority. Many AI tools process data on external servers, which creates potential privacy concerns, especially when working with data from minors.</p>
+                        
+                        <div class="guidance-card">
+                            <h3><i class="fas fa-shield-alt"></i>Best Practices for Data Privacy</h3>
+                            <ul class="guidance-list">
+                                <li><strong>Never share personally identifiable student information</strong> with AI tools, including names, ID numbers, contact details, or any data that could identify a specific student.</li>
+                                <li><strong>Anonymize student work</strong> before using it with AI tools by removing names and other identifying information.</li>
+                                <li><strong>Be cautious with sensitive topics</strong> in student work that might reveal personal information even when anonymized.</li>
+                                <li><strong>Check your school's policies</strong> regarding the use of external AI tools and data processing.</li>
+                                <li><strong>Consider using AI tools specifically designed for education</strong> that have appropriate privacy protections and compliance with educational data regulations.</li>
+                                <li><strong>Be transparent with students and parents</strong> about how AI tools are being used in your teaching practice.</li>
+                            </ul>
+                        </div>
+                        
+                        <p>Remember that many educational settings have specific legal requirements regarding student data (such as GDPR in Europe, FERPA in the US, or similar regulations in your region). Ensure your use of AI tools complies with these requirements.</p>
+                        
+                        <!-- Quiz Question 2 -->
+                        <div class="quiz-section">
+                            <div class="quiz-question" id="question2">
+                                <h3>Quick Check: Which of the following is an appropriate practice when using AI with student work?</h3>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Uploading a class list with student names and grades to get AI feedback on performance patterns</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Sharing student essays exactly as written with names included so the AI can provide personalized feedback</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Removing student names and any identifying information before asking AI to analyze patterns in work samples</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Using AI to evaluate student behavioral issues by providing detailed descriptions of specific student incidents</div>
+                                    </div>
                                 </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Sharing student essays exactly as written with names included so the AI can provide personalized feedback</div>
+                                <div class="quiz-feedback" id="feedback2">
+                                    <p><strong>Correct!</strong> Always anonymize student work by removing names and other identifying information before sharing with AI tools. This helps protect student privacy while still allowing you to benefit from AI assistance with assessment or feedback.</p>
                                 </div>
-                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question2')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Removing student names and any identifying information before asking AI to analyze patterns in work samples</div>
-                                </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question2')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Using AI to evaluate student behavioral issues by providing detailed descriptions of specific student incidents</div>
-                                </div>
-                            </div>
-                            <div class="quiz-feedback" id="feedback2">
-                                <p><strong>Correct!</strong> Always anonymize student work by removing names and other identifying information before sharing with AI tools. This helps protect student privacy while still allowing you to benefit from AI assistance with assessment or feedback.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 3 of 6</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Bias & Fairness Section -->
-            <div class="content-section">
-                <h2 class="section-title">Recognizing & Addressing Bias</h2>
-                <div class="section-content">
-                    <p>AI systems can reflect and sometimes amplify biases present in their training data. This is particularly important in educational settings, where we aim to provide equitable learning experiences for all students.</p>
-                    
-                    <div class="alert-box">
-                        <h3><i class="fas fa-balance-scale"></i>Potential Bias Concerns in Educational AI</h3>
-                        <ul class="alert-list">
-                            <li><strong>Cultural and geographical biases</strong> - AI may favor certain cultural perspectives or have limited knowledge of non-Western or non-dominant cultural contexts</li>
-                            <li><strong>Language biases</strong> - AI often performs better with standard English and may struggle with different dialects, accents, or non-English languages</li>
-                            <li><strong>Representation biases</strong> - AI might generate examples or content that reinforces stereotypes about different groups</li>
-                            <li><strong>Subject-specific biases</strong> - AI may have stronger performance in some subject areas than others</li>
-                            <li><strong>Assessment biases</strong> - Using AI to evaluate student work might disadvantage students with different writing styles or approaches</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="guidance-card">
-                        <h3><i class="fas fa-lightbulb"></i>Mitigating Bias When Using AI</h3>
-                        <ul class="guidance-list">
-                            <li><strong>Critically review AI-generated content</strong> for representation of diverse perspectives, examples, and approaches</li>
-                            <li><strong>Provide specific instructions</strong> about inclusivity and diverse representation when prompting AI</li>
-                            <li><strong>Be especially vigilant</strong> when generating content related to social issues, history, or topics involving different cultural groups</li>
-                            <li><strong>Use AI as one tool among many</strong>, not the sole source for content or assessment</li>
-                            <li><strong>Involve diverse perspectives</strong> in reviewing AI-generated educational materials when possible</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Quiz Question 3 -->
-                    <div class="quiz-section">
-                        <div class="quiz-question" id="question3">
-                            <h3>Quick Check: How can educators best address potential bias in AI-generated educational content?</h3>
-                            <div class="quiz-options">
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Assume AI-generated content is unbiased since AI is objective and data-driven</div>
+            <!-- Step 4: Bias & Fairness Section -->
+            <div class="module-step" data-step="4">
+                <div class="content-section">
+                    <h2 class="section-title">Recognizing & Addressing Bias</h2>
+                    <div class="section-content">
+                        <p>AI systems can reflect and sometimes amplify biases present in their training data. This is particularly important in educational settings, where we aim to provide equitable learning experiences for all students.</p>
+                        
+                        <div class="alert-box">
+                            <h3><i class="fas fa-balance-scale"></i>Potential Bias Concerns in Educational AI</h3>
+                            <ul class="alert-list">
+                                <li><strong>Cultural and geographical biases</strong> - AI may favor certain cultural perspectives or have limited knowledge of non-Western or non-dominant cultural contexts</li>
+                                <li><strong>Language biases</strong> - AI often performs better with standard English and may struggle with different dialects, accents, or non-English languages</li>
+                                <li><strong>Representation biases</strong> - AI might generate examples or content that reinforces stereotypes about different groups</li>
+                                <li><strong>Subject-specific biases</strong> - AI may have stronger performance in some subject areas than others</li>
+                                <li><strong>Assessment biases</strong> - Using AI to evaluate student work might disadvantage students with different writing styles or approaches</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="guidance-card">
+                            <h3><i class="fas fa-lightbulb"></i>Mitigating Bias When Using AI</h3>
+                            <ul class="guidance-list">
+                                <li><strong>Critically review AI-generated content</strong> for representation of diverse perspectives, examples, and approaches</li>
+                                <li><strong>Provide specific instructions</strong> about inclusivity and diverse representation when prompting AI</li>
+                                <li><strong>Be especially vigilant</strong> when generating content related to social issues, history, or topics involving different cultural groups</li>
+                                <li><strong>Use AI as one tool among many</strong>, not the sole source for content or assessment</li>
+                                <li><strong>Involve diverse perspectives</strong> in reviewing AI-generated educational materials when possible</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Quiz Question 3 -->
+                        <div class="quiz-section">
+                            <div class="quiz-question" id="question3">
+                                <h3>Quick Check: How can educators best address potential bias in AI-generated educational content?</h3>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Assume AI-generated content is unbiased since AI is objective and data-driven</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Only use AI for STEM subjects where bias is less likely to be an issue</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Tell students to disregard any biased content they might notice in AI-generated materials</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question3')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Critically review AI outputs for diverse representation and provide specific instructions for inclusivity</div>
+                                    </div>
                                 </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Only use AI for STEM subjects where bias is less likely to be an issue</div>
+                                <div class="quiz-feedback" id="feedback3">
+                                    <p><strong>Correct!</strong> Always review AI-generated content with a critical eye for potential biases, and provide specific instructions about inclusivity when prompting AI systems. Your professional judgment is essential for ensuring educational materials are appropriate and representative.</p>
                                 </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question3')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Tell students to disregard any biased content they might notice in AI-generated materials</div>
-                                </div>
-                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question3')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Critically review AI outputs for diverse representation and provide specific instructions for inclusivity</div>
-                                </div>
-                            </div>
-                            <div class="quiz-feedback" id="feedback3">
-                                <p><strong>Correct!</strong> Always review AI-generated content with a critical eye for potential biases, and provide specific instructions about inclusivity when prompting AI systems. Your professional judgment is essential for ensuring educational materials are appropriate and representative.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 4 of 6</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Academic Integrity Section -->
-            <div class="content-section">
-                <h2 class="section-title">Modeling Appropriate AI Use & Academic Integrity</h2>
-                <div class="section-content">
-                    <p>As educators, we not only use AI tools ourselves but also model appropriate use for our students. Establishing clear guidelines around AI use helps maintain academic integrity while embracing the benefits these tools can offer.</p>
-                    
-                    <div class="guidance-card">
-                        <h3><i class="fas fa-graduation-cap"></i>Balancing AI Use and Academic Integrity</h3>
-                        <ul class="guidance-list">
-                            <li><strong>Be transparent with students</strong> about when and how you use AI in your teaching practice</li>
-                            <li><strong>Establish clear guidelines</strong> for when and how students can use AI tools in their learning</li>
-                            <li><strong>Design assessments that evaluate deeper understanding</strong> rather than easily generated content</li>
-                            <li><strong>Teach information literacy skills</strong> including the critical evaluation of AI-generated content</li>
-                            <li><strong>Emphasize the importance of attribution</strong> when using AI-generated content, just as with any other source</li>
-                            <li><strong>Discuss ethical AI use</strong> as part of digital citizenship education</li>
-                        </ul>
-                    </div>
-                    
-                    <p>Rather than focusing solely on preventing AI use, consider how to integrate appropriate AI use into your teaching and assessment approaches. This prepares students for a world where AI tools will be part of their academic and professional futures.</p>
-                    
-                    <!-- Quiz Question 4 -->
-                    <div class="quiz-section">
-                        <div class="quiz-question" id="question4">
-                            <h3>Quick Check: Which approach best balances academic integrity with the reality of AI tools?</h3>
-                            <div class="quiz-options">
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Banning all AI use for students while using it privately as a teacher</div>
+            <!-- Step 5: Academic Integrity Section -->
+            <div class="module-step" data-step="5">
+                <div class="content-section">
+                    <h2 class="section-title">Modeling Appropriate AI Use & Academic Integrity</h2>
+                    <div class="section-content">
+                        <p>As educators, we not only use AI tools ourselves but also model appropriate use for our students. Establishing clear guidelines around AI use helps maintain academic integrity while embracing the benefits these tools can offer.</p>
+                        
+                        <div class="guidance-card">
+                            <h3><i class="fas fa-graduation-cap"></i>Balancing AI Use and Academic Integrity</h3>
+                            <ul class="guidance-list">
+                                <li><strong>Be transparent with students</strong> about when and how you use AI in your teaching practice</li>
+                                <li><strong>Establish clear guidelines</strong> for when and how students can use AI tools in their learning</li>
+                                <li><strong>Design assessments that evaluate deeper understanding</strong> rather than easily generated content</li>
+                                <li><strong>Teach information literacy skills</strong> including the critical evaluation of AI-generated content</li>
+                                <li><strong>Emphasize the importance of attribution</strong> when using AI-generated content, just as with any other source</li>
+                                <li><strong>Discuss ethical AI use</strong> as part of digital citizenship education</li>
+                            </ul>
+                        </div>
+                        
+                        <p>Rather than focusing solely on preventing AI use, consider how to integrate appropriate AI use into your teaching and assessment approaches. This prepares students for a world where AI tools will be part of their academic and professional futures.</p>
+                        
+                        <!-- Quiz Question 4 -->
+                        <div class="quiz-section">
+                            <div class="quiz-question" id="question4">
+                                <h3>Quick Check: Which approach best balances academic integrity with the reality of AI tools?</h3>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Banning all AI use for students while using it privately as a teacher</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Allowing unlimited AI use without guidelines or discussion about appropriate use</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question4')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Establishing clear guidelines for appropriate AI use and designing assessments that evaluate deeper understanding</div>
+                                    </div>
+                                    <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
+                                        <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
+                                        <div>Focusing exclusively on detecting AI-generated student work rather than teaching appropriate use</div>
+                                    </div>
                                 </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Allowing unlimited AI use without guidelines or discussion about appropriate use</div>
+                                <div class="quiz-feedback" id="feedback4">
+                                    <p><strong>Correct!</strong> Instead of an all-or-nothing approach, establishing clear guidelines and designing assessments that focus on deeper learning helps students develop appropriate AI literacy while maintaining academic integrity. This prepares them for a future where AI tools will be commonplace.</p>
                                 </div>
-                                <div class="quiz-option" data-correct="true" onclick="checkAnswer(this, 'question4')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Establishing clear guidelines for appropriate AI use and designing assessments that evaluate deeper understanding</div>
-                                </div>
-                                <div class="quiz-option" data-correct="false" onclick="checkAnswer(this, 'question4')">
-                                    <div class="quiz-option-marker"><i class="fas fa-check"></i></div>
-                                    <div>Focusing exclusively on detecting AI-generated student work rather than teaching appropriate use</div>
-                                </div>
-                            </div>
-                            <div class="quiz-feedback" id="feedback4">
-                                <p><strong>Correct!</strong> Instead of an all-or-nothing approach, establishing clear guidelines and designing assessments that focus on deeper learning helps students develop appropriate AI literacy while maintaining academic integrity. This prepares them for a future where AI tools will be commonplace.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 5 of 6</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Summary & Next Steps Section -->
-            <div class="content-section">
-                <h2 class="section-title">Summary & Safe AI Use Pledge</h2>
-                <div class="section-content">
-                    <p>In this module, we've covered the fundamental aspects of AI safety and ethics in educational settings:</p>
-                    
-                    <ul class="guidance-list">
-                        <li>Understanding AI limitations and the importance of human oversight</li>
-                        <li>Protecting student data and privacy when using AI tools</li>
-                        <li>Recognizing and addressing potential biases in AI-generated content</li>
-                        <li>Modeling appropriate AI use and maintaining academic integrity</li>
-                    </ul>
-                    
-                    <p>By keeping these principles in mind, you can harness the benefits of AI while using it responsibly and ethically in your educational practice.</p>
-                    
-                    <div class="guidance-card" style="background-color: rgba(99, 102, 241, 0.1); border-left-color: var(--primary);">
-                        <h3><i class="fas fa-hand-paper"></i>Safe AI Use Pledge</h3>
-                        <p>As an educator using AI tools, I commit to:</p>
+            <!-- Step 6: Summary & Next Steps Section -->
+            <div class="module-step" data-step="6">
+                <div class="content-section">
+                    <h2 class="section-title">Summary & Safe AI Use Pledge</h2>
+                    <div class="section-content">
+                        <p>In this module, we've covered the fundamental aspects of AI safety and ethics in educational settings:</p>
+                        
                         <ul class="guidance-list">
-                            <li>Apply my professional judgment to review and verify AI-generated content</li>
-                            <li>Protect student privacy and comply with data protection regulations</li>
-                            <li>Critically evaluate AI outputs for potential bias and ensure diverse representation</li>
-                            <li>Model appropriate and ethical AI use for my students</li>
-                            <li>Continually learn about best practices for educational AI as the technology evolves</li>
+                            <li>Understanding AI limitations and the importance of human oversight</li>
+                            <li>Protecting student data and privacy when using AI tools</li>
+                            <li>Recognizing and addressing potential biases in AI-generated content</li>
+                            <li>Modeling appropriate AI use and maintaining academic integrity</li>
                         </ul>
+                        
+                        <p>By keeping these principles in mind, you can harness the benefits of AI while using it responsibly and ethically in your educational practice.</p>
+                        
+                        <div class="guidance-card" style="background-color: rgba(99, 102, 241, 0.1); border-left-color: var(--primary);">
+                            <h3><i class="fas fa-hand-paper"></i>Safe AI Use Pledge</h3>
+                            <p>As an educator using AI tools, I commit to:</p>
+                            <ul class="guidance-list">
+                                <li>Apply my professional judgment to review and verify AI-generated content</li>
+                                <li>Protect student privacy and comply with data protection regulations</li>
+                                <li>Critically evaluate AI outputs for potential bias and ensure diverse representation</li>
+                                <li>Model appropriate and ethical AI use for my students</li>
+                                <li>Continually learn about best practices for educational AI as the technology evolves</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="next-module-container">
+                            <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
+                                <i class="fas fa-check-circle"></i> Complete Module & Continue
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="next-module-container">
-                        <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
-                            <i class="fas fa-check-circle"></i> Complete Module & Continue
-                        </button>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 6 of 6</div>
                     </div>
+                    <button class="step-btn next-step-btn">
+                        <i class="fas fa-check-circle"></i> Complete Module
+                    </button>
                 </div>
             </div>
         </div>
@@ -721,6 +820,136 @@
                 default:
                     pathwayNameElement.textContent = 'AI Foundations';
             }
+        });
+    </script>
+    
+    <script>
+        /**
+         * Step navigation functionality for module progression
+         */
+        
+        /**
+         * Initialize step navigation for a module
+         * @param {string} moduleId - Identifier for the module (used for localStorage)
+         * @param {number} totalSteps - Total number of steps in the module
+         */
+        function initModuleSteps(moduleId, totalSteps) {
+            // Get all step elements
+            const steps = document.querySelectorAll('.module-step');
+            
+            // Current step tracking
+            let currentStep = 1;
+            const savedStep = localStorage.getItem(`${moduleId}_currentStep`);
+            if (savedStep) {
+                currentStep = parseInt(savedStep);
+            }
+            
+            // Create indicators and set up navigation for each step
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                const prevBtn = step.querySelector('.prev-step-btn');
+                const nextBtn = step.querySelector('.next-step-btn');
+                const indicators = step.querySelector('.step-indicators');
+                
+                // Create indicators if they exist
+                if (indicators) {
+                    indicators.innerHTML = '';
+                    for (let i = 0; i < totalSteps; i++) {
+                        const indicator = document.createElement('div');
+                        indicator.className = 'step-indicator';
+                        if (i + 1 === stepNumber) {
+                            indicator.classList.add('active');
+                        } else if (i + 1 < stepNumber) {
+                            indicator.classList.add('completed');
+                        }
+                        indicators.appendChild(indicator);
+                    }
+                }
+                
+                // Set up previous button
+                if (prevBtn) {
+                    prevBtn.disabled = stepNumber === 1;
+                    prevBtn.addEventListener('click', function() {
+                        if (stepNumber > 1) {
+                            showStep(stepNumber - 1);
+                        }
+                    });
+                }
+                
+                // Set up next button
+                if (nextBtn) {
+                    if (stepNumber === totalSteps) {
+                        // If last step, set up completion
+                        nextBtn.addEventListener('click', function() {
+                            completeModule();
+                        });
+                    } else {
+                        // Otherwise navigate to next step
+                        nextBtn.addEventListener('click', function() {
+                            showStep(stepNumber + 1);
+                        });
+                    }
+                }
+            });
+            
+            // Initialize first view
+            showStep(currentStep);
+            
+            /**
+             * Show a specific step and hide others
+             * @param {number} stepNumber - The step to show
+             */
+            function showStep(stepNumber) {
+                // Validate step number
+                if (stepNumber < 1 || stepNumber > totalSteps) {
+                    return;
+                }
+                
+                // Update current step
+                currentStep = stepNumber;
+                localStorage.setItem(`${moduleId}_currentStep`, currentStep);
+                
+                // Hide all steps
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                
+                // Show current step
+                const currentStepElement = document.querySelector(`.module-step[data-step="${currentStep}"]`);
+                if (currentStepElement) {
+                    currentStepElement.classList.add('active');
+                    // Scroll to top of step
+                    window.scrollTo({
+                        top: document.querySelector('.main-content').offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update all indicator sets to show the current step
+                    document.querySelectorAll('.step-indicators').forEach(indicatorSet => {
+                        const indicators = indicatorSet.querySelectorAll('.step-indicator');
+                        indicators.forEach((indicator, index) => {
+                            indicator.classList.remove('active', 'completed');
+                            if (index + 1 === currentStep) {
+                                indicator.classList.add('active');
+                            } else if (index + 1 < currentStep) {
+                                indicator.classList.add('completed');
+                            }
+                        });
+                    });
+                    
+                    // Update all progress texts
+                    document.querySelectorAll('.step-progress-text').forEach(textEl => {
+                        textEl.textContent = `Step ${currentStep} of ${totalSteps}`;
+                    });
+                }
+            }
+        }
+        
+        // Save reference to the original complete function
+        window.completeModuleOriginal = completeModule;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initModuleSteps('ai-safety-ethics', 6);
         });
     </script>
 </body>

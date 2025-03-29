@@ -1,0 +1,88 @@
+/* Step navigation system for modules */
+.module-step {
+    display: none; /* All steps are hidden by default */
+}
+
+.module-step.active {
+    display: block; /* Only the active step is shown */
+    animation: fadeIn 0.4s ease;
+}
+
+.step-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--accent-light);
+}
+
+.step-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.step-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.step-btn:disabled {
+    background-color: var(--neutral-light);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.step-btn.prev-step-btn {
+    background-color: white;
+    color: var(--dark);
+    border: 1px solid var(--accent-light);
+}
+
+.step-btn.prev-step-btn:hover {
+    background-color: var(--light);
+}
+
+.step-indicators {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.step-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-light);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.step-indicator.active {
+    background-color: var(--primary);
+    width: 12px;
+    height: 12px;
+}
+
+.step-indicator.completed {
+    background-color: var(--secondary);
+}
+
+.step-progress-text {
+    margin: 0 15px;
+    font-size: 0.9rem;
+    color: var(--neutral);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
