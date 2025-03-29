@@ -837,50 +837,69 @@
              * Show a specific step and hide others
              * @param {number} stepNumber - The step to show
              */
-            function showStep(stepNumber) {
-                // Validate step number
-                if (stepNumber < 1 || stepNumber > totalSteps) {
-                    return;
+             function showStep(stepNumber) {
+    // Validate step number
+    if (stepNumber < 1 || stepNumber > totalSteps) {
+        return;
+    }
+    
+    // Get current scroll position and viewport dimensions
+    const currentScrollPosition = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    
+    // Update current step
+    currentStep = stepNumber;
+    localStorage.setItem(`${moduleId}_currentStep`, currentStep);
+    
+    // Hide all steps
+    steps.forEach(step => {
+        step.classList.remove('active');
+    });
+    
+    // Show current step
+    const currentStepElement = document.querySelector(`.module-step[data-step="${currentStep}"]`);
+    if (currentStepElement) {
+        currentStepElement.classList.add('active');
+        
+        // Get position info about the new step
+        const stepTop = currentStepElement.getBoundingClientRect().top + window.scrollY;
+        const stepHeight = currentStepElement.offsetHeight;
+        
+        // Determine if scrolling is needed:
+        // 1. If new step is already mostly visible, don't scroll
+        // 2. If new step is far out of view, scroll to a reasonable position
+        const isStepVisible = (
+            currentScrollPosition < stepTop + (stepHeight * 0.3) &&
+            currentScrollPosition + viewportHeight > stepTop + 200
+        );
+        
+        if (!isStepVisible) {
+            // Scroll to just above the step content - enough to see the header and beginning
+            window.scrollTo({
+                top: document.querySelector('.module-progress').offsetTop,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Update indicators
+        document.querySelectorAll('.step-indicators').forEach(indicatorSet => {
+            const indicators = indicatorSet.querySelectorAll('.step-indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.remove('active', 'completed');
+                if (index + 1 === currentStep) {
+                    indicator.classList.add('active');
+                } else if (index + 1 < currentStep) {
+                    indicator.classList.add('completed');
                 }
-                
-                // Update current step
-                currentStep = stepNumber;
-                localStorage.setItem(`${moduleId}_currentStep`, currentStep);
-                
-                // Hide all steps
-                steps.forEach(step => {
-                    step.classList.remove('active');
-                });
-                
-                // Show current step
-                const currentStepElement = document.querySelector(`.module-step[data-step="${currentStep}"]`);
-                if (currentStepElement) {
-                    currentStepElement.classList.add('active');
-                    // Scroll to top of step
-                    window.scrollTo({
-                        top: document.querySelector('.main-content').offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update all indicator sets to show the current step
-                    document.querySelectorAll('.step-indicators').forEach(indicatorSet => {
-                        const indicators = indicatorSet.querySelectorAll('.step-indicator');
-                        indicators.forEach((indicator, index) => {
-                            indicator.classList.remove('active', 'completed');
-                            if (index + 1 === currentStep) {
-                                indicator.classList.add('active');
-                            } else if (index + 1 < currentStep) {
-                                indicator.classList.add('completed');
-                            }
-                        });
-                    });
-                    
-                    // Update all progress texts
-                    document.querySelectorAll('.step-progress-text').forEach(textEl => {
-                        textEl.textContent = `Step ${currentStep} of ${totalSteps}`;
-                    });
-                }
-            }
+            });
+        });
+        
+        // Update progress texts
+        document.querySelectorAll('.step-progress-text').forEach(textEl => {
+            textEl.textContent = `Step ${currentStep} of ${totalSteps}`;
+        });
+    }
+}
         }
         
         // Save reference to the original complete function

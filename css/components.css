@@ -144,40 +144,154 @@
 }
 
 /* ===== CARDS ===== */
+/* Base card component */
+/* Card grid layout */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Base card component */
 .card {
     background-color: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: var(--transition-normal);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
 }
 
+/* Card header - the colored top border */
 .card-header {
-    padding: var(--spacing-6);
-    border-bottom: 1px solid var(--accent-light);
+    height: 4px;
+    width: 100%;
 }
 
-.card-body {
-    padding: var(--spacing-6);
+/* Card variations */
+.card-primary .card-header {
+    background-color: var(--primary);
 }
 
+.card-secondary .card-header {
+    background-color: var(--secondary);
+}
+
+.card-tertiary .card-header {
+    background-color: var(--tertiary);
+}
+
+/* Card title section */
 .card-title {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: var(--primary);
+    padding: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.card-title h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+}
+
+/* Card content */
+.card-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card p {
+    color: var(--neutral);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Feature list */
+.feature-list {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.feature {
     display: flex;
     align-items: center;
-    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-.card-title svg {
-    margin-right: 0.5rem;
+.feature i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
 }
+
+/* Button at bottom of card */
+.card-footer {
+    padding: 0 20px 20px;
+    margin-top: auto;
+}
+
+.btn-card {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 500;
+    background: white;
+    color: var(--dark);
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-card:hover {
+    background-color: var(--light);
+}
+
+.card-primary .btn-card:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.card-secondary .btn-card:hover {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: white;
+}
+
+.card-tertiary .btn-card:hover {
+    background-color: var(--tertiary);
+    border-color: var(--tertiary);
+    color: white;
+}
+
+/* Color-coded feature icons based on card type */
+.card-primary .feature i {
+    color: var(--primary);
+}
+
+.card-secondary .feature i {
+    color: var(--secondary);
+}
+
+.card-tertiary .feature i {
+    color: var(--tertiary);
+}
+
+
 
 /* Module Cards */
 .module-card {

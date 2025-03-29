@@ -29,97 +29,7 @@ body {
     padding: 0 20px;
 }
 
-/* Header */
-header {
-    padding: 20px 0;
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    position: fixed;
-    width: 100%;
-    z-index: 100;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
 
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-icon {
-    font-size: 2rem;
-}
-
-.nav-links {
-    display: flex;
-    gap: 30px;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--neutral);
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--primary);
-}
-
-/* Hero Section */
-.hero {
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 30px;
-    padding-top: 120px;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
-    z-index: -1;
-}
-
-.hero-content {
-    max-width: 800px;
-    z-index: 1;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 20px;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    line-height: 1.2;
-}
-
-.hero p {
-    font-size: 1.25rem;
-    margin-bottom: 30px;
-    color: var(--neutral);
-    line-height: 1.6;
-}
 
 /* Main Content */
 .main-content {
@@ -213,76 +123,7 @@ header {
     line-height: 1.6;
 }
 
-/* Prompt Cards */
-.prompts-category {
-    margin-bottom: 50px;
-}
 
-.category-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--light);
-}
-
-.category-icon {
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-light);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-}
-
-.category-title {
-    font-size: 1.8rem;
-    color: var(--dark);
-}
-
-.prompt-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 25px;
-}
-
-.prompt-card {
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.prompt-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.prompt-header {
-    padding: 15px 20px;
-    background-color: var(--primary-light);
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.prompt-content {
-    padding: 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
 
 .prompt-text {
     font-family: monospace;
@@ -297,32 +138,7 @@ header {
     flex-grow: 1;
 }
 
-.prompt-copy {
-    display: flex;
-    justify-content: flex-end;
-}
 
-.copy-btn {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-}
-
-.copy-btn:hover {
-    background-color: var(--primary-dark);
-}
-
-.copied {
-    background-color: var(--secondary);
-}
 
 /* Progress Bar */
 .progress-container {
