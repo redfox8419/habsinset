@@ -3,10 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Inset Day - Discover, Learn, Create</title>
+    <title>AI Inset Day - AI Tools for Education</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* Minimal additional styles just for the animations */
+        .scroll-container {
+            height: 300vh;
+            width: 100%;
+            position: relative;
+            background-color: #111827;
+        }
+
+        .pathways {
+            margin-top: 100vh;
+            position: relative;
+            margin-top: 0;
+            z-index: 100;
+        }
+        
+        .hero-home {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 10;
+            background-color: #111827;
+        }
+        
+        /* Image containers for animation */
+        .image-container {
+            position: absolute;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: -1;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Left image */
+        .hero-home {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    background-color: #111827;
+    overflow: visible;
+}
+
+/* Left image - unchanged */
+.hero-home .img1 {
+    width: 320px;
+    height: 200px;
+    left: -380px;
+    top: 100%;
+    transform: translateY(-50%);
+}
+
+/* Top right image - fixed pixel position from top */
+.hero-home .img2 {
+    width: 240px;
+    height: 160px;
+    right: -320px;
+    top: 120px; /* Absolute pixels from top */
+    bottom: auto; /* Remove any bottom positioning */
+}
+
+/* Bottom right image - fixed pixel position from bottom */
+.hero-home .img3 {
+    width: 240px;
+    height: 160px;
+    right: -320px;
+    bottom: 120px; /* Absolute pixels from bottom */
+    top: auto; /* Remove any top positioning */
+}
+.hero-home .img4 {
+    width: 240px;
+    height: 160px;
+    left: -320px; /* Same distance from left as img1 */
+    bottom: 120px; /* Same distance from bottom as img3 */
+    top: auto; /* Remove any top positioning */
+}
+/* Center top image */
+.hero-home .img5 {
+    width: 280px;
+    height: 180px;
+    left: 50%;
+    top: -200px; /* Position above the text */
+    transform: translateX(-50%); /* Center horizontally */
+}
+
+/* Center bottom image */
+.hero-home .img6 {
+    width: 250px;
+    height: 250px;
+    left: 65%;
+    bottom: -230px; /* Position below the text */
+    transform: translateX(-50%); /* Center horizontally */
+}
+        
+        /* Ensure pathways section appears correctly */
+        
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            text-align: center;
+            color: white;
+        }
+        
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .scroll-arrow:before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg);
+            position: absolute;
+            left: 9px;
+            animation: arrowBounce 2s infinite;
+        }
+        
+        @keyframes arrowBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) rotate(45deg);
+            }
+            40% {
+                transform: translateY(-10px) rotate(45deg);
+            }
+            60% {
+                transform: translateY(-5px) rotate(45deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-home .img1,
+            .hero-home .img2,
+            .hero-home .img3 {
+                display: none; /* Hide images on mobile */
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Loading screen -->
@@ -15,119 +175,181 @@
     </div>
 
     <!-- Header -->
-    <!-- Header Placeholder - will be filled by JavaScript -->
-    <div id="header-placeholder" data-path="./js/header.js"></div>
+    <header>
+        <div id="header-placeholder" data-path="./js/header.js"></div>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero hero-home">
-        <div class="container hero-content">
-            <h1>Discover the Power of AI in Education</h1>
-            <p>Welcome to our AI Inset Day! This interactive session will help you explore artificial intelligence and its applications in teaching and learning. Choose your learning pathway below to begin your AI journey.</p>
-        </div>
-        <div class="floating-elements">
-            <div class="floating-element element-1"></div>
-            <div class="floating-element element-2"></div>
-            <div class="floating-element element-3"></div>
+    <!-- Scroll Container -->
+    <div class="scroll-container" id="scroll-container">
+        <!-- Hero Section (Fixed) -->
+        <section class="hero hero-home">
+            <div class="container hero-content">
+                <h1>Welcome to AI Inset Day</h1>
+                <p>A comprehensive professional development program to help educators harness the power of AI in their teaching practice. Choose your learning pathway and discover how AI can transform your classroom.</p>
+                
+                <!-- Image containers for animation -->
+                <div class="image-container img1">
+                    <img src="/images/image1.png" alt="AI in education" />
+                </div>
+                
+                <div class="image-container img2">
+                    <img src="/images/image2.png" alt="Teacher using AI" />
+                </div>
+                
+                <div class="image-container img3">
+                    <img src="/images/image3.png" alt="Students learning" />
+                </div>
+                <div class="image-container img4">
+                    <img src="/images/image4.png" alt="Educational AI concepts" />
+                </div>
+                <div class="image-container img5">
+                    <img src="/images/image5.png" alt="AI concept map" />
+                </div>
+                
+                <div class="image-container img6">
+                    <img src="/images/image6.png" alt="Educational technology" />
+                </div>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-element element-1"></div>
+                <div class="floating-element element-2"></div>
+                <div class="floating-element element-3"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        <p>Scroll to explore</p>
+        <div class="scroll-arrow"></div>
+    </div>
+
+    <!-- Pathways Section - USING ORIGINAL MARKUP -->
+    <section class="pathways">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Choose Your Learning Pathway</h2>
+                <p class="pathways-subtitle">Select the path that best fits your needs and experience level. Each pathway includes a sequence of modules designed to build your skills progressively.</p>
+            </div>
+            
+            <div class="pathway-grid">
+                <!-- AI Foundations Pathway -->
+                <div class="card pathway-card">
+                    <div class="card-header"></div>
+                    <div class="card-title">
+                        <h3>AI Foundations</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="pathway-icon text-center mb-4">
+                            <i class="fas fa-seedling text-primary fa-3x"></i>
+                        </div>
+                        <p>Perfect for beginners! Start with the fundamentals of AI in education, learn basic prompting techniques, and discover how AI can enhance your teaching practice.</p>
+                        
+                        <div class="pathway-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>AI Ethics and Safety for Education</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Basic Prompting Techniques</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>AI Tools for Classroom Use</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="ai-foundations/index.html" class="btn-card">
+                                Start This Pathway
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource Builder Pathway -->
+                <div class="card pathway-card">
+                    <div class="card-header"></div>
+                    <div class="card-title">
+                        <h3>Resource Builder</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="pathway-icon text-center mb-4">
+                            <i class="fas fa-tools text-secondary fa-3x"></i>
+                        </div>
+                        <p>Great for teachers with some AI experience! Learn advanced prompting techniques and access ready-to-use templates to create high-quality educational resources quickly.</p>
+                        
+                        <div class="pathway-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Advanced Prompting Strategies</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Subject-Specific Prompt Templates</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Creating Differentiated Materials</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="resource-builder/index.html" class="btn-card">
+                                Start This Pathway
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Code Creator Pathway -->
+                <div class="card pathway-card">
+                    <div class="card-header"></div>
+                    <div class="card-title">
+                        <h3>Code Creator</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="pathway-icon text-center mb-4">
+                            <i class="fas fa-code text-tertiary fa-3x"></i>
+                        </div>
+                        <p>For tech-savvy educators! Learn to use AI to generate interactive HTML applications, quizzes, and games for your classroom - no programming experience required.</p>
+                        
+                        <div class="pathway-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Generating Interactive Elements</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Creating Custom Web Applications</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Building Engaging Digital Assessments</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="code-creator/index.html" class="btn-card">
+                                Start This Pathway
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-   <!-- Pathways Section -->
-<section class="pathways" id="pathways">
-    <div class="container">
-        <div class="section-heading">
-            <h2>Choose Your Learning Pathway</h2>
-            <p>Select the pathway that best matches your experience level with AI tools and technologies.</p>
-        </div>
-        <div class="cards-grid">
-            <!-- AI Foundations Pathway -->
-            <div class="card card-primary">
-                <div class="card-header"></div>
-                <div class="card-title">
-                    <h3>AI Foundations</h3>
-                </div>
-                <div class="card-body">
-                    <p>New to AI? Start here to learn about AI in education, effective prompting techniques, and why AI tools can enhance your teaching practice.</p>
-                    <div class="feature-list">
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Understanding AI in education</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Effective prompt writing</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Creating teaching materials with AI</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="getting-started/ai-safety-ethics.html?pathway=ai-foundations&module=1" class="btn-card">Begin Pathway</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Resource Builder Pathway -->
-            <div class="card card-secondary">
-                <div class="card-header"></div>
-                <div class="card-title">
-                    <h3>Resource Builder</h3>
-                </div>
-                <div class="card-body">
-                    <p>Ready to create effective teaching resources? Learn advanced prompting strategies and access ready-to-use templates for classroom materials.</p>
-                    <div class="feature-list">
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Advanced prompting techniques</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Ready-to-use prompt templates</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Specialized educational resources</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="getting-started/ai-safety-ethics.html?pathway=resource-builder&module=1" class="btn-card">Begin Pathway</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Code Creator Pathway -->
-            <div class="card card-tertiary">
-                <div class="card-header"></div>
-                <div class="card-title">
-                    <h3>Code Creator</h3>
-                </div>
-                <div class="card-body">
-                    <p>Learn how to use AI to create custom HTML applications, interactive quizzes, and games by generating and modifying code for your classroom.</p>
-                    <div class="feature-list">
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>AI code generation</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Custom HTML quiz builders</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Interactive game development</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="getting-started/ai-safety-ethics.html?pathway=code-creator&module=1" class="btn-card">Begin Pathway</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
     </div>
-</section>
-    
-    <!-- Footer Placeholder - will be filled by JavaScript -->
-    <div id="footer-placeholder" data-path="./js/footer.js"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div id="footer-placeholder" data-path="./js/footer.js"></div>
+    </footer>
 
     <script>
         // Loading screen
@@ -136,23 +358,151 @@
                 document.querySelector('.loading-screen').classList.add('fade-out');
             }, 1000);
         });
+        
+        // Back to Top Button
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                document.getElementById('backToTopBtn').classList.add('active');
+            } else {
+                document.getElementById('backToTopBtn').classList.remove('active');
+            }
+        });
 
-        // Navigate to section when nav link is clicked
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                });
+        document.getElementById('backToTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        // GSAP Animations - ONLY adding animation code here
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get elements
+            const heroSection = document.querySelector('.hero-home');
+            const heroContent = heroSection.querySelector('.hero-content');
+            const floatingElements = heroSection.querySelector('.floating-elements');
+            
+            // Get image containers
+            const imageContainers = [
+                heroSection.querySelector('.img1'),
+                heroSection.querySelector('.img2'),
+                heroSection.querySelector('.img3'),
+                heroSection.querySelector('.img4'),
+                heroSection.querySelector('.img5'),
+                heroSection.querySelector('.img6')
+            ];
+            
+            // Create hero section animation
+            const heroExitTl = gsap.timeline({
+    scrollTrigger: {
+        trigger: '#scroll-container',
+        start: 'top top',
+        end: '+=800', // Shorter scroll distance
+        scrub: 1,
+        pin: heroSection, // Pin hero section specifically
+        pinSpacing: false, // This prevents extra space creation
+        onLeave: () => {
+            heroSection.style.visibility = 'hidden';
+            // Force pathways to appear immediately after animation
+            gsap.set('.pathways', { y: 0 });
+        },
+        onEnterBack: () => heroSection.style.visibility = 'visible'
+    }
+});
+            
+            // Images move first
+            heroExitTl.to(imageContainers[0], { 
+                x: 100,
+                y: 100, 
+                scale: 1.4, 
+                opacity: 0, 
+                duration: 0.5
+            }, 0);
+            
+            heroExitTl.to(imageContainers[1], { 
+                x: -100, 
+                y: 100, 
+                scale: 1.3, 
+                opacity: 0, 
+                duration: 0.5
+            }, 0);
+            
+            heroExitTl.to(imageContainers[2], { 
+                x: 20, 
+                y: -150, 
+                scale: 1.3, 
+                opacity: 0, 
+                duration: 0.5
+            }, 0);
+
+            heroExitTl.to(imageContainers[4], { 
+                x: 300,
+                y: -50,     // Move further up
+                scale: 1.3, 
+                opacity: 0, 
+                duration: 0.5
+            }, 0);
+
+            // Set initial flip
+            gsap.set(imageContainers[5], {
+                scaleX: -1 // Start with the image flipped
+            });
+
+// For animation, use separate scaleX and scaleY (don't use the combined scale property)
+            heroExitTl.to(imageContainers[5], {
+                x: -200,
+                scaleX: -1, // Keep negative to maintain flip direction while scaling
+                scaleY: 1,  // Scale vertically normally
+                opacity: 0,
+                duration: 0.5
+            }, 0);
+
+            // Add animation for the fourth image - moving bottom left
+heroExitTl.to(imageContainers[3], { 
+    x: 200, 
+    y: -150,  // Positive y value moves it down
+    scale: 1.3, 
+    opacity: 0, 
+    duration: 0.5
+}, 0);
+            
+            // Then text fades
+            heroExitTl.to(heroContent.querySelector('h1'), { 
+                y: -150,
+                scale: 1.5, 
+                opacity: 0, 
+                duration: 0.5 
+            }, 0.3);
+            
+            heroExitTl.to(heroContent.querySelector('p'), { 
+                y: 100,
+                scale: 1.3, 
+                opacity: 0, 
+                duration: 0.5 
+            }, 0.35);
+            
+            heroExitTl.to(floatingElements, { 
+                opacity: 0, 
+                duration: 0.5 
+            }, 0.3);
+            
+            // Scroll indicator
+            gsap.to('#scrollIndicator', {
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: '#scroll-container',
+                    start: '5% top',
+                    end: '10% top',
+                    scrub: true
+                }
             });
         });
     </script>
+    
+    <!-- Include the AI quiz script if it exists -->
     <script src="js/ai-quiz.js"></script>
     <script src="../js/header.js"></script>
     <script src="../js/footer.js"></script>
