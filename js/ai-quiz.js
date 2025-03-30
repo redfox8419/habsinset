@@ -316,13 +316,23 @@ function createQuizModal() {
         document.querySelector('.quiz-header p').textContent = 'Based on your responses, we\'ve identified the best starting point for your AI learning journey.';
         
         // Add event listener to close button
-        document.querySelector('.quiz-close-btn').addEventListener('click', function() {
-            closeQuizModal();
-        });
+        // Add event listener to close button
+    document.querySelector('.quiz-close-btn').addEventListener('click', function() {
+        closeQuizModal();
         
-        // Mark quiz as completed
-        localStorage.setItem('aiQuizCompleted', 'true');
-    }
+        // Show pathways section after quiz closes
+        gsap.set('.pathways', { 
+            y: 0,
+            visibility: 'visible'
+        });
+
+        // Scroll directly to the pathways section
+    document.querySelector('.pathways').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // Mark quiz as completed
+    localStorage.setItem('aiQuizCompleted', 'true');
+}
     
     // Function to determine recommended pathway
     function getRecommendedPathway(score) {
@@ -642,7 +652,7 @@ function addQuizStyles() {
 // Initialize once DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     addQuizStyles();
-    createQuizModal();
+    
     
     // For testing - add a reset button to clear localStorage and reload the page
     // Uncomment these lines during development, comment out for production

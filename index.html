@@ -608,17 +608,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1.6);
     
     // Hide second section and show pathways at end
-    masterTimeline.to(secondSection, {
-        autoAlpha: 0,
-        duration: 0.1,
-        onComplete: () => {
-            // Force pathways to appear after animations
+    // Hide second section and conditionally show quiz or pathways
+masterTimeline.to(secondSection, {
+    autoAlpha: 0,
+    duration: 0.1,
+    onComplete: () => {
+        // Check if this is the first visit
+        if (!localStorage.getItem('aiQuizCompleted')) {
+            // First visit - show the quiz
+            createQuizModal();
+            
+            // Hide pathways until quiz is completed
+            gsap.set('.pathways', { 
+                visibility: 'hidden'
+            });
+        } else {
+            // Return visit - show pathways immediately
             gsap.set('.pathways', { 
                 y: 0,
                 visibility: 'visible'
             });
         }
-    }, 1.9);
+    }
+}, 1.9);
     
     // Scroll indicator - keep this exactly as it was
     gsap.to('#scrollIndicator', {
