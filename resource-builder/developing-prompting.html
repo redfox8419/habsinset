@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developing Prompting Techniques - Resource Builder Pathway</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/module-steps.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <!-- Module Progress -->
+            <div class="module-progress">
+                <div class="progress-steps">
+                    <div class="progress-step">
+                        <div class="step-number completed">1</div>
+                        <span class="step-label">AI Safety</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number active">2</div>
+                        <span class="step-label">Developing Prompting</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <span class="step-label">Polishing Output</span>
+                    </div>
+                </div>
+                <div class="pathway-name" id="pathwayName">Resource Builder</div>
+            </div>
+
+            <!-- Step 1: Introduction -->
+            <div class="module-step" data-step="1">
+                <div class="content-section">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--dark);">Developing Prompting Techniques</h1>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--neutral); margin-bottom: 30px;">Take your AI prompting skills to the next level with advanced techniques that produce higher-quality educational resources with less back-and-forth.</p>
+                    
+                    <h2 class="section-title">Moving Beyond Basic Prompting</h2>
+                    <div class="section-content">
+                        <p>In this module, we'll build on foundational prompting skills to develop more sophisticated approaches for creating educational resources. Before we dive into advanced techniques, let's briefly revisit the fundamental framework.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-redo" style="color: var(--primary); margin-right: 10px;"></i>Quick Recap: The Express-Context-Iterate Framework</h3>
+                            
+                            <p>If you're coming directly to this module, here's a quick recap of the basic prompting framework:</p>
+                            
+                            <div class="cards-grid">
+                                <!-- Express Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>1. Express</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-brain text-primary fa-3x"></i>
+                                        </div>
+                                        <p>Start by expressing your thoughts freely. Don't worry about perfect phrasing or organization—just get your ideas across clearly.</p>
+                                    </div>
+                                </div>
+                            
+                                <!-- Context Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>2. Context</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-book-open text-secondary fa-3x"></i>
+                                        </div>
+                                        <p>Include relevant details about your specific situation: year group, subject, student abilities, learning objectives, or specifications.</p>
+                                    </div>
+                                </div>
+                            
+                                <!-- Iterate Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>3. Iterate</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-sync-alt text-tertiary fa-3x"></i>
+                                        </div>
+                                        <p>View prompting as a conversation. If the first response isn't quite right, ask for revisions or clarifications rather than starting over.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p style="margin-top: 20px;">This framework provides a solid foundation, but to create exceptional educational resources, we can employ more structured and sophisticated prompting techniques.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 1 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Structured Frameworks -->
+            <div class="module-step" data-step="2">
+                <div class="content-section">
+                    <h2 class="section-title">Using Structured Frameworks for Better Results</h2>
+                    <div class="section-content">
+                        <p>While casual prompting works for simple requests, structured frameworks significantly improve results for complex educational resources.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-sitemap" style="color: var(--primary); margin-right: 10px;"></i>The CRISPE Framework</h3>
+                            
+                            <p>The CRISPE framework provides a comprehensive structure for complex prompts that leads to more precise, tailored results:</p>
+                            
+                            <div class="card" style="margin-bottom: 30px;">
+                                <div class="card-header"></div>
+                                <div class="card-body">
+                                    <ul class="guidance-list">
+                                        <li><strong>Capacity:</strong> Define the AI's role and expertise level</li>
+                                        <li><strong>Role:</strong> Specify your role and needs as an educator</li>
+                                        <li><strong>Insight:</strong> Provide essential context about your students and setting</li>
+                                        <li><strong>Specifics:</strong> Detail exactly what you need in the output</li>
+                                        <li><strong>Purpose:</strong> Explain how the resource will be used</li>
+                                        <li><strong>Examples:</strong> Share examples or references when possible</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="content-container" style="background-color: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h4 style="color: var(--dark); margin-bottom: 10px;">Example Framework:</h4>
+                                <pre style="background-color: white; padding: 15px; border-radius: 4px; overflow-x: auto; font-family: monospace; font-size: 0.9rem; line-height: 1.4;">
+Capacity: Act as an experienced educator with expertise in [SUBJECT] for [YEAR/GRADE] students.
+
+Role: I am a [SUBJECT] teacher preparing materials for a [TOPIC] unit.
+
+Insight: My students have [BACKGROUND KNOWLEDGE/CHALLENGES/NEEDS].
+
+Specifics: Create a [RESOURCE TYPE] that includes [SPECIFIC ELEMENTS] and follows [FORMAT/STYLE REQUIREMENTS].
+
+Purpose: This will be used for [TEACHING PURPOSE/CONTEXT].
+
+Examples: The resource should follow a similar structure to [REFERENCE OR ATTACHMENT].
+                                </pre>
+                            </div>
+                            
+                            <p>The CRISPE framework transforms vague requests into structured briefs that provide the AI with all the information it needs to create precisely tailored educational resources.</p>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-lightbulb"></i>Why Structured Frameworks Matter</h3>
+                                <p>Using a framework like CRISPE offers several advantages over basic prompting:</p>
+                                <ul class="guidance-list">
+                                    <li>Ensures you don't accidentally omit important contextual details</li>
+                                    <li>Helps the AI understand the specific educational purpose of the resource</li>
+                                    <li>Creates a reusable template you can adapt for different resources</li>
+                                    <li>Reduces the need for extensive back-and-forth clarification</li>
+                                    <li>Produces results that are more immediately usable with less editing</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 2 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Prompt Chaining -->
+            <div class="module-step" data-step="3">
+                <div class="content-section">
+                    <h2 class="section-title">Breaking Down Complex Tasks with Prompt Chaining</h2>
+                    <div class="section-content">
+                        <p>Rather than trying to generate an entire unit of work in one prompt, prompt chaining breaks complex resource creation into a logical sequence of smaller tasks.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-link" style="color: var(--primary); margin-right: 10px;"></i>What is Prompt Chaining?</h3>
+                            
+                            <p>Prompt chaining is the process of breaking a complex task into a sequence of smaller, connected prompts. Each prompt builds on the output of previous prompts, creating a step-by-step workflow.</p>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-check-circle"></i>Key Benefits of Prompt Chaining</h3>
+                                <ul class="guidance-list">
+                                    <li><strong>Reduces AI confusion and hallucinations</strong> by focusing on one aspect at a time</li>
+                                    <li><strong>Creates more cohesive, thoughtful resources</strong> by building logically</li>
+                                    <li><strong>Allows for quality checks at each stage</strong> of the development process</li>
+                                    <li><strong>Makes the process more manageable</strong> for both you and the AI</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="content-container" style="background-color: var(--light); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <h4 style="color: var(--dark); margin-bottom: 10px;">Example Chain for Creating a Unit Plan:</h4>
+                                <ol style="margin-left: 20px; line-height: 1.6;">
+                                    <li><strong>Initial Plan:</strong> "Create an outline for a 2-week unit on [TOPIC] for [YEAR GROUP], listing key learning objectives and assessment opportunities."</li>
+                                    <li><strong>Lesson Sequence:</strong> "Based on this outline, develop a sequence of 6 lessons that build knowledge progressively."</li>
+                                    <li><strong>Individual Lessons:</strong> "For lesson 2, create a detailed plan including starter, main activities, and plenary."</li>
+                                    <li><strong>Resource Development:</strong> "Now create the student worksheet needed for the main activity in lesson 2."</li>
+                                    <li><strong>Assessment:</strong> "Design a summative assessment that evaluates the key objectives from the unit plan."</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-info-circle" style="margin-right: 10px;"></i>Pro Tip
+                                </h3>
+                                <p>When using prompt chaining, always reference previous outputs explicitly. For example: "Based on the lesson sequence you just created, especially the content in lesson 3 about [SPECIFIC CONTENT], develop a detailed..." This ensures continuity and coherence across the chain.</p>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-clipboard-check" style="color: var(--secondary); margin-right: 10px;"></i>Example Implementation</h3>
+                            
+                            <p><strong>Instead of this single massive prompt:</strong></p>
+                            <div style="background-color: var(--light); padding: 15px; border-radius: 4px; margin-bottom: 15px; color: var(--neutral);">
+                                "Create a complete 3-lesson mini-unit on To Kill a Mockingbird for Year 10 English, including lesson plans, worksheets, discussion questions, homework assignments, and a final assessment."
+                            </div>
+                            
+                            <p><strong>Use this prompt chain:</strong></p>
+                            <ol style="margin-left: 20px; line-height: 1.6;">
+                                <li>"Create an outline for a 3-lesson mini-unit on To Kill a Mockingbird for Year 10 English, focusing on character development, social justice themes, and literary devices. Include key learning objectives for each lesson."</li>
+                                <li>"Based on the outline you just created, develop a detailed plan for Lesson 1 on character development, including a starter activity, main teaching points, student activities, and plenary."</li>
+                                <li>"Now create a worksheet for the character analysis activity in Lesson 1, focusing on Atticus Finch, Scout, and Jem. Include text excerpts, guiding questions, and a graphic organizer."</li>
+                                <li>And so on...</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 3 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Resource Uploads -->
+            <div class="module-step" data-step="4">
+                <div class="content-section">
+                    <h2 class="section-title">Enriching Context Through Resource Uploads</h2>
+                    <div class="section-content">
+                        <p>Modern AI tools allow uploading documents, images, and other files to provide richer context for your prompts.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-upload" style="color: var(--primary); margin-right: 10px;"></i>Strategic Resource Upload Approaches</h3>
+                            
+                            <p>Uploading relevant resources dramatically improves the AI's ability to align with your specific educational context, curriculum requirements, and formatting preferences.</p>
+                            
+                            <div class="cards-grid">
+                                <!-- Curriculum Documents Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Curriculum Documents</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-file-alt text-primary fa-3x"></i>
+                                        </div>
+                                        <p>Upload official curriculum standards, exam specifications, or syllabus materials to ensure AI aligns with required content.</p>
+                                        <div style="margin-top: 15px; padding: 10px; background-color: var(--light); border-radius: 4px;">
+                                            <strong>Example prompt:</strong> "I've uploaded our examination board specification for GCSE Chemistry. Please create a revision guide that covers the organic chemistry section (pages 23-25)."
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Existing Resources Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Existing Resources</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-copy text-secondary fa-3x"></i>
+                                        </div>
+                                        <p>Share current worksheets or lesson plans you want to improve or expand upon to maintain consistency with your teaching materials.</p>
+                                        <div style="margin-top: 15px; padding: 10px; background-color: var(--light); border-radius: 4px;">
+                                            <strong>Example prompt:</strong> "I've uploaded my current worksheet on fractions. Please create three differentiated versions while maintaining the same overall structure and approach."
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Textbook Pages Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Textbook Pages</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-book text-tertiary fa-3x"></i>
+                                        </div>
+                                        <p>Upload relevant pages to ensure AI aligns with your teaching materials and uses consistent terminology and approaches.</p>
+                                        <div style="margin-top: 15px; padding: 10px; background-color: var(--light); border-radius: 4px;">
+                                            <strong>Example prompt:</strong> "I've uploaded pages 45-47 from our science textbook. Create a hands-on activity that extends the explanation of photosynthesis shown here."
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card" style="margin-top: 30px;">
+                                <h3><i class="fas fa-lightbulb"></i>Best Practices for Resource Uploads</h3>
+                                <ul class="guidance-list">
+                                    <li><strong>Be specific about relevant sections</strong> - Direct the AI to particular pages or highlighted sections</li>
+                                    <li><strong>Upload multiple reference materials</strong> - Provide curriculum documents and your own resources to get the best alignment</li>
+                                    <li><strong>Include model examples</strong> - Upload examples of resources you consider high-quality to guide the AI's output</li>
+                                    <li><strong>Ensure readability</strong> - Make sure scanned documents are clear and legible</li>
+                                    <li><strong>Remove sensitive information</strong> - Redact any private or identifying student information</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--primary);">
+                                <h3 style="color: var(--primary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-info-circle" style="margin-right: 10px;"></i>Pro Tip
+                                </h3>
+                                <p>When uploading multiple documents, name them clearly in your prompt: "I've uploaded two files: 'curriculum_guide.pdf' contains our learning objectives, and 'previous_worksheet.docx' shows my current resource that needs updating." This helps the AI understand the purpose of each document.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 4 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 5: Mastering Iteration -->
+            <div class="module-step" data-step="5">
+                <div class="content-section">
+                    <h2 class="section-title">The Art of Effective Iteration</h2>
+                    <div class="section-content">
+                        <p>Iteration is where the real magic happens in AI prompting, yet many teachers give up after the first attempt. Let's explore strategies for more effective iteration.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-sync-alt" style="color: var(--primary); margin-right: 10px;"></i>Why Iteration Matters</h3>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-check-circle"></i>Benefits of Effective Iteration</h3>
+                                <ul class="guidance-list">
+                                    <li>First attempts are rarely perfect—even with structured prompts</li>
+                                    <li>Each iteration brings the output closer to your vision</li>
+                                    <li>It's faster than starting over with a new prompt</li>
+                                    <li>AI learns from your feedback during the conversation</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-tools" style="color: var(--secondary); margin-right: 10px;"></i>Effective Iteration Strategies</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Specific Feedback Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Be Specific About Issues</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="padding: 10px; margin-bottom: 10px; background-color: var(--light); border-radius: 4px; color: var(--tertiary);">
+                                            <strong>Instead of:</strong> "This doesn't look right."
+                                        </div>
+                                        <div style="padding: 10px; background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; color: var(--secondary);">
+                                            <strong>Try:</strong> "The vocabulary is too advanced for Year 3 students. Please simplify the language and use shorter sentences."
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- One Aspect at a Time Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Fix One Aspect at a Time</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="padding: 10px; margin-bottom: 10px; background-color: var(--light); border-radius: 4px; color: var(--tertiary);">
+                                            <strong>Instead of:</strong> "Change the language, add more questions, and include visuals."
+                                        </div>
+                                        <div style="padding: 10px; background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; color: var(--secondary);">
+                                            <strong>Try:</strong> "Keep everything the same but simplify the language. We'll address other aspects next."
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Show Examples Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Show, Don't Just Tell</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="padding: 10px; margin-bottom: 10px; background-color: var(--light); border-radius: 4px; color: var(--tertiary);">
+                                            <strong>Instead of:</strong> "Make it sound more engaging."
+                                        </div>
+                                        <div style="padding: 10px; background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; color: var(--secondary);">
+                                            <strong>Try:</strong> "Change the tone to be more like this example: 'Ready for an exciting journey through the water cycle? Let's dive in!'"
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-comments" style="color: var(--primary); margin-right: 10px;"></i>Example Iteration Conversation</h3>
+                            
+                            <div class="content-container" style="background-color: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <p><strong>Initial Request:</strong> "Create a worksheet on fractions for Year 4 students."</p>
+                                
+                                <p><strong>First Iteration:</strong> "This is a good start, but I need the worksheet to focus specifically on equivalent fractions, not fractions in general. Please revise it to focus just on this concept."</p>
+                                
+                                <p><strong>Second Iteration:</strong> "Thanks, the focus is better now. Could you add some visual fraction strips to support the numeric representations? Also, please include a simple self-assessment section at the end."</p>
+                                
+                                <p><strong>Third Iteration:</strong> "This is almost perfect! Just one more change - could you create three slightly different versions at the bottom for differentiation? Perhaps label them as 'Starting', 'Developing', and 'Mastering' with appropriate difficulty levels."</p>
+                                
+                                <p><strong>Final Confirmation:</strong> "Perfect! This worksheet now has exactly what I need - focused content on equivalent fractions, visual supports, self-assessment, and differentiated sections. Thank you!"</p>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Iteration Mindset
+                                </h3>
+                                <p>Think of iteration as sculpting - you start with a rough shape and refine it gradually, rather than expecting a perfect result immediately. Each iteration brings you closer to your ideal resource with less effort than starting over.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 5 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 6: Practice Activity -->
+            <div class="module-step" data-step="6">
+                <div class="content-section">
+                    <h2 class="section-title">Putting It All Together</h2>
+                    <div class="section-content">
+                        <p>Let's practice combining these techniques to create a high-quality educational resource.</p>
+                        
+                        <div class="content-container">
+                            <div style="padding: 25px; background-color: var(--light); border-radius: 8px; margin-bottom: 30px; border-left: 4px solid var(--primary);">
+                                <h3 style="color: var(--dark); margin-bottom: 15px;">Challenge Scenario</h3>
+                                <p>You need to create a comprehensive revision guide for an upcoming assessment. The guide should include key concepts, practice questions, and study strategies.</p>
+                                
+                                <h4 style="margin-top: 20px; margin-bottom: 10px; color: var(--dark);">Your Task:</h4>
+                                <ol style="margin-left: 20px; line-height: 1.6;">
+                                    <li>Develop a structured prompt using the CRISPE framework</li>
+                                    <li>Plan a chain of 3-4 prompts to develop different aspects of the guide</li>
+                                    <li>Consider what supporting materials you would upload</li>
+                                    <li>Draft 2-3 follow-up iterations to refine the output</li>
+                                </ol>
+                            </div>
+                            
+                            <!-- Example Solution -->
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color: var(--secondary); margin-right: 10px;"></i>Example Solution</h3>
+                            
+                            <div class="content-container" style="background-color: rgba(16, 185, 129, 0.1); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h4 style="color: var(--secondary); margin-bottom: 10px;">Step 1: Initial CRISPE Framework Prompt</h4>
+                                <pre style="background-color: white; padding: 15px; border-radius: 4px; overflow-x: auto; font-family: monospace; font-size: 0.9rem; line-height: 1.4; margin-bottom: 20px;">
+Capacity: Act as an experienced GCSE Chemistry teacher who is skilled at creating effective revision materials.
+
+Role: I am a Chemistry teacher preparing my Year 11 students for their final GCSE assessment on Chemical Analysis and Quantitative Chemistry.
+
+Insight: My students have mixed abilities, with some struggling with calculations and others needing extension. Many find these topics abstract and have difficulty applying concepts in exam questions.
+
+Specifics: Create an outline for a comprehensive revision guide that includes:
+- Key concepts and definitions
+- Common misconceptions
+- Practice questions of progressive difficulty
+- Calculation strategies with worked examples
+- Memory aids for key information
+
+Purpose: This will be used as a structured revision resource during the final three weeks before their exam.
+
+Examples: I've uploaded our exam specification and a previous revision guide I created for another topic as reference.
+                                </pre>
+                                
+                                <h4 style="color: var(--secondary); margin-bottom: 10px;">Step 2: Prompt Chain for Different Components</h4>
+                                <ol style="margin-left: 20px; line-height: 1.6; margin-bottom: 20px;">
+                                    <li><strong>Content Outline:</strong> "Based on the outline you've created, please develop the Key Concepts section in detail, organizing the information in a logical sequence and highlighting the most critical points that frequently appear in exams."</li>
+                                    <li><strong>Practice Questions:</strong> "Now develop a set of 15 practice questions that progress from basic recall to complex application. Include a mix of multiple choice, short answer, and calculation questions that align with the specification I uploaded."</li>
+                                    <li><strong>Worked Examples:</strong> "Create 5 detailed worked examples for the calculation questions, showing each step clearly with explanations of the reasoning. Make these examples follow the approach shown in the revision guide I uploaded."</li>
+                                    <li><strong>Study Strategies:</strong> "Finally, create a one-page study strategy guide with specific techniques for memorizing key information and approaching different question types in the exam."</li>
+                                </ol>
+                                
+                                <h4 style="color: var(--secondary); margin-bottom: 10px;">Step 3: Iteration Refinements</h4>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li><strong>First Iteration:</strong> "The content looks good, but could you reorganize the Key Concepts section to match the exact order in the specification? Also, please add more visual elements to represent the key reactions."</li>
+                                    <li><strong>Second Iteration:</strong> "The practice questions need more scaffolding. Could you add hints for the more difficult questions and organize them in three clearly marked difficulty levels?"</li>
+                                    <li><strong>Final Refinement:</strong> "This looks great! As a final improvement, could you add a quick-reference summary at the beginning of each section that highlights the most frequently examined concepts? Also, please ensure all chemical equations are properly formatted with state symbols."</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Reflection Questions -->
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-question-circle"></i>Reflection Questions</h3>
+                                <ol class="guidance-list">
+                                    <li>How does this structured approach differ from how you might have prompted AI previously?</li>
+                                    <li>Which technique (CRISPE, prompt chaining, resource uploading, or iteration) do you think will make the biggest difference to your results?</li>
+                                    <li>What specific subject and year group would you apply these techniques to in your teaching?</li>
+                                    <li>How might you adapt this approach for creating different types of resources (e.g., lesson plans, assessments, differentiated activities)?</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 6 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 7: Summary & Next Steps -->
+            <div class="module-step" data-step="7">
+                <div class="content-section">
+                    <h2 class="section-title">Summary & Next Steps</h2>
+                    <div class="section-content">
+                        <p>In this module, we've explored advanced prompting techniques that can significantly improve the quality of AI-generated educational resources:</p>
+                        
+                        <ul class="guidance-list">
+                            <li><strong>Structured Frameworks</strong> like CRISPE provide clear organization for complex requests</li>
+                            <li><strong>Prompt Chaining</strong> breaks down resource creation into manageable sequential steps</li>
+                            <li><strong>Resource Uploads</strong> provide rich context that improves AI understanding of your needs</li>
+                            <li><strong>Effective Iteration</strong> is crucial for refining outputs to match your exact requirements</li>
+                        </ul>
+                        
+                        <p>These techniques build upon your foundation of basic prompting, giving you more control and better results when creating teaching materials.</p>
+                        
+                        <div class="guidance-card" style="background-color: rgba(99, 102, 241, 0.1); border-left-color: var(--primary); margin-top: 30px;">
+                            <h3><i class="fas fa-lightbulb"></i>Implementation Tips</h3>
+                            <ul class="guidance-list">
+                                <li>Start by implementing one technique at a time until it becomes familiar</li>
+                                <li>Create templates for your most frequent resource types using the CRISPE framework</li>
+                                <li>Build a library of successful prompts that you can adapt for future use</li>
+                                <li>Remember that investing time in better prompting ultimately saves more time in editing</li>
+                                <li>Share effective prompts with colleagues to multiply the impact</li>
+                            </ul>
+                        </div>
+                        
+                        <p style="margin-top: 20px;">Your next step is to learn how to polish AI outputs to create professional-quality resources that are classroom-ready. In Module 3, we'll explore techniques for formatting, enhancing, and customizing AI-generated content to ensure it meets professional standards.</p>
+                        
+                        <div class="next-module-container">
+                            <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
+                                <i class="fas fa-check-circle"></i> Complete Module & Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 7 of 7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Function to handle module completion
+        function completeModule() {
+            // Determine which pathway the user is on
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'resource-builder';
+            
+            // Mark this module as completed in localStorage
+            localStorage.setItem('advancedPromptingCompleted', 'true');
+            localStorage.setItem(`${pathway}_module2_completed`, 'true');
+            
+            // Redirect to the appropriate next module
+            window.location.href = '../resource-builder/polishing-output.html?pathway=resource-builder&module=3';
+        }
+        
+        // Update pathway name in progress bar
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'resource-builder';
+            
+            // Update the pathway name display
+            const pathwayNameElement = document.getElementById('pathwayName');
+            if (pathwayNameElement) {
+                pathwayNameElement.textContent = 'Resource Builder';
+            }
+        });
+        
+        // Save reference to the original complete function
+        window.completeModuleOriginal = completeModule;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initModuleSteps('developing-prompting', 7);
+            
+            // Progress Bar for scrolling
+            window.addEventListener('scroll', function() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.scrollY;
+                
+                const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+                
+                // Back to Top Button
+                if (scrollTop > 300) {
+                    document.getElementById('backToTopBtn').classList.add('active');
+                } else {
+                    document.getElementById('backToTopBtn').classList.remove('active');
+                }
+            });
+
+            // Back to Top Button
+            document.getElementById('backToTopBtn').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="../js/module-steps.js"></script>
+</body>
+</html>

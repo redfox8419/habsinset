@@ -34,23 +34,15 @@ const pathwayModules = {
         },
         {
             id: 'module2',
-            name: 'Prompting Cheat Sheet',
-            url: '../resources/prompt-cheat-sheet.html?pathway=resource-builder&module=2',
+            name: 'Developing Prompting',
+            url: '../resource-builder/developing-prompting.html?pathway=resource-builder&module=2',
             required: 'module1' // Requires module1 to be completed
         },
         {
             id: 'module3',
-            name: 'Advanced Prompting',
-            url: '#', // Coming soon
+            name: 'Polishing Your AI Output',
+            url: '../resource-builder/polishing-output.html?pathway=resource-builder&module=3',
             required: 'module2', // Requires module2 to be completed
-            comingSoon: true
-        },
-        {
-            id: 'module4',
-            name: 'Interactive Editors',
-            url: '#', // Coming soon
-            required: 'module3', // Requires module3 to be completed
-            comingSoon: true
         }
     ],
     'code-creator': [
@@ -230,9 +222,9 @@ function getModuleDescription(pathway, index) {
         ],
         'resource-builder': [
             null, // index 0 is handled above
-            "Access a collection of ready-to-use prompt templates for creating worksheets, assessments, differentiated materials, and more.",
-            "Master advanced techniques for crafting effective prompts, including structured formats and strategies for complex educational needs.",
-            "Use specialized editors to create interactive quizzes, games, and resources with structured templates and AI assistance."
+            "Take your prompting to the next level with structured frameworks, prompt chaining, and resource upload strategies to get better results with less back-and-forth.",
+            "Learn how to get AI to produce polished, professional-quality educational resources that require minimal editing and are ready to use in your classroom.",
+            "Discover advanced techniques for creating multi-page resources, interactive materials, and visually appealing content that engages students."
         ],
         'code-creator': [
             null, // index 0 is handled above
