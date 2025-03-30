@@ -53,66 +53,113 @@
         
         /* Left image */
         .hero-home {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 10;
-    background-color: #111827;
-    overflow: visible;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 10;
+            background-color: #111827;
+            overflow: visible;
+        }
 
-/* Left image - unchanged */
-.hero-home .img1 {
-    width: 320px;
-    height: 200px;
-    left: -380px;
-    top: 100%;
-    transform: translateY(-50%);
-}
+        /* Left image - unchanged */
+        .hero-home .img1 {
+            width: 320px;
+            height: 200px;
+            left: -380px;
+            top: 100%;
+            transform: translateY(-50%);
+        }
 
-/* Top right image - fixed pixel position from top */
-.hero-home .img2 {
-    width: 240px;
-    height: 160px;
-    right: -320px;
-    top: 120px; /* Absolute pixels from top */
-    bottom: auto; /* Remove any bottom positioning */
-}
+        /* Top right image - fixed pixel position from top */
+        .hero-home .img2 {
+            width: 240px;
+            height: 160px;
+            right: -320px;
+            top: 120px; /* Absolute pixels from top */
+            bottom: auto; /* Remove any bottom positioning */
+        }
 
-/* Bottom right image - fixed pixel position from bottom */
-.hero-home .img3 {
-    width: 240px;
-    height: 160px;
-    right: -320px;
-    bottom: 120px; /* Absolute pixels from bottom */
-    top: auto; /* Remove any top positioning */
-}
-.hero-home .img4 {
-    width: 240px;
-    height: 160px;
-    left: -320px; /* Same distance from left as img1 */
-    bottom: 120px; /* Same distance from bottom as img3 */
-    top: auto; /* Remove any top positioning */
-}
-/* Center top image */
-.hero-home .img5 {
-    width: 280px;
-    height: 180px;
-    left: 50%;
-    top: -200px; /* Position above the text */
-    transform: translateX(-50%); /* Center horizontally */
-}
+        /* Bottom right image - fixed pixel position from bottom */
+        .hero-home .img3 {
+            width: 240px;
+            height: 160px;
+            right: -320px;
+            bottom: 120px; /* Absolute pixels from bottom */
+            top: auto; /* Remove any top positioning */
+        }
+        .hero-home .img4 {
+            width: 240px;
+            height: 160px;
+            left: -320px; /* Same distance from left as img1 */
+            bottom: 120px; /* Same distance from bottom as img3 */
+            top: auto; /* Remove any top positioning */
+        }
+        /* Center top image */
+        .hero-home .img5 {
+            width: 280px;
+            height: 180px;
+            left: 50%;
+            top: -200px; /* Position above the text */
+            transform: translateX(-50%); /* Center horizontally */
+        }
 
-/* Center bottom image */
-.hero-home .img6 {
-    width: 250px;
-    height: 250px;
-    left: 65%;
-    bottom: -230px; /* Position below the text */
-    transform: translateX(-50%); /* Center horizontally */
-}
+        /* Center bottom image */
+        .hero-home .img6 {
+            width: 250px;
+            height: 250px;
+            left: 65%;
+            bottom: -230px; /* Position below the text */
+            transform: translateX(-50%); /* Center horizontally */
+        }
+        
+        /* Second section styles */
+        .second-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 5; /* Lower than first section but higher than pathways */
+            background-color: #111827;
+            overflow: visible;
+            opacity: 0; /* Start invisible */
+            visibility: hidden; /* Start hidden */
+        }
+        
+        /* Position the second section images to be initially outside the viewport */
+        .second-section .img1 {
+            width: 180px;
+            height: 280px;
+            left: -400px; /* Start off-screen left */
+            top: 180px;
+            opacity: 0;
+        }
+        
+        .second-section .img2 {
+            width: 300px;
+            height: 160px;
+            right: -240px; /* Start off-screen right */
+            top: 140px;
+            opacity: 0;
+        }
+        
+        .second-section .img3 {
+            width: 300px;
+            height: 220px;
+            right: -260px; /* Start off-screen right */
+            bottom: -620px;
+            opacity: 0;
+        }
+        
+        .second-section .img4 {
+            width: 180px;
+            height: 280px;
+            left: -320px; /* Start off-screen left */
+            top: 500px;
+            opacity: 0;
+        }
         
         /* Ensure pathways section appears correctly */
         
@@ -162,7 +209,11 @@
         @media (max-width: 768px) {
             .hero-home .img1,
             .hero-home .img2,
-            .hero-home .img3 {
+            .hero-home .img3,
+            .second-section .img1,
+            .second-section .img2,
+            .second-section .img3,
+            .second-section .img4 {
                 display: none; /* Hide images on mobile */
             }
         }
@@ -208,6 +259,34 @@
                 
                 <div class="image-container img6">
                     <img src="/images/image6.png" alt="Educational technology" />
+                </div>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-element element-1"></div>
+                <div class="floating-element element-2"></div>
+                <div class="floating-element element-3"></div>
+            </div>
+        </section>
+
+        <!-- Second Animated Section -->
+        <section class="second-section">
+            <div class="container hero-content">
+                
+                <!-- Image containers for second section animation -->
+                <div class="image-container img1">
+                    <img src="/images/second1.png" alt="Teacher collaboration" />
+                </div>
+                
+                <div class="image-container img2">
+                    <img src="/images/second2.png" alt="Student engagement" />
+                </div>
+                
+                <div class="image-container img3">
+                    <img src="/images/second3.png" alt="AI tools showcase" />
+                </div>
+                
+                <div class="image-container img4">
+                    <img src="/images/second4.png" alt="Classroom innovation" />
                 </div>
             </div>
             <div class="floating-elements">
@@ -379,127 +458,179 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // GSAP Animations - ONLY adding animation code here
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get elements
-            const heroSection = document.querySelector('.hero-home');
-            const heroContent = heroSection.querySelector('.hero-content');
-            const floatingElements = heroSection.querySelector('.floating-elements');
-            
-            // Get image containers
-            const imageContainers = [
-                heroSection.querySelector('.img1'),
-                heroSection.querySelector('.img2'),
-                heroSection.querySelector('.img3'),
-                heroSection.querySelector('.img4'),
-                heroSection.querySelector('.img5'),
-                heroSection.querySelector('.img6')
-            ];
-            
-            // Create hero section animation
-            const heroExitTl = gsap.timeline({
-    scrollTrigger: {
-        trigger: '#scroll-container',
-        start: 'top top',
-        end: '+=800', // Shorter scroll distance
-        scrub: 1,
-        pin: heroSection, // Pin hero section specifically
-        pinSpacing: false, // This prevents extra space creation
-        onLeave: () => {
-            heroSection.style.visibility = 'hidden';
-            // Force pathways to appear immediately after animation
-            gsap.set('.pathways', { y: 0 });
-        },
-        onEnterBack: () => heroSection.style.visibility = 'visible'
-    }
+        // GSAP Animations - ONLY adding animation code here
+document.addEventListener('DOMContentLoaded', () => {
+    // Get elements
+    const heroSection = document.querySelector('.hero-home');
+    const heroContent = heroSection.querySelector('.hero-content');
+    const floatingElements = heroSection.querySelector('.floating-elements');
+    
+    // Get image containers for first section
+    const imageContainers = [
+        heroSection.querySelector('.img1'),
+        heroSection.querySelector('.img2'),
+        heroSection.querySelector('.img3'),
+        heroSection.querySelector('.img4'),
+        heroSection.querySelector('.img5'),
+        heroSection.querySelector('.img6')
+    ];
+    
+    // Get second section elements
+    const secondSection = document.querySelector('.second-section');
+    const secondContent = secondSection.querySelector('.hero-content');
+    const secondFloatingElements = secondSection.querySelector('.floating-elements');
+    
+    // Get image containers for second section
+    const secondImageContainers = [
+        secondSection.querySelector('.img1'),
+        secondSection.querySelector('.img2'),
+        secondSection.querySelector('.img3'),
+        secondSection.querySelector('.img4')
+    ];
+    
+    // Create a master timeline for both sections
+    const masterTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: '#scroll-container',
+            start: 'top top',
+            end: '+=1600', // Total scroll distance for both sections
+            scrub: 1,
+            pin: true, // Pin the scroll container for both animations
+            anticipatePin: 1
+        }
+    });
+    
+    // First section exit animations
+    masterTimeline.to(imageContainers[0], { 
+        x: 100, y: 100, scale: 1.4, opacity: 0, duration: 0.5
+    }, 0);
+    
+    masterTimeline.to(imageContainers[1], { 
+        x: -100, y: 100, scale: 1.3, opacity: 0, duration: 0.5
+    }, 0);
+    
+    masterTimeline.to(imageContainers[2], { 
+        x: 20, y: -150, scale: 1.3, opacity: 0, duration: 0.5
+    }, 0);
+    
+    // Set initial flip for image 5
+    gsap.set(imageContainers[5], {
+        scaleX: -1 // Start with the image flipped
+    });
+    
+    masterTimeline.to(imageContainers[4], { 
+        x: 300, y: -50, scale: 1.3, opacity: 0, duration: 0.5
+    }, 0);
+    
+    masterTimeline.to(imageContainers[5], {
+        x: -200, scaleX: -1, scaleY: 1, opacity: 0, duration: 0.5
+    }, 0);
+    
+    masterTimeline.to(imageContainers[3], { 
+        x: 200, y: -150, scale: 1.3, opacity: 0, duration: 0.5
+    }, 0);
+    
+    // First section text animations
+    masterTimeline.to(heroContent.querySelector('h1'), { 
+        y: -150, scale: 1.5, opacity: 0, duration: 0.5 
+    }, 0.3);
+    
+    masterTimeline.to(heroContent.querySelector('p'), { 
+        y: 100, scale: 1.3, opacity: 0, duration: 0.5 
+    }, 0.35);
+    
+    masterTimeline.to(floatingElements, { 
+        opacity: 0, duration: 0.5 
+    }, 0.3);
+    
+    // Hide first section completely at this point
+    masterTimeline.to(heroSection, {
+        autoAlpha: 0,
+        duration: 0.1
+    }, 0.8);
+    
+    // Fade in second section
+    masterTimeline.to(secondSection, {
+        opacity: 1,
+        visibility: 'visible',
+        duration: 0.3
+    }, 0.8);
+    
+    // Second section entrance animations
+    // Use fromTo for clearer animation definitions
+    masterTimeline.fromTo(secondImageContainers[0],
+        { x: -400, opacity: 0 },
+        { x: 330, opacity: 1, duration: 0.4 }
+    , 0.9);
+    
+    masterTimeline.fromTo(secondImageContainers[1],
+    { x: 400, y: 80, opacity: 0 }, // starts right + low
+    { x: -290, y: 120, opacity: 1, duration: 0.4 },
+    1.0
+);
+    
+    masterTimeline.fromTo(secondImageContainers[2],
+    { x: 400, y: 120, opacity: 0 }, // starts right + low
+    { x: -290, y: 80, opacity: 1, duration: 0.4 }
+    , 1.1);
+    
+    masterTimeline.fromTo(secondImageContainers[3],
+        { x: -400, opacity: 0 },
+        { x: 290, opacity: 1, duration: 0.4 }
+    , 1.2);
+    
+    // Animate in the second section text
+   
+    
+    // Leave second section visible for a moment
+    masterTimeline.to({}, {duration: 0.3}, 1.4);
+    
+    // Second section exit animations
+    masterTimeline.to(secondImageContainers[0], { 
+        x: 100, y: -50, scale: 1.3, opacity: 0, duration: 0.4
+    }, 1.5);
+    
+    masterTimeline.to(secondImageContainers[1], { 
+        x: -120, y: 80, scale: 1.4, opacity: 0, duration: 0.4
+    }, 1.5);
+    
+    masterTimeline.to(secondImageContainers[2], { 
+        x: -50, y: 180, scale: 1.2, opacity: 0, duration: 0.4
+    }, 1.5);
+    
+    masterTimeline.to(secondImageContainers[3], { 
+        x: 150, y: 80, scale: 1.3, opacity: 0, duration: 0.4
+    }, 1.5);
+    
+    
+    masterTimeline.to(secondFloatingElements, { 
+        opacity: 0, duration: 0.4
+    }, 1.6);
+    
+    // Hide second section and show pathways at end
+    masterTimeline.to(secondSection, {
+        autoAlpha: 0,
+        duration: 0.1,
+        onComplete: () => {
+            // Force pathways to appear after animations
+            gsap.set('.pathways', { 
+                y: 0,
+                visibility: 'visible'
+            });
+        }
+    }, 1.9);
+    
+    // Scroll indicator - keep this exactly as it was
+    gsap.to('#scrollIndicator', {
+        opacity: 0,
+        scrollTrigger: {
+            trigger: '#scroll-container',
+            start: '5% top',
+            end: '10% top',
+            scrub: true
+        }
+    });
 });
-            
-            // Images move first
-            heroExitTl.to(imageContainers[0], { 
-                x: 100,
-                y: 100, 
-                scale: 1.4, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            heroExitTl.to(imageContainers[1], { 
-                x: -100, 
-                y: 100, 
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            heroExitTl.to(imageContainers[2], { 
-                x: 20, 
-                y: -150, 
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-
-            heroExitTl.to(imageContainers[4], { 
-                x: 300,
-                y: -50,     // Move further up
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-
-            // Set initial flip
-            gsap.set(imageContainers[5], {
-                scaleX: -1 // Start with the image flipped
-            });
-
-// For animation, use separate scaleX and scaleY (don't use the combined scale property)
-            heroExitTl.to(imageContainers[5], {
-                x: -200,
-                scaleX: -1, // Keep negative to maintain flip direction while scaling
-                scaleY: 1,  // Scale vertically normally
-                opacity: 0,
-                duration: 0.5
-            }, 0);
-
-            // Add animation for the fourth image - moving bottom left
-heroExitTl.to(imageContainers[3], { 
-    x: 200, 
-    y: -150,  // Positive y value moves it down
-    scale: 1.3, 
-    opacity: 0, 
-    duration: 0.5
-}, 0);
-            
-            // Then text fades
-            heroExitTl.to(heroContent.querySelector('h1'), { 
-                y: -150,
-                scale: 1.5, 
-                opacity: 0, 
-                duration: 0.5 
-            }, 0.3);
-            
-            heroExitTl.to(heroContent.querySelector('p'), { 
-                y: 100,
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5 
-            }, 0.35);
-            
-            heroExitTl.to(floatingElements, { 
-                opacity: 0, 
-                duration: 0.5 
-            }, 0.3);
-            
-            // Scroll indicator
-            gsap.to('#scrollIndicator', {
-                opacity: 0,
-                scrollTrigger: {
-                    trigger: '#scroll-container',
-                    start: '5% top',
-                    end: '10% top',
-                    scrub: true
-                }
-            });
-        });
     </script>
     
     <!-- Include the AI quiz script if it exists -->

@@ -491,6 +491,25 @@ Please make sure the HTML includes all necessary CSS for proper printing, includ
                                 </ol>
                             </div>
                             
+                            <div class="alert-box" style="background-color: rgba(244, 63, 94, 0.1); border-radius: 8px; padding: 20px; margin-top: 30px; border-left: 4px solid var(--tertiary);">
+                                <h3 style="color: var(--tertiary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>Important: Expect to Iterate!
+                                </h3>
+                                <p>When working with HTML output, <strong>iteration is especially important</strong>. Unlike plain text, where formatting issues might be minor, HTML resources have visual elements, layouts, and styling that may not be exactly what you envisioned on the first try.</p>
+                                <p>Your first HTML output will rarely be perfect, and that's completely normal! You should expect to go through 2-4 rounds of refinement to get the resource exactly right. This is part of the process, not a failure of your prompting skills.</p>
+                                <h4 style="margin-top: 15px; margin-bottom: 8px;">Common elements that need adjustment:</h4>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li>Spacing and margins (e.g., "Add more space for student answers")</li>
+                                    <li>Colors and visual styling (e.g., "Make the header blue lighter and less bright")</li>
+                                    <li>Font sizes (e.g., "Increase the size of the title and make instructions bold")</li>
+                                    <li>Page layout (e.g., "Adjust this to fit better on a single page")</li>
+                                </ul>
+                                <h4 style="margin-top: 15px; margin-bottom: 8px;">Example iteration conversation:</h4>
+                                <p style="font-style: italic; margin-bottom: 8px;">You: "The worksheet looks good, but can you add more space for writing answers, make the header background lighter blue (#a3d5ff), and add line numbers to the left of each question?"</p>
+                                <p style="font-style: italic; margin-bottom: 8px;">AI: [Provides updated HTML]</p>
+                                <p style="font-style: italic;">You: "Now I notice the spacing is off when I print it. Can you adjust the margins to ensure it prints properly on A4 paper with 2cm margins, and make sure questions don't split across pages?"</p>
+                            </div>
+                            
                             <div class="guidance-card">
                                 <h3><i class="fas fa-lightbulb"></i>Design & Formatting Tips</h3>
                                 <p>To create truly professional worksheets, include these elements in your prompts:</p>
