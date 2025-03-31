@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <header>
           <div class="container header-content">
             <a href="../index.html" class="logo">
-              <span class="logo-icon"><i class="fas fa-robot"></i></span>
+              <span class="logo-icon">
+                <img src="../images/ai-icon.png" alt="AI Icon" style="height: 40px; width: auto; margin-top: 10px;">
+              </span>
               <span>AI Inset Day</span>
             </a>
             <nav class="nav-links">
