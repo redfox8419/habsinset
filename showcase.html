@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Showcase Gallery - AI Inset Day</title>
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/showcase.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -14,33 +13,24 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Header -->
+    <!-- Header - Using JS component -->
     <header>
-        <div class="container header-content">
-            <a href="index.html" class="logo">
-                <span class="logo-icon"><i class="fas fa-robot"></i></span>
-                <span>AI Inset Day</span>
-            </a>
-            <nav class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="#showcase-grid" class="nav-link">All Projects</a>
-            </nav>
-        </div>
+        <div id="header-placeholder"></div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero hero-medium hero-showcase">
+    <section class="hero hero-medium">
         <div class="container hero-content">
             <h1>AI Showcase Gallery</h1>
             <p>Explore a collection of AI-created educational resources, interactive activities, and teaching tools. These showcase examples demonstrate some of what's possible using the best Frontier AI models.</p>
             
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="interactive">Interactive</button>
-                <button class="filter-btn" data-filter="activity">Activities</button>
-                <button class="filter-btn" data-filter="resource">Resources</button>
-                <button class="filter-btn" data-filter="game">Games</button>
-                <button class="filter-btn" data-filter="assessment">Assessment</button>
+            <div class="flex gap-3 mt-5 flex-wrap">
+                <button class="btn btn-outline text-white active filter-btn" data-filter="all">All Projects</button>
+                <button class="btn btn-outline text-white filter-btn" data-filter="interactive">Interactive</button>
+                <button class="btn btn-outline text-white filter-btn" data-filter="activity">Activities</button>
+                <button class="btn btn-outline text-white filter-btn" data-filter="resource">Resources</button>
+                <button class="btn btn-outline text-white filter-btn" data-filter="game">Games</button>
+                <button class="btn btn-outline text-white filter-btn" data-filter="assessment">Assessment</button>
             </div>
         </div>
         <div class="floating-elements">
@@ -52,155 +42,180 @@
     <!-- Main Content -->
     <section class="main-content">
         <div class="container">
-            <div class="showcase-grid" id="showcase-grid">
+            <div class="cards-grid mt-10" id="showcase-grid">
                 <!-- Showcase Item 1 -->
-                <div class="showcase-card card-1" data-category="interactive activity">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/solar-system.jpg" alt="3D Interactive Solar System" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-solar-system showcase-icon" style="display:none;"></i>
+                <div class="card card-primary" data-category="interactive activity">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/solar-system.jpg" alt="3D Interactive Solar System" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-globe text-primary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">3D Interactive Solar System</h3>
-                        <div class="tag-container">
-                            <span class="tag interactive">Interactive</span>
-                            <span class="tag activity">Activity</span>
-                            <span class="tag resource">Resource</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">3D Interactive Solar System</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Interactive</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Activity</span>
+                            <span class="px-2 py-1 bg-tertiary text-white rounded text-sm">Resource</span>
                         </div>
-                        <p class="showcase-desc">Explore our solar system in immersive 3D! Students can view planets from any angle, compare sizes, and learn about celestial bodies. Watch out for the UFO that flies around for some added fun!</p>
-                        <a href="showcase/solar-system.html" class="showcase-link" target="_blank">Launch Experience</a>
+                        <p class="text-neutral mb-4">Explore our solar system in immersive 3D! Students can view planets from any angle, compare sizes, and learn about celestial bodies. Watch out for the UFO that flies around for some added fun!</p>
+                        <div class="card-footer">
+                            <a href="showcase/solar-system.html" class="btn-card" target="_blank">Launch Experience</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 2 -->
-                <div class="showcase-card card-2" data-category="interactive game">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/space-blaster.jpg" alt="Space Blaster Quiz Game" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-rocket showcase-icon" style="display:none;"></i>
+                <div class="card card-secondary" data-category="interactive game">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/space-blaster.jpg" alt="Space Blaster Quiz Game" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-rocket text-secondary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">Space Blaster Quiz Game</h3>
-                        <div class="tag-container">
-                            <span class="tag interactive">Interactive</span>
-                            <span class="tag game">Game</span>
-                            <span class="tag assessment">Assessment</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">Space Blaster Quiz Game</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Interactive</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Game</span>
+                            <span class="px-2 py-1 bg-tertiary text-white rounded text-sm">Assessment</span>
                         </div>
-                        <p class="showcase-desc">A 2D space-themed shooter where students answer educational questions by blasting the correct answers with their spacecraft. Fun and learning combined in an arcade-style experience!</p>
-                        <a href="/showcase/solar-system.html" class="showcase-link" target="_blank">Play Game</a>
+                        <p class="text-neutral mb-4">A 2D space-themed shooter where students answer educational questions by blasting the correct answers with their spacecraft. Fun and learning combined in an arcade-style experience!</p>
+                        <div class="card-footer">
+                            <a href="/showcase/solar-system.html" class="btn-card" target="_blank">Play Game</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 3 -->
-                <div class="showcase-card card-3" data-category="interactive activity">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/hot-air-balloon.jpg" alt="3D Hot Air Balloon Experience" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-hot-air-balloon showcase-icon" style="display:none;"></i>
+                <div class="card card-tertiary" data-category="interactive activity">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/hot-air-balloon.jpg" alt="3D Hot Air Balloon Experience" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-air-balloon text-tertiary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">3D Hot Air Balloon Experience</h3>
-                        <div class="tag-container">
-                            <span class="tag interactive">Interactive</span>
-                            <span class="tag activity">Activity</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">3D Hot Air Balloon Experience</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Interactive</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Activity</span>
                         </div>
-                        <p class="showcase-desc">Take to the skies in this immersive 3D hot air balloon adventure. Students explore various educational concepts while enjoying beautiful landscapes from above.</p>
-                        <a href="/showcase/hot-air-balloon/index.html" class="showcase-link" target="_blank">Start Adventure</a>
+                        <p class="text-neutral mb-4">Take to the skies in this immersive 3D hot air balloon adventure. Students explore various educational concepts while enjoying beautiful landscapes from above.</p>
+                        <div class="card-footer">
+                            <a href="/showcase/hot-air-balloon/index.html" class="btn-card" target="_blank">Start Adventure</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 4 -->
-                <div class="showcase-card card-4" data-category="assessment resource">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/math-test.jpg" alt="Self-Marking Mathematics Test" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-calculator showcase-icon" style="display:none;"></i>
+                <div class="card card-quaternary" data-category="assessment resource">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/math-test.jpg" alt="Self-Marking Mathematics Test" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-calculator text-quaternary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">Self-Marking Mathematics Test</h3>
-                        <div class="tag-container">
-                            <span class="tag assessment">Assessment</span>
-                            <span class="tag resource">Resource</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">Self-Marking Mathematics Test</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Assessment</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Resource</span>
                         </div>
-                        <p class="showcase-desc">A comprehensive mathematics assessment tool that provides immediate feedback and marking. Covers various topics with adaptive difficulty based on student performance.</p>
-                        <a href="#" class="showcase-link" target="_blank">Take Test</a>
+                        <p class="text-neutral mb-4">A comprehensive mathematics assessment tool that provides immediate feedback and marking. Covers various topics with adaptive difficulty based on student performance.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn-card" target="_blank">Take Test</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 5 -->
-                <div class="showcase-card card-5" data-category="assessment activity">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/vocabulary-test.jpg" alt="Self-Marking Vocabulary Test" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-language showcase-icon" style="display:none;"></i>
+                <div class="card card-primary" data-category="assessment activity">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/vocabulary-test.jpg" alt="Self-Marking Vocabulary Test" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-language text-primary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">Self-Marking Vocabulary Test</h3>
-                        <div class="tag-container">
-                            <span class="tag assessment">Assessment</span>
-                            <span class="tag activity">Activity</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">Self-Marking Vocabulary Test</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Assessment</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Activity</span>
                         </div>
-                        <p class="showcase-desc">An interactive vocabulary assessment for language learning that provides instant feedback. Tests comprehension, spelling, and usage with multimedia elements for enhanced learning.</p>
-                        <a href="#" class="showcase-link" target="_blank">Start Test</a>
+                        <p class="text-neutral mb-4">An interactive vocabulary assessment for language learning that provides instant feedback. Tests comprehension, spelling, and usage with multimedia elements for enhanced learning.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn-card" target="_blank">Start Test</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 6 -->
-                <div class="showcase-card card-6" data-category="game assessment">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/pacman.jpg" alt="PacMan Educational Tribute" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-ghost showcase-icon" style="display:none;"></i>
+                <div class="card card-secondary" data-category="game assessment">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/pacman.jpg" alt="PacMan Educational Tribute" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-ghost text-secondary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">PacMan Educational Tribute</h3>
-                        <div class="tag-container">
-                            <span class="tag game">Game</span>
-                            <span class="tag assessment">Assessment</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">PacMan Educational Tribute</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Game</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Assessment</span>
                         </div>
-                        <p class="showcase-desc">A tribute to the classic PacMan game with an educational twist! Students navigate the maze while answering curriculum-aligned questions to earn points and avoid ghosts.</p>
-                        <a href="#" class="showcase-link" target="_blank">Play Game</a>
+                        <p class="text-neutral mb-4">A tribute to the classic PacMan game with an educational twist! Students navigate the maze while answering curriculum-aligned questions to earn points and avoid ghosts.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn-card" target="_blank">Play Game</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 7 -->
-                <div class="showcase-card card-7" data-category="game assessment">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/flappy-2d.jpg" alt="2D Flappy Quiz" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-bird showcase-icon" style="display:none;"></i>
+                <div class="card card-tertiary" data-category="game assessment">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/flappy-2d.jpg" alt="2D Flappy Quiz" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-bird text-tertiary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">2D Flappy Quiz</h3>
-                        <div class="tag-container">
-                            <span class="tag game">Game</span>
-                            <span class="tag assessment">Assessment</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">2D Flappy Quiz</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Game</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Assessment</span>
                         </div>
-                        <p class="showcase-desc">A Flappy Bird-inspired 2D game where students navigate through pipes by correctly answering educational questions. Fun and challenging with adaptive difficulty levels!</p>
-                        <a href="#" class="showcase-link" target="_blank">Play Game</a>
+                        <p class="text-neutral mb-4">A Flappy Bird-inspired 2D game where students navigate through pipes by correctly answering educational questions. Fun and challenging with adaptive difficulty levels!</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn-card" target="_blank">Play Game</a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Showcase Item 8 -->
-                <div class="showcase-card card-8" data-category="game interactive">
-                    <div class="showcase-preview">
-                        <img src="images/showcase/flappy-3d.jpg" alt="3D Flappy Quiz" class="showcase-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-cube showcase-icon" style="display:none;"></i>
+                <div class="card card-quaternary" data-category="game interactive">
+                    <div class="card-header"></div>
+                    <div class="text-center py-3 bg-light">
+                        <img src="images/showcase/flappy-3d.jpg" alt="3D Flappy Quiz" class="w-full h-full object-cover" style="max-height: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-cube text-quaternary fa-3x" style="display:none;"></i>
                     </div>
-                    <div class="showcase-content">
-                        <h3 class="showcase-title">3D Flappy Quiz</h3>
-                        <div class="tag-container">
-                            <span class="tag game">Game</span>
-                            <span class="tag interactive">Interactive</span>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">3D Flappy Quiz</h3>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <span class="px-2 py-1 bg-primary text-white rounded text-sm">Game</span>
+                            <span class="px-2 py-1 bg-secondary text-white rounded text-sm">Interactive</span>
                         </div>
-                        <p class="showcase-desc">An immersive 3D version of the Flappy Quiz game with enhanced graphics and gameplay. Navigate through a three-dimensional environment while answering questions in this engaging educational experience.</p>
-                        <a href="#" class="showcase-link" target="_blank">Play 3D Game</a>
+                        <p class="text-neutral mb-4">An immersive 3D version of the Flappy Quiz game with enhanced graphics and gameplay. Navigate through a three-dimensional environment while answering questions in this engaging educational experience.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn-card" target="_blank">Play 3D Game</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Footer - Using JS component -->
     <footer>
-        <div class="container footer-content">
-            <p>These showcase examples demonstrate the possibilities when AI is combined with educational expertise.</p>
-            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
-            <a href="index.html" class="home-btn">Back to Home</a>
-        </div>
+        <div id="footer-placeholder"></div>
     </footer>
 
     <script>
@@ -214,7 +229,7 @@
         // Filtering functionality
         document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.filter-btn');
-            const showcaseCards = document.querySelectorAll('.showcase-card');
+            const showcaseCards = document.querySelectorAll('.card');
             
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -253,7 +268,27 @@
                     }
                 });
             });
+
+            // Back to Top Button
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    document.getElementById('backToTopBtn').classList.add('active');
+                } else {
+                    document.getElementById('backToTopBtn').classList.remove('active');
+                }
+            });
+
+            document.getElementById('backToTopBtn').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
+    
+    <!-- Include header and footer JS -->
+    <script src="js/header.js"></script>
+    <script src="js/footer.js"></script>
 </body>
 </html>
