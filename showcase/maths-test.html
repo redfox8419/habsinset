@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Test</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --secondary: #8b5cf6;
+            --accent: #f97316;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--neutral-100);
+            color: var(--neutral-800);
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 1.5rem 2rem;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .math-icon {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .progress-container {
+            padding: 1rem 2rem;
+            background-color: var(--neutral-200);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--neutral-300);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--neutral-800);
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .intro-screen, .results-screen {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .intro-screen h2, .results-screen h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .intro-screen p, .results-screen p {
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .question-screen {
+            padding: 1rem 0;
+        }
+
+        .question-box {
+            margin-bottom: 2rem;
+        }
+
+        .question {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .math-problem {
+            background-color: var(--neutral-100);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .math-content {
+            font-family: 'Cambria Math', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .math-image {
+            max-width: 100%;
+            margin: 1rem 0;
+            display: block;
+        }
+
+        .hint {
+            font-size: 0.875rem;
+            color: var(--neutral-800);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--neutral-300);
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+            font-family: 'Cambria Math', serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            color: white;
+            background-color: var(--primary);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.15);
+        }
+
+        .button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .button.secondary {
+            background-color: var(--neutral-200);
+            color: var(--neutral-800);
+        }
+
+        .button.secondary:hover {
+            background-color: var(--neutral-300);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .results-list {
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            text-align: left;
+        }
+
+        .result-item {
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease;
+            background-color: var(--neutral-100);
+            border-left: 4px solid var(--neutral-300);
+        }
+
+        .result-item.correct {
+            border-left: 4px solid var(--success);
+        }
+
+        .result-item.incorrect {
+            border-left: 4px solid var(--error);
+        }
+
+        .result-question {
+            margin-bottom: 1rem;
+        }
+
+        .result-answer {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-icon {
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .correct .result-icon {
+            color: var(--success);
+        }
+
+        .incorrect .result-icon {
+            color: var(--error);
+        }
+
+        .working-steps {
+            background-color: white;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--neutral-300);
+        }
+
+        .working-steps h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .step {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--neutral-300);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 1rem 0;
+        }
+
+        .feedback {
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .excellent {
+            color: var(--success);
+        }
+
+        .good {
+            color: var(--primary);
+        }
+
+        .average {
+            color: var(--warning);
+        }
+
+        .needs-work {
+            color: var(--error);
+        }
+
+        .show-working-btn {
+            background-color: var(--neutral-200);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .show-working-btn:hover {
+            background-color: var(--neutral-300);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 1.25rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+                padding-right: 40px;
+            }
+
+            main {
+                padding: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            opacity: 0;
+            animation: confetti-fall 4s linear forwards;
+            z-index: 100;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                top: -10px;
+                transform: translateX(0) rotateZ(0deg);
+            }
+            100% {
+                opacity: 0;
+                top: 100%;
+                transform: translateX(100px) rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mathematics Test</h1>
+            <p>Test your knowledge of essential mathematics concepts</p>
+            <div class="math-icon">∑</div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progressText">Question 0 of 10</span>
+                <span id="timeDisplay">Time: 00:00</span>
+            </div>
+        </div>
+
+        <main>
+            <!-- Introduction Screen -->
+            <div class="screen active" id="introScreen">
+                <div class="intro-screen">
+                    <h2>Welcome to the Mathematics Test</h2>
+                    <p>This test will assess your understanding of key mathematics concepts. You'll be presented with 10 problems covering different topics like number operations, algebra, geometry, and statistics.</p>
+                    <p>Try to provide simple numerical answers where possible. The test is designed to be straightforward to mark, so complex formatting isn't required. The test will show detailed working at the end so you can see how to solve each problem.</p>
+                    <p>Your results will only be shown at the end. Good luck!</p>
+                    <button class="button" id="startButton">Start Test</button>
+                </div>
+            </div>
+
+            <!-- Question Screen -->
+            <div class="screen" id="questionScreen">
+                <div class="question-screen">
+                    <div class="question-box">
+                        <div class="question" id="questionNumber">Question 1</div>
+                        <div class="math-problem">
+                            <div class="math-content" id="mathContent">Loading problem...</div>
+                            <div id="imageContainer"></div>
+                        </div>
+                        <div class="hint" id="hint">Hint: Remember to check your answer format</div>
+                        <input type="text" class="answer-input" id="answerInput" placeholder="Type your answer here..." autocomplete="off">
+                    </div>
+                    <div class="button-group">
+                        <button class="button secondary" id="previousButton" disabled>Previous</button>
+                        <button class="button" id="nextButton">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="screen" id="resultsScreen">
+                <div class="results-screen">
+                    <h2>Your Results</h2>
+                    <div class="score" id="scoreDisplay">0/10</div>
+                    <div class="feedback" id="feedbackText">Computing your feedback...</div>
+                    <div class="results-list" id="resultsList">
+                        <!-- Results will be inserted here -->
+                    </div>
+                    <button class="button" id="retryButton">Retry Test</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Test data
+        const mathProblems = [
+            {
+                question: "Calculate: -3 × (-7) + 8",
+                content: "Calculate: -3 × (-7) + 8",
+                hint: "Remember that multiplying two negative numbers gives a positive result.",
+                answer: "29",
+                acceptableAnswers: ["29"],
+                working: [
+                    "When multiplying negative numbers, remember that (-) × (-) = (+)",
+                    "-3 × (-7) = 21 (a negative multiplied by a negative gives a positive)",
+                    "21 + 8 = 29"
+                ]
+            },
+            {
+                question: "Calculate the value of 5a when a = 6",
+                content: "Calculate the value of 5a when a = 6",
+                hint: "Substitute the value of a into the expression and calculate.",
+                answer: "30",
+                acceptableAnswers: ["30"],
+                working: [
+                    "Substitute a = 6 into the expression 5a",
+                    "5a = 5 × 6",
+                    "5a = 30"
+                ]
+            },
+            {
+                question: "Find the value of x when: 2(x + 3) = 16",
+                content: "Find the value of x when: 2(x + 3) = 16",
+                hint: "Expand the bracket first, then solve for x.",
+                answer: "5",
+                acceptableAnswers: ["5", "x=5"],
+                working: [
+                    "2(x + 3) = 16",
+                    "2x + 6 = 16 (expand the bracket)",
+                    "2x = 16 - 6 (subtract 6 from both sides)",
+                    "2x = 10",
+                    "x = 5 (divide both sides by 2)"
+                ]
+            },
+            {
+                question: "What is 40% of 80?",
+                content: "What is 40% of 80?",
+                hint: "To find a percentage of a number, convert the percentage to a decimal and multiply.",
+                answer: "32",
+                acceptableAnswers: ["32"],
+                working: [
+                    "40% of 80 means 40/100 × 80",
+                    "40/100 = 0.4",
+                    "0.4 × 80 = 32"
+                ]
+            },
+            {
+                question: "Find the value of 2x + 3y when x = 4 and y = 5",
+                content: "Find the value of 2x + 3y when x = 4 and y = 5",
+                hint: "Substitute the values of x and y into the expression and calculate.",
+                answer: "23",
+                acceptableAnswers: ["23"],
+                working: [
+                    "Substitute x = 4 and y = 5 into the expression 2x + 3y",
+                    "2x + 3y = 2 × 4 + 3 × 5",
+                    "2x + 3y = 8 + 15",
+                    "2x + 3y = 23"
+                ]
+            },
+            {
+                question: "If 5n = 75, what is the value of n?",
+                content: "If 5n = 75, what is the value of n?",
+                hint: "Divide both sides of the equation by 5.",
+                answer: "15",
+                acceptableAnswers: ["15", "n=15"],
+                working: [
+                    "5n = 75",
+                    "To find n, divide both sides by 5",
+                    "n = 75 ÷ 5",
+                    "n = 15"
+                ]
+            },
+            {
+                question: "A shape is enlarged by a scale factor of 3. If the original shape has an area of 12cm², what is the area of the enlarged shape?",
+                content: "A shape is enlarged by a scale factor of 3. If the original shape has an area of 12cm², what is the area of the enlarged shape?",
+                hint: "When a shape is enlarged by a scale factor, the area is multiplied by the square of the scale factor.",
+                answer: "108",
+                acceptableAnswers: ["108", "108cm²", "108 cm²", "108cm^2", "108 cm^2"],
+                working: [
+                    "When a shape is enlarged by a scale factor of k, the area is multiplied by k²",
+                    "Original area = 12cm²",
+                    "Scale factor = 3",
+                    "New area = Original area × (Scale factor)²",
+                    "New area = 12cm² × 3²",
+                    "New area = 12cm² × 9",
+                    "New area = 108cm²"
+                ]
+            },
+            {
+                question: "The angles in a triangle are in the ratio 3:4:5. What is the smallest angle in degrees?",
+                content: "The angles in a triangle are in the ratio 3:4:5. What is the smallest angle in degrees?",
+                hint: "Remember that angles in a triangle sum to 180°.",
+                answer: "45",
+                acceptableAnswers: ["45", "45°", "45 degrees"],
+                working: [
+                    "If the angles are in ratio 3:4:5, they can be written as 3x, 4x, and 5x for some value x",
+                    "Since angles in a triangle sum to 180°:",
+                    "3x + 4x + 5x = 180°",
+                    "12x = 180°",
+                    "x = 15°",
+                    "The smallest angle corresponds to the smallest ratio value, which is 3",
+                    "Smallest angle = 3x = 3 × 15° = 45°"
+                ]
+            },
+            {
+                question: "Find the highest common factor (HCF) of 36 and 48",
+                content: "Find the highest common factor (HCF) of 36 and 48",
+                hint: "List the factors of each number and identify the largest factor they have in common.",
+                answer: "12",
+                acceptableAnswers: ["12"],
+                working: [
+                    "Factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36",
+                    "Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48",
+                    "Common factors: 1, 2, 3, 4, 6, 12",
+                    "The highest common factor (HCF) is 12"
+                ]
+            },
+            {
+                question: "Find the mode of the data set: 3, 7, 4, 9, 4, 12, 4, 8.",
+                content: "Find the mode of the data set: 3, 7, 4, 9, 4, 12, 4, 8.",
+                hint: "The mode is the most frequently occurring value in the data set.",
+                answer: "4",
+                acceptableAnswers: ["4"],
+                working: [
+                    "The mode is the value that appears most frequently in the data set",
+                    "3 appears once",
+                    "4 appears three times",
+                    "7 appears once",
+                    "8 appears once",
+                    "9 appears once",
+                    "12 appears once",
+                    "Since 4 appears most frequently (three times), the mode is 4"
+                ]
+            }
+        ];
+
+        // Initialization
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(mathProblems.length).fill('');
+        let startTime;
+        let timerInterval;
+
+        // DOM Elements
+        const introScreen = document.getElementById('introScreen');
+        const questionScreen = document.getElementById('questionScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const questionNumber = document.getElementById('questionNumber');
+        const mathContent = document.getElementById('mathContent');
+        const imageContainer = document.getElementById('imageContainer');
+        const hintElement = document.getElementById('hint');
+        const answerInput = document.getElementById('answerInput');
+        const previousButton = document.getElementById('previousButton');
+        const nextButton = document.getElementById('nextButton');
+        const startButton = document.getElementById('startButton');
+        const retryButton = document.getElementById('retryButton');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const feedbackText = document.getElementById('feedbackText');
+        const resultsList = document.getElementById('resultsList');
+
+        // Event Listeners
+        startButton.addEventListener('click', startTest);
+        previousButton.addEventListener('click', goToPreviousQuestion);
+        nextButton.addEventListener('click', goToNextQuestion);
+        retryButton.addEventListener('click', resetTest);
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                goToNextQuestion();
+            }
+        });
+
+        // Function to start the test
+        function startTest() {
+            introScreen.classList.remove('active');
+            questionScreen.classList.add('active');
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateQuestion();
+        }
+
+        // Update timer display
+        function updateTimer() {
+            const currentTime = new Date();
+            const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+            const minutes = Math.floor(elapsedSeconds / 60);
+            const seconds = elapsedSeconds % 60;
+            timeDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Update question display
+        function updateQuestion() {
+            const currentProblem = mathProblems[currentQuestionIndex];
+            questionNumber.textContent = `Question ${currentQuestionIndex + 1}`;
+            mathContent.textContent = currentProblem.content;
+            hintElement.textContent = `Hint: ${currentProblem.hint}`;
+            answerInput.value = userAnswers[currentQuestionIndex];
+            
+            // Update progress
+            progressFill.style.width = `${((currentQuestionIndex + 1) / mathProblems.length) * 100}%`;
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${mathProblems.length}`;
+            
+            // Update buttons
+            previousButton.disabled = currentQuestionIndex === 0;
+            nextButton.textContent = currentQuestionIndex === mathProblems.length - 1 ? "Finish" : "Next";
+            
+            // Focus on input
+            answerInput.focus();
+        }
+
+        // Go to previous question
+        function goToPreviousQuestion() {
+            saveCurrentAnswer();
+            currentQuestionIndex--;
+            updateQuestion();
+        }
+
+        // Go to next question or finish test
+        function goToNextQuestion() {
+            saveCurrentAnswer();
+            
+            if (currentQuestionIndex < mathProblems.length - 1) {
+                currentQuestionIndex++;
+                updateQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        // Save current answer
+        function saveCurrentAnswer() {
+            userAnswers[currentQuestionIndex] = answerInput.value.trim();
+        }
+
+        // Check if the answer is correct (accepting multiple possible formats)
+        function isCorrectAnswer(userAnswer, problem) {
+            const lowerUserAnswer = userAnswer.toLowerCase();
+            return problem.acceptableAnswers.some(answer => 
+                lowerUserAnswer === answer.toLowerCase());
+        }
+
+        // Show or hide working steps
+        function toggleWorking(problemIndex) {
+            const workingSection = document.getElementById(`working-${problemIndex}`);
+            const button = document.getElementById(`working-btn-${problemIndex}`);
+            
+            if (workingSection.classList.contains('hidden')) {
+                workingSection.classList.remove('hidden');
+                button.textContent = 'Hide Working';
+            } else {
+                workingSection.classList.add('hidden');
+                button.textContent = 'Show Working';
+            }
+        }
+
+        // Finish the test and show results
+        function finishTest() {
+            clearInterval(timerInterval);
+            questionScreen.classList.remove('active');
+            resultsScreen.classList.add('active');
+            
+            // Calculate score
+            let correctAnswers = 0;
+            userAnswers.forEach((answer, index) => {
+                if (isCorrectAnswer(answer, mathProblems[index])) {
+                    correctAnswers++;
+                }
+            });
+            
+            // Display score
+            scoreDisplay.textContent = `${correctAnswers}/${mathProblems.length}`;
+            
+            // Display feedback
+            const percentage = (correctAnswers / mathProblems.length) * 100;
+            let feedbackClass;
+            let feedbackMessage;
+            
+            if (percentage >= 90) {
+                feedbackClass = 'excellent';
+                feedbackMessage = 'Excellent! Your mathematics understanding is outstanding!';
+                createConfetti();
+            } else if (percentage >= 70) {
+                feedbackClass = 'good';
+                feedbackMessage = 'Good job! You have a strong grasp of mathematics concepts.';
+            } else if (percentage >= 50) {
+                feedbackClass = 'average';
+                feedbackMessage = 'Not bad! Keep practicing to improve your mathematics skills.';
+            } else {
+                feedbackClass = 'needs-work';
+                feedbackMessage = 'Keep studying! With more practice, you\'ll improve your understanding of mathematics.';
+            }
+            
+            feedbackText.textContent = feedbackMessage;
+            feedbackText.className = `feedback ${feedbackClass}`;
+            
+            // Display detailed results
+            resultsList.innerHTML = '';
+            mathProblems.forEach((problem, index) => {
+                const isCorrect = isCorrectAnswer(userAnswers[index], problem);
+                const resultItem = document.createElement('div');
+                resultItem.className = `result-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                const resultHTML = `
+                    <div class="result-question">
+                        <div class="result-answer">
+                            <span class="result-icon">${isCorrect ? '✓' : '✗'}</span>
+                            <strong>Question ${index + 1}:</strong>
+                        </div>
+                        <div>${problem.content}</div>
+                        <div>Your answer: ${userAnswers[index] || '(no answer)'}</div>
+                        ${!isCorrect ? `<div>Correct answer: ${problem.answer}</div>` : ''}
+                    </div>
+                    <button class="show-working-btn" id="working-btn-${index}" onclick="toggleWorking(${index})">Show Working</button>
+                    <div class="working-steps hidden" id="working-${index}">
+                        <h4>Step-by-Step Solution:</h4>
+                        ${problem.working.map(step => `<div class="step">${step}</div>`).join('')}
+                    </div>
+                `;
+                
+                resultItem.innerHTML = resultHTML;
+                resultsList.appendChild(resultItem);
+                
+                // Add delay for animation
+                setTimeout(() => {
+                    resultItem.style.opacity = 1;
+                }, index * 50);
+            });
+        }
+
+        // Reset test for retrying
+        function resetTest() {
+            currentQuestionIndex = 0;
+            userAnswers = new Array(mathProblems.length).fill('');
+            resultsScreen.classList.remove('active');
+            introScreen.classList.add('active');
+            progressFill.style.width = '0%';
+            progressText.textContent = `Question 0 of ${mathProblems.length}`;
+            timeDisplay.textContent = 'Time: 00:00';
+        }
+
+        // Create confetti for high scores
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 10 + 5}px`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                
+                document.querySelector('.container').appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Make toggleWorking available globally for the onclick handlers
+        window.toggleWorking = toggleWorking;
+    </script>
+</body>
+</html>

@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Human Nutrition Blaster Enhanced</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #111;
+    font-family: 'Orbitron', sans-serif;
+    color: #eee;
+  }
+
+  @font-face {
+    font-family: 'Orbitron';
+    src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  #gameContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: 2px solid #444;
+    box-sizing: border-box;
+  }
+
+  /* Top bar styling */
+  #topBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px;
+    z-index: 10;
+    font-size: 1em;
+    user-select: none;
+    border-bottom: 1px solid #444;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+
+  #scoreDisplay, #levelDisplay, #timerDisplay, #livesDisplay {
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+  }
+
+  .heart {
+    font-size: 1.2em;
+    color: #ff3e3e;
+    margin-left: 5px;
+    text-shadow: 0 0 10px #ff3e3e;
+  }
+
+  /* Question box with enhanced design */
+  #questionBox {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 90%;
+    background: rgba(0,0,0,0.5);
+    padding: 15px 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    user-select: none;
+    z-index: 10;
+    text-shadow: 0 0 15px rgba(128, 200, 255, 0.8);
+    border: 1px solid #444;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 25px rgba(0, 150, 255, 0.2);
+  }
+
+  /* Make question text more prominent */
+  #questionBox::before {
+    content: "Question:";
+    display: block;
+    font-size: 0.8em;
+    color: #8cc4ff;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  /* Start Screen Overlay with improved design */
+  #startScreen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 20;
+    background-image: radial-gradient(circle at center, rgba(30, 60, 100, 0.3), rgba(0, 0, 0, 0.9));
+  }
+
+  #startScreen h1 {
+    margin: 0 0 25px 0;
+    font-size: 3em;
+    color: #8cc4ff;
+    text-shadow: 0 0 20px rgba(100, 180, 255, 0.8);
+    letter-spacing: 3px;
+  }
+
+  #startScreen p {
+    max-width: 600px;
+    margin: 0 auto 25px auto;
+    font-size: 1.1em;
+    line-height: 1.6;
+    padding: 0 20px;
+  }
+
+  /* Game button styling */
+  .game-button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1em;
+    padding: 12px 25px;
+    cursor: pointer;
+    border: 2px solid #4488ff;
+    background: rgba(20, 40, 80, 0.8);
+    color: #fff;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 0 15px rgba(50, 120, 255, 0.5);
+  }
+
+  .game-button:hover {
+    background: rgba(40, 80, 160, 0.9);
+    box-shadow: 0 0 20px rgba(50, 120, 255, 0.7);
+    transform: scale(1.05);
+  }
+
+  .difficulty-options {
+    margin: 20px 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: 1px solid #444;
+  }
+
+  .difficulty-options label {
+    margin: 0 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .difficulty-options label:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Game Over Screen with improved styling */
+  #gameOverScreen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    color: #eee;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 20;
+    background-image: radial-gradient(circle at center, rgba(80, 20, 20, 0.3), rgba(0, 0, 0, 0.9));
+  }
+
+  #gameOverScreen h1 {
+    margin: 0 0 20px 0;
+    font-size: 3.5em;
+    color: #ff5555;
+    text-shadow: 0 0 20px rgba(255, 50, 50, 0.8);
+  }
+
+  #gameOverScreen p {
+    margin-bottom: 20px;
+    font-size: 1.3em;
+  }
+
+  /* Stats display */
+  #statsDisplay {
+    margin: 20px 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    min-width: 300px;
+    text-align: left;
+  }
+
+  /* Pause screen */
+  #pauseScreen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    color: #eee;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 20;
+  }
+
+  #pauseScreen h2 {
+    margin: 0 0 20px 0;
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Feedback message */
+  #feedbackMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    z-index: 15;
+    transition: all 0.5s;
+    text-align: center;
+  }
+
+  /* Mobile controls */
+  #mobileControls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 15;
+  }
+
+  .control-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(100, 150, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    border: 2px solid rgba(100, 150, 255, 0.5);
+    box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Power-up indicator */
+  #powerupIndicator {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border: 1px solid #444;
+  }
+
+  #powerupIndicator span {
+    margin-left: 5px;
+  }
+
+  /* High score entry */
+  #highScoreEntry {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #4488ff;
+    z-index: 30;
+    display: none;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 0 30px rgba(50, 120, 255, 0.5);
+  }
+
+  #highScoreEntry input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #111;
+    border: 1px solid #444;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  /* High scores display */
+  #highScoresDisplay {
+    background: rgba(0, 0, 0, 0.7);
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  #highScoresTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  #highScoresTable th, #highScoresTable td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+
+  #highScoresTable th {
+    color: #8cc4ff;
+  }
+
+  /* Score animation */
+  .score-animation {
+    animation: pulseScore 0.5s ease-in-out;
+  }
+
+  @keyframes pulseScore {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); color: #8cc4ff; }
+    100% { transform: scale(1); }
+  }
+
+  /* Sound controls */
+  #soundControl {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 25;
+    font-size: 1.5em;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    border: 1px solid #444;
+  }
+</style>
+</head>
+<body>
+<div id="gameContainer">
+  <canvas id="gameCanvas"></canvas>
+  
+  <div id="topBar">
+    <div id="scoreDisplay">Score: <span id="scoreValue">0</span></div>
+    <div id="levelDisplay">Level: <span id="levelValue">1</span></div>
+    <div id="timerDisplay">Time: <span id="timeValue">10</span>s</div>
+    <div id="livesDisplay">Lives: <span id="livesIcons"></span></div>
+  </div>
+  
+  <div id="questionBox">Question:</div>
+  <div id="feedbackMessage"></div>
+  <div id="powerupIndicator">Power-up: <span id="powerupType"></span> (<span id="powerupTime">0</span>s)</div>
+  
+  <div id="mobileControls">
+    <div id="leftBtn" class="control-btn">←</div>
+    <div id="thrustBtn" class="control-btn">↑</div>
+    <div id="rightBtn" class="control-btn">→</div>
+    <div id="fireBtn" class="control-btn">🔥</div>
+  </div>
+  
+  <div id="soundControl">🔊</div>
+  
+  <div id="startScreen">
+    <h1>Human Nutrition Blaster</h1>
+    <p>
+      Pilot your spaceship through the galaxy of human nutrition knowledge!<br><br>
+      Answer questions by shooting the correct words floating in space. Avoid collisions with the words as they will cost you a life. Shooting incorrect answers will deduct points and a life. Watch your timer!<br><br>
+      <strong>Controls:</strong><br>
+      - Arrow Keys Left/Right: Rotate spaceship<br>
+      - Arrow Key Up: Accelerate (thrust)<br>
+      - Spacebar: Shoot laser<br>
+      - P: Pause game<br><br>
+      Answer correctly to progress through levels and collect power-ups to enhance your ship!
+    </p>
+    <div class="difficulty-options">
+      <strong>Select Difficulty:</strong><br>
+      <label><input type="radio" name="difficulty" value="easy" checked> Easy</label>
+      <label><input type="radio" name="difficulty" value="medium"> Medium</label>
+      <label><input type="radio" name="difficulty" value="hard"> Hard</label>
+      <label><input type="radio" name="difficulty" value="insanity"> Insanity</label>
+    </div>
+    <button id="startButton" class="game-button">Start Game</button>
+  </div>
+  
+  <div id="pauseScreen">
+    <h2>Game Paused</h2>
+    <button id="resumeButton" class="game-button">Resume Game</button>
+    <button id="quitButton" class="game-button">Quit Game</button>
+  </div>
+  
+  <div id="gameOverScreen">
+    <h1>GAME OVER</h1>
+    <p>Your final score: <span id="finalScore"></span></p>
+    <div id="statsDisplay">
+      <p>Questions answered: <span id="questionsAnswered">0</span></p>
+      <p>Correct answers: <span id="correctAnswers">0</span></p>
+      <p>Highest level reached: <span id="highestLevel">1</span></p>
+      <p>Power-ups collected: <span id="powerupsCollected">0</span></p>
+    </div>
+    <div id="highScoresDisplay">
+      <h3>High Scores</h3>
+      <table id="highScoresTable">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody id="highScoresBody">
+          <!-- High scores will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <button id="submitScoreButton" class="game-button">Submit Score</button>
+    <button id="restartButton" class="game-button">Play Again</button>
+  </div>
+  
+  <div id="highScoreEntry">
+    <h3>New High Score!</h3>
+    <p>Your score: <span id="newHighScore"></span></p>
+    <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
+    <button id="saveScoreButton" class="game-button">Save Score</button>
+  </div>
+</div>
+
+<script>
+// Sound effects
+const sounds = {
+  laser: new Audio(),
+  explosion: new Audio(),
+  powerup: new Audio(),
+  correct: new Audio(),
+  incorrect: new Audio(),
+  levelUp: new Audio(),
+  gameOver: new Audio(),
+  background: new Audio()
+};
+
+// Initialize audio data (we'd use real sound files in production)
+function initSounds() {
+  // Simple beep sounds using AudioContext
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  
+  // Create sound data functions
+  const createLaserSound = () => {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.type = 'sawtooth';
+    oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.15);
+    
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.15);
+  };
+  
+  const createExplosionSound = () => {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(110, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.5);
+    
+    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.5);
+  };
+  
+  const createCorrectSound = () => {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.3);
+  };
+  
+  const createIncorrectSound = () => {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+    
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.2);
+  };
+  
+  // Assign the sound playing functions
+  sounds.laser.play = createLaserSound;
+  sounds.explosion.play = createExplosionSound;
+  sounds.correct.play = createCorrectSound;
+  sounds.incorrect.play = createIncorrectSound;
+  sounds.powerup.play = createCorrectSound;
+  sounds.levelUp.play = createCorrectSound;
+  sounds.gameOver.play = createExplosionSound;
+}
+
+// Mute flag
+let soundsMuted = false;
+
+// Toggle sound
+function toggleSound() {
+  soundsMuted = !soundsMuted;
+  document.getElementById('soundControl').textContent = soundsMuted ? '🔇' : '🔊';
+}
+
+// Play sound if not muted
+function playSound(sound) {
+  if (!soundsMuted && sound && sound.play) {
+    sound.play();
+  }
+}
+
+// Difficulty settings with enhanced values
+const difficultySettings = {
+  easy: {
+    timeLimit: 20,
+    lives: 5,
+    speedMultiplier: 0.8,
+    healthPackChance: 0.25,
+    powerupChance: 0.15
+  },
+  medium: {
+    timeLimit: 15,
+    lives: 4,
+    speedMultiplier: 1.2,
+    healthPackChance: 0.15,
+    powerupChance: 0.1
+  },
+  hard: {
+    timeLimit: 12,
+    lives: 3,
+    speedMultiplier: 1.6,
+    healthPackChance: 0.08,
+    powerupChance: 0.08
+  },
+  insanity: {
+    timeLimit: 8,
+    lives: 2,
+    speedMultiplier: 2.2,
+    healthPackChance: 0.05,
+    powerupChance: 0.06
+  }
+};
+
+const container = document.getElementById('gameContainer');
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+const scoreDisplay = document.getElementById('scoreValue');
+const levelDisplay = document.getElementById('levelValue');
+const timerDisplay = document.getElementById('timeValue');
+const livesIcons = document.getElementById('livesIcons');
+const questionBox = document.getElementById('questionBox');
+const feedbackMessage = document.getElementById('feedbackMessage');
+const powerupIndicator = document.getElementById('powerupIndicator');
+const powerupType = document.getElementById('powerupType');
+const powerupTime = document.getElementById('powerupTime');
+
+const startScreen = document.getElementById('startScreen');
+const startButton = document.getElementById('startButton');
+const pauseScreen = document.getElementById('pauseScreen');
+const resumeButton = document.getElementById('resumeButton');
+const quitButton = document.getElementById('quitButton');
+const gameOverScreen = document.getElementById('gameOverScreen');
+const finalScoreElement = document.getElementById('finalScore');
+const questionsAnsweredElement = document.getElementById('questionsAnswered');
+const correctAnswersElement = document.getElementById('correctAnswers');
+const highestLevelElement = document.getElementById('highestLevel');
+const powerupsCollectedElement = document.getElementById('powerupsCollected');
+const restartButton = document.getElementById('restartButton');
+const submitScoreButton = document.getElementById('submitScoreButton');
+const highScoreEntry = document.getElementById('highScoreEntry');
+const newHighScoreElement = document.getElementById('newHighScore');
+const playerNameInput = document.getElementById('playerName');
+const saveScoreButton = document.getElementById('saveScoreButton');
+const highScoresBody = document.getElementById('highScoresBody');
+const soundControl = document.getElementById('soundControl');
+
+// Mobile controls
+const mobileControls = document.getElementById('mobileControls');
+const leftBtn = document.getElementById('leftBtn');
+const thrustBtn = document.getElementById('thrustBtn');
+const rightBtn = document.getElementById('rightBtn');
+const fireBtn = document.getElementById('fireBtn');
+
+let chosenDifficulty = 'easy';
+
+// Responsive resizing
+function resizeGame() {
+  canvas.width = container.clientWidth;
+  canvas.height = container.clientHeight;
+  
+  // Check if mobile controls should be shown
+  if (window.innerWidth < 768) {
+    mobileControls.style.display = 'flex';
+  } else {
+    mobileControls.style.display = 'none';
+  }
+}
+
+window.addEventListener('resize', resizeGame);
+resizeGame();
+
+// Game state variables
+let score = 0;
+let level = 1;
+let questionCounter = 0; 
+let questionsAnswered = 0;
+let correctAnswers = 0;
+let powerupsCollected = 0;
+let questionStartTime; 
+let questionTimeLimit;
+let questionTimeRemaining;
+let lives;
+let isGameStarted = false;
+let isGameOver = false;
+let isPaused = false;
+let intervalID;
+let speedMultiplier;
+let healthPackChance;
+let powerupChance;
+let gameStartTime;
+let highestLevelReached = 1;
+
+// Active power-up tracking
+let activePowerup = null;
+let powerupTimer = 0;
+let powerupIntervalID = null;
+
+// Starfield variables
+let stars = [];
+const NUM_STARS = 300;
+const STAR_LAYERS = 4;
+
+// Spaceship with enhanced properties
+let spaceship = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  size: 20,
+  angle: 0,
+  speed: 0,
+  maxSpeed: 4, // Reduced from 7 for better control
+  acceleration: 0.2, // Reduced from 0.4 for more gradual acceleration
+  friction: 0.96, // Increased friction to slow down faster
+  rotationSpeed: 0.05,
+  thrusting: false,
+  invulnerable: false,
+  invulnerableTime: 0,
+  rapid: false,
+  multishot: false,
+  shieldRadius: 0,
+  trailParticles: []
+};
+
+let lasers = [];
+let keywords = [];
+let currentQuestion = null;
+let particles = [];
+let powerups = [];
+
+// Rotation flags for smooth rotation
+let rotatingLeft = false;
+let rotatingRight = false;
+
+// Human Nutrition Glossary + new questions
+const glossary = [
+  { question: "What macronutrient provides quick energy?", answer: "Carbohydrate" },
+  { question: "What macronutrient is used for growth and repair?", answer: "Protein" },
+  { question: "What macronutrient provides long-term energy storage?", answer: "Lipid" },
+  { question: "Which type of vitamin is needed for vision, skin, and immune health?", answer: "Vitamin A" },
+  { question: "Which vitamin helps with iron absorption and immune function?", answer: "Vitamin C" },
+  { question: "Which vitamin helps the body absorb calcium for healthy bones?", answer: "Vitamin D" },
+  { question: "Which mineral is essential for strong bones and teeth?", answer: "Calcium" },
+  { question: "Which mineral is needed to make haemoglobin for red blood cells?", answer: "Iron" },
+  { question: "What component of a balanced diet is needed for temperature regulation?", answer: "Water" },
+  { question: "What dietary component aids in the movement of food through the gut?", answer: "Fibre" },
+  { question: "Which life stage demands peak energy intake?", answer: "Adolescence" },
+  { question: "Which factor most influences daily energy needs?", answer: "Exercise" },
+  { question: "Which process increases maternal energy needs?", answer: "Growth" },
+  { question: "Which organ initiates mechanical digestion?", answer: "Mouth" },
+  { question: "Which tube connects the mouth to the stomach?", answer: "Oesophagus" },
+  { question: "Which organ secretes pepsin?", answer: "Stomach" },
+  { question: "Which section receives pancreatic enzymes?", answer: "Duodenum" },
+  { question: "Which structure absorbs most nutrients?", answer: "Ileum" },
+  { question: "Which organ reabsorbs water?", answer: "Colon" },
+  { question: "Which organ produces digestive enzymes?", answer: "Pancreas" },
+  { question: "What type of muscle contraction moves food along the gut?", answer: "Peristalsis" },
+  { question: "What type of muscle action involves rhythmic contractions of the gut?", answer: "Peristalsis" },
+  { question: "Which enzyme breaks down starch into maltose?", answer: "Amylase" },
+  { question: "Which enzyme breaks down maltose into glucose?", answer: "Maltase" },
+  { question: "Which enzyme breaks down proteins into amino acids?", answer: "Protease" },
+  { question: "Which enzyme breaks down lipids into fatty acids and glycerol?", answer: "Lipase" },
+  { question: "Which type of enzyme digests proteins in the stomach?", answer: "Protease" },
+  { question: "Which enzyme breaks down carbohydrates into simple sugars?", answer: "Amylase" },
+  { question: "Which enzyme breaks down fats into fatty acides and glycerol?", answer: "Lipase" },
+  { question: "Which organ produces bile?", answer: "Liver" },
+  { question: "What process breaks large fat droplets into smaller droplets?", answer: "Emulsification" },
+  { question: "What neutralizes stomach acid in the duodenum?", answer: "Bile" },
+  { question: "What is the main site of nutrient absorption in the digestive system?", answer: "Ileum" },
+  { question: "What structure in the small intestine increases surface area for absorption?", answer: "Villus" },
+  { question: "What structure in the small intestine absorbs glucose and amino acids?", answer: "Villus" },
+  { question: "Which organ contains villi to maximize nutrient absorption?", answer: "Ileum" },
+  { question: "What part of a villus absorbs fats into the lymphatic system?", answer: "Lacteal" },
+  { question: "Which part of the digestive system contains villi for nutrient absorption?", answer: "Ileum" },
+  { question: "What is the name of the process by which nutrients move into the bloodstream?", answer: "Absorption" },
+  { question: "Which structure inside villi absorbs fatty acids and glycerol?", answer: "Lacteal" },
+  { question: "Which blood vessels inside villi absorb amino acids and glucose?", answer: "Capillaries" },
+  // New questions for variety
+  { question: "Which vitamin is essential for blood clotting?", answer: "Vitamin K" },
+  { question: "Which B vitamin is important for nerve function and energy metabolism?", answer: "Vitamin B1" },
+  { question: "What is the term for the total amount of energy required by the body in a day?", answer: "BMR" },
+  { question: "Which hormone regulates blood glucose levels?", answer: "Insulin" },
+  { question: "What nutrient is the body's preferred source of energy?", answer: "Glucose" }
+];
+
+// Power-up types
+const powerupTypes = [
+  { type: "Shield", color: "#4488ff", duration: 12, activate: activateShield, deactivate: deactivateShield },
+  { type: "Rapid Fire", color: "#ff4444", duration: 10, activate: activateRapidFire, deactivate: deactivateRapidFire },
+  { type: "Multi-shot", color: "#44ff44", duration: 8, activate: activateMultishot, deactivate: deactivateMultishot },
+  { type: "Time Bonus", color: "#ffff44", duration: 0, activate: activateTimeBonus, deactivate: null }
+];
+
+// Power-up activation functions
+function activateShield() {
+  spaceship.invulnerable = true;
+  spaceship.shieldRadius = spaceship.size * 1.5;
+  showPowerupIndicator("Shield", 12);
+  
+  // Create shield activation particles
+  for (let i = 0; i < 20; i++) {
+    let angle = Math.random() * Math.PI * 2;
+    let speed = Math.random() * 2 + 1;
+    particles.push({
+      x: spaceship.x + Math.cos(angle) * spaceship.size,
+      y: spaceship.y + Math.sin(angle) * spaceship.size,
+      dx: Math.cos(angle) * speed,
+      dy: Math.sin(angle) * speed,
+      life: 30,
+      maxLife: 30,
+      size: Math.random() * 3 + 1,
+      color: '#4488ff'
+    });
+  }
+}
+
+function deactivateShield() {
+  spaceship.invulnerable = false;
+  spaceship.shieldRadius = 0;
+}
+
+function activateRapidFire() {
+  spaceship.rapid = true;
+  showPowerupIndicator("Rapid Fire", 10);
+}
+
+function deactivateRapidFire() {
+  spaceship.rapid = false;
+}
+
+function activateMultishot() {
+  spaceship.multishot = true;
+  showPowerupIndicator("Multi-shot", 8);
+}
+
+function deactivateMultishot() {
+  spaceship.multishot = false;
+}
+
+function activateTimeBonus() {
+  questionTimeRemaining += 10;
+  timerDisplay.textContent = questionTimeRemaining;
+  showFeedback("Time +10s", "#ffff44");
+}
+
+function showPowerupIndicator(type, time) {
+  powerupType.textContent = type;
+  powerupTime.textContent = time;
+  powerupIndicator.style.display = "flex";
+  
+  clearInterval(powerupIntervalID);
+  powerupTimer = time;
+  
+  powerupIntervalID = setInterval(() => {
+    powerupTimer--;
+    powerupTime.textContent = powerupTimer;
+    
+    if (powerupTimer <= 0) {
+      clearInterval(powerupIntervalID);
+      powerupIndicator.style.display = "none";
+    }
+  }, 1000);
+}
+
+// Draw hearts for lives with animation
+function drawLives() {
+  livesIcons.innerHTML = '';
+  for (let i = 0; i < lives; i++) {
+    livesIcons.innerHTML += '<span class="heart">❤</span>';
+  }
+}
+
+// Show feedback message
+function showFeedback(message, color) {
+  feedbackMessage.textContent = message;
+  feedbackMessage.style.color = color;
+  feedbackMessage.style.opacity = 1;
+  
+  setTimeout(() => {
+    feedbackMessage.style.opacity = 0;
+  }, 1500);
+}
+
+// Score animation
+function animateScore() {
+  scoreDisplay.classList.add('score-animation');
+  setTimeout(() => {
+    scoreDisplay.classList.remove('score-animation');
+  }, 500);
+}
+
+// Particle explosion with enhanced effects and safety checks
+function createExplosion(x, y, correct) {
+  // Validate coordinates to ensure they're on screen
+  if (isNaN(x) || isNaN(y) || x < 0 || x > canvas.width || y < 0 || y > canvas.height) {
+    // Use center of screen if coordinates are invalid
+    x = canvas.width / 2;
+    y = canvas.height / 2;
+  }
+  
+  let color = correct ? '#44ff44' : '#ff4444';
+  let particleCount = correct ? 30 : 20;
+  
+  for (let i = 0; i < particleCount; i++) {
+    let speed = Math.random() * 4 + 2;
+    let angle = Math.random() * Math.PI * 2;
+    particles.push({
+      x: x, 
+      y: y, 
+      dx: Math.cos(angle) * speed,
+      dy: Math.sin(angle) * speed,
+      life: 40,
+      maxLife: 40,
+      size: Math.random() * 3 + 2,
+      color: color
+    });
+  }
+  
+  // Play sound
+  playSound(correct ? sounds.correct : sounds.explosion);
+}
+
+// Draw particles with improved visuals
+function drawParticles() {
+  ctx.save();
+  for (let i = 0; i < particles.length; i++) {
+    let p = particles[i];
+    ctx.globalAlpha = p.life / p.maxLife;
+    ctx.fillStyle = p.color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = p.color;
+    
+    // Ensure radius is positive
+    const radius = Math.max(0.1, p.size * (p.life / p.maxLife));
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// Update particles
+function updateParticles() {
+  for (let i = 0; i < particles.length; i++) {
+    let p = particles[i];
+    p.x += p.dx;
+    p.y += p.dy;
+    p.dx *= 0.98;
+    p.dy *= 0.98;
+    p.life -= 1;
+    
+    // Ensure life doesn't go below 0 (prevent negative radius in rendering)
+    p.life = Math.max(0, p.life);
+    
+    if (p.life <= 0) {
+      particles.splice(i, 1);
+      i--;
+    }
+  }
+}
+
+// Draw spaceship with enhanced visuals
+function drawSpaceship() {
+  ctx.save();
+  ctx.translate(spaceship.x, spaceship.y);
+  ctx.rotate(spaceship.angle);
+  
+  // Shield effect if invulnerable
+  if (spaceship.invulnerable && spaceship.shieldRadius > 0) {
+    // Outer shield
+    ctx.beginPath();
+    ctx.arc(0, 0, spaceship.shieldRadius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(68, 136, 255, 0.8)';
+    ctx.lineWidth = 3;
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#4488ff';
+    ctx.stroke();
+    
+    // Inner shield glow (ensure radius is positive)
+    const innerRadius = Math.max(1, spaceship.shieldRadius - 5);
+    ctx.beginPath();
+    ctx.arc(0, 0, innerRadius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(68, 136, 255, 0.4)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+  
+  // Thruster trail particles
+  if (spaceship.thrusting) {
+    // Add new trail particles
+    spaceship.trailParticles.push({
+      x: -8,
+      y: 20,
+      dx: (Math.random() - 0.5) * 2,
+      dy: Math.random() * 3 + 3,
+      life: 20,
+      color: Math.random() < 0.3 ? '#ff4400' : '#ffaa00'
+    });
+    
+    spaceship.trailParticles.push({
+      x: 8,
+      y: 20,
+      dx: (Math.random() - 0.5) * 2,
+      dy: Math.random() * 3 + 3,
+      life: 20,
+      color: Math.random() < 0.3 ? '#ff4400' : '#ffaa00'
+    });
+  }
+  
+  // Draw trail particles
+  ctx.save();
+  for (let i = 0; i < spaceship.trailParticles.length; i++) {
+    let p = spaceship.trailParticles[i];
+    ctx.globalAlpha = p.life / 20;
+    ctx.fillStyle = p.color;
+    
+    // Ensure radius is positive before drawing
+    const radius = Math.max(0.1, p.life / 5);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Update trail particles
+    p.x += p.dx;
+    p.y += p.dy;
+    p.life -= 1;
+    
+    if (p.life <= 0) {
+      spaceship.trailParticles.splice(i, 1);
+      i--;
+    }
+  }
+  ctx.restore();
+  
+  // Glow effect
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = spaceship.invulnerable ? '#4488ff' : 
+                    spaceship.rapid ? '#ff4444' : 
+                    spaceship.multishot ? '#44ff44' : '#ffffff';
+  
+  // Main hull
+  ctx.beginPath();
+  ctx.moveTo(0, -20);
+  ctx.lineTo(8, -10);
+  ctx.lineTo(15, 5);
+  ctx.lineTo(12, 15);
+  ctx.lineTo(-12, 15);
+  ctx.lineTo(-15, 5);
+  ctx.lineTo(-8, -10);
+  ctx.closePath();
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  
+  // Cockpit
+  ctx.beginPath();
+  ctx.moveTo(0, -15);
+  ctx.lineTo(4, -8);
+  ctx.lineTo(0, -4);
+  ctx.lineTo(-4, -8);
+  ctx.closePath();
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  
+  // Wings
+  ctx.beginPath();
+  ctx.moveTo(-8, -10);
+  ctx.lineTo(-20, 10);
+  ctx.lineTo(-15, 5);
+  ctx.lineTo(-8, -5);
+  ctx.moveTo(8, -10);
+  ctx.lineTo(20, 10);
+  ctx.lineTo(15, 5);
+  ctx.lineTo(8, -5);
+  ctx.stroke();
+  
+  // Engine ports
+  ctx.fillRect(-10, 15, 4, 5);
+  ctx.fillRect(6, 15, 4, 5);
+  
+  // Detail lines
+  ctx.beginPath();
+  ctx.moveTo(-6, 0);
+  ctx.lineTo(-10, 10);
+  ctx.moveTo(6, 0);
+  ctx.lineTo(10, 10);
+  ctx.stroke();
+  
+  // Thruster flame if accelerating
+  if (spaceship.thrusting) {
+    ctx.beginPath();
+    ctx.moveTo(-10, 20);
+    ctx.lineTo(-6, 20);
+    ctx.lineTo(-8, 20 + Math.random() * 15 + 5);
+    ctx.closePath();
+    ctx.fillStyle = Math.random() < 0.5 ? '#ff8800' : '#ffaa00';
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.moveTo(6, 20);
+    ctx.lineTo(10, 20);
+    ctx.lineTo(8, 20 + Math.random() * 15 + 5);
+    ctx.closePath();
+    ctx.fillStyle = Math.random() < 0.5 ? '#ff8800' : '#ffaa00';
+    ctx.fill();
+  }
+  
+  ctx.restore();
+}
+
+// Draw lasers with enhanced visuals
+function drawLasers() {
+  ctx.save();
+  
+  for (let i = 0; i < lasers.length; i++) {
+    let laser = lasers[i];
+    
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = laser.color || '#ff4444';
+    
+    // Laser beam
+    ctx.beginPath();
+    ctx.moveTo(laser.x, laser.y);
+    ctx.lineTo(laser.x - laser.dx * 15, laser.y - laser.dy * 15);
+    ctx.strokeStyle = laser.color || '#ff4444';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    // Laser core (brighter center)
+    ctx.beginPath();
+    ctx.moveTo(laser.x, laser.y);
+    ctx.lineTo(laser.x - laser.dx * 10, laser.y - laser.dy * 10);
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  
+  ctx.restore();
+}
+
+// Draw keywords with enhanced visuals
+function drawKeywords() {
+  ctx.save();
+  
+  for (let i = 0; i < keywords.length; i++) {
+    let k = keywords[i];
+    
+    ctx.save();
+    ctx.translate(k.x, k.y);
+    
+    // Glow effect
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = k.color || 'white';
+    
+    // Pulsing scale for visual appeal
+    let pulseScale = 1 + Math.sin(Date.now() * 0.005) * 0.05;
+    ctx.scale(k.scale * pulseScale, k.scale * pulseScale);
+    
+    // Text style
+    ctx.font = 'bold 18px Orbitron, sans-serif';
+    ctx.fillStyle = k.color || 'white';
+    ctx.textBaseline = 'middle';
+    
+    // Background for better readability
+    let textWidth = ctx.measureText(k.word).width;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(-5, -15, textWidth + 10, 30);
+    
+    // Border
+    ctx.strokeStyle = k.color || 'white';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(-5, -15, textWidth + 10, 30);
+    
+    // Text
+    ctx.fillStyle = k.color || 'white';
+    ctx.fillText(k.word, 0, 0);
+    
+    ctx.restore();
+  }
+  
+  ctx.restore();
+}
+
+// Draw powerups
+function drawPowerups() {
+  ctx.save();
+  
+  for (let i = 0; i < powerups.length; i++) {
+    let p = powerups[i];
+    
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    
+    // Glow effect
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = p.color;
+    
+    // Pulsing scale
+    let pulseScale = 1 + Math.sin(Date.now() * 0.005) * 0.1;
+    ctx.scale(pulseScale, pulseScale);
+    
+    // Draw power-up icon
+    ctx.beginPath();
+    ctx.arc(0, 0, 15, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.arc(0, 0, 15, 0, Math.PI * 2);
+    ctx.strokeStyle = p.color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Power-up symbol
+    ctx.font = 'bold 16px Orbitron, sans-serif';
+    ctx.fillStyle = p.color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    
+    let symbol = p.type === "Shield" ? "S" : 
+                p.type === "Rapid Fire" ? "R" : 
+                p.type === "Multi-shot" ? "M" : "T";
+    
+    ctx.fillText(symbol, 0, 0);
+    
+    ctx.restore();
+  }
+  
+  ctx.restore();
+}
+
+// Update spaceship position with smoother movement
+function updateSpaceship() {
+  // Apply rotation
+  if (rotatingLeft) {
+    spaceship.angle -= spaceship.rotationSpeed;
+  }
+  if (rotatingRight) {
+    spaceship.angle += spaceship.rotationSpeed;
+  }
+  
+  // Apply thrust
+  if (spaceship.thrusting) {
+    spaceship.speed += spaceship.acceleration;
+    if (spaceship.speed > spaceship.maxSpeed) {
+      spaceship.speed = spaceship.maxSpeed;
+    }
+  }
+  
+  // Apply friction
+  spaceship.speed *= spaceship.friction;
+  
+  // Update position
+  spaceship.x += Math.sin(spaceship.angle) * spaceship.speed;
+  spaceship.y -= Math.cos(spaceship.angle) * spaceship.speed;
+  
+  // Wrap around canvas
+  if (spaceship.x < 0) spaceship.x = canvas.width;
+  if (spaceship.x > canvas.width) spaceship.x = 0;
+  if (spaceship.y < 0) spaceship.y = canvas.height;
+  if (spaceship.y > canvas.height) spaceship.y = 0;
+}
+
+// Update lasers
+function updateLasers() {
+  for (let i = 0; i < lasers.length; i++) {
+    lasers[i].x += lasers[i].dx * 15;
+    lasers[i].y += lasers[i].dy * 15;
+    lasers[i].life--;
+    
+    // Remove lasers that are off-screen or expired
+    if (lasers[i].x < 0 || lasers[i].x > canvas.width ||
+        lasers[i].y < 0 || lasers[i].y > canvas.height || 
+        lasers[i].life <= 0) {
+      lasers.splice(i, 1);
+      i--;
+    }
+  }
+}
+
+// Update keywords with simple, consistent movement (like the original game)
+function updateKeywords() {
+  for (let i = 0; i < keywords.length; i++) {
+    let k = keywords[i];
+    
+    // Simple linear movement (similar to original game)
+    k.x += k.dx;
+    k.y += k.dy;
+    
+    // Initial scale animation
+    if (k.scale < 1) {
+      k.scale += 0.05;
+      if (k.scale > 1) k.scale = 1;
+    }
+    
+    // Bounce off edges
+    ctx.font = 'bold 18px Orbitron, sans-serif';
+    let textWidth = ctx.measureText(k.word).width * k.scale + 10;
+    if (k.x < 0 || k.x > canvas.width - textWidth) {
+      k.dx *= -1;
+    }
+    
+    if (k.y < 50 || k.y > canvas.height - 15) {
+      k.dy *= -1;
+    }
+  }
+}
+
+// Update powerups
+function updatePowerups() {
+  for (let i = 0; i < powerups.length; i++) {
+    let p = powerups[i];
+    
+    p.x += p.dx;
+    p.y += p.dy;
+    
+    // Bounce off edges
+    if (p.x < 15 || p.x > canvas.width - 15) {
+      p.dx *= -1;
+    }
+    
+    if (p.y < 50 || p.y > canvas.height - 15) {
+      p.dy *= -1;
+    }
+    
+    // Check collision with spaceship
+    let dx = p.x - spaceship.x;
+    let dy = p.y - spaceship.y;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+    
+    if (dist < spaceship.size + 15) {
+      // Collect power-up
+      let powerupObj = powerupTypes.find(pt => pt.type === p.type);
+      if (powerupObj) {
+        // Deactivate any current power-up
+        if (activePowerup && activePowerup.deactivate) {
+          activePowerup.deactivate();
+        }
+        
+        // Activate new power-up
+        powerupObj.activate();
+        activePowerup = powerupObj;
+        
+        // Set a timer if there's a duration
+        if (powerupObj.duration > 0) {
+          setTimeout(() => {
+            if (powerupObj.deactivate) {
+              powerupObj.deactivate();
+            }
+            activePowerup = null;
+          }, powerupObj.duration * 1000);
+        }
+        
+        // Play sound and create particles
+        playSound(sounds.powerup);
+        createExplosion(p.x, p.y, true);
+        showFeedback("Power-up: " + p.type, p.color);
+        
+        powerupsCollected++;
+        
+        // Remove the power-up
+        powerups.splice(i, 1);
+        i--;
+      }
+    }
+  }
+}
+
+// Check collisions between lasers and keywords
+function checkCollisions() {
+  for (let i = 0; i < lasers.length; i++) {
+    for (let j = 0; j < keywords.length; j++) {
+      if (isColliding(lasers[i], keywords[j])) {
+        let hitX = keywords[j].x;
+        let hitY = keywords[j].y;
+        
+        // If the hit keyword is the correct answer...
+        if (keywords[j].word === currentQuestion.answer) {
+          let timeTaken = Date.now() - questionStartTime;
+          let pointsEarned = calculateTimeBasedScore(timeTaken);
+          score += pointsEarned;
+          
+          createExplosion(hitX, hitY, true);
+          animateScore();
+          showFeedback("Correct! +"+pointsEarned, "#44ff44");
+          
+          questionCounter++;
+          questionsAnswered++;
+          correctAnswers++;
+          
+          if (questionCounter >= 5) {
+            level++;
+            highestLevelReached = Math.max(highestLevelReached, level);
+            questionCounter = 0;
+            playSound(sounds.levelUp);
+            showFeedback("Level Up!", "#ffff44");
+          }
+          
+          scoreDisplay.textContent = score;
+          levelDisplay.textContent = level;
+          lasers.splice(i, 1);
+          showNewQuestion();
+          return;
+        } else if (keywords[j].word === "Health") {
+          createExplosion(hitX, hitY, true);
+          let oldLives = lives;
+          lives = Math.min(lives + 1, 5);
+          
+          if (lives > oldLives) {
+            showFeedback("+1 Life", "#44ff44");
+            playSound(sounds.correct);
+          }
+          
+          drawLives();
+        } else {
+          // Wrong answer
+          score = Math.max(0, score - 2);
+          lives -= 1;
+          
+          createExplosion(hitX, hitY, false);
+          showFeedback("Wrong! -2 points", "#ff4444");
+          playSound(sounds.incorrect);
+          
+          drawLives();
+          
+          if (lives <= 0) {
+            lasers.splice(i, 1);
+            keywords.splice(j, 1);
+            endGame();
+            return;
+          }
+        }
+        
+        scoreDisplay.textContent = score;
+        keywords.splice(j, 1);
+        lasers.splice(i, 1);
+        i--;
+        break;
+      }
+    }
+  }
+}
+
+// Check collisions between keywords and spaceship
+function checkShipCollisions() {
+  if (spaceship.invulnerable) return; // Skip if invulnerable
+  
+  let shipRadius = spaceship.size;
+  
+  for (let i = 0; i < keywords.length; i++) {
+    let k = keywords[i];
+    let dx = k.x - spaceship.x;
+    let dy = k.y - spaceship.y;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+    
+    if (dist < shipRadius + 10) {
+      lives -= 1;
+      drawLives();
+      
+      createExplosion(k.x, k.y, false);
+      showFeedback("-1 Life", "#ff4444");
+      
+      keywords.splice(i, 1);
+      i--;
+      
+      // Brief invulnerability after hit
+      spaceship.invulnerable = true;
+      setTimeout(() => {
+        spaceship.invulnerable = false;
+      }, 1500);
+      
+      if (lives <= 0) {
+        endGame();
+        return;
+      }
+    }
+  }
+}
+
+// Enhanced collision detection between laser and keyword
+function isColliding(laser, keyword) {
+  ctx.font = 'bold 18px Orbitron, sans-serif';
+  const textWidth = ctx.measureText(keyword.word).width * keyword.scale + 10;
+  const textHeight = 30 * keyword.scale;
+  
+  const keywordLeft = keyword.x - 5;
+  const keywordRight = keyword.x + textWidth;
+  const keywordTop = keyword.y - textHeight / 2;
+  const keywordBottom = keyword.y + textHeight / 2;
+  
+  return (laser.x >= keywordLeft && laser.x <= keywordRight &&
+          laser.y >= keywordTop && laser.y <= keywordBottom);
+}
+
+// Calculate time-based score with enhanced formula
+function calculateTimeBasedScore(timeTaken) {
+  const baseScore = 10;
+  const maxTime = questionTimeLimit * 1000;
+  const timeBonus = Math.max(0, maxTime - timeTaken);
+  const scoreMultiplier = 1 + (timeBonus / maxTime) * 2;
+  return Math.round(baseScore * scoreMultiplier * level);
+}
+
+// Fisher-Yates Shuffle Algorithm
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Create keywords with simple movement (like original game)
+function createKeywords() {
+  keywords = [];
+  const numKeywords = Math.min(6 + Math.floor(level / 3), 10);
+  let possibleAnswers = [];
+
+  // Always include correct answer
+  possibleAnswers.push(currentQuestion.answer);
+
+  // Add health packs with probability
+  if (lives < 5 && Math.random() < healthPackChance && !possibleAnswers.includes("Health")) {
+    possibleAnswers.push("Health");
+  }
+
+  // Create power-ups with probability
+  if (Math.random() < powerupChance && powerups.length < 2) {
+    createPowerup();
+  }
+
+  // Add wrong answers to fill up
+  while (possibleAnswers.length < numKeywords) {
+    let randomIndex = Math.floor(Math.random() * glossary.length);
+    let randomKeyword = glossary[randomIndex].answer;
+    if (randomKeyword !== currentQuestion.answer && randomKeyword !== "Health" && !possibleAnswers.includes(randomKeyword)) {
+      possibleAnswers.push(randomKeyword);
+    }
+  }
+
+  // Shuffle answers
+  possibleAnswers = shuffleArray(possibleAnswers);
+
+  // Make sure correct answer is included
+  if (!possibleAnswers.includes(currentQuestion.answer)) {
+    possibleAnswers[0] = currentQuestion.answer;
+  }
+
+  // Create keyword objects with simple movement (similar to original game)
+  ctx.font = 'bold 18px Orbitron, sans-serif';
+  for (let i = 0; i < possibleAnswers.length; i++) {
+    let word = possibleAnswers[i];
+    let textWidth = ctx.measureText(word).width;
+    
+    const margin = 50;
+    const maxX = canvas.width - textWidth - margin * 2;
+    const maxY = canvas.height - 150;
+    const xPos = Math.random() * maxX + margin;
+    const yPos = Math.random() * maxY + 100;
+    
+    // Simple speed calculation like in the original
+    const baseSpeed = 1 + level * 0.1;
+    const speed = baseSpeed * speedMultiplier;
+    
+    // Random direction but simpler than before
+    keywords.push({
+      word: word,
+      x: xPos,
+      y: yPos,
+      dx: (Math.random() - 0.5) * speed * 2,
+      dy: (Math.random() - 0.5) * speed * 2,
+      scale: 0.3,
+      color: (word === "Health") ? '#44ff44' : 'white'
+    });
+  }
+}
+
+// Create a power-up
+function createPowerup() {
+  const powerupType = powerupTypes[Math.floor(Math.random() * powerupTypes.length)];
+  
+  const margin = 50;
+  const maxX = canvas.width - margin * 2;
+  const maxY = canvas.height - 150;
+  const xPos = Math.random() * maxX + margin;
+  const yPos = Math.random() * maxY + 100;
+  
+  // Random angle for movement
+  const angle = Math.random() * Math.PI * 2;
+  const speed = 1 + Math.random() * 0.5;
+  
+  powerups.push({
+    type: powerupType.type,
+    color: powerupType.color,
+    x: xPos,
+    y: yPos,
+    dx: Math.cos(angle) * speed,
+    dy: Math.sin(angle) * speed
+  });
+}
+
+// Show a new question
+function showNewQuestion() {
+  if (!isGameStarted || isGameOver) return;
+  
+  let randomIndex;
+  let attempts = 0;
+  
+  do {
+    randomIndex = Math.floor(Math.random() * glossary.length);
+    attempts++;
+    
+    if (attempts > glossary.length) {
+      console.error("Error: Unable to find an unasked question.");
+      // Reset all questions if we've gone through them all
+      glossary.forEach(q => q.asked = false);
+      randomIndex = Math.floor(Math.random() * glossary.length);
+      break;
+    }
+  } while (glossary[randomIndex].asked);
+
+  currentQuestion = glossary[randomIndex];
+  
+  if (currentQuestion) {
+    currentQuestion.asked = true;
+    questionBox.textContent = currentQuestion.question;
+    
+    // Visual transition for question box
+    questionBox.style.transform = "translateX(-50%) scale(1.1)";
+    setTimeout(() => {
+      questionBox.style.transform = "translateX(-50%) scale(1)";
+    }, 200);
+
+    createKeywords();
+    questionStartTime = Date.now();
+    questionTimeRemaining = questionTimeLimit;
+    timerDisplay.textContent = questionTimeRemaining;
+    startQuestionTimer();
+  } else {
+    console.error("Error: currentQuestion is undefined.");
+  }
+}
+
+// Timer for questions
+function startQuestionTimer() {
+  clearInterval(intervalID);
+  
+  intervalID = setInterval(() => {
+    if (isPaused) return;
+    
+    questionTimeRemaining--;
+    timerDisplay.textContent = questionTimeRemaining;
+    
+    // Visual indicator when time is running low
+    if (questionTimeRemaining <= 5) {
+      timerDisplay.style.color = questionTimeRemaining <= 3 ? '#ff4444' : '#ffff44';
+    } else {
+      timerDisplay.style.color = '#ffffff';
+    }
+    
+    if (questionTimeRemaining <= 0) {
+      lives -= 1;
+      createExplosion(spaceship.x, spaceship.y, false);
+      showFeedback("Time's up! -1 Life", "#ff4444");
+      drawLives();
+      
+      if (lives <= 0) {
+        endGame();
+      } else {
+        showNewQuestion();
+      }
+    }
+  }, 1000);
+}
+
+// Pause game
+function pauseGame() {
+  isPaused = true;
+  pauseScreen.style.display = 'flex';
+}
+
+// Resume game
+function resumeGame() {
+  isPaused = false;
+  pauseScreen.style.display = 'none';
+}
+
+// End game and show stats
+function endGame() {
+  isGameOver = true;
+  clearInterval(intervalID);
+  
+  // Play game over sound
+  playSound(sounds.gameOver);
+  
+  // Show final stats
+  finalScoreElement.textContent = score;
+  questionsAnsweredElement.textContent = questionsAnswered;
+  correctAnswersElement.textContent = correctAnswers;
+  highestLevelElement.textContent = highestLevelReached;
+  powerupsCollectedElement.textContent = powerupsCollected;
+  
+  // Check for high score
+  checkHighScore();
+  
+  // Update high scores table
+  updateHighScoresTable();
+  
+  gameOverScreen.style.display = 'flex';
+}
+
+// In-memory high score handling (no localStorage)
+let gameHighScores = [];
+
+// High score handling
+function checkHighScore() {
+  // Check if current score qualifies as high score
+  if (gameHighScores.length < 5 || score > gameHighScores[gameHighScores.length - 1].score) {
+    newHighScoreElement.textContent = score;
+    submitScoreButton.style.display = 'block';
+  } else {
+    submitScoreButton.style.display = 'none';
+  }
+}
+
+function submitHighScore() {
+  highScoreEntry.style.display = 'block';
+}
+
+function saveHighScore() {
+  const playerName = playerNameInput.value.trim() || 'Anonymous';
+  
+  // Add new score
+  gameHighScores.push({
+    name: playerName,
+    score: score,
+    level: highestLevelReached,
+    date: new Date().toLocaleDateString()
+  });
+  
+  // Sort by score (descending)
+  gameHighScores.sort((a, b) => b.score - a.score);
+  
+  // Keep only top 10
+  if (gameHighScores.length > 10) {
+    gameHighScores.length = 10;
+  }
+  
+  // Update display
+  updateHighScoresTable();
+  
+  // Hide entry form
+  highScoreEntry.style.display = 'none';
+}
+
+function getHighScores() {
+  return gameHighScores;
+}
+
+function updateHighScoresTable() {
+  const highScores = getHighScores();
+  highScoresBody.innerHTML = '';
+  
+  highScores.forEach((score, index) => {
+    const row = document.createElement('tr');
+    
+    const rankCell = document.createElement('td');
+    rankCell.textContent = index + 1;
+    
+    const nameCell = document.createElement('td');
+    nameCell.textContent = score.name;
+    
+    const scoreCell = document.createElement('td');
+    scoreCell.textContent = score.score;
+    
+    const levelCell = document.createElement('td');
+    levelCell.textContent = score.level;
+    
+    row.appendChild(rankCell);
+    row.appendChild(nameCell);
+    row.appendChild(scoreCell);
+    row.appendChild(levelCell);
+    
+    highScoresBody.appendChild(row);
+  });
+}
+
+// Initialize stars for starfield
+function initStars() {
+  stars = [];
+  for (let i = 0; i < NUM_STARS; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1,
+      speed: Math.random() * 2 + 1,
+      layer: Math.floor(Math.random() * STAR_LAYERS),
+      color: `rgba(${155 + Math.random() * 100}, ${155 + Math.random() * 100}, ${200 + Math.random() * 55}, ${0.5 + Math.random() * 0.5})`
+    });
+  }
+}
+
+// Draw stars with parallax effect
+function drawStarfield() {
+  ctx.save();
+  const baseParallaxX = -spaceship.speed * Math.sin(spaceship.angle) * 0.5;
+  const baseParallaxY = -spaceship.speed * -Math.cos(spaceship.angle) * 0.5;
+  
+  stars.forEach(star => {
+    const parallaxMultiplier = (star.layer + 1) / STAR_LAYERS;
+    star.x += baseParallaxX * parallaxMultiplier;
+    star.y += baseParallaxY * parallaxMultiplier;
+    
+    // Wrap around edges
+    if (star.x < 0) star.x = canvas.width;
+    if (star.x > canvas.width) star.x = 0;
+    if (star.y < 0) star.y = canvas.height;
+    if (star.y > canvas.height) star.y = 0;
+    
+    // Draw star with appropriate brightness based on layer
+    ctx.beginPath();
+    ctx.fillStyle = star.color;
+    
+    // Twinkle effect
+    const twinkle = 0.7 + Math.sin(Date.now() * 0.003 * (star.layer + 1)) * 0.3;
+    
+    ctx.globalAlpha = twinkle * ((star.layer + 1) / STAR_LAYERS);
+    // Ensure radius is positive
+    const radius = Math.max(0.1, star.size * ((star.layer + 1) / STAR_LAYERS));
+    ctx.arc(star.x, star.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  
+  ctx.restore();
+}
+
+// Game loop with improved structure and error handling
+function gameLoop() {
+  if (!isGameStarted || isGameOver || isPaused) return;
+  
+  try {
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw background
+    drawStarfield();
+    
+    // Update game objects
+    updateSpaceship();
+    updateLasers();
+    updateKeywords();
+    updatePowerups();
+    updateParticles();
+    
+    // Check collisions
+    checkCollisions();
+    checkShipCollisions();
+    
+    // Draw game objects
+    drawPowerups();
+    drawSpaceship();
+    drawLasers();
+    drawKeywords();
+    drawParticles();
+  } catch (error) {
+    console.error("Error in game loop:", error);
+    // Try to recover by keeping the game running
+  }
+  
+  // Request next frame
+  requestAnimationFrame(gameLoop);
+}
+
+// Keyboard controls with improved handling
+document.addEventListener('keydown', (event) => {
+  if (isGameOver) return;
+  
+  if (isGameStarted && !isPaused) {
+    if (event.code === 'ArrowUp' || event.key === 'w' || event.key === 'W') {
+      spaceship.thrusting = true;
+    }
+    if (event.code === 'ArrowLeft' || event.key === 'a' || event.key === 'A') {
+      rotatingLeft = true;
+    }
+    if (event.code === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
+      rotatingRight = true;
+    }
+    if (event.code === 'Space' || event.key === ' ') {
+      fireLaser();
+    }
+    if (event.code === 'KeyP' || event.key === 'p' || event.key === 'P') {
+      pauseGame();
+    }
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  if (isGameOver) return;
+  
+  if (isGameStarted) {
+    if (event.code === 'ArrowUp' || event.key === 'w' || event.key === 'W') {
+      spaceship.thrusting = false;
+    }
+    if (event.code === 'ArrowLeft' || event.key === 'a' || event.key === 'A') {
+      rotatingLeft = false;
+    }
+    if (event.code === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
+      rotatingRight = false;
+    }
+  }
+});
+
+// Fire laser function with power-up effects
+function fireLaser() {
+  const laserSpeed = 15;
+  const laserDirX = Math.sin(spaceship.angle);
+  const laserDirY = -Math.cos(spaceship.angle);
+  const laserStartX = spaceship.x + laserDirX * spaceship.size;
+  const laserStartY = spaceship.y + laserDirY * spaceship.size;
+  
+  // Play laser sound
+  playSound(sounds.laser);
+  
+  if (spaceship.multishot) {
+    // Multi-shot power-up: fire 3 lasers in a spread
+    const spreadAngle = 0.2; // Angle between lasers in radians
+    
+    for (let i = -1; i <= 1; i++) {
+      const angle = spaceship.angle + (i * spreadAngle);
+      const dirX = Math.sin(angle);
+      const dirY = -Math.cos(angle);
+      
+      lasers.push({
+        x: laserStartX,
+        y: laserStartY,
+        dx: dirX,
+        dy: dirY,
+        life: 60,
+        color: '#44ff44'
+      });
+    }
+  } else {
+    // Regular laser
+    lasers.push({
+      x: laserStartX,
+      y: laserStartY,
+      dx: laserDirX,
+      dy: laserDirY,
+      life: 60,
+      color: spaceship.rapid ? '#ff4444' : '#ff6666'
+    });
+  }
+  
+  // Rapid fire: allow immediate shooting again
+  if (spaceship.rapid) {
+    setTimeout(() => {
+      if (isGameStarted && !isPaused && !isGameOver && spaceship.rapid) {
+        fireLaser();
+      }
+    }, 200);
+  }
+}
+
+// Mobile controls
+leftBtn.addEventListener('touchstart', () => {
+  rotatingLeft = true;
+});
+
+leftBtn.addEventListener('touchend', () => {
+  rotatingLeft = false;
+});
+
+rightBtn.addEventListener('touchstart', () => {
+  rotatingRight = true;
+});
+
+rightBtn.addEventListener('touchend', () => {
+  rotatingRight = false;
+});
+
+thrustBtn.addEventListener('touchstart', () => {
+  spaceship.thrusting = true;
+});
+
+thrustBtn.addEventListener('touchend', () => {
+  spaceship.thrusting = false;
+});
+
+fireBtn.addEventListener('touchstart', () => {
+  fireLaser();
+});
+
+// Button event listeners
+startButton.addEventListener('click', () => {
+  const difficultyRadios = document.querySelectorAll('input[name="difficulty"]');
+  difficultyRadios.forEach(radio => {
+    if (radio.checked) chosenDifficulty = radio.value;
+  });
+  startGame();
+});
+
+resumeButton.addEventListener('click', resumeGame);
+
+quitButton.addEventListener('click', () => {
+  isPaused = false;
+  endGame();
+});
+
+restartButton.addEventListener('click', () => {
+  location.reload();
+});
+
+submitScoreButton.addEventListener('click', submitHighScore);
+
+saveScoreButton.addEventListener('click', saveHighScore);
+
+soundControl.addEventListener('click', toggleSound);
+
+// Start game
+function startGame() {
+  // Initialize sounds
+  initSounds();
+  
+  // Get difficulty settings
+  const settings = difficultySettings[chosenDifficulty];
+  questionTimeLimit = settings.timeLimit;
+  questionTimeRemaining = questionTimeLimit;
+  lives = settings.lives;
+  speedMultiplier = settings.speedMultiplier;
+  healthPackChance = settings.healthPackChance;
+  powerupChance = settings.powerupChance;
+
+  // Hide start screen
+  startScreen.style.display = 'none';
+  
+  // Reset game state
+  isGameStarted = true;
+  isGameOver = false;
+  isPaused = false;
+  score = 0;
+  level = 1;
+  questionCounter = 0;
+  questionsAnswered = 0;
+  correctAnswers = 0;
+  powerupsCollected = 0;
+  highestLevelReached = 1;
+  gameStartTime = Date.now();
+  
+  // Reset spaceship
+  spaceship.x = canvas.width / 2;
+  spaceship.y = canvas.height / 2;
+  spaceship.speed = 0;
+  spaceship.angle = 0;
+  spaceship.thrusting = false;
+  spaceship.invulnerable = false;
+  spaceship.rapid = false;
+  spaceship.multishot = false;
+  spaceship.trailParticles = [];
+  
+  // Reset controls
+  rotatingLeft = false;
+  rotatingRight = false;
+  
+  // Clear arrays
+  lasers = [];
+  keywords = [];
+  particles = [];
+  powerups = [];
+  
+  // Update display
+  drawLives();
+  scoreDisplay.textContent = score;
+  levelDisplay.textContent = level;
+  timerDisplay.textContent = questionTimeLimit;
+  
+  // Initialize starfield
+  initStars();
+  
+  // Start first question
+  showNewQuestion();
+  
+  // Start game loop
+  gameLoop();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flappy Bird - Nutrition Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #333;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            max-width: 100vw;
+            max-height: 100vh;
+            overflow: hidden;
+            background: #87CEEB;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        /* Custom SVG bird character */
+        #bird {
+            position: absolute;
+            width: 68px;
+            height: 48px;
+            left: 80px;
+            z-index: 10;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="56.701 234.743 327.628 204.02"><line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 15px;" x1="118.465" y1="343.768" x2="71.582" y2="348.029"></line><line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 15px;" x1="119.186" y1="338.805" x2="80.045" y2="317.237"></line><line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 15px;" x1="115.829" y1="351.073" x2="86.384" y2="371.522"></line><ellipse style="stroke: rgb(0, 0, 0); fill: rgb(81, 171, 173);" cx="222.037" cy="346.538" rx="104.194" ry="72.237"></ellipse><path d="M 356.69 357.143 C 356.228 361.888 338.603 364.425 320.961 371.742 C 303.319 379.059 285.232 365.206 285.232 357.143 C 285.232 349.081 301.229 334.097 320.961 342.544 C 340.693 350.992 357.151 352.399 356.69 357.143 Z" style="stroke: rgb(0, 0, 0); fill: rgb(226, 155, 44);"></path><line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 8px;" x1="270.607" y1="325.932" x2="288.188" y2="325.481"></line><line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 8px;" x1="299.231" y1="325.255" x2="316.812" y2="324.804"></line><rect x="274.213" y="329.988" width="13.524" height="5.86" style="stroke: rgb(247, 244, 244); fill: rgb(251, 248, 248);"></rect><rect x="304.385" y="329.537" width="12.622" height="6.311" style="fill: rgb(250, 247, 247); stroke: rgb(250, 248, 248);"></rect><rect x="282.279" y="329.771" width="5.194" height="6.232" style="stroke: rgb(0, 0, 0); fill: rgb(5, 5, 5);"></rect><rect x="310.844" y="328.94" width="5.194" height="6.232" style="stroke: rgb(0, 0, 0); fill: rgb(5, 5, 5);"></rect><path style="stroke: rgb(0, 0, 0); fill: rgb(226, 155, 44);" d="M 354.773 357.684 C 351.253 357.684 347.733 357.684 344.213 357.684 C 334.158 357.684 323.02 359.841 313.709 359.841 C 312.16 359.841 306.6 361.5 306.6 362.844"></path><path style="stroke: rgb(0, 0, 0); stroke-width: 3px; fill: rgb(81, 171, 173);" d="M 139.936 294.725 C 138.679 293.217 137.479 297.72 136.022 301.887 C 134.894 305.115 135.202 307.594 136.84 309.56 C 135.898 309.56 145.393 324.992 147.4 324.992 C 146.371 325.335 164.557 337.47 165.341 337.209"></path><path style="stroke: rgb(0, 0, 0); stroke-width: 3px; fill: rgb(81, 171, 173);" d="M 217.768 340.323 C 218.073 340.323 197.493 297.334 169.105 277.31 C 151.003 264.541 138.039 251.392 137.747 251.185 C 135.271 249.435 134.088 290.765 140.386 293.696 C 138.117 294.151 163.481 319.874 166.916 319.874"></path><line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 15px;" x1="225.795" y1="266.075" x2="314.779" y2="305.696"></line><polyline style="stroke-width: 3px; stroke: rgb(170, 67, 82); fill: rgb(170, 67, 82);" points="249.178 268.675 277.107 247.241 281.004 271.922 301.789 262.829 299.191 290.109"></polyline></svg>') no-repeat;
+            background-size: contain;
+            background-position: center;
+            /* Make collision box appropriately sized */
+            box-sizing: border-box;
+        }
+        .pipe {
+            position: absolute;
+            width: 60px;
+            background: #2E8B57;
+            z-index: 5;
+        }
+        .pipe.top {
+            top: 0;
+            border-bottom: 4px solid #228B22;
+        }
+        .pipe.bottom {
+            bottom: 0;
+            border-top: 4px solid #228B22;
+        }
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            z-index: 1;
+            opacity: 0.8;
+        }
+        .jump-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff7700;
+            border-radius: 50%;
+            opacity: 0.8;
+            z-index: 9;
+            animation: fadeOut 0.6s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 20;
+        }
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 30;
+            display: none;
+            min-width: 200px;
+        }
+        #question-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 30;
+            display: none;
+            width: 80%;
+            max-width: 500px;
+        }
+        #question-text {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        #answers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        button {
+            background: #4169E1;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #1E90FF;
+        }
+        #play-again {
+            margin-top: 20px;
+        }
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background: #8B4513;
+            z-index: 2;
+        }
+        .debug-hitbox {
+            pointer-events: none;
+            opacity: 0.7;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Simple bird div with background SVG -->
+        <div id="bird"></div>
+        <div id="score">Score: 0</div>
+        
+        <div id="game-over">
+            <h2>Game Over</h2>
+            <p>Your Score: <span id="final-score">0</span></p>
+            <button id="play-again">Play Again</button>
+        </div>
+        
+        <div id="question-modal">
+            <h3 id="question-text"></h3>
+            <div id="answers"></div>
+        </div>
+        
+        <div class="ground"></div>
+    </div>
+    <script>
+        const gameContainer = document.getElementById('game-container');
+        const bird = document.getElementById('bird');
+        const scoreElement = document.getElementById('score');
+        const gameOverElement = document.getElementById('game-over');
+        const questionModal = document.getElementById('question-modal');
+        const playAgainButton = document.getElementById('play-again');
+        // Game state variables
+        let gameWidth, gameHeight;
+        let gameLoop;
+        let score = 0;
+        let velocity = 0;
+        let gravity = 0.5;
+        let jumpStrength = -8;
+        let gameActive = false;
+        let pipes = [];
+        let clouds = [];
+        let lastPipeTime = 0;
+        let pipeInterval = 2000;
+        let pipeSpeed = 3;
+        let pipeGap;
+        let lastJumpTime = 0;
+        let questionChance = 0.5; // 50% chance to show a question after passing pipes
+        let questionShownRecently = false;
+        let minPipeDistance = 250; // Minimum distance between pipes (in pixels)
+        let birdPositionY = 0; // Explicitly track bird's Y position
+        let pipesSafelyPassed = {}; // Track pipes that have been safely passed
+        let debugMode = false; // Set to true to see hitboxes
+        const jumpCooldown = 200;
+        const questions = [
+  {
+    question: "What ethical principle focuses on ensuring AI systems don't harm users?",
+    answers: ["Transparency", "Non-maleficence", "Autonomy", "Justice"],
+    correct: 1
+  },
+  {
+    question: "What is the main concern with AI data privacy in education?",
+    answers: ["Cost", "Student data protection", "Speed of processing", "Hardware requirements"],
+    correct: 1
+  },
+  {
+    question: "What is AI bias?",
+    answers: ["When AI performs faster than expected", "When AI systems show systematic unfairness", "When AI processes large volumes of data", "When AI has limited capabilities"],
+    correct: 1
+  },
+  {
+    question: "Which is NOT a responsible approach to AI in education?",
+    answers: ["Getting informed consent", "Explaining AI limitations", "Replacing teacher judgment entirely", "Monitoring for bias"],
+    correct: 2
+  },
+  {
+    question: "What is 'hallucination' in AI language models?",
+    answers: ["Processing images", "Creating false information", "Learning from feedback", "Translating languages"],
+    correct: 1
+  },
+  {
+    question: "Who bears primary responsibility for AI-generated educational content?",
+    answers: ["The AI model", "The AI company", "The teacher using the AI", "The students"],
+    correct: 2
+  },
+  {
+    question: "What should you do when AI generates factually incorrect information?",
+    answers: ["Accept it anyway", "Fact-check against reliable sources", "Assume it must be new information", "Share it without verification"],
+    correct: 1
+  },
+  {
+    question: "What is a key concern when using AI-generated images in teaching?",
+    answers: ["Image quality", "Processing time", "Copyright infringement", "File size"],
+    correct: 2
+  },
+  {
+    question: "Which practice best supports ethical AI use in classrooms?",
+    answers: ["Using AI secretly", "Being transparent about AI use", "Ignoring potential biases", "Relying solely on AI assessment"],
+    correct: 1
+  },
+  {
+    question: "What is digital literacy in the context of AI?",
+    answers: ["Computer programming skills", "The ability to critically evaluate AI outputs", "Speed-reading digital content", "Creating digital art"],
+    correct: 1
+  },
+  {
+    question: "What should teachers do when using AI-generated resources?",
+    answers: ["Claim them as self-created", "Rely on them without review", "Verify accuracy and appropriateness", "Use only for advanced students"],
+    correct: 2
+  },
+  {
+    question: "Which AI application requires the most careful ethical consideration?",
+    answers: ["Spell checking essays", "Generating practice math problems", "Automated student assessment", "Creating lesson plan outlines"],
+    correct: 2
+  },
+  {
+    question: "What is 'prompt engineering'?",
+    answers: ["Hardware configuration", "Writing effective instructions for AI", "Computer programming", "Designing robots"],
+    correct: 1
+  },
+  {
+    question: "What concept refers to AI systems potentially functioning beyond human control?",
+    answers: ["AI alignment", "AI singularity", "AI bias", "AI fairness"],
+    correct: 1
+  },
+  {
+    question: "What is NOT typically considered personal data when using educational AI?",
+    answers: ["Student names", "Anonymous curriculum statistics", "Student home addresses", "Individual grades"],
+    correct: 1
+  },
+  {
+    question: "What does 'model drift' refer to in AI systems?",
+    answers: ["AI becoming more accurate", "AI forgetting previous training", "AI becoming outdated as the world changes", "AI hardware malfunctioning"],
+    correct: 2
+  },
+  {
+    question: "Which practice helps reduce AI bias?",
+    answers: ["Using a single data source", "Training with diverse, representative data", "Limiting model parameters", "Reducing processing power"],
+    correct: 1
+  },
+  {
+    question: "What is a key benefit of human-AI collaboration in education?",
+    answers: ["Reducing teacher workload completely", "Combining AI efficiency with human judgment", "Eliminating the need for lesson planning", "Removing subjective assessment"],
+    correct: 1
+  },
+  {
+    question: "What is 'AI literacy'?",
+    answers: ["AI reading ability", "Understanding how to use and evaluate AI", "Programming algorithms", "Teaching robots to read"],
+    correct: 1
+  },
+  {
+    question: "What should teachers consider when using AI for student assessment?",
+    answers: ["It's always objective", "It should completely replace teacher judgment", "It may contain biases", "It's perfect for evaluating creativity"],
+    correct: 2
+  },
+  {
+    question: "Which represents appropriate transparency about AI use?",
+    answers: ["Hiding AI use from students", "Informing parents AI is being used", "Only telling school leadership", "Only mentioning it if asked directly"],
+    correct: 1
+  },
+  {
+    question: "What is an important consideration when using AI chatbots with students?",
+    answers: ["They will always provide correct information", "Students need guidance on their limitations", "They're only suitable for advanced students", "They should replace teacher explanations"],
+    correct: 1
+  },
+  {
+    question: "What should be considered when using AI to create differentiated materials?",
+    answers: ["AI needs no supervision for this task", "Simplification might lose important nuance", "It's only useful for advanced content", "It works best with fictional content"],
+    correct: 1
+  },
+  {
+    question: "Which is NOT a recommended practice for AI safety in education?",
+    answers: ["Periodic review of AI-generated content", "Cross-checking AI information", "Blind trust in AI outputs", "Clear attribution of AI-generated materials"],
+    correct: 2
+  },
+  {
+    question: "What approach best addresses AI ethical concerns in schools?",
+    answers: ["Avoiding AI use entirely", "Developing clear usage policies", "Limiting AI to administrators only", "Using it without explicit guidelines"],
+    correct: 1
+  },
+  {
+    question: "What is 'data poisoning' in AI systems?",
+    answers: ["Using expired data", "Deliberately contaminating training data", "Encrypting sensitive information", "Compressing large datasets"],
+    correct: 1
+  },
+  {
+    question: "What principle suggests AI should enhance rather than replace human capabilities?",
+    answers: ["Automation", "Augmentation", "Autonomy", "Accuracy"],
+    correct: 1
+  },
+  {
+    question: "What is a primary concern with AI-generated feedback on student work?",
+    answers: ["It's too slow", "It may lack personal connection", "It uses too much electricity", "It's always too critical"],
+    correct: 1
+  },
+  {
+    question: "What practice helps ensure AI is used ethically in education?",
+    answers: ["Using it without student knowledge", "Regular ethical review and reflection", "Maximizing automation", "Focusing only on academic content"],
+    correct: 1
+  },
+  {
+    question: "Which statement best represents the concept of 'AI alignment'?",
+    answers: ["Making AI physically secure", "Ensuring AI follows a specific programming language", "Making AI systems that act according to human values", "Creating AI that works identically across devices"],
+    correct: 2
+  }
+];
+        function setupGameDimensions() {
+            gameWidth = gameContainer.offsetWidth;
+            gameHeight = gameContainer.offsetHeight;
+            
+            // Make the gap proportional to game height but with reasonable limits
+            pipeGap = Math.max(150, gameHeight * 0.35);
+            
+            // Adjust minimum pipe distance based on game width
+            minPipeDistance = Math.max(gameWidth * 0.4, 300);
+            
+            // Adjust scale for smaller screens
+            if (gameWidth < 500) {
+                pipeSpeed = 2;
+            } else {
+                pipeSpeed = 3;
+            }
+            
+            // Initialize bird position
+            birdPositionY = gameHeight / 2;
+            bird.style.top = `${birdPositionY}px`;
+        }
+        function createJumpEffect() {
+            const birdRect = bird.getBoundingClientRect();
+            const containerRect = gameContainer.getBoundingClientRect();
+            
+            // Create multiple particles
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'jump-particle';
+                
+                // Position behind the bird
+                const posX = birdRect.left - containerRect.left - Math.random() * 10;
+                const posY = birdRect.top - containerRect.top + birdRect.height/2 + (Math.random() * 10 - 5);
+                
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                
+                // Randomize particle appearance
+                particle.style.width = `${5 + Math.random() * 5}px`;
+                particle.style.height = particle.style.width;
+                
+                // Randomize color between orange and yellow
+                const hue = 20 + Math.floor(Math.random() * 40);
+                particle.style.background = `hsl(${hue}, 100%, 60%)`;
+                
+                // Add to game
+                gameContainer.appendChild(particle);
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    particle.remove();
+                }, 600);
+            }
+        }
+        function createClouds() {
+            for (let i = 0; i < 5; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.width = `${50 + Math.random() * 100}px`;
+                cloud.style.height = `${20 + Math.random() * 40}px`;
+                cloud.style.left = `${Math.random() * gameWidth}px`;
+                cloud.style.top = `${Math.random() * (gameHeight / 2)}px`;
+                cloud.speed = 0.5 + Math.random() * 1;
+                gameContainer.appendChild(cloud);
+                clouds.push(cloud);
+            }
+        }
+        function createPipe() {
+            // Ensure pipes have a fair gap based on game height
+            const minHeight = Math.max(50, gameHeight * 0.1);
+            const maxHeight = Math.min(gameHeight - pipeGap - 50, gameHeight * 0.6);
+            const height = minHeight + Math.random() * (maxHeight - minHeight);
+            
+            const topPipe = document.createElement('div');
+            topPipe.className = 'pipe top';
+            topPipe.style.height = `${height}px`;
+            topPipe.style.left = `${gameWidth}px`;
+            gameContainer.appendChild(topPipe);
+            
+            const bottomPipe = document.createElement('div');
+            bottomPipe.className = 'pipe bottom';
+            bottomPipe.style.height = `${gameHeight - height - pipeGap}px`;
+            bottomPipe.style.left = `${gameWidth}px`;
+            gameContainer.appendChild(bottomPipe);
+            
+            // Create a unique ID for this pipe pair
+            const pipeId = Date.now().toString();
+            topPipe.dataset.pipeId = pipeId;
+            bottomPipe.dataset.pipeId = pipeId;
+            
+            return { 
+                top: topPipe, 
+                bottom: bottomPipe, 
+                passed: false, 
+                height: height,
+                id: pipeId,
+                safelyPassed: false
+            };
+        }
+        function getHitbox(element) {
+            if (!element) return null;
+            
+            try {
+                const rect = element.getBoundingClientRect();
+                const containerRect = gameContainer.getBoundingClientRect();
+                
+                // Convert to coordinates relative to the game container
+                return {
+                    left: rect.left - containerRect.left,
+                    right: rect.right - containerRect.left,
+                    top: rect.top - containerRect.top,
+                    bottom: rect.bottom - containerRect.top,
+                    width: rect.width,
+                    height: rect.height
+                };
+            } catch (e) {
+                console.error("Error getting hitbox:", e);
+                return null;
+            }
+        }
+
+        function checkCollision(element1, element2) {
+            // If either element doesn't exist or a pipe has been safely passed, return false
+            if (!element1 || !element2) return false;
+            
+            // Get element2's pipe ID
+            const pipeId = element2.dataset.pipeId;
+            if (pipeId && pipesSafelyPassed[pipeId]) {
+                return false; // Skip collision check for pipes we've safely passed
+            }
+            
+            try {
+                // Get hitboxes relative to game container
+                const birdBox = getHitbox(element1);
+                const obstacleBox = getHitbox(element2);
+                
+                if (!birdBox || !obstacleBox) return false;
+                
+                // Create an even smaller hitbox for the bird (40% of visual size)
+                const birdHitboxWidth = birdBox.width * 0.4;
+                const birdHitboxHeight = birdBox.height * 0.4;
+                const birdHitboxLeft = birdBox.left + (birdBox.width - birdHitboxWidth) / 2;
+                const birdHitboxTop = birdBox.top + (birdBox.height - birdHitboxHeight) / 2;
+                
+                // Get pipe hitbox (80% of visual width)
+                const pipeHitboxWidth = obstacleBox.width * 0.8;
+                const pipeHitboxLeft = obstacleBox.left + (obstacleBox.width - pipeHitboxWidth) / 2;
+                
+                // Very generous buffer (15px)
+                const buffer = 15;
+                
+                // Debug visualization of hitboxes
+                if (debugMode) {
+                    // Remove any existing debug boxes
+                    const oldDebugBoxes = document.querySelectorAll('.debug-hitbox');
+                    oldDebugBoxes.forEach(box => box.remove());
+                    
+                    // Bird hitbox
+                    const birdDebugBox = document.createElement('div');
+                    birdDebugBox.className = 'debug-hitbox';
+                    birdDebugBox.style.position = 'absolute';
+                    birdDebugBox.style.left = `${birdHitboxLeft}px`;
+                    birdDebugBox.style.top = `${birdHitboxTop}px`;
+                    birdDebugBox.style.width = `${birdHitboxWidth}px`;
+                    birdDebugBox.style.height = `${birdHitboxHeight}px`;
+                    birdDebugBox.style.border = '2px solid red';
+                    birdDebugBox.style.zIndex = '999';
+                    gameContainer.appendChild(birdDebugBox);
+                    
+                    // Pipe hitbox
+                    const pipeDebugBox = document.createElement('div');
+                    pipeDebugBox.className = 'debug-hitbox';
+                    pipeDebugBox.style.position = 'absolute';
+                    pipeDebugBox.style.left = `${pipeHitboxLeft}px`;
+                    pipeDebugBox.style.top = `${obstacleBox.top}px`;
+                    pipeDebugBox.style.width = `${pipeHitboxWidth}px`;
+                    pipeDebugBox.style.height = `${obstacleBox.height}px`;
+                    pipeDebugBox.style.border = '2px solid blue';
+                    pipeDebugBox.style.zIndex = '999';
+                    gameContainer.appendChild(pipeDebugBox);
+                }
+                
+                // Check if there's actual collision
+                const collision = !(
+                    birdHitboxLeft + birdHitboxWidth < pipeHitboxLeft + buffer ||
+                    birdHitboxLeft > pipeHitboxLeft + pipeHitboxWidth - buffer ||
+                    birdHitboxTop + birdHitboxHeight < obstacleBox.top + buffer ||
+                    birdHitboxTop > obstacleBox.bottom - buffer
+                );
+                
+                return collision;
+            } catch (e) {
+                // If there's any error in collision detection, don't trigger game over
+                console.error("Collision detection error:", e);
+                return false;
+            }
+        }
+        function showQuestion() {
+            const questionData = questions[Math.floor(Math.random() * questions.length)];
+            document.getElementById('question-text').textContent = questionData.question;
+            
+            const answersDiv = document.getElementById('answers');
+            answersDiv.innerHTML = '';
+            
+            questionData.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.onclick = () => {
+                    if (index === questionData.correct) {
+                        score += 50;
+                        scoreElement.textContent = `Score: ${score}`;
+                    }
+                    questionModal.style.display = 'none';
+                    setTimeout(() => { 
+                        gameActive = true;
+                        questionShownRecently = false;  // Reset flag after question is answered
+                    }, 300);
+                };
+                answersDiv.appendChild(button);
+            });
+            
+            questionModal.style.display = 'block';
+            gameActive = false;
+            questionShownRecently = true;
+        }
+        function updateClouds() {
+            clouds.forEach(cloud => {
+                const left = parseFloat(cloud.style.left);
+                if (left < -parseFloat(cloud.style.width)) {
+                    cloud.style.left = `${gameWidth}px`;
+                    cloud.style.top = `${Math.random() * (gameHeight / 2)}px`;
+                } else {
+                    cloud.style.left = `${left - cloud.speed}px`;
+                }
+            });
+        }
+        function update() {
+            if (!gameActive) return;
+            
+            // Update bird position using our tracked Y position
+            velocity = Math.min(10, velocity + gravity);
+            birdPositionY += velocity;
+            bird.style.top = `${birdPositionY}px`;
+            
+            // Rotate bird based on velocity
+            const rotation = Math.max(-20, Math.min(20, velocity * 2));
+            bird.style.transform = `rotate(${rotation}deg)`;
+            
+            // Check boundaries with a more forgiving approach
+            const birdBox = getHitbox(bird);
+            if (!birdBox) return; // Safety check
+            
+            // Very generous boundary check (20px buffer)
+            if (birdBox.top < -20 || birdBox.bottom > gameHeight - 15) {
+                gameOver();
+                return;
+            }
+            
+            // Create new pipes
+            if (Date.now() - lastPipeTime > pipeInterval) {
+                // Check if the last pipe has moved far enough to add a new one
+                const lastPipe = pipes[pipes.length - 1];
+                if (!lastPipe || parseFloat(lastPipe.top.style.left) < gameWidth - minPipeDistance) {
+                    pipes.push(createPipe());
+                    lastPipeTime = Date.now();
+                }
+            }
+            
+            // Move pipes
+            let pipePositions = [];
+            for (let i = pipes.length - 1; i >= 0; i--) {
+                const pipe = pipes[i];
+                const pipeLeft = parseFloat(pipe.top.style.left) - pipeSpeed;
+                
+                // Store pipe positions for debugging
+                pipePositions.push(pipeLeft);
+                
+                // Move both top and bottom pipes
+                pipe.top.style.left = `${pipeLeft}px`;
+                pipe.bottom.style.left = `${pipeLeft}px`;
+                
+                // Remove pipes that have gone off screen
+                if (pipeLeft < -60) {
+                    pipe.top.remove();
+                    pipe.bottom.remove();
+                    pipes.splice(i, 1);
+                    continue;
+                }
+                
+                // Get bird horizontal position (constant)
+                const birdLeft = 80; // Bird is fixed at this X position
+                
+                // If we've moved beyond this pipe, mark it as safely passed
+                if (!pipe.safelyPassed && pipeLeft + 60 < birdLeft) {
+                    pipe.safelyPassed = true;
+                    pipesSafelyPassed[pipe.id] = true;
+                }
+                
+                // Only check collision for pipes that haven't been safely passed
+                // and are within collision range (reduced distance to 60px)
+                if (!pipe.safelyPassed && Math.abs(pipeLeft - birdLeft) < 60) {
+                    if (checkCollision(bird, pipe.top) || checkCollision(bird, pipe.bottom)) {
+                        gameOver();
+                        return;
+                    }
+                }
+                
+                // Score for passing pipes
+                if (!pipe.passed && pipeLeft < birdLeft - 20) {
+                    pipe.passed = true;
+                    score += 10;
+                    scoreElement.textContent = `Score: ${score}`;
+                    
+                    // Chance to show question after successfully passing pipes
+                    // Only if a question hasn't been shown recently
+                    if (!questionShownRecently && Math.random() < questionChance) {
+                        // Small delay before showing question to allow player to get through pipes
+                        setTimeout(() => {
+                            showQuestion();
+                        }, 500);
+                    }
+                }
+            }
+            
+            // Update clouds
+            updateClouds();
+        }
+        function gameOver() {
+            gameActive = false;
+            document.getElementById('final-score').textContent = score;
+            gameOverElement.style.display = 'block';
+            clearInterval(gameLoop);
+        }
+        function clearAllElements() {
+            // Clear pipes
+            pipes.forEach(pipe => {
+                pipe.top.remove();
+                pipe.bottom.remove();
+            });
+            pipes = [];
+            
+            // Clear any particles
+            const particles = document.querySelectorAll('.jump-particle');
+            particles.forEach(particle => particle.remove());
+            
+            // Clear clouds
+            clouds.forEach(cloud => cloud.remove());
+            clouds = [];
+        }
+        function startGame() {
+            // Clear all existing elements
+            clearAllElements();
+            
+            // Set up game dimensions
+            setupGameDimensions();
+            
+            // Create background elements
+            createClouds();
+            
+            // Reset game state
+            score = 0;
+            velocity = 0;
+            scoreElement.textContent = `Score: 0`;
+            gameOverElement.style.display = 'none';
+            questionModal.style.display = 'none';
+            birdPositionY = gameHeight / 2;
+            bird.style.top = `${birdPositionY}px`;
+            bird.style.transform = 'rotate(0deg)';
+            questionShownRecently = false;
+            pipesSafelyPassed = {}; // Clear safely passed pipes
+            
+            // Remove any debug hitboxes
+            const debugBoxes = document.querySelectorAll('.debug-hitbox');
+            debugBoxes.forEach(box => box.remove());
+            
+            lastPipeTime = Date.now();
+            gameActive = true;
+            
+            // Start game loop
+            clearInterval(gameLoop);
+            gameLoop = setInterval(update, 1000 / 60);
+        }
+        // Handle keyboard input
+        document.addEventListener('keydown', (e) => {
+            if ((e.code === 'Space' || e.code === 'ArrowUp') && gameActive) {
+                const currentTime = Date.now();
+                if (currentTime - lastJumpTime >= jumpCooldown) {
+                    velocity = jumpStrength;
+                    createJumpEffect();
+                    lastJumpTime = currentTime;
+                    e.preventDefault();
+                }
+            }
+            
+            // Debug mode toggle
+            if (e.code === 'KeyD' && e.ctrlKey) {
+                debugMode = !debugMode;
+                console.log("Debug mode:", debugMode);
+                e.preventDefault();
+            }
+        });
+        // Handle touch input for mobile
+        gameContainer.addEventListener('touchstart', (e) => {
+            if (gameActive) {
+                const currentTime = Date.now();
+                if (currentTime - lastJumpTime >= jumpCooldown) {
+                    velocity = jumpStrength;
+                    createJumpEffect();
+                    lastJumpTime = currentTime;
+                    e.preventDefault();
+                }
+            }
+        });
+        // Play again button
+        playAgainButton.addEventListener('click', startGame);
+        // Resize handler
+        window.addEventListener('resize', () => {
+            setupGameDimensions();
+        });
+        // Start the game on load
+        window.addEventListener('load', () => {
+            setupGameDimensions();
+            startGame();
+        });
+    </script>
+</body>
+</html>

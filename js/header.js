@@ -45,6 +45,37 @@ document.addEventListener('DOMContentLoaded', function() {
             width: 100%;
             background-color: white;
           }
+
+          .tooltip {
+            position: relative;
+          }
+
+          .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform-origin: top;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 200;
+            margin-top: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          }
+
+          .tooltip:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+          }
           
           .dropdown {
             position: absolute;
@@ -95,9 +126,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </button>
             
             <div id="dropdown" class="dropdown">
-              <a href="../ai-foundations/index.html">AI Foundations</a>
-              <a href="../resource-builder/index.html">Resource Builder</a>
-              <a href="../code-creator/index.html">Code Creator</a>
+              <a href="../index.html#pathways" class="tooltip" data-tooltip="Guided AI learning">Learning Pathways</a>
+              <a href="../resources/index.html" class="tooltip" data-tooltip="AI resources for teachers">Resources</a>
+              <a href="../showcase.html" class="tooltip" data-tooltip="See AI in action">Showcase</a>
             </div>
           </div>
         </header>
