@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Editors - Code Creator Pathway</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/module-steps.css">
+    <link rel="stylesheet" href="../css/interactive-editors.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <!-- Module Progress -->
+            <div class="module-progress">
+                <div class="progress-steps">
+                    <div class="progress-step">
+                        <div class="step-number completed">1</div>
+                        <span class="step-label">AI Safety</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number active">2</div>
+                        <span class="step-label">Interactive Editors</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <span class="step-label">Code Generation</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <span class="step-label">Interactive Quizzes</span>
+                    </div>
+                </div>
+                <div class="pathway-name" id="pathwayName">Code Creator</div>
+            </div>
+
+            <!-- Step 1: Introduction -->
+            <div class="module-step" data-step="1">
+                <div class="content-section">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--dark);">Creating Interactive Resources with AI</h1>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--neutral); margin-bottom: 30px;">Discover how to use AI to create engaging, interactive resources for your classroom—no coding experience required!</p>
+                    
+                    <h2 class="section-title">The Power of Interactive Resources</h2>
+                    <div class="section-content">
+                        <p>Static worksheets and presentations have their place, but interactive digital resources can take student engagement to another level. Until recently, creating such resources required technical skills that many teachers simply don't have the time to learn.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-magic" style="color: var(--primary); margin-right: 10px;"></i>AI Has Changed the Game</h3>
+                            
+                            <p>With the help of AI, you can now create custom interactive resources like:</p>
+                            
+                            <div class="cards-grid">
+                                <!-- Quiz Games Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Interactive Quizzes</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-question-circle text-primary fa-3x"></i>
+                                        </div>
+                                        <p>Self-grading quizzes with immediate feedback, progress tracking, and engaging question formats.</p>
+                                    </div>
+                                </div>
+                            
+                                <!-- Simulations Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Interactive Simulations</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-flask text-secondary fa-3x"></i>
+                                        </div>
+                                        <p>Visual demonstrations of concepts like physics phenomena, mathematical relationships, or historical timelines.</p>
+                                    </div>
+                                </div>
+                            
+                                <!-- Educational Games Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Educational Games</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-gamepad text-tertiary fa-3x"></i>
+                                        </div>
+                                        <p>Simple games like matching exercises, word puzzles, or interactive stories that reinforce learning objectives.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card" style="margin-top: 30px;">
+                                <h3><i class="fas fa-lightbulb"></i>The Best Part</h3>
+                                <p>You don't need to write a single line of code yourself. AI does all the technical work for you. Your role is to provide clear instructions about what you want, review the results, and ask for any necessary adjustments.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 1 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: HTML Basics -->
+            <div class="module-step" data-step="2">
+                <div class="content-section">
+                    <h2 class="section-title">A 30-Second Introduction to Web Technologies</h2>
+                    <div class="section-content">
+                        <p>Before we explore how AI can create interactive resources for us, let's have an extremely brief overview of the building blocks. Don't worry—you won't need to learn these technologies yourself!</p>
+                        
+                        <div class="content-container">
+                            <div class="cards-grid">
+                                <!-- HTML Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>HTML</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fab fa-html5 text-primary fa-3x"></i>
+                                        </div>
+                                        <p><strong>What it is:</strong> The structure and content of web pages. Like the skeleton and organs of a digital resource.</p>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 0.9rem;">
+                                            &lt;h1&gt;My Interactive Quiz&lt;/h1&gt;<br>
+                                            &lt;p&gt;Test your knowledge!&lt;/p&gt;
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- CSS Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>CSS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fab fa-css3-alt text-secondary fa-3x"></i>
+                                        </div>
+                                        <p><strong>What it is:</strong> The styling and appearance. Like the skin, clothing, and makeup of a digital resource.</p>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 0.9rem;">
+                                            h1 {<br>
+                                            &nbsp;&nbsp;color: blue;<br>
+                                            &nbsp;&nbsp;font-size: 24px;<br>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- JavaScript Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>JavaScript</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fab fa-js text-tertiary fa-3x"></i>
+                                        </div>
+                                        <p><strong>What it is:</strong> The behavior and interactivity. Like the muscles and nervous system that make a digital resource respond and move.</p>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 0.9rem;">
+                                            function checkAnswer() {<br>
+                                            &nbsp;&nbsp;if (answer === "correct") {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;showFeedback("Great job!");<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card" style="margin-top: 30px;">
+                                <h3><i class="fas fa-lightbulb"></i>The Best News</h3>
+                                <p>You don't need to understand or write any of this code. AI can generate all of it for you based on your plain English instructions. The examples above are just to give you a glimpse of what's happening behind the scenes.</p>
+                                <p>Together, these three technologies allow us to create interactive resources that work in any web browser—without installing special software.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 2 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: The Workflow -->
+            <div class="module-step" data-step="3">
+                <div class="content-section">
+                    <h2 class="section-title">The AI-Powered Workflow</h2>
+                    <div class="section-content">
+                        <p>Creating an interactive resource with AI is surprisingly straightforward. Here's the basic workflow that we'll follow:</p>
+                        
+                        <div class="content-container">
+                            <div style="margin: 30px 0;">
+                                <ol style="list-style-type: none; counter-reset: step-counter; margin: 0; padding: 0;">
+                                    <li style="position: relative; padding-left: 60px; margin-bottom: 40px; counter-increment: step-counter;">
+                                        <span style="position: absolute; left: 0; top: -5px; width: 40px; height: 40px; background-color: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">1</span>
+                                        <h4 style="margin: 0 0 10px 0; color: var(--dark);">Describe Your Resource</h4>
+                                        <p style="margin: 0; color: var(--neutral);">Tell the AI exactly what kind of interactive resource you want to create. Explain the subject, topic, age group, and specific features you'd like to include.</p>
+                                    </li>
+                                    <li style="position: relative; padding-left: 60px; margin-bottom: 40px; counter-increment: step-counter;">
+                                        <span style="position: absolute; left: 0; top: -5px; width: 40px; height: 40px; background-color: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">2</span>
+                                        <h4 style="margin: 0 0 10px 0; color: var(--dark);">Generate the Code</h4>
+                                        <p style="margin: 0; color: var(--neutral);">AI creates all the necessary HTML, CSS, and JavaScript code based on your description. You don't need to understand the code—just copy it.</p>
+                                    </li>
+                                    <li style="position: relative; padding-left: 60px; margin-bottom: 40px; counter-increment: step-counter;">
+                                        <span style="position: absolute; left: 0; top: -5px; width: 40px; height: 40px; background-color: var(--tertiary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">3</span>
+                                        <h4 style="margin: 0 0 10px 0; color: var(--dark);">Save as HTML File</h4>
+                                        <p style="margin: 0; color: var(--neutral);">Save the generated code as a .html file on your computer. We'll show you exactly how to do this—it's as easy as saving a text document.</p>
+                                    </li>
+                                    <li style="position: relative; padding-left: 60px; margin-bottom: 40px; counter-increment: step-counter;">
+                                        <span style="position: absolute; left: 0; top: -5px; width: 40px; height: 40px; background-color: var(--purple); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">4</span>
+                                        <h4 style="margin: 0 0 10px 0; color: var(--dark);">Open in Web Browser</h4>
+                                        <p style="margin: 0; color: var(--neutral);">Open the saved file in any web browser to see and use your interactive resource. It will work offline without requiring an internet connection.</p>
+                                    </li>
+                                    <li style="position: relative; padding-left: 60px; counter-increment: step-counter;">
+                                        <span style="position: absolute; left: 0; top: -5px; width: 40px; height: 40px; background-color: var(--teal, #0d9488); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">5</span>
+                                        <h4 style="margin: 0 0 10px 0; color: var(--dark);">Refine if Needed</h4>
+                                        <p style="margin: 0; color: var(--neutral);">If the resource isn't exactly what you wanted, ask the AI to modify specific aspects. This iterative process helps you get exactly what you need.</p>
+                                    </li>
+                                </ol>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 30px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Key Point
+                                </h3>
+                                <p>The beauty of this approach is that all the technical complexity is handled by the AI. You focus on the educational content and design—what would be most effective for your students—rather than worrying about programming details.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 3 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Guide to Prompting for Code -->
+            <div class="module-step" data-step="4">
+                <div class="content-section">
+                    <h2 class="section-title">Prompting AI to Generate Code</h2>
+                    <div class="section-content">
+                        <p>The first step—and arguably the most important—is describing what you want the AI to create. Here's how to craft effective prompts for interactive resources:</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-comment-alt" style="color: var(--primary); margin-right: 10px;"></i>Effective Prompts for Interactive Resources</h3>
+                            
+                            <div class="content-container" style="background-color: var(--light); padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+                                <h4 style="color: var(--dark); margin-bottom: 15px;">Key Terms & Features to Request in Your Prompts:</h4>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <h5 style="margin-bottom: 8px; display: flex; align-items: center;">
+                                        <i class="fas fa-puzzle-piece" style="color: var(--primary); margin-right: 10px;"></i>
+                                        Interactive Elements
+                                    </h5>
+                                    <ul style="margin-left: 30px; line-height: 1.6;">
+                                        <li><strong>Drag and drop</strong> - For matching activities, sorting exercises, or placing items on a map/diagram</li>
+                                        <li><strong>Click events</strong> - For interactive buttons, revealing hidden information, or selecting answers</li>
+                                        <li><strong>Hover effects</strong> - For tooltips, highlighting information, or creating interactive diagrams</li>
+                                        <li><strong>Form validation</strong> - For checking student answers and providing immediate feedback</li>
+                                        <li><strong>Timers</strong> - For timed activities, countdown challenges, or tracking student performance</li>
+                                        <li><strong>Progress tracking</strong> - For showing completion status, recording scores, or unlocking content</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <h5 style="margin-bottom: 8px; display: flex; align-items: center;">
+                                        <i class="fas fa-gamepad" style="color: var(--secondary); margin-right: 10px;"></i>
+                                        Resource Types You Can Create
+                                    </h5>
+                                    <ul style="margin-left: 30px; line-height: 1.6;">
+                                        <li><strong>Interactive quizzes</strong> - Multiple choice, fill-in-blank, matching, or mixed formats with automatic grading</li>
+                                        <li><strong>Flashcard systems</strong> - With flip animations, spaced repetition, or progress tracking</li>
+                                        <li><strong>Sorting activities</strong> - Categorizing items into groups, ordering sequences, or organizing hierarchies</li>
+                                        <li><strong>Interactive diagrams</strong> - Label parts, explore layers, zoom in/out, or animate processes</li>
+                                        <li><strong>Simple games</strong> - Memory matching, word searches, educational puzzles, or achievement systems</li>
+                                        <li><strong>Visual simulations</strong> - Demonstrate scientific principles, historical events, or mathematical concepts</li>
+                                        <li><strong>Interactive stories</strong> - Choose-your-own-adventure formats, decision trees, or scenario-based learning</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <h5 style="margin-bottom: 8px; display: flex; align-items: center;">
+                                        <i class="fas fa-cogs" style="color: var(--tertiary); margin-right: 10px;"></i>
+                                        Technical Terms to Include
+                                    </h5>
+                                    <ul style="margin-left: 30px; line-height: 1.6;">
+                                        <li><strong>"Self-contained HTML file"</strong> - Ensures everything is in one file for easy sharing</li>
+                                        <li><strong>"Embedded CSS and JavaScript"</strong> - Keeps all code in the single HTML file</li>
+                                        <li><strong>"Responsive design"</strong> - Makes resources work well on different screen sizes</li>
+                                        <li><strong>"Local storage"</strong> - Allows saving progress or scores in the browser</li>
+                                        <li><strong>"Offline functionality"</strong> - Works without internet connection after initial download</li>
+                                        <li><strong>"Cross-browser compatible"</strong> - Works in different browsers (Chrome, Firefox, Safari, etc.)</li>
+                                        <li><strong>"Mobile-friendly controls"</strong> - Easy to use on touchscreens</li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h5 style="margin-bottom: 8px; display: flex; align-items: center;">
+                                        <i class="fas fa-magic" style="color: var(--purple); margin-right: 10px;"></i>
+                                        Special Effects & Engagement Features
+                                    </h5>
+                                    <ul style="margin-left: 30px; line-height: 1.6;">
+                                        <li><strong>Animations</strong> - For transitions, celebrations, or demonstrating concepts</li>
+                                        <li><strong>Sound effects</strong> - For feedback, engagement, or auditory learning</li>
+                                        <li><strong>Randomization</strong> - For question order, problem generation, or variable practice</li>
+                                        <li><strong>Difficulty progression</strong> - Increasing challenge as students succeed</li>
+                                        <li><strong>Hints system</strong> - Providing scaffolded support when students struggle</li>
+                                        <li><strong>Visual feedback</strong> - Using colors, icons, or animations to indicate correctness</li>
+                                        <li><strong>Gamification elements</strong> - Points, badges, leaderboards, or achievements</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--primary);">
+                                <h3 style="color: var(--primary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Pro Tip
+                                </h3>
+                                <p>Start by asking for a simple version of what you want, then request modifications or enhancements. It's often easier to start with something basic and refine it than to try to get everything perfect in one go.</p>
+                            </div>
+
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 30px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-info-circle" style="margin-right: 10px;"></i>Did You Know?
+                                </h3>
+                                <p>This entire website and all its interactive features were created by prompting AI, by someone who started with zero coding knowledge! Every module, interactive element, and design feature was generated through AI prompting and then saved as HTML files. It's a real-world example of what's possible when educators harness the power of AI for creating digital resources.</p>
+                            </div>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-info-circle"></i>What to Expect</h3>
+                                <p>When you submit a well-crafted prompt, the AI will generate a complete block of code. Don't worry about understanding all the technical details—the important thing is that the AI is creating a self-contained resource that will work when opened in a web browser.</p>
+                                <p>The AI's response will typically include:</p>
+                                <ul class="guidance-list">
+                                    <li>An explanation of what it created</li>
+                                    <li>The complete HTML code (which includes embedded CSS and JavaScript)</li>
+                                    <li>Instructions for saving and using the file</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 4 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 5: Saving and Using the Code -->
+            <div class="module-step" data-step="5">
+                <div class="content-section">
+                    <h2 class="section-title">Saving and Using Your Interactive Resource</h2>
+                    <div class="section-content">
+                        <p>Once the AI has generated the code for your interactive resource, you'll need to save it as an HTML file and open it in a web browser. Here's how:</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-save" style="color: var(--primary); margin-right: 10px;"></i>How to Save the Code as an HTML File</h3>
+                            
+                            <div style="margin: 30px 0;">
+                                <ol style="list-style-type: decimal; margin-left: 20px; line-height: 1.6;">
+                                    <li style="margin-bottom: 20px;">
+                                        <strong>Copy the complete code</strong> that the AI generated. Make sure you select all of it, from the first <code>&lt;!DOCTYPE html&gt;</code> to the final <code>&lt;/html&gt;</code> tag.
+                                    </li>
+                                    <li style="margin-bottom: 20px;">
+                                        <strong>Open a text editor</strong> on your computer:
+                                        <ul style="margin-left: 20px; margin-top: 10px;">
+                                            <li>On Windows: Use Notepad (press Start and type "Notepad")</li>
+                                            <li>On Mac: Use TextEdit (from Applications or press Cmd+Space and type "TextEdit")</li>
+                                            <li>On Chromebook: Use the Text app</li>
+                                        </ul>
+                                    </li>
+                                    <li style="margin-bottom: 20px;">
+                                        <strong>Paste the code</strong> into the text editor.
+                                        <div style="margin-top: 10px; padding: 10px; background-color: #fff8dc; border-left: 4px solid #f59e0b; border-radius: 4px;">
+                                            <strong>Note for Mac users:</strong> If using TextEdit, you may need to first select Format → Make Plain Text before pasting code.
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom: 20px;">
+                                        <strong>Save the file</strong> with an .html extension:
+                                        <ul style="margin-left: 20px; margin-top: 10px;">
+                                            <li>Click File → Save or press Ctrl+S (Cmd+S on Mac)</li>
+                                            <li>Choose a location where you'll easily find the file (like your Desktop)</li>
+                                            <li>Name your file something descriptive, ending with <strong>.html</strong> (e.g., "fraction_quiz.html" or "solar_system_model.html")</li>
+                                            <li>Make sure the "Save as type" or "Format" is set to "All Files" (not "Text Document")</li>
+                                            <li>Click Save</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-globe" style="color: var(--secondary); margin-right: 10px;"></i>Opening Your Interactive Resource</h3>
+                            
+                            <div style="margin: 20px 0 30px;">
+                                <ol style="list-style-type: decimal; margin-left: 20px; line-height: 1.6;">
+                                    <li style="margin-bottom: 15px;">
+                                        <strong>Find the HTML file</strong> you just saved.
+                                    </li>
+                                    <li style="margin-bottom: 15px;">
+                                        <strong>Double-click the file</strong> to open it in your computer's default web browser.
+                                        <div style="margin-top: 10px; padding: 10px; background-color: #f0f9ff; border-left: 4px solid var(--primary); border-radius: 4px;">
+                                            <strong>Tip:</strong> You can also right-click the file and select "Open with" to choose a specific browser if you prefer.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <strong>Interact with your resource!</strong> It should now be fully functional in your browser, even without an internet connection.
+                                    </li>
+                                </ol>
+                            </div>
+                            
+                            <div class="cards-grid">
+                                <!-- Sharing Options Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Sharing with Students</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The HTML file you've created can be shared with students in several ways:</p>
+                                        <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.6;">
+                                            <li>Upload to your school's learning management system</li>
+                                            <li>Share via Google Drive, OneDrive, or Dropbox</li>
+                                            <li>Email the file as an attachment</li>
+                                            <li>Put on USB drives for offline use</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Troubleshooting Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Troubleshooting</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>If your resource doesn't work as expected:</p>
+                                        <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.6;">
+                                            <li>Ensure you saved with the .html extension</li>
+                                            <li>Check that you copied ALL the code the AI provided</li>
+                                            <li>Try a different browser (Chrome or Firefox recommended)</li>
+                                            <li>Ask the AI to fix specific issues you're encountering</li>
+                                            <li>Try generating a simpler version first</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 30px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Key Advantage
+                                </h3>
+                                <p>One of the biggest benefits of HTML resources is that they work offline once downloaded. Students don't need an internet connection to use them, making them ideal for environments with limited connectivity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 5 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 6: Refining and Modifying -->
+            <div class="module-step" data-step="6">
+                <div class="content-section">
+                    <h2 class="section-title">Refining Your Interactive Resources</h2>
+                    <div class="section-content">
+                        <p>Your first interactive resource might not be perfect on the first try, and that's completely normal! Here's how to refine it through iteration with the AI:</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-sync-alt" style="color: var(--primary); margin-right: 10px;"></i>The Iteration Process</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Specific Feedback Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Be Specific About Changes</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="padding: 15px; background-color: var(--light); border-radius: 4px; margin-bottom: 15px; color: var(--tertiary);">
+                                            <strong>Instead of:</strong> "This doesn't look good."
+                                        </div>
+                                        <div style="padding: 15px; background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; color: var(--secondary);">
+                                            <strong>Try:</strong> "Please change the background color to a lighter blue and make the font size larger for better readability."
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Code Modification Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Share the Current Code</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="padding: 15px; background-color: var(--light); border-radius: 4px; margin-bottom: 15px; color: var(--tertiary);">
+                                            <strong>Instead of:</strong> "Fix the quiz I asked for earlier."
+                                        </div>
+                                        <div style="padding: 15px; background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; color: var(--secondary);">
+                                            <strong>Try:</strong> "Here's the HTML code you generated for my quiz. Please modify it to add a timer and increase the difficulty of questions 3-5."
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 30px 0;">
+                                <h4 style="margin-bottom: 15px; color: var(--dark);">Common Refinement Requests:</h4>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li style="margin-bottom: 10px;"><strong>Visual Adjustments:</strong> "Make the buttons larger and change their color to green for better visibility."</li>
+                                    <li style="margin-bottom: 10px;"><strong>Feedback Enhancement:</strong> "Add more detailed explanations when a student gets a wrong answer."</li>
+                                    <li style="margin-bottom: 10px;"><strong>Content Modification:</strong> "Replace the current questions with these new ones that are more aligned with our curriculum."</li>
+                                    <li style="margin-bottom: 10px;"><strong>Feature Addition:</strong> "Add a timer that gives students 30 seconds per question."</li>
+                                    <li style="margin-bottom: 10px;"><strong>Behavior Change:</strong> "Make it so students can try each question twice before showing the correct answer."</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--primary);">
+                                <h3 style="color: var(--primary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Pro Tip: Saving Different Versions
+                                </h3>
+                                <p>When refining your resources, save each significant iteration with a slightly different filename (e.g., "fraction_quiz_v1.html", "fraction_quiz_v2.html"). This allows you to go back to previous versions if needed and helps you see your progress.</p>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-edit" style="color: var(--secondary); margin-right: 10px;"></i>Example Refinement Conversation</h3>
+                            
+                            <div style="border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; margin-bottom: 30px;">
+                                <div style="background-color: #f8fafc; padding: 15px; border-bottom: 1px solid #e2e8f0;">
+                                    <p style="margin: 0; font-weight: 600; color: var(--dark);"><i class="fas fa-user" style="margin-right: 10px;"></i>Your Initial Request:</p>
+                                </div>
+                                <div style="padding: 15px; background-color: white;">
+                                    <p style="margin: 0; color: var(--neutral);">Create a simple multiplication quiz for Year 3 students with 5 questions. Make it colorful and give immediate feedback.</p>
+                                </div>
+                                
+                                <div style="background-color: #f8fafc; padding: 15px; border-bottom: 1px solid #e2e8f0; border-top: 1px solid #e2e8f0;">
+                                    <p style="margin: 0; font-weight: 600; color: var(--dark);"><i class="fas fa-robot" style="margin-right: 10px;"></i>AI Response:</p>
+                                </div>
+                                <div style="padding: 15px; background-color: white;">
+                                    <p style="margin: 0 0 10px 0; color: var(--neutral);">I've created a colorful multiplication quiz for Year 3 students with 5 questions. It provides immediate feedback...</p>
+                                    <p style="margin: 0; color: var(--neutral);"><em>[AI provides HTML code here]</em></p>
+                                </div>
+                                
+                                <div style="background-color: #f8fafc; padding: 15px; border-bottom: 1px solid #e2e8f0; border-top: 1px solid #e2e8f0;">
+                                    <p style="margin: 0; font-weight: 600; color: var(--dark);"><i class="fas fa-user" style="margin-right: 10px;"></i>Your Refinement Request:</p>
+                                </div>
+                                <div style="padding: 15px; background-color: white;">
+                                    <p style="margin: 0; color: var(--neutral);">Thanks! I've tested the quiz and it works well, but I'd like to make these improvements:</p>
+                                    <ol style="margin: 10px 0 0 20px; color: var(--neutral);">
+                                        <li>Make the font size larger for younger students</li>
+                                        <li>Add a progress bar to show how many questions they've completed</li>
+                                        <li>Include a celebratory message with confetti animation when they finish all questions</li>
+                                    </ol>
+                                    <p style="margin: 10px 0 0 0; color: var(--neutral);">Here's the current code: [COPY AND PASTE THE EXISTING HTML HERE]</p>
+                                </div>
+                                
+                                <div style="background-color: #f8fafc; padding: 15px; border-bottom: 1px solid #e2e8f0; border-top: 1px solid #e2e8f0;">
+                                    <p style="margin: 0; font-weight: 600; color: var(--dark);"><i class="fas fa-robot" style="margin-right: 10px;"></i>AI Response:</p>
+                                </div>
+                                <div style="padding: 15px; background-color: white;">
+                                    <p style="margin: 0 0 10px 0; color: var(--neutral);">I've updated the quiz with all your requested improvements. The font is now larger, there's a progress bar at the top, and students will see a celebratory animation with confetti when they complete all questions!</p>
+                                    <p style="margin: 0; color: var(--neutral);"><em>[AI provides updated HTML code here]</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 6 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 7: What You Can Create & Next Steps -->
+            <div class="module-step" data-step="7">
+                <div class="content-section">
+                    <h2 class="section-title">Possibilities and Next Steps</h2>
+                    <div class="section-content">
+                        <p>Now that you understand the workflow for creating interactive educational resources with AI, let's explore the possibilities and plan your next steps.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-lightbulb" style="color: var(--primary); margin-right: 10px;"></i>What Can You Create?</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Basic Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Beginner Level</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Multiple-choice quizzes with feedback</li>
+                                            <li>Flashcard systems</li>
+                                            <li>Simple matching activities</li>
+                                            <li>Basic educational games</li>
+                                            <li>Interactive diagrams</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Intermediate Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Intermediate Level</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Drag-and-drop activities</li>
+                                            <li>Interactive timelines</li>
+                                            <li>Sorting and categorization exercises</li>
+                                            <li>Data visualizations</li>
+                                            <li>Choose-your-own-adventure stories</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Advanced Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Advanced Level</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Virtual labs and simulations</li>
+                                            <li>Complex educational games</li>
+                                            <li>Interactive assessments with analytics</li>
+                                            <li>3D models and visualizations</li>
+                                            <li>Multi-stage learning modules</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-map-signs" style="color: var(--secondary); margin-right: 10px;"></i>Your Journey Ahead</h3>
+                            
+                            <div class="content-container" style="background-color: var(--light); padding: 25px; border-radius: 8px; margin-bottom: 30px;">
+                                <p style="margin-bottom: 20px;">Now that you understand the basics of creating interactive resources with AI, your learning journey will continue with:</p>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="margin-bottom: 10px; display: flex; align-items: center;">
+                                        <i class="fas fa-code" style="color: var(--primary); margin-right: 10px;"></i>
+                                        Introduction to AI Code Generation
+                                    </h4>
+                                    <p>In the next module, you'll learn more advanced techniques for generating specific types of interactive resources, with detailed examples and templates to follow.</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 style="margin-bottom: 10px; display: flex; align-items: center;">
+                                        <i class="fas fa-question-circle" style="color: var(--secondary); margin-right: 10px;"></i>
+                                        Interactive HTML Quizzes
+                                    </h4>
+                                    <p>The final module will focus specifically on creating sophisticated, engaging quizzes and assessments for your students using AI and HTML.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-star"></i>Key Takeaways</h3>
+                                <ul class="guidance-list">
+                                    <li>You don't need to know how to code to create interactive educational resources</li>
+                                    <li>The process involves describing what you want, saving the AI-generated code, and opening it in a browser</li>
+                                    <li>HTML resources work offline and can be easily shared with students</li>
+                                    <li>Iteration and refinement help you get exactly what you need</li>
+                                    <li>Start simple and gradually try more complex projects as your confidence grows</li>
+                                </ul>
+                            </div>
+                            
+                            <p style="margin-top: 30px;">For your first project, we recommend starting with something simple like a basic quiz or flashcard system for your subject area. This will help you get comfortable with the workflow before attempting more complex resources.</p>
+                            
+                            <div class="next-module-container">
+                                <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
+                                    <i class="fas fa-check-circle"></i> Complete Module & Continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 7 of 7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Function to handle module completion
+        function completeModule() {
+            // Determine which pathway the user is on
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'code-creator';
+            
+            // Mark this module as completed in localStorage
+            localStorage.setItem('interactiveEditorsCompleted', 'true');
+            localStorage.setItem(`${pathway}_module2_completed`, 'true');
+            
+            // Redirect to the pathway home page with completion message
+            window.location.href = '../code-creator/index.html?pathway=code-creator&completed=true';
+        }
+        
+        // Update pathway name in progress bar
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'code-creator';
+            
+            // Update the pathway name display
+            const pathwayNameElement = document.getElementById('pathwayName');
+            if (pathwayNameElement) {
+                pathwayNameElement.textContent = 'Code Creator';
+            }
+        });
+        
+        // Save reference to the original complete function
+        window.completeModuleOriginal = completeModule;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initModuleSteps('interactive-editors', 7);
+            
+            // Progress Bar for scrolling
+            window.addEventListener('scroll', function() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.scrollY;
+                
+                const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+                
+                // Back to Top Button
+                if (scrollTop > 300) {
+                    document.getElementById('backToTopBtn').classList.add('active');
+                } else {
+                    document.getElementById('backToTopBtn').classList.remove('active');
+                }
+            });
+
+            // Back to Top Button
+            document.getElementById('backToTopBtn').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="../js/module-steps.js"></script>
+</body>
+</html>

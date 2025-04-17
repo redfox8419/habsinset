@@ -54,24 +54,18 @@ const pathwayModules = {
         },
         {
             id: 'module2',
-            name: 'Interactive Editors',
+            name: 'Coding with AI',
             url: '../editors/index.html?pathway=code-creator&module=2',
             required: 'module1' // Requires module1 to be completed
         },
         {
             id: 'module3',
-            name: 'Introduction to AI Code Generation',
-            url: '#', // Coming soon
+            name: 'How to Create a Mini Web App',
+            url: '#', // Update this URL when the content is ready
             required: 'module2', // Requires module2 to be completed
-            comingSoon: true
-        },
-        {
-            id: 'module4',
-            name: 'Interactive HTML Quizzes',
-            url: '#', // Coming soon
-            required: 'module3', // Requires module3 to be completed
-            comingSoon: true
+            comingSoon: true // Set to false when ready
         }
+
     ]
 };
 
