@@ -63,36 +63,6 @@
             <div class="modules-sequential" id="modules-container">
                 <!-- Modules will be dynamically created by JavaScript -->
             </div>
-            
-            <!-- Workflow Steps Section -->
-            <div class="workflow-steps">
-                <h3>How to Create AI-Assisted Code</h3>
-                <div class="steps-grid">
-                    <div class="workflow-step">
-                        <div class="step-number-container">1</div>
-                        <h4>Describe What You Need</h4>
-                        <p>Tell the AI exactly what kind of interactive resource you want to create, including subject, topic, age group, and specific features.</p>
-                    </div>
-                    
-                    <div class="workflow-step">
-                        <div class="step-number-container">2</div>
-                        <h4>Review Generated Code</h4>
-                        <p>The AI will create HTML, CSS, and JavaScript code for your interactive resource that you can preview and test.</p>
-                    </div>
-                    
-                    <div class="workflow-step">
-                        <div class="step-number-container">3</div>
-                        <h4>Request Modifications</h4>
-                        <p>Ask for specific changes or improvements to refine the resource until it perfectly matches your needs.</p>
-                    </div>
-                    
-                    <div class="workflow-step">
-                        <div class="step-number-container">4</div>
-                        <h4>Use and Share</h4>
-                        <p>Save the final resource to use in your classroom or share with colleagues and students.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -116,6 +86,9 @@
                 // Scroll to the alert
                 document.getElementById('access-alert').scrollIntoView();
             }
+            
+            // Explicitly initialize with code-creator pathway
+            initPathwayModules('code-creator');
         });
     </script>
     <script src="../js/header.js"></script>

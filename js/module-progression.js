@@ -55,15 +55,15 @@ const pathwayModules = {
         {
             id: 'module2',
             name: 'Coding with AI',
-            url: '../editors/index.html?pathway=code-creator&module=2',
+            url: '../code-creator/code-generation.html?pathway=code-creator&module=2',
             required: 'module1' // Requires module1 to be completed
         },
         {
             id: 'module3',
             name: 'How to Create a Mini Web App',
-            url: '#', // Update this URL when the content is ready
+            url: '../code-creator/how-to.html?pathway=code-creator&module=3', // Update this URL when the content is ready
             required: 'module2', // Requires module2 to be completed
-            comingSoon: true // Set to false when ready
+            
         }
 
     ]
@@ -222,7 +222,7 @@ function getModuleDescription(pathway, index) {
         ],
         'code-creator': [
             null, // index 0 is handled above
-            "Explore these interactive editors to create engaging learning activities for your classroom with these easy-to-use, no-code editor tools.",
+            
             "Learn the basics of using AI to generate HTML, CSS, and JavaScript code for educational applications without programming knowledge.",
             "Create custom, interactive quizzes with immediate feedback, multimedia elements, and engaging design using AI assistance."
         ]

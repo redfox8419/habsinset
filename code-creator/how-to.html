@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Your First Interactive HTML App - Code Creator Pathway</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/module-steps.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="main-content" style="padding: 60px 0;">
+        <div class="container">
+            <!-- Module Progress -->
+            <div class="module-progress">
+                <div class="progress-steps">
+                    <div class="progress-step">
+                        <div class="step-number completed">1</div>
+                        <span class="step-label">AI Safety</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number completed">2</div>
+                        <span class="step-label">Interactive Editors</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number active">3</div>
+                        <span class="step-label">Creating Mini Web Apps</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <span class="step-label">Interactive Quizzes</span>
+                    </div>
+                </div>
+                <div class="pathway-name" id="pathwayName">Code Creator</div>
+            </div>
+
+            <!-- Step 1: Introduction -->
+            <div class="module-step" data-step="1">
+                <div class="content-section">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--dark);">Creating Your First Interactive HTML App</h1>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--neutral); margin-bottom: 30px;">Learn how to create a fully interactive, self-contained HTML web application using AI—without writing a single line of code yourself.</p>
+                    
+                    <h2 class="section-title">Introduction to Single-File HTML Applications</h2>
+                    <div class="section-content">
+                        <p>In this module, we'll focus on creating an interactive quiz application that works entirely from a single HTML file. Unlike static worksheets, these applications provide immediate feedback, track scores, and create a more engaging learning experience.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-lightbulb" style="color: var(--primary); margin-right: 10px;"></i>Why Create HTML Applications?</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Advantages Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Key Advantages</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-star text-primary fa-3x"></i>
+                                        </div>
+                                        <div class="feature-list">
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Works on any device with a web browser</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>No installation required</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Provides immediate, automated feedback</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Can be shared via file or hosted online</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Works offline once downloaded</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Use Cases Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Educational Applications</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-graduation-cap text-secondary fa-3x"></i>
+                                        </div>
+                                        <div class="feature-list">
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Self-marking quizzes and assessments</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Interactive learning modules</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Revision tools with spaced repetition</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Educational games and simulations</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Digital escape rooms and challenges</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card" style="margin-top: 30px;">
+                                <h3><i class="fas fa-magic"></i>The Power of AI-Generated Code</h3>
+                                <p>The most exciting aspect of this approach is that you don't need to understand HTML, CSS, or JavaScript to create sophisticated interactive applications. AI does the technical work for you, translating your ideas and requirements into functional code.</p>
+                                <p>In this module, we'll create a self-marking quiz as our example, but the same principles apply to many other types of educational applications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 1 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Planning Your Interactive App -->
+            <div class="module-step" data-step="2">
+                <div class="content-section">
+                    <h2 class="section-title">Planning Your Interactive Quiz App</h2>
+                    <div class="section-content">
+                        <p>Before asking AI to generate your app, it's important to clearly define what you want. Think of this as creating a brief for your application.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-clipboard-list" style="color: var(--primary); margin-right: 10px;"></i>Key Elements to Consider</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Content Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Educational Content</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-book text-primary fa-3x"></i>
+                                        </div>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Topic or subject area</li>
+                                            <li>Age/grade level appropriateness</li>
+                                            <li>Number and type of questions</li>
+                                            <li>Specific concepts to cover</li>
+                                            <li>Difficulty level and progression</li>
+                                            <li>Whether to include explanations</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Functionality Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Interactive Features</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-sliders-h text-secondary fa-3x"></i>
+                                        </div>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Question layout (one per page or all at once)</li>
+                                            <li>Randomization of questions/answers</li>
+                                            <li>Immediate or delayed feedback</li>
+                                            <li>Score tracking and display</li>
+                                            <li>Navigation between questions</li>
+                                            <li>Time limits or progress indicators</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Design Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Visual Design</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-paint-brush text-tertiary fa-3x"></i>
+                                        </div>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Color scheme preferences</li>
+                                            <li>Overall aesthetic (playful, professional, minimal)</li>
+                                            <li>Device responsiveness (mobile, tablet, desktop)</li>
+                                            <li>Visual feedback for correct/incorrect answers</li>
+                                            <li>Accessibility considerations</li>
+                                            <li>School branding or specific styles</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card" style="margin-top: 30px;">
+                                <h3><i class="fas fa-lightbulb"></i>Planning Tips</h3>
+                                <ul class="guidance-list">
+                                    <li><strong>Start simple:</strong> For your first app, focus on core functionality rather than complex features</li>
+                                    <li><strong>Consider your audience:</strong> Ensure the app's complexity matches your students' abilities</li>
+                                    <li><strong>Leverage existing content:</strong> Use material you're already teaching as the basis for your app</li>
+                                    <li><strong>Think about the context:</strong> Will students use this in class, at home, or both?</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-clipboard-check" style="color: var(--secondary); margin-right: 10px;"></i>Example Planning for a Quiz App</h3>
+                            
+                            <div style="background-color: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h4 style="color: var(--dark); margin-bottom: 10px;">Sample Quiz Requirements:</h4>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li><strong>Topic:</strong> Basic Fractions for Year 5 students</li>
+                                    <li><strong>Format:</strong> 10 multiple-choice questions with 4 options each</li>
+                                    <li><strong>Features:</strong> 
+                                        <ul>
+                                            <li>Show one question at a time</li>
+                                            <li>Randomize question order</li>
+                                            <li>Provide immediate feedback after all questions</li>
+                                            <li>Show final score and correct answers</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Design:</strong> 
+                                        <ul>
+                                            <li>Bright, child-friendly interface</li>
+                                            <li>Large buttons for easy navigation</li>
+                                            <li>Clear visual indicators for correct/incorrect answers</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Content Source:</strong> Based on the Year 5 curriculum for fractions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 2 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Crafting the Perfect Prompt -->
+            <div class="module-step" data-step="3">
+                <div class="content-section">
+                    <h2 class="section-title">Crafting the Perfect Prompt for Your Quiz App</h2>
+                    <div class="section-content">
+                        <p>The key to getting a high-quality interactive app from AI is providing a clear, detailed prompt. We'll use a structured prompt that specifies exactly what we want.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-comment-alt" style="color: var(--primary); margin-right: 10px;"></i>Interactive Quiz App Prompt Template</h3>
+                            
+                            <div style="background-color: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <p>Copy and paste this template into ChatGPT or your preferred AI assistant, replacing the placeholder text in [square brackets] with your specific requirements:</p>
+                                <div style="background-color: white; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; overflow-x: auto;">
+I want to create an interactive multiple-choice quiz as a self-contained HTML page. Please generate the complete HTML code (including CSS and JavaScript) so I can simply copy and paste it into a single file.
+
+Requirements:
+1. The quiz must have exactly [NUMBER] questions about "[YOUR TOPIC]". Use the additional context provided to inform the question content but do NOT display this context in the quiz.
+2. Each question should have exactly [NUMBER] answer choices, with one correct answer and an explanation for that answer.
+3. The order of the questions should be randomized, and only one question should be shown per page, with a 'Next' button to progress.
+4. The design should be professional and fully responsive, making use of the whole viewport.
+5. After the last question, prompt the student to submit. Once submitted, display:
+   - The student's score.
+   - Detailed feedback for each question, including:
+     * The question text.
+     * The student's selected answer (with a clear visual indicator—a green check mark or similar—for correct answers, and a red cross for incorrect answers).
+     * The correct answer (if the student's answer was incorrect).
+     * The explanation for the correct answer.
+6. Additional context: "[INSERT ADDITIONAL CONTEXT HERE]". Use this context to help generate appropriate questions for the quiz but do not display it to students.
+
+Please produce the complete HTML code meeting these requirements.
+</div>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Using the Additional Context
+                                </h3>
+                                <p>The "Additional Context" section is where you can provide valuable information to help the AI generate appropriate questions. Consider including:</p>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li>Specific curriculum points or learning objectives</li>
+                                    <li>Key concepts that should be covered</li>
+                                    <li>Example questions or the style you prefer</li>
+                                    <li>Content from your syllabus or teaching materials</li>
+                                    <li>Grade level and appropriate language/difficulty</li>
+                                </ul>
+                                <p>The more specific you are here, the better the AI will understand what you need.</p>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-th-list" style="color: var(--secondary); margin-right: 10px;"></i>Example Completed Prompt</h3>
+                            
+                            <div style="background-color: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <p>Here's how the prompt might look with actual quiz requirements:</p>
+                                <div style="background-color: white; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; overflow-x: auto;">
+I want to create an interactive multiple-choice quiz as a self-contained HTML page. Please generate the complete HTML code (including CSS and JavaScript) so I can simply copy and paste it into a single file.
+
+Requirements:
+1. The quiz must have exactly 10 questions about "Basic Fractions for Year 5". Use the additional context provided to inform the question content but do NOT display this context in the quiz.
+2. Each question should have exactly 4 answer choices, with one correct answer and an explanation for that answer.
+3. The order of the questions should be randomized, and only one question should be shown per page, with a 'Next' button to progress.
+4. The design should be bright and child-friendly with large buttons and clear visuals, fully responsive for use on tablets or computers.
+5. After the last question, prompt the student to submit. Once submitted, display:
+   - The student's score.
+   - Detailed feedback for each question, including:
+     * The question text.
+     * The student's selected answer (with a clear visual indicator—a green check mark or similar—for correct answers, and a red cross for incorrect answers).
+     * The correct answer (if the student's answer was incorrect).
+     * The explanation for the correct answer.
+6. Additional context: "This quiz should cover the Year 5 curriculum on fractions including: equivalent fractions, comparing fractions, adding and subtracting fractions with the same denominator, and solving simple word problems involving fractions. Questions should progress from simple identification to more complex problem-solving. Include visual representations of fractions where appropriate in the questions."
+
+Please produce the complete HTML code meeting these requirements.
+</div>
+                            </div>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-info-circle"></i>Prompt Enhancement Tips</h3>
+                                <ul class="guidance-list">
+                                    <li><strong>Be specific about numbers:</strong> Clearly state how many questions and answer options you want</li>
+                                    <li><strong>Describe the visual style:</strong> Use descriptive terms like "professional," "playful," or "minimalist"</li>
+                                    <li><strong>Request specific features:</strong> If you want timers, progress bars, or specific feedback mechanisms, ask for them explicitly</li>
+                                    <li><strong>Include educational context:</strong> Provide curriculum details, learning objectives, or topic scope</li>
+                                    <li><strong>Specify the target audience:</strong> Mention the age group or educational level for appropriate content and design</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 3 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Saving and Running the Code -->
+            <div class="module-step" data-step="4">
+                <div class="content-section">
+                    <h2 class="section-title">Saving and Running Your Quiz App</h2>
+                    <div class="section-content">
+                        <p>After the AI generates your code, you'll need to save it as an HTML file and open it in a web browser. This process is simple but requires a few specific steps.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-save" style="color: var(--primary); margin-right: 10px;"></i>Saving the Generated Code</h3>
+                            
+                            <ol style="margin-left: 20px; line-height: 1.6; margin-bottom: 30px;">
+                                <li><strong>Select all the code</strong> generated by the AI (use Ctrl+A or Cmd+A within the code block)</li>
+                                <li><strong>Copy the code</strong> to your clipboard (Ctrl+C or Cmd+C)</li>
+                                <li><strong>Open a text editor:</strong>
+                                    <ul style="margin-left: 20px; margin-top: 5px; margin-bottom: 5px;">
+                                        <li>On Windows: Use Notepad (Start → type "Notepad")</li>
+                                        <li>On Mac: Use TextEdit (Applications → TextEdit)</li>
+                                        <li>On Chromebook: Use the Text app</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Paste the code</strong> into the text editor (Ctrl+V or Cmd+V)</li>
+                                <li><strong>Save the file with an .html extension:</strong>
+                                    <ul style="margin-left: 20px; margin-top: 5px; margin-bottom: 5px;">
+                                        <li>Click File → Save or press Ctrl+S (Cmd+S on Mac)</li>
+                                        <li>Choose a location where you'll easily find the file (like your Desktop)</li>
+                                        <li>Name your file with an informative name ending with <strong>.html</strong> (e.g., "fractions_quiz.html")</li>
+                                        <li><em>Important for Windows:</em> In the "Save as type" dropdown, select "All Files" (not "Text Document")</li>
+                                        <li><em>Important for Mac:</em> If using TextEdit, first select Format → Make Plain Text before saving</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                            
+                            <div class="alert-box" style="background-color: rgba(244, 63, 94, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--tertiary);">
+                                <h3 style="color: var(--tertiary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>Common Saving Mistakes
+                                </h3>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li><strong>Accidentally saving as .txt:</strong> Make sure the file ends with .html, not .txt or .html.txt</li>
+                                    <li><strong>Using rich text format:</strong> On Mac, TextEdit may default to Rich Text, which won't work. Use plain text only</li>
+                                    <li><strong>Missing the complete code:</strong> Ensure you've copied all code from <!DOCTYPE html> to the final </html> tag</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-play" style="color: var(--secondary); margin-right: 10px;"></i>Running Your Quiz App</h3>
+                            
+                            <ol style="margin-left: 20px; line-height: 1.6; margin-bottom: 30px;">
+                                <li><strong>Locate the HTML file</strong> you just saved on your computer</li>
+                                <li><strong>Double-click the file</strong> to open it in your default web browser
+                                    <div style="background-color: var(--light); padding: 10px; border-radius: 4px; margin: 10px 0; font-size: 0.9rem;">
+                                        <strong>Tip:</strong> If you want to use a specific browser, right-click the file and select "Open with" to choose your preferred browser
+                                    </div>
+                                </li>
+                                <li><strong>Test your quiz</strong> by going through all questions and checking the results</li>
+                            </ol>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-desktop"></i>Browser Compatibility</h3>
+                                <p>Your interactive quiz should work in all modern browsers, but these are generally recommended (in order of preference):</p>
+                                <ol class="guidance-list">
+                                    <li>Google Chrome (Best overall compatibility)</li>
+                                    <li>Microsoft Edge (Good alternative on Windows)</li>
+                                    <li>Firefox (Also excellent compatibility)</li>
+                                    <li>Safari (On Mac and iOS devices)</li>
+                                </ol>
+                                <p>If you notice any issues in one browser, try opening the file in a different browser to compare.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 4 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 5: Modifying and Refining -->
+            <div class="module-step" data-step="5">
+                <div class="content-section">
+                    <h2 class="section-title">Refining Your Quiz App</h2>
+                    <div class="section-content">
+                        <p>Your first generated quiz may not be perfect. Rather than manually editing code, you can use AI to refine it by describing the changes you want to make.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-edit" style="color: var(--primary); margin-right: 10px;"></i>The Refinement Process</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Common Modifications Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Common Modifications</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-sliders-h text-primary fa-3x"></i>
+                                        </div>
+                                        <p>Here are frequently requested changes:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Adjusting the visual design (colors, fonts, layout)</li>
+                                            <li>Adding images to questions or explanations</li>
+                                            <li>Modifying specific questions or answer options</li>
+                                            <li>Changing the feedback mechanism</li>
+                                            <li>Adding timers or progress indicators</li>
+                                            <li>Implementing different scoring systems</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Refinement Prompt Template Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Refinement Prompt Template</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-comment-dots text-secondary fa-3x"></i>
+                                        </div>
+                                        <p>Use this template to request changes:</p>
+                                        <div style="background-color: var(--light); padding: 15px; border-radius: 4px; margin-top: 10px; font-family: monospace; font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; overflow-x: auto;">
+I've created this quiz app using the code you provided, but I'd like to make some changes. Please modify the code to:
+
+1. [DESCRIBE CHANGE 1]
+2. [DESCRIBE CHANGE 2]
+3. [DESCRIBE CHANGE 3]
+
+Here's the current code:
+
+[PASTE YOUR ENTIRE HTML CODE HERE]
+
+Please provide the updated code with these changes implemented.
+</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-file-alt" style="color: var(--secondary); margin-right: 10px;"></i>Example Refinement Requests</h3>
+                            
+                            <div style="background-color: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h4 style="color: var(--dark); margin-bottom: 10px;">Examples of Specific Change Requests:</h4>
+                                <div style="margin-bottom: 15px;">
+                                    <p><strong>Visual Design Changes:</strong></p>
+                                    <div style="background-color: white; padding: 10px; border-radius: 4px; margin: 5px 0; font-style: italic;">
+                                        "Change the color scheme to use our school colors: blue (#1a3c64) for headers and green (#2e8b57) for buttons. Also, increase the font size throughout for better readability on tablets."
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <p><strong>Adding Images:</strong></p>
+                                    <div style="background-color: white; padding: 10px; border-radius: 4px; margin: 5px 0; font-style: italic;">
+                                        "Add relevant image illustrations to each question. For Question 1 about equivalent fractions, please use this image URL: [URL]. For the other questions, please find and insert appropriate fraction diagrams or visualization images."
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <p><strong>Modifying Questions:</strong></p>
+                                    <div style="background-color: white; padding: 10px; border-radius: 4px; margin: 5px 0; font-style: italic;">
+                                        "Question 3 is too difficult for Year 5 students. Please replace it with a simpler question about identifying fractions in shaded parts of shapes. Also, reword Question 7 to be clearer and more age-appropriate."
+                                    </div>
+                                </div>
+                                <div>
+                                    <p><strong>Adding Features:</strong></p>
+                                    <div style="background-color: white; padding: 10px; border-radius: 4px; margin: 5px 0; font-style: italic;">
+                                        "Add a progress bar at the top of the quiz to show students how many questions they've completed. Also, add a 'Try Again' button at the end so students can restart the quiz if they want to improve their score."
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Iterative Refinement Tip
+                                </h3>
+                                <p>Rather than asking for many changes at once, it's often more effective to make changes in small batches, testing between each revision. This allows you to:</p>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li>See the impact of each change clearly</li>
+                                    <li>Identify any unexpected issues early</li>
+                                    <li>Refine your requirements based on what you see</li>
+                                    <li>Create different versions to compare</li>
+                                </ul>
+                                <p>Save each iteration with a version number (e.g., "fractions_quiz_v1.html", "fractions_quiz_v2.html") to keep track of your progress.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 5 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 6: Advanced Customization -->
+            <div class="module-step" data-step="6">
+                <div class="content-section">
+                    <h2 class="section-title">Advanced Customization Options</h2>
+                    <div class="section-content">
+                        <p>Once you're comfortable with creating basic quiz apps, you can explore more advanced customization options to enhance the educational experience.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-star" style="color: var(--primary); margin-right: 10px;"></i>Advanced Features to Consider</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Multimedia Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Adding Multimedia</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-photo-video text-primary fa-3x"></i>
+                                        </div>
+                                        <p>Enhance learning with multimedia elements:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Images to illustrate concepts</li>
+                                            <li>Audio clips for language learning</li>
+                                            <li>Embedded videos for demonstrations</li>
+                                            <li>Interactive diagrams and charts</li>
+                                        </ul>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 4px; margin-top: 10px; font-size: 0.9rem;">
+                                            <strong>Example prompt:</strong> "Please add relevant images to each question. For question 2, use this image URL: [URL]. For the other questions, include appropriate diagram images for the math concepts described."
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Gamification Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Gamification Elements</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-gamepad text-secondary fa-3x"></i>
+                                        </div>
+                                        <p>Make learning more engaging with game-like features:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Point systems and badges</li>
+                                            <li>Timers for added challenge</li>
+                                            <li>Level progression</li>
+                                            <li>Achievement unlocks</li>
+                                            <li>Celebration animations</li>
+                                        </ul>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 4px; margin-top: 10px; font-size: 0.9rem;">
+                                            <strong>Example prompt:</strong> "Add gamification elements including a points system (10 points per correct answer), a timer showing seconds taken, and confetti animation when the user scores above 80%."
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Accessibility Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Accessibility Improvements</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-universal-access text-tertiary fa-3x"></i>
+                                        </div>
+                                        <p>Make your quiz accessible to all students:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Screen reader compatibility</li>
+                                            <li>Keyboard navigation</li>
+                                            <li>High-contrast options</li>
+                                            <li>Font size adjusters</li>
+                                            <li>Alternative text for images</li>
+                                        </ul>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 4px; margin-top: 10px; font-size: 0.9rem;">
+                                            <strong>Example prompt:</strong> "Enhance the accessibility of this quiz by adding proper ARIA labels, keyboard navigation, alternative text for all images, and a toggle for high-contrast mode."
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-graduation-cap" style="color: var(--secondary); margin-right: 10px;"></i>Enhancing Learning with Custom Features</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Differentiation Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Differentiation Options</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Support diverse learner needs:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Multiple difficulty levels</li>
+                                            <li>Adaptive question selection</li>
+                                            <li>Optional hint systems</li>
+                                            <li>Variable time limits</li>
+                                        </ul>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 4px; margin-top: 10px; font-size: 0.9rem;">
+                                            <strong>Example prompt:</strong> "Add a difficulty selector at the start with three options: 'Easy', 'Medium', and 'Hard'. Each level should use different sets of questions with appropriate complexity."
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Interactive Elements Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Interactive Learning Elements</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Add elements that engage different learning styles:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Drag-and-drop activities</li>
+                                            <li>Drawing or annotation tools</li>
+                                            <li>Interactive diagrams</li>
+                                            <li>Manipulable objects</li>
+                                        </ul>
+                                        <div style="background-color: var(--light); padding: 10px; border-radius: 4px; margin-top: 10px; font-size: 0.9rem;">
+                                            <strong>Example prompt:</strong> "Replace the standard multiple choice with an interactive fraction model where students can drag pieces to show their answer."
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="guidance-card" style="margin-top: 30px;">
+                                <h3><i class="fas fa-lightbulb"></i>Advanced Customization Tips</h3>
+                                <ul class="guidance-list">
+                                    <li><strong>Introduce features gradually:</strong> Start with a basic quiz that works well, then add one advanced feature at a time</li>
+                                    <li><strong>Test thoroughly:</strong> Each new feature increases complexity, so test carefully after each addition</li>
+                                    <li><strong>Provide examples:</strong> When requesting complex features, provide examples or references to help the AI understand</li>
+                                    <li><strong>Set reasonable expectations:</strong> Some very complex interactive elements may require specialized tools beyond a single HTML file</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 6 of 7</div>
+                    </div>
+                    <button class="step-btn next-step-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 7: Sharing and Deploying Your App -->
+            <div class="module-step" data-step="7">
+                <div class="content-section">
+                    <h2 class="section-title">Sharing and Deploying Your Quiz App</h2>
+                    <div class="section-content">
+                        <p>Once you've created and refined your quiz app, you'll want to share it with your students. There are several ways to do this, from simple file sharing to online hosting.</p>
+                        
+                        <div class="content-container">
+                            <h3 style="margin-top: 20px; margin-bottom: 15px;"><i class="fas fa-share-alt" style="color: var(--primary); margin-right: 10px;"></i>Simple Sharing Methods</h3>
+                            
+                            <div class="cards-grid">
+                                <!-- Direct File Sharing Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Direct File Sharing</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-file-code text-primary fa-3x"></i>
+                                        </div>
+                                        <p>The simplest approach - distribute the HTML file directly:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Email the HTML file to students</li>
+                                            <li>Upload to your LMS (Google Classroom, Canvas, etc.)</li>
+                                            <li>Share via cloud storage (Google Drive, OneDrive)</li>
+                                            <li>Distribute on USB drives or school network</li>
+                                        </ul>
+                                        <p style="margin-top: 10px;"><strong>Pros:</strong> Easy, quick, works offline</p>
+                                        <p><strong>Cons:</strong> Students must download the file</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Online Hosting Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Online Hosting (Optional)</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-globe text-secondary fa-3x"></i>
+                                        </div>
+                                        <p>Host your quiz online for easy access:</p>
+                                        <ul style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Free hosting services (details below)</li>
+                                            <li>School website (if you have access)</li>
+                                            <li>Online HTML sharing platforms</li>
+                                        </ul>
+                                        <p style="margin-top: 10px;"><strong>Pros:</strong> Accessible via URL, no downloads needed</p>
+                                        <p><strong>Cons:</strong> Requires internet connection, slightly more complex setup</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-cloud-upload-alt" style="color: var(--secondary); margin-right: 10px;"></i>Online Hosting Options (Optional)</h3>
+                            
+                            <p>If you'd like to host your quiz online for easier access, here are some simple, free options that require no technical knowledge:</p>
+                            
+                            <div class="cards-grid">
+                                <!-- Netlify Card -->
+                                <div class="card card-primary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Netlify (Drag & Drop)</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-cloud text-primary fa-3x"></i>
+                                        </div>
+                                        <ol style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Go to <a href="https://www.netlify.com/" target="_blank">netlify.com</a> and sign up (free)</li>
+                                            <li>Click "Add new site" → "Deploy manually"</li>
+                                            <li>Create a folder on your computer and place your HTML file inside it (name it index.html)</li>
+                                            <li>Drag and drop the entire folder onto the Netlify upload area</li>
+                                            <li>Netlify will deploy your site and provide a URL</li>
+                                            <li>Share this URL with your students</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                
+                                <!-- GitHub Pages Card -->
+                                <div class="card card-secondary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>GitHub Pages</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fab fa-github text-secondary fa-3x"></i>
+                                        </div>
+                                        <ol style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Sign up for a free account at <a href="https://github.com/" target="_blank">github.com</a></li>
+                                            <li>Create a new repository (+ icon → "New repository")</li>
+                                            <li>Name it something descriptive</li>
+                                            <li>Upload your HTML file (rename it to "index.html")</li>
+                                            <li>Go to Settings → Pages → set source to "main" and Save</li>
+                                            <li>Your site will be available at username.github.io/repository-name</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                
+                                <!-- Vercel Card -->
+                                <div class="card card-tertiary">
+                                    <div class="card-header"></div>
+                                    <div class="card-title">
+                                        <h3>Vercel</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-bolt text-tertiary fa-3x"></i>
+                                        </div>
+                                        <ol style="margin-left: 20px; line-height: 1.6;">
+                                            <li>Sign up at <a href="https://vercel.com/" target="_blank">vercel.com</a> (free)</li>
+                                            <li>Click "Add New..." → "Project"</li>
+                                            <li>Choose "Upload" and select a folder containing your HTML file (named "index.html")</li>
+                                            <li>Click "Deploy"</li>
+                                            <li>Vercel will provide a URL for your site</li>
+                                            <li>Share this URL with your students</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-box" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 20px; margin-top: 30px; border-left: 4px solid var(--secondary);">
+                                <h3 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Important Note on Sharing
+                                </h3>
+                                <p>When distributing your quiz, consider these additional points:</p>
+                                <ul style="margin-left: 20px; line-height: 1.6;">
+                                    <li><strong>Test on different devices:</strong> Try your quiz on various devices and browsers to ensure compatibility</li>
+                                    <li><strong>Provide clear instructions:</strong> Let students know how to access and use the quiz</li>
+                                    <li><strong>Consider privacy:</strong> These self-contained HTML quizzes don't collect data, but if you add such features later, ensure compliance with school policies</li>
+                                    <li><strong>Backup your files:</strong> Keep copies of all versions of your quiz</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-book-open" style="color: var(--tertiary); margin-right: 10px;"></i>Module Summary</h3>
+                            
+                            <div class="guidance-card">
+                                <h3><i class="fas fa-check-circle"></i>What You've Learned</h3>
+                                <p>In this module, you've learned how to:</p>
+                                <ul class="guidance-list">
+                                    <li>Plan an interactive HTML app that meets your educational needs</li>
+                                    <li>Create effective prompts for AI to generate your quiz application</li>
+                                    <li>Save and run the generated HTML code</li>
+                                    <li>Refine and customize your quiz with additional features</li>
+                                    <li>Share your quiz with students through various methods</li>
+                                </ul>
+                                <p>With these skills, you can now create engaging, interactive learning experiences that work across devices without specialized software or complex setups.</p>
+                            </div>
+                            
+                            <p style="margin-top: 20px;">In the next module, we'll build on these foundations and explore more advanced quiz creation techniques, including collecting and analyzing student responses, creating question banks, and implementing adaptive learning features.</p>
+                            
+                            <div class="next-module-container">
+                                <button id="completeModuleBtn" class="next-module-btn" onclick="completeModule()">
+                                    <i class="fas fa-check-circle"></i> Complete Module & Continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="step-navigation">
+                    <button class="step-btn prev-step-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators-container">
+                        <div class="step-indicators"></div>
+                        <div class="step-progress-text">Step 7 of 7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Function to handle module completion
+        function completeModule() {
+            // Determine which pathway the user is on
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'code-creator';
+            
+            // Mark this module as completed in localStorage
+            localStorage.setItem('creatingMiniWebAppsCompleted', 'true');
+            localStorage.setItem(`${pathway}_module3_completed`, 'true');
+            
+            // Redirect to the appropriate next module or pathway home page
+            window.location.href = '../code-creator/index.html?pathway=code-creator&completed=true';
+        }
+        
+        // Update pathway name in progress bar
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathway = urlParams.get('pathway') || 'code-creator';
+            
+            // Update the pathway name display
+            const pathwayNameElement = document.getElementById('pathwayName');
+            if (pathwayNameElement) {
+                pathwayNameElement.textContent = 'Code Creator';
+            }
+        });
+        
+        // Save reference to the original complete function
+        window.completeModuleOriginal = completeModule;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initModuleSteps('creating-mini-web-apps', 7);
+            
+            // Progress Bar for scrolling
+            window.addEventListener('scroll', function() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.scrollY;
+                
+                const scrolled = (scrollTop / (documentHeight - windowHeight)) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+                
+                // Back to Top Button
+                if (scrollTop > 300) {
+                    document.getElementById('backToTopBtn').classList.add('active');
+                } else {
+                    document.getElementById('backToTopBtn').classList.remove('active');
+                }
+            });
+
+            // Back to Top Button
+            document.getElementById('backToTopBtn').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="../js/module-steps.js"></script>
+</body>
+</html>
