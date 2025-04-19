@@ -16,24 +16,14 @@
 
     <!-- Header -->
     <header>
-        <div class="container header-content">
-            <a href="index.html" class="logo">
-                <span class="logo-icon"><i class="fas fa-robot"></i></span>
-                <span>AI Inset Day</span>
-            </a>
-            <nav class="nav-links">
-                <a href="#editor" class="nav-link">Editor</a>
-                <a href="#preview" class="nav-link">Preview</a>
-                <a href="#export" class="nav-link">Export</a>
-            </nav>
-        </div>
+        <div id="header-placeholder" data-path="./js/header.js"></div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero hero-medium">
         <div class="container hero-content">
             <h1>Drag & Drop Activity Creator</h1>
-            <p>Design interactive learning experiences where students categorize statements by dragging them to appropriate columns. Perfect for exploring complex topics with multiple perspectives.</p>
+            <p>Design interactive learning experiences where students categorize statements by dragging them to appropriate columns. Perfect for exploring complex topics with multiple perspectives. Simply add your own content to the editor, preview to try it out and then export.</p>
         </div>
         <div class="floating-elements">
             <div class="floating-element element-1"></div>
@@ -197,11 +187,7 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container footer-content">
-            <p>Create engaging sorting activities that help students develop critical thinking skills and explore different perspectives.</p>
-            <p>&copy; 2025 AI Inset Day. All rights reserved.</p>
-            <a href="index.html" class="home-btn">Back to Home</a>
-        </div>
+        <div id="footer-placeholder" data-path="./js/footer.js"></div>
     </footer>
 
     <script>
@@ -849,5 +835,7 @@ ${dropZonesHTML}
         // Initialize
         renderStatementsList();
     </script>
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
 </body>
 </html>
