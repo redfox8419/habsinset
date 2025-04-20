@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill-in-the-Blanks Activity Creator - AI Inset Day</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3F72AF;
+            --primary-light: #DBE2EF;
+            --primary-dark: #112D4E;
+            --secondary: #F9F7F7;
+            --accent: #FF9A3C;
+            --accent-light: #FFD5A5;
+            --neutral: #F0F4F8;
+            --success: #90EE90;
+            --error: #FFB6C1;
+            --dark: #2C3E50;
+            --white: #FFFFFF;
+            --gray-100: #F9FAFB;
+            --gray-200: #F0F4F8;
+            --gray-300: #E2E8F0;
+            --gray-400: #CBD5E0;
+            --gray-500: #A0AEC0;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+            --radius: 0.375rem;
+            --radius-lg: 0.5rem;
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            background-color: var(--gray-100);
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .header {
+            background-color: var(--white);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            background-image: linear-gradient(135deg, var(--primary-light), var(--primary));
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--primary-dark);
+            font-size: 1.875rem;
+        }
+
+        .header p {
+            margin-top: 0.5rem;
+            color: var(--primary-dark);
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--gray-300);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab:hover:not(.active) {
+            background-color: var(--gray-200);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title svg {
+            margin-right: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="text"], 
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .color-picker {
+            display: flex;
+            align-items: center;
+        }
+
+        .color-picker input[type="color"] {
+            border: none;
+            width: 3rem;
+            height: 2rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+
+        .text-editor {
+            margin-bottom: 1rem;
+        }
+
+        .text-content {
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            background-color: var(--white);
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .text-content p {
+            margin-bottom: 1rem;
+        }
+
+        .word {
+            cursor: pointer;
+            padding: 0.15rem 0.3rem;
+            border-radius: 0.25rem;
+            transition: var(--transition);
+            display: inline-block;
+            margin: 0 0.1rem;
+        }
+
+        .word:hover {
+            background-color: var(--primary-light);
+        }
+
+        .word.selected {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        .word.blank {
+            background-color: var(--accent-light);
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        .settings-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-light);
+            color: var(--dark);
+        }
+
+        .btn-neutral {
+            background-color: var(--gray-200);
+            color: var(--dark);
+        }
+
+        .btn-neutral:hover {
+            background-color: var(--gray-300);
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        /* Preview Activity Styles */
+        .activity-header {
+            background-color: white;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-header h1 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.875rem;
+        }
+
+        .activity-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .instructions {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .cloze-container {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .cloze-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* For the typed mode blanks */
+        .cloze-input {
+            width: auto;       /* Let them size automatically… */
+  	        min-width: 50px;     /* or whatever small size you like */
+  	        max-width: 120px;     /* stops it from becoming too big */
+            height: 30px;
+            background-color: var(--gray-200);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            margin: 0 0.25rem;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0 0.5rem;
+            font-size: 1rem;
+        }
+      
+        .cloze-input.correct {
+            background-color: var(--success) !important;
+            border-color: #2E8B57;
+            color: var(--dark);
+        }
+      
+        .cloze-input.incorrect {
+            background-color: var(--error) !important;
+            border-color: #CD5C5C;
+            color: var(--dark);
+        }
+
+        /* For the drag-and-drop mode blanks */
+        .cloze-blank {
+            display: inline-block;
+            width: 120px;
+            height: 30px;
+            background-color: var(--gray-200);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            margin: 0 0.25rem;
+            vertical-align: middle;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 500;
+            padding: 0 0.5rem;
+        }
+
+        .cloze-blank.filled {
+            background-color: var(--primary-light);
+            border: 2px solid var(--primary);
+        }
+
+        .cloze-blank.highlight {
+            background-color: var(--accent-light);
+        }
+
+        .cloze-blank.correct {
+            background-color: var(--success);
+            border-color: #2E8B57;
+        }
+
+        .cloze-blank.incorrect {
+            background-color: var(--error);
+            border-color: #CD5C5C;
+        }
+
+        .words-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            background: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .draggable-word {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: move;
+            user-select: none;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .draggable-word:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .draggable-word.dragging {
+            opacity: 0.5;
+        }
+
+        .result-message {
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            display: none;
+        }
+
+        .result-message.success {
+            background: var(--success);
+            color: #2E8B57;
+            display: block;
+        }
+
+        .result-message.partial {
+            background: #FFF8DC;
+            color: #B8860B;
+            display: block;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .export-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .export-panel {
+            background-color: var(--gray-200);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+        }
+
+        #exportCode {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-300);
+            background-color: var(--white);
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .settings-panel {
+                grid-template-columns: 1fr;
+            }
+          
+            .editor-actions {
+                flex-direction: column;
+            }
+          
+            .activity-container {
+                padding: 0 1rem;
+            }
+          
+            .cloze-container {
+                padding: 1rem;
+            }
+          
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div id="header-placeholder" data-path="./js/header.js"></div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-medium">
+        <div class="container hero-content">
+            <h1>Fill-in-the-Blanks Activity Creator</h1>
+            <p>Design interactive cloze exercises where students fill in missing words. Perfect for vocabulary development, reading comprehension, and testing subject knowledge. Simply add your own content to the editor, preview to try it out and then export.</p>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section" style="padding-top: 30px;">
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="editor">Editor</div>
+                <div class="tab" data-tab="preview">Preview</div>
+                <div class="tab" data-tab="export">Export</div>
+            </div>
+
+            <div class="tab-content active" id="editor">
+                <div class="card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        Activity Details
+                    </h2>
+                    <div class="input-group">
+                        <label for="activityTitle">Activity Title</label>
+                        <input type="text" id="activityTitle" value="Fill in the Blanks: The Water Cycle">
+                    </div>
+                    <div class="input-group">
+                        <label for="activityInstructions">Instructions</label>
+                        <textarea id="activityInstructions" rows="2">Drag the words from the word bank into the correct blanks in the text to complete the description of the water cycle.</textarea>
+                    </div>
+
+                    <!-- New: Answer Mode Setting -->
+                    <div class="input-group">
+                        <label for="answerMode">Answer Mode</label>
+                        <select id="answerMode">
+                            <option value="wordBank" selected>Use Word Bank (Drag and Drop)</option>
+                            <option value="typing">Type the Missing Word(s)</option>
+                        </select>
+                    </div>
+                  
+                    <div class="settings-panel">
+                        <div class="input-group">
+                            <label for="primaryColor">Primary Color</label>
+                            <div class="color-picker">
+                                <input type="color" id="primaryColor" value="#3F72AF">
+                                <span id="primaryColorCode">#3F72AF</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="accentColor">Accent Color</label>
+                            <div class="color-picker">
+                                <input type="color" id="accentColor" value="#FF9A3C">
+                                <span id="accentColorCode">#FF9A3C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        Create Your Text
+                    </h2>
+                    <p>Enter your text below. Click on words you want to turn into blanks.</p>
+                  
+                    <div class="text-editor">
+                        <textarea id="sourceText" rows="10" style="width:100%">The water cycle describes how water moves on, above, and below the surface of the Earth. Water can change states through evaporation, condensation, precipitation, and collection. The process begins when the sun heats up water in rivers, lakes, and oceans. This water evaporates and rises into the atmosphere as water vapor. As it rises, it cools and condenses into clouds. When the water droplets in clouds become too heavy, they fall back to Earth as precipitation in the form of rain, snow, sleet, or hail. The water collects in bodies of water like rivers, lakes, and oceans, and the cycle begins again.</textarea>
+                        <div class="editor-actions">
+                            <button id="processText" class="btn btn-primary">Process Text</button>
+                            <button id="resetText" class="btn btn-neutral">Reset</button>
+                        </div>
+                        <div id="processedText" class="text-content"></div>
+                        <p>Click on words to toggle them as blanks in the activity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="preview">
+                <div class="activity-header">
+                    <h1 id="previewTitle">Fill in the Blanks: The Water Cycle</h1>
+                </div>
+
+                <div class="activity-container">
+                    <div class="instructions" id="previewInstructions">
+                        Drag the words from the word bank into the correct blanks in the text to complete the description of the water cycle.
+                    </div>
+
+                    <div id="resultMessage" class="result-message"></div>
+
+                    <div class="words-bank" id="wordsBank">
+                        <!-- Word bank will be filled dynamically (if wordBank mode) -->
+                    </div>
+
+                    <div class="cloze-container">
+                        <div class="cloze-text" id="clozeText">
+                            <!-- Cloze text will be filled dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="checkAnswers" class="btn btn-primary">Check Answers</button>
+                    <button id="resetActivity" class="btn btn-neutral">Reset</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="export">
+                <div class="card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Export Your Activity
+                    </h2>
+                    <p>Your fill-in-the-blanks activity is ready to export! Click the button below to download the HTML file.</p>
+                  
+                    <div class="export-options">
+                        <button id="exportHTML" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download HTML File
+                        </button>
+                      
+                        <button id="showCodeBtn" class="btn btn-neutral">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            View HTML Code
+                        </button>
+                      
+                        <div id="codePanel" class="export-panel" style="display: none;">
+                            <p>Copy and paste this code into a text editor and save it with a .html extension:</p>
+                            <textarea id="exportCode" readonly></textarea>
+                            <button id="copyCode" class="btn btn-neutral">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div id="footer-placeholder" data-path="./js/footer.js"></div>
+    </footer>
+
+    <script>
+        // Keep track of selected words and blanks
+        let selectedWords = [];
+        let currentDraggedWord = null;
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1000);
+        });
+
+        // Process text into selectable words
+        document.getElementById('processText').addEventListener('click', function() {
+            const sourceText = document.getElementById('sourceText').value;
+            const processedTextContainer = document.getElementById('processedText');
+          
+            // Reset selected words
+            selectedWords = [];
+          
+            // Clear any previous content
+            processedTextContainer.innerHTML = '';
+          
+            // Split text by spaces and punctuation but keep track of everything
+            const regex = /([a-zA-Z0-9]+(['-][a-zA-Z0-9]+)*)|([^a-zA-Z0-9]+)/g;
+            const matches = sourceText.match(regex) || [];
+          
+            // Create HTML with each word as a selectable element
+            let processedHTML = '';
+          
+            matches.forEach(match => {
+                // If it's a word (contains at least one letter or number)
+                if (/[a-zA-Z0-9]/.test(match)) {
+                    processedHTML += `<span class="word" data-word="${match}">${match}</span>`;
+                } else {
+                    // It's punctuation or whitespace
+                    processedHTML += match;
+                }
+            });
+          
+            processedTextContainer.innerHTML = processedHTML;
+          
+            // Add click event to each word
+            document.querySelectorAll('.word').forEach(wordEl => {
+                wordEl.addEventListener('click', function() {
+                    this.classList.toggle('blank');
+                    const word = this.dataset.word;
+                  
+                    if (this.classList.contains('blank')) {
+                        // Add to selected words if not already included
+                        if (!selectedWords.includes(word)) {
+                            selectedWords.push(word);
+                        }
+                    } else {
+                        // Remove from selected words
+                        const index = selectedWords.indexOf(word);
+                        if (index > -1) {
+                            selectedWords.splice(index, 1);
+                        }
+                    }
+                });
+            });
+        });
+
+        // Reset text processing
+        document.getElementById('resetText').addEventListener('click', function() {
+            document.getElementById('processedText').innerHTML = '';
+            selectedWords = [];
+        });
+      
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+              
+                tab.classList.add('active');
+                const targetContent = document.getElementById(tab.dataset.tab);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                  
+                    if (tab.dataset.tab === 'preview') {
+                        updatePreview();
+                    } else if (tab.dataset.tab === 'export') {
+                        generateExportCode();
+                    }
+                }
+            });
+        });
+
+        // Color pickers
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.getElementById('primaryColorCode').textContent = e.target.value;
+            document.documentElement.style.setProperty('--primary', e.target.value);
+            // Update preview if active
+            if (document.getElementById('preview').classList.contains('active')) {
+                updatePreview();
+            }
+        });
+
+        document.getElementById('accentColor').addEventListener('input', function(e) {
+            document.getElementById('accentColorCode').textContent = e.target.value;
+            document.documentElement.style.setProperty('--accent', e.target.value);
+            // Update preview if active
+            if (document.getElementById('preview').classList.contains('active')) {
+                updatePreview();
+            }
+        });
+
+        // Update preview
+        function updatePreview() {
+            const titleEl = document.getElementById('previewTitle');
+            const instructionsEl = document.getElementById('previewInstructions');
+            const resultMessageEl = document.getElementById('resultMessage');
+            const wordsBankEl = document.getElementById('wordsBank');
+            const clozeTextEl = document.getElementById('clozeText');
+          
+            if (titleEl) titleEl.textContent = document.getElementById('activityTitle').value;
+            if (instructionsEl) instructionsEl.textContent = document.getElementById('activityInstructions').value;
+          
+            if (resultMessageEl) {
+                resultMessageEl.className = 'result-message';
+                resultMessageEl.textContent = '';
+            }
+          
+            // Which mode is selected?
+            const answerMode = document.getElementById('answerMode').value;
+
+            // Show or hide the word bank depending on mode
+            if (answerMode === 'wordBank') {
+                wordsBankEl.style.display = 'flex'; 
+            } else {
+                wordsBankEl.style.display = 'none';
+            }
+
+            // Create words bank (only if using word bank)
+            if (wordsBankEl && answerMode === 'wordBank') {
+                wordsBankEl.innerHTML = '';
+              
+                // Shuffle selected words for the bank
+                const shuffledWords = [...selectedWords].sort(() => Math.random() - 0.5);
+              
+                shuffledWords.forEach(word => {
+                    const wordEl = document.createElement('div');
+                    wordEl.className = 'draggable-word';
+                    wordEl.textContent = word;
+                    wordEl.setAttribute('draggable', 'true');
+                    wordEl.dataset.word = word;
+                  
+                    // Add drag events
+                    wordEl.addEventListener('dragstart', function(e) {
+                        this.classList.add('dragging');
+                        currentDraggedWord = this;
+                        e.dataTransfer.setData('text/plain', word);
+                    });
+                  
+                    wordEl.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                        currentDraggedWord = null;
+                    });
+                  
+                    wordsBankEl.appendChild(wordEl);
+                });
+            }
+          
+            // Create cloze text
+            if (clozeTextEl) {
+                const sourceText = document.getElementById('sourceText').value;
+                const processedText = document.getElementById('processedText');
+              
+                // If text wasn't processed yet, show a message
+                if (!processedText.innerHTML) {
+                    clozeTextEl.innerHTML = '<p>Please process your text in the Editor tab first.</p>';
+                    return;
+                }
+              
+                // Store all words that should be blanks (exact instances)
+                const blankWords = [];
+                document.querySelectorAll('.word.blank').forEach(word => {
+                    blankWords.push(word.textContent);
+                });
+              
+                // Use a similar approach as in the process text function
+                const regex = /([a-zA-Z0-9]+(['-][a-zA-Z0-9]+)*)|([^a-zA-Z0-9]+)/g;
+                const matches = sourceText.match(regex) || [];
+              
+                let clozeHTML = '';
+              
+                matches.forEach(match => {
+                    // If it's a word and it's in our selected words list
+                    if (/[a-zA-Z0-9]/.test(match) && blankWords.includes(match)) {
+                        // Remove this instance from blankWords to ensure we only blank out
+                        // the exact number of instances that were selected
+                        const index = blankWords.indexOf(match);
+                        blankWords.splice(index, 1);
+                      
+                        // Check the mode
+                        if (answerMode === 'wordBank') {
+                            // Word bank mode => draggable blank
+                            clozeHTML += `<span class="cloze-blank" data-word="${match}"></span>`;
+                        } else {
+                            // Typing mode => text input
+                            clozeHTML += `<input type="text" class="cloze-input" data-answer="${match}" />`;
+                        }
+                    } else {
+                        // Keep as is (word or punctuation)
+                        clozeHTML += match;
+                    }
+                });
+              
+                clozeTextEl.innerHTML = clozeHTML;
+
+                // If in wordBank mode, set up drop zones
+                if (answerMode === 'wordBank') {
+                    document.querySelectorAll('.cloze-blank').forEach(blank => {
+                        blank.addEventListener('dragover', function(e) {
+                            e.preventDefault();
+                            this.classList.add('highlight');
+                        });
+                      
+                        blank.addEventListener('dragleave', function() {
+                            this.classList.remove('highlight');
+                        });
+                      
+                        blank.addEventListener('drop', function(e) {
+                            e.preventDefault();
+                            this.classList.remove('highlight');
+                          
+                            const word = e.dataTransfer.getData('text/plain');
+                            this.textContent = word;
+                            this.classList.add('filled');
+                            this.dataset.filled = word;
+                          
+                            // Hide the dragged word
+                            if (currentDraggedWord) {
+                                currentDraggedWord.style.display = 'none';
+                            }
+                        });
+                    });
+                }
+            }
+        }
+
+        // Check answers in preview
+        document.getElementById('checkAnswers').addEventListener('click', function() {
+            const answerMode = document.getElementById('answerMode').value;
+            const blanksCount = document.querySelectorAll('.word.blank').length; 
+            let correctCount = 0;
+
+            if (answerMode === 'wordBank') {
+                const blanks = document.querySelectorAll('.cloze-blank');
+                blanks.forEach(blank => {
+                    blank.classList.remove('correct', 'incorrect');
+                    if (blank.dataset.filled) {
+                        // Compare ignoring case
+                        if (blank.dataset.filled.toLowerCase() === blank.dataset.word.toLowerCase()) {
+                            blank.classList.add('correct');
+                            correctCount++;
+                        } else {
+                            blank.classList.add('incorrect');
+                        }
+                    }
+                });
+            } else {
+                // Typing mode
+                const inputs = document.querySelectorAll('.cloze-input');
+                inputs.forEach(inp => {
+                    inp.classList.remove('correct', 'incorrect');
+                    // Compare ignoring case and trim
+                    if (inp.value.trim().toLowerCase() === inp.dataset.answer.toLowerCase()) {
+                        inp.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        inp.classList.add('incorrect');
+                    }
+                });
+            }
+
+            const resultMessage = document.getElementById('resultMessage');
+            resultMessage.className = 'result-message';
+          
+            if (correctCount === blanksCount) {
+                resultMessage.textContent = 'Perfect! All blanks are filled correctly.';
+                resultMessage.classList.add('success');
+            } else {
+                resultMessage.textContent = 'You have ' + correctCount + ' out of ' + blanksCount + ' correct answers. Try again!';
+                resultMessage.classList.add('partial');
+            }
+        });
+
+        // Reset activity
+        document.getElementById('resetActivity').addEventListener('click', function() {
+            updatePreview();
+        });
+
+        // Generate exported HTML
+        function generateExportCode() {
+            const activityTitle = document.getElementById('activityTitle').value;
+            const instructions = document.getElementById('activityInstructions').value;
+            const primaryColor = document.getElementById('primaryColor').value;
+            const accentColor = document.getElementById('accentColor').value;
+            const sourceText = document.getElementById('sourceText').value;
+            const answerMode = document.getElementById('answerMode').value;
+          
+            // Create word list and answer data
+            let wordsArray = '[';
+            let htmlAnswers = 'const answers = {\n';
+          
+            selectedWords.forEach((word, index) => {
+                wordsArray += `"${escapeHTML(word)}"${index < selectedWords.length - 1 ? ', ' : ''}`;
+                // For drag-and-drop, the "answer" is the same as the key
+                // For typed mode, it's also the same. We'll just store them identically.
+                htmlAnswers += `    "${escapeHTML(word)}": "${escapeHTML(word)}"${index < selectedWords.length - 1 ? ',\n' : '\n'}`;
+            });
+          
+            wordsArray += ']';
+            htmlAnswers += '};';
+          
+            // Create cloze text with blanks
+            const regex = /([a-zA-Z0-9]+(['-][a-zA-Z0-9]+)*)|([^a-zA-Z0-9]+)/g;
+            const matches = sourceText.match(regex) || [];
+          
+            // We will build an HTML snippet that either uses <span class="cloze-blank"> or <input class="cloze-input" ...>
+            let htmlText = '"';
+            // We'll keep a temp array for counting how many times a word becomes blank
+            let tempBlanks = [...selectedWords];
+
+            matches.forEach(match => {
+                if (/[a-zA-Z0-9]/.test(match) && tempBlanks.includes(match)) {
+                    // Remove one occurrence from tempBlanks
+                    const idx = tempBlanks.indexOf(match);
+                    tempBlanks.splice(idx, 1);
+
+                    if (answerMode === 'wordBank') {
+                        htmlText += `<span class=\\"cloze-blank\\" data-word=\\"${escapeHTML(match)}\\"></span>`;
+                    } else {
+                        // typed mode
+                        htmlText += `<input type=\\"text\\" class=\\"cloze-input\\" data-answer=\\"${escapeHTML(match)}\\" />`;
+                    }
+                } else {
+                    // Keep as is
+                    htmlText += escapeHTML(match).replace(/\n/g, '\\n');
+                }
+            });
+          
+            htmlText += '"';
+
+            // We'll adjust the instructions in the final HTML if typed mode was selected (just for clarity)
+            const finalInstructions = (answerMode === 'typing')
+                ? instructions || "Type the missing words in the blanks below."
+                : instructions || "Drag each word from the word bank to the correct blank.";
+          
+            // We'll store a snippet for the "word bank" portion. If typed mode, we won't render it; if word bank, we do.
+            let wordBankHTML = '';
+            if (answerMode === 'wordBank') {
+                wordBankHTML = `
+        <div class="words-bank" id="wordsBank">
+            <!-- Word bank will be filled dynamically -->
+        </div>`;
+            } else {
+                // typed => no word bank
+                wordBankHTML = `
+        <div class="words-bank" id="wordsBank" style="display: none;"></div>`;
+            }
+
+            const htmlCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${activityTitle}</title>
+    <style>
+        :root {
+            --primary: ${primaryColor};
+            --primary-light: ${lightenColor(primaryColor, 40)};
+            --primary-dark: ${darkenColor(primaryColor, 20)};
+            --accent: ${accentColor};
+            --accent-light: ${lightenColor(accentColor, 40)};
+            --success: #90EE90;
+            --error: #FFB6C1;
+            --dark: #2C3E50;
+            --white: #FFFFFF;
+            --gray-100: #F9FAFB;
+            --gray-200: #F0F4F8;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --radius: 0.375rem;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #FAFAFA;
+        }
+
+        .header {
+            background-color: white;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.875rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .instructions {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .cloze-container {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .cloze-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Input-based blanks (typed mode) */
+        .cloze-input {
+            width: auto;       /* Let them size automatically… */
+  	        min-width: 50px;     /* or whatever small size you like */
+  	        max-width: 120px;     /* stops it from becoming too big */
+            background-color: var(--gray-200);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            margin: 0 0.25rem;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 0 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .cloze-input.correct {
+            background-color: var(--success) !important;
+            border-color: #2E8B57;
+            color: var(--dark);
+        }
+        
+        .cloze-input.incorrect {
+            background-color: var(--error) !important;
+            border-color: #CD5C5C;
+            color: var(--dark);
+        }
+
+        /* Span-based blanks (word bank mode) */
+        .cloze-blank {
+            display: inline-block;
+            width: 120px;
+            height: 30px;
+            background-color: var(--gray-200);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            margin: 0 0.25rem;
+            vertical-align: middle;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-weight: 500;
+            padding: 0 0.5rem;
+        }
+
+        .cloze-blank.filled {
+            background-color: var(--primary-light);
+            border: 2px solid var(--primary);
+        }
+
+        .cloze-blank.highlight {
+            background-color: var(--accent-light);
+        }
+
+        .cloze-blank.correct {
+            background-color: var(--success);
+            border-color: #2E8B57;
+        }
+
+        .cloze-blank.incorrect {
+            background-color: var(--error);
+            border-color: #CD5C5C;
+        }
+
+        .words-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            background: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .draggable-word {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: move;
+            user-select: none;
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .draggable-word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .draggable-word.dragging {
+            opacity: 0.5;
+        }
+
+        .result-message {
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            display: none;
+        }
+
+        .result-message.success {
+            background: var(--success);
+            color: #2E8B57;
+            display: block;
+        }
+
+        .result-message.partial {
+            background: #FFF8DC;
+            color: #B8860B;
+            display: block;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: 500;
+        }
+
+        button.reset {
+            background: #E2E8F0;
+            color: #2C3E50;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .cloze-container {
+                padding: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>${activityTitle}</h1>
+    </header>
+
+    <div class="container">
+        <div class="instructions">
+            ${finalInstructions}
+        </div>
+
+        <div id="resultMessage" class="result-message"></div>
+
+        ${wordBankHTML}
+
+        <div class="cloze-container">
+            <div class="cloze-text" id="clozeText">
+                ${htmlText}
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="checkAnswers()">Check Answers</button>
+        <button onclick="resetActivity()" class="reset">Reset</button>
+    </div>
+
+    <script>
+        // Which mode was exported?
+        const answerMode = "${answerMode}";
+
+        // Words to use in the bank
+        const words = ${wordsArray};
+        
+        // Expected answers for each blank
+        ${htmlAnswers}
+
+        // Text with blanks
+        const clozeText = ${htmlText};
+        
+        let currentDraggedWord = null;
+
+        // Initialize the activity
+        function initializeActivity() {
+            const container = document.getElementById('clozeText');
+            const resultMessageEl = document.getElementById('resultMessage');
+            if (resultMessageEl) {
+                resultMessageEl.className = 'result-message';
+                resultMessageEl.textContent = '';
+            }
+
+            if (container) {
+                // Insert the content
+                container.innerHTML = clozeText;
+            }
+
+            // If answerMode == 'wordBank', fill the word bank and add drag events
+            if (answerMode === 'wordBank') {
+                const wordsBankEl = document.getElementById('wordsBank');
+                if (wordsBankEl) {
+                    wordsBankEl.innerHTML = '';
+                    // Shuffle words
+                    const shuffled = [...words].sort(() => Math.random() - 0.5);
+                    
+                    shuffled.forEach(word => {
+                        const wEl = document.createElement('div');
+                        wEl.className = 'draggable-word';
+                        wEl.textContent = word;
+                        wEl.dataset.word = word;
+                        wEl.setAttribute('draggable', 'true');
+
+                        wEl.addEventListener('dragstart', function(e) {
+                            this.classList.add('dragging');
+                            currentDraggedWord = this;
+                            e.dataTransfer.setData('text/plain', word);
+                        });
+
+                        wEl.addEventListener('dragend', function() {
+                            this.classList.remove('dragging');
+                            currentDraggedWord = null;
+                        });
+
+                        wordsBankEl.appendChild(wEl);
+                    });
+                }
+
+                // Setup drop zones
+                document.querySelectorAll('.cloze-blank').forEach(blank => {
+                    blank.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        blank.classList.add('highlight');
+                    });
+                    blank.addEventListener('dragleave', function(e) {
+                        blank.classList.remove('highlight');
+                    });
+                    blank.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        blank.classList.remove('highlight');
+                        const w = e.dataTransfer.getData('text/plain');
+                        blank.textContent = w;
+                        blank.classList.add('filled');
+                        blank.dataset.filled = w;
+                        if (currentDraggedWord) {
+                            currentDraggedWord.style.display = 'none';
+                        }
+                    });
+                });
+            } else {
+                // typed mode => no word bank
+                // (inputs are already in the HTML)
+            }
+        }
+
+        // Check answers
+        function checkAnswers() {
+            const resultMessage = document.getElementById('resultMessage');
+            resultMessage.className = 'result-message';
+
+            let blanksCount = 0;
+            let correctCount = 0;
+
+            if (answerMode === 'wordBank') {
+                const blanks = document.querySelectorAll('.cloze-blank');
+                blanksCount = blanks.length;
+                blanks.forEach(b => {
+                    b.classList.remove('correct', 'incorrect');
+                    if (b.dataset.filled) {
+                        // compare ignoring case
+                        if (b.dataset.filled.toLowerCase() === b.dataset.word.toLowerCase()) {
+                            b.classList.add('correct');
+                            correctCount++;
+                        } else {
+                            b.classList.add('incorrect');
+                        }
+                    }
+                });
+            } else {
+                // typed mode
+                const inputs = document.querySelectorAll('.cloze-input');
+                blanksCount = inputs.length;
+                inputs.forEach(inp => {
+                    inp.classList.remove('correct', 'incorrect');
+                    const expected = inp.dataset.answer.toLowerCase();
+                    const typed = inp.value.trim().toLowerCase();
+                    if (typed === expected) {
+                        inp.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        inp.classList.add('incorrect');
+                    }
+                });
+            }
+
+            if (correctCount === blanksCount && blanksCount > 0) {
+                resultMessage.textContent = 'Perfect! All blanks are filled correctly.';
+                resultMessage.classList.add('success');
+            } else {
+                resultMessage.textContent = 'You have ' + correctCount + ' out of ' + blanksCount + ' correct answers. Try again!';
+                resultMessage.classList.add('partial');
+            }
+        }
+
+        // Reset the activity
+        function resetActivity() {
+            initializeActivity();
+        }
+
+        // Helper: lighten/darken not strictly needed in final, but we keep for color usage
+        // We'll reinitialize on load
+        window.onload = initializeActivity;
+    <\/script>
+</body>
+</html>`;
+
+            document.getElementById('exportCode').value = htmlCode;
+            // Store for export
+            window.exportedHTML = htmlCode;
+        }
+
+        // Helper function to escape HTML
+        function escapeHTML(str) {
+            return (str + '')
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Helper function to lighten a color
+        function lightenColor(color, percent) {
+            color = color.replace(/#/g, '');
+            let r = parseInt(color.substring(0, 2), 16);
+            let g = parseInt(color.substring(2, 4), 16);
+            let b = parseInt(color.substring(4, 6), 16);
+            r = Math.min(255, r + Math.floor(255 * (percent / 100)));
+            g = Math.min(255, g + Math.floor(255 * (percent / 100)));
+            b = Math.min(255, b + Math.floor(255 * (percent / 100)));
+            return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+        }
+
+        // Helper function to darken a color
+        function darkenColor(color, percent) {
+            color = color.replace(/#/g, '');
+            let r = parseInt(color.substring(0, 2), 16);
+            let g = parseInt(color.substring(2, 4), 16);
+            let b = parseInt(color.substring(4, 6), 16);
+            r = Math.max(0, r - Math.floor(r * (percent / 100)));
+            g = Math.max(0, g - Math.floor(g * (percent / 100)));
+            b = Math.max(0, b - Math.floor(b * (percent / 100)));
+            return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+        }
+
+        // Show/hide code panel
+        document.getElementById('showCodeBtn').addEventListener('click', function() {
+            const codePanel = document.getElementById('codePanel');
+            if (codePanel.style.display === 'none') {
+                codePanel.style.display = 'block';
+                this.textContent = 'Hide HTML Code';
+            } else {
+                codePanel.style.display = 'none';
+                this.textContent = 'View HTML Code';
+            }
+        });
+
+        // Copy code to clipboard
+        document.getElementById('copyCode').addEventListener('click', function() {
+            const codeTextarea = document.getElementById('exportCode');
+            codeTextarea.select();
+            document.execCommand('copy');
+            this.textContent = 'Copied!';
+            setTimeout(() => {
+                this.textContent = 'Copy Code';
+            }, 2000);
+        });
+
+        // Export HTML file
+        document.getElementById('exportHTML').addEventListener('click', function() {
+            generateExportCode();
+            const blob = new Blob([window.exportedHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = document.getElementById('activityTitle').value.replace(/\s+/g, '-').toLowerCase() + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Process the initial text automatically
+        document.getElementById('processText').click();
+    </script>
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+</body>
+</html>
