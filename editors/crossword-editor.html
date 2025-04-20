@@ -233,6 +233,37 @@
             color: #333;
             margin-bottom: 30px;
         }
+
+        .tabs {
+    display: flex;
+    border-bottom: 2px solid var(--gray-300);
+    margin-bottom: 1.5rem;
+    background-color: var(--white);
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.tab {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--neutral);
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+
+.tab.active {
+    border-bottom-color: var(--primary);
+    color: var(--primary);
+}
+
+.tab:hover:not(.active) {
+    background-color: var(--light);
+    color: var(--dark);
+}
     </style>
 </head>
 <body>
