@@ -1,0 +1,20 @@
+{
+  "name": "habs-prompt-library",
+  "version": "1.0.0",
+  "description": "Prompt Library for Habs AI Hub",
+  "main": "api/prompt-api.js",
+  "scripts": {
+    "setup": "node setup-database.js",
+    "start": "node api/prompt-api.js",
+    "dev": "nodemon api/prompt-api.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

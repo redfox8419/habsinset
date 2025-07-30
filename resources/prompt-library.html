@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Library - Habs AI Hub</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Remove default header */
+        header {
+            display: none;
+        }
+        
+        /* Page Layout */
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+        
+        /* Top Navigation Bar */
+        .nav-bar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #111827;
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .logo-link strong {
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #3b82f6;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+            padding: 60px 24px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 200;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-title strong {
+            font-weight: 600;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+        
+        /* Search and Filters */
+        .search-section {
+            background: white;
+            padding: 32px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .search-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 48px 12px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+        
+        .add-prompt-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .add-prompt-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-tab:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .filter-tab.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: flex;
+            gap: 32px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #111827;
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-item {
+            margin-bottom: 12px;
+        }
+        
+        .category-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #4b5563;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .category-link:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+        
+        .category-link.active {
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+        
+        .category-icon {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .category-count {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+        
+        /* Prompts Grid */
+        .prompts-section {
+            flex: 1;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .results-count {
+            color: #6b7280;
+        }
+        
+        .sort-dropdown {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+        }
+        
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        /* Prompt Card */
+        .prompt-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .prompt-header {
+            margin-bottom: 16px;
+        }
+        
+        .prompt-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        
+        .prompt-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        
+        .prompt-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .prompt-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .prompt-categories {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        
+        .category-badge {
+            padding: 4px 12px;
+            background: #eff6ff;
+            color: #3b82f6;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+        
+        .prompt-actions {
+            display: flex;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .prompt-action-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .prompt-action-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+        
+        .prompt-action-btn.primary {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .prompt-action-btn.primary:hover {
+            background: #2563eb;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 32px 32px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: #e5e7eb;
+        }
+        
+        .modal-body {
+            padding: 32px;
+        }
+        
+        .prompt-full-text {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 8px 16px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .copy-button:hover {
+            background: #2563eb;
+        }
+        
+        .copy-button.copied {
+            background: #10b981;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            color: #e5e7eb;
+            margin-bottom: 24px;
+        }
+        
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+        
+        .empty-description {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f4f6;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                order: -1;
+            }
+            
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .filter-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .modal {
+                padding: 20px;
+            }
+            
+            .modal-header,
+            .modal-body {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="../" class="logo-link">
+                    Habs <strong>AI Hub</strong>
+                </a>
+                <div class="breadcrumb">
+                    <a href="../">Home</a>
+                    <span>/</span>
+                    <span>Prompt Library</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="add-prompt-btn" onclick="showAddPromptModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Prompt
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Teacher-Created <strong>Prompt Library</strong></h1>
+            <p class="hero-subtitle">Discover, share, and save time with proven AI prompts designed by educators</p>
+        </div>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-input-wrapper">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search prompts by title, description, or keywords...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab active" data-filter="all">All Prompts</button>
+                <button class="filter-tab" data-filter="popular">Most Popular</button>
+                <button class="filter-tab" data-filter="newest">Recently Added</button>
+                <button class="filter-tab" data-filter="timesaver">Quick Wins</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Subject Categories -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Subjects</h3>
+                <ul class="category-list" id="subjectCategories">
+                    <!-- Categories will be loaded dynamically -->
+                </ul>
+            </div>
+            
+            <!-- Purpose Categories -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Purpose</h3>
+                <ul class="category-list" id="purposeCategories">
+                    <!-- Categories will be loaded dynamically -->
+                </ul>
+            </div>
+            
+            <!-- Difficulty Level -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Difficulty</h3>
+                <ul class="category-list">
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-difficulty="beginner">
+                            <i class="fas fa-circle category-icon" style="color: #10b981;"></i>
+                            <span>Beginner</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-difficulty="intermediate">
+                            <i class="fas fa-circle category-icon" style="color: #f59e0b;"></i>
+                            <span>Intermediate</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-difficulty="advanced">
+                            <i class="fas fa-circle category-icon" style="color: #ef4444;"></i>
+                            <span>Advanced</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Prompts Section -->
+        <section class="prompts-section">
+            <div class="section-header">
+                <h2 class="results-count">Showing <span id="resultCount">0</span> prompts</h2>
+                <select class="sort-dropdown" id="sortDropdown">
+                    <option value="newest">Newest First</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="rating">Highest Rated</option>
+                </select>
+            </div>
+            
+            <div class="prompts-grid" id="promptsGrid">
+                <!-- Loading state -->
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading prompts...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- View Prompt Modal -->
+    <div class="modal" id="viewPromptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalPromptTitle">Prompt Title</h2>
+                <button class="modal-close" onclick="closeModal('viewPromptModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="position: relative;">
+                    <div class="prompt-full-text" id="modalPromptText"></div>
+                    <button class="copy-button" onclick="copyPrompt()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                
+                <div class="prompt-details">
+                    <div class="prompt-meta" style="margin-bottom: 16px;">
+                        <span class="prompt-meta-item">
+                            <i class="fas fa-clock"></i>
+                            Saves <span id="modalTimeSaved">15 mins</span>
+                        </span>
+                        <span class="prompt-meta-item">
+                            <i class="fas fa-robot"></i>
+                            <span id="modalAITool">Any AI</span>
+                        </span>
+                    </div>
+                    
+                    <div id="modalCategories" class="prompt-categories"></div>
+                    
+                    <div id="modalTips" style="margin-top: 24px;"></div>
+                    <div id="modalExample" style="margin-top: 24px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Prompt Modal -->
+    <div class="modal" id="addPromptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Prompt</h2>
+                <button class="modal-close" onclick="closeModal('addPromptModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="promptForm">
+                    <div class="form-group">
+                        <label class="form-label" for="promptTitle">Title*</label>
+                        <input type="text" class="form-input" id="promptTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="promptDescription">Description*</label>
+                        <textarea class="form-textarea" id="promptDescription" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="promptText">Prompt Text*</label>
+                        <textarea class="form-textarea" id="promptText" style="min-height: 200px;" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Categories</label>
+                        <div class="checkbox-group" id="categoryCheckboxes">
+                            <!-- Categories will be loaded dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="timeSaved">Time Saved</label>
+                        <input type="text" class="form-input" id="timeSaved" placeholder="e.g., 15 mins, 1 hour">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="difficultyLevel">Difficulty Level</label>
+                        <select class="form-select" id="difficultyLevel">
+                            <option value="">Select difficulty</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="aiTool">AI Tool</label>
+                        <input type="text" class="form-input" id="aiTool" placeholder="e.g., ChatGPT, Claude, Any">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="tips">Tips (Optional)</label>
+                        <textarea class="form-textarea" id="tips" placeholder="Any tips for using this prompt effectively"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="exampleOutput">Example Output (Optional)</label>
+                        <textarea class="form-textarea" id="exampleOutput" placeholder="An example of what the AI might generate"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('addPromptModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Prompt</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_URL = 'http://localhost:3000/api';
+        
+        // State
+        let prompts = [];
+        let categories = [];
+        let currentFilters = {
+            search: '',
+            category: null,
+            difficulty: null,
+            sort: 'newest'
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategories();
+            loadPrompts();
+            setupEventListeners();
+        });
+        
+        // Load categories
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_URL}/categories`);
+                categories = await response.json();
+                
+                // Populate sidebar categories
+                const subjectCats = categories.filter(c => c.type === 'subject');
+                const purposeCats = categories.filter(c => c.type === 'purpose');
+                
+                document.getElementById('subjectCategories').innerHTML = subjectCats.map(cat => `
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="${cat.id}">
+                            <i class="${cat.icon || 'fas fa-tag'} category-icon"></i>
+                            <span>${cat.name}</span>
+                            <span class="category-count">0</span>
+                        </a>
+                    </li>
+                `).join('');
+                
+                document.getElementById('purposeCategories').innerHTML = purposeCats.map(cat => `
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="${cat.id}">
+                            <i class="${cat.icon || 'fas fa-tag'} category-icon"></i>
+                            <span>${cat.name}</span>
+                            <span class="category-count">0</span>
+                        </a>
+                    </li>
+                `).join('');
+                
+                // Populate form checkboxes
+                document.getElementById('categoryCheckboxes').innerHTML = categories.map(cat => `
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="${cat.id}" name="categories">
+                        <span>${cat.name}</span>
+                    </label>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+        
+        // Load prompts
+        async function loadPrompts() {
+            try {
+                const params = new URLSearchParams();
+                if (currentFilters.search) params.append('search', currentFilters.search);
+                if (currentFilters.category) params.append('category', currentFilters.category);
+                params.append('sort', currentFilters.sort);
+                
+                const response = await fetch(`${API_URL}/prompts?${params}`);
+                prompts = await response.json();
+                
+                displayPrompts();
+                updateResultCount();
+            } catch (error) {
+                console.error('Error loading prompts:', error);
+                document.getElementById('promptsGrid').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle empty-icon"></i>
+                        <h3 class="empty-title">Unable to load prompts</h3>
+                        <p class="empty-description">Please check your connection and try again.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Display prompts
+        function displayPrompts() {
+            const grid = document.getElementById('promptsGrid');
+            
+            if (prompts.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-sparkles empty-icon"></i>
+                        <h3 class="empty-title">No prompts found</h3>
+                        <p class="empty-description">Try adjusting your filters or be the first to add a prompt!</p>
+                        <button class="btn btn-primary" onclick="showAddPromptModal()">
+                            <i class="fas fa-plus"></i> Add First Prompt
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = prompts.map(prompt => {
+                const categoryNames = prompt.category_names ? prompt.category_names.split(',') : [];
+                return `
+                    <div class="prompt-card" onclick="viewPrompt(${prompt.id})">
+                        <div class="prompt-header">
+                            <h3 class="prompt-title">${prompt.title}</h3>
+                            <div class="prompt-meta">
+                                ${prompt.time_saved ? `
+                                    <span class="prompt-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        ${prompt.time_saved}
+                                    </span>
+                                ` : ''}
+                                <span class="prompt-meta-item">
+                                    <i class="fas fa-eye"></i>
+                                    ${prompt.usage_count || 0} uses
+                                </span>
+                            </div>
+                        </div>
+                        <p class="prompt-description">${prompt.description}</p>
+                        <div class="prompt-categories">
+                            ${categoryNames.map(name => `
+                                <span class="category-badge">${name}</span>
+                            `).join('')}
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-action-btn" onclick="event.stopPropagation(); copyPromptText('${prompt.id}')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="prompt-action-btn primary" onclick="event.stopPropagation(); viewPrompt(${prompt.id})">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search
+            const searchInput = document.getElementById('searchInput');
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    currentFilters.search = e.target.value;
+                    loadPrompts();
+                }, 300);
+            });
+            
+            // Filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    const filter = e.target.dataset.filter;
+                    switch(filter) {
+                        case 'popular':
+                            currentFilters.sort = 'popular';
+                            break;
+                        case 'newest':
+                            currentFilters.sort = 'newest';
+                            break;
+                        case 'timesaver':
+                            // Implement time saver filter
+                            break;
+                        default:
+                            currentFilters.sort = 'newest';
+                    }
+                    loadPrompts();
+                });
+            });
+            
+            // Category links
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.category-link')) {
+                    e.preventDefault();
+                    const link = e.target.closest('.category-link');
+                    const categoryId = link.dataset.category;
+                    const difficulty = link.dataset.difficulty;
+                    
+                    if (categoryId) {
+                        currentFilters.category = currentFilters.category === categoryId ? null : categoryId;
+                    } else if (difficulty) {
+                        currentFilters.difficulty = currentFilters.difficulty === difficulty ? null : difficulty;
+                    }
+                    
+                    // Update active state
+                    document.querySelectorAll('.category-link').forEach(l => l.classList.remove('active'));
+                    if (currentFilters.category || currentFilters.difficulty) {
+                        link.classList.add('active');
+                    }
+                    
+                    loadPrompts();
+                }
+            });
+            
+            // Sort dropdown
+            document.getElementById('sortDropdown').addEventListener('change', (e) => {
+                currentFilters.sort = e.target.value;
+                loadPrompts();
+            });
+            
+            // Form submission
+            document.getElementById('promptForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await savePrompt();
+            });
+        }
+        
+        // View prompt
+        async function viewPrompt(promptId) {
+            try {
+                const response = await fetch(`${API_URL}/prompts/${promptId}`);
+                const prompt = await response.json();
+                
+                document.getElementById('modalPromptTitle').textContent = prompt.title;
+                document.getElementById('modalPromptText').textContent = prompt.prompt_text;
+                document.getElementById('modalTimeSaved').textContent = prompt.time_saved || 'N/A';
+                document.getElementById('modalAITool').textContent = prompt.ai_tool || 'Any AI';
+                
+                // Categories
+                const categoryNames = prompt.category_names ? prompt.category_names.split(',') : [];
+                document.getElementById('modalCategories').innerHTML = categoryNames.map(name => `
+                    <span class="category-badge">${name}</span>
+                `).join('');
+                
+                // Tips
+                if (prompt.tips) {
+                    document.getElementById('modalTips').innerHTML = `
+                        <h4 style="margin-bottom: 8px;"><i class="fas fa-lightbulb"></i> Tips</h4>
+                        <p>${prompt.tips}</p>
+                    `;
+                } else {
+                    document.getElementById('modalTips').innerHTML = '';
+                }
+                
+                // Example
+                if (prompt.example_output) {
+                    document.getElementById('modalExample').innerHTML = `
+                        <h4 style="margin-bottom: 8px;"><i class="fas fa-file-alt"></i> Example Output</h4>
+                        <div style="background: #f9fafb; padding: 16px; border-radius: 8px;">
+                            ${prompt.example_output}
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('modalExample').innerHTML = '';
+                }
+                
+                showModal('viewPromptModal');
+            } catch (error) {
+                console.error('Error viewing prompt:', error);
+            }
+        }
+        
+        // Copy prompt
+        async function copyPrompt() {
+            const text = document.getElementById('modalPromptText').textContent;
+            await navigator.clipboard.writeText(text);
+            
+            const button = document.querySelector('.copy-button');
+            button.classList.add('copied');
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            }, 2000);
+        }
+        
+        // Copy prompt text directly
+        async function copyPromptText(promptId) {
+            const prompt = prompts.find(p => p.id == promptId);
+            if (prompt) {
+                await navigator.clipboard.writeText(prompt.prompt_text);
+                
+                // Track copy
+                fetch(`${API_URL}/prompts/${promptId}/copy`, { method: 'POST' });
+                
+                // Show feedback
+                event.target.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    event.target.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            }
+        }
+        
+        // Save prompt
+        async function savePrompt() {
+            const formData = {
+                title: document.getElementById('promptTitle').value,
+                description: document.getElementById('promptDescription').value,
+                prompt_text: document.getElementById('promptText').value,
+                time_saved: document.getElementById('timeSaved').value,
+                difficulty_level: document.getElementById('difficultyLevel').value,
+                ai_tool: document.getElementById('aiTool').value,
+                tips: document.getElementById('tips').value,
+                example_output: document.getElementById('exampleOutput').value,
+                categories: Array.from(document.querySelectorAll('input[name="categories"]:checked')).map(cb => cb.value)
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/prompts`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    closeModal('addPromptModal');
+                    document.getElementById('promptForm').reset();
+                    loadPrompts();
+                } else {
+                    alert('Error saving prompt. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error saving prompt:', error);
+                alert('Error saving prompt. Please try again.');
+            }
+        }
+        
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function showAddPromptModal() {
+            showModal('addPromptModal');
+        }
+        
+        // Update result count
+        function updateResultCount() {
+            document.getElementById('resultCount').textContent = prompts.length;
+        }
+        
+        // Close modal on backdrop click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
