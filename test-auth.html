@@ -1,0 +1,112 @@
+<!-- test-auth.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Windows Auth Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .test-section { margin: 20px 0; }
+        button { padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Windows Authentication Test</h1>
+    
+    <div class="test-section">
+        <h3>Current User Info:</h3>
+        <pre id="userInfo"></pre>
+    </div>
+    
+    <div class="test-section">
+        <h3>Network Test:</h3>
+        <button onclick="testNetwork()">Test Authentication Headers</button>
+        <pre id="networkResult"></pre>
+    </div>
+
+    <script>
+        // Show what we can detect immediately
+        document.getElementById('userInfo').textContent = JSON.stringify({
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+            domain: window.location.hostname,
+            protocol: window.location.protocol,
+            currentUser: document.domain,
+            timestamp: new Date().toISOString()
+        }, null, 2);
+
+        // Test network authentication
+        async function testNetwork() {
+            const resultElement = document.getElementById('networkResult');
+            resultElement.textContent = "Testing...";
+            
+            try {
+                // Test 1: Try to make an authenticated request
+                const response = await fetch(window.location.href, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                // Collect response info
+                const headers = {};
+                response.headers.forEach((value, key) => {
+                    headers[key] = value;
+                });
+                
+                // Test 2: Try a different endpoint that might reveal auth
+                let authTest = null;
+                try {
+                    const authResponse = await fetch('/', {
+                        method: 'HEAD',
+                        credentials: 'include'
+                    });
+                    authTest = {
+                        status: authResponse.status,
+                        statusText: authResponse.statusText
+                    };
+                } catch (e) {
+                    authTest = { error: e.message };
+                }
+                
+                const result = {
+                    mainRequest: {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: headers,
+                        url: response.url,
+                        type: response.type
+                    },
+                    authTest: authTest,
+                    browserInfo: {
+                        cookiesEnabled: navigator.cookieEnabled,
+                        onLine: navigator.onLine,
+                        connection: navigator.connection ? {
+                            effectiveType: navigator.connection.effectiveType,
+                            downlink: navigator.connection.downlink
+                        } : 'Not available'
+                    },
+                    timestamp: new Date().toISOString()
+                };
+                
+                resultElement.textContent = JSON.stringify(result, null, 2);
+                
+            } catch (error) {
+                resultElement.textContent = JSON.stringify({
+                    error: error.message,
+                    stack: error.stack,
+                    timestamp: new Date().toISOString()
+                }, null, 2);
+            }
+        }
+        
+        // Auto-run the test when page loads
+        window.onload = function() {
+            testNetwork();
+        };
+    </script>
+</body>
+</html>
