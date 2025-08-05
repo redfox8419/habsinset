@@ -1,0 +1,187 @@
+{
+  "tools": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "domain": "chat.openai.com",
+      "url": "https://chat.openai.com",
+      "pricing": "Free + $20/mo",
+      "description": "The most popular AI assistant. Perfect for lesson planning, creating assessments, and generating teaching materials.",
+      "features": [
+        "Lesson plans & worksheets",
+        "Quiz & rubric generation",
+        "Email drafting & communication"
+      ],
+      "bestFor": "General teaching tasks, beginners"
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "domain": "claude.ai",
+      "url": "https://claude.ai",
+      "pricing": "Free + $20/mo",
+      "description": "Excellent for detailed analysis and longer documents. Great at understanding context and providing thoughtful responses.",
+      "features": [
+        "Document analysis & summarization",
+        "Detailed feedback & marking",
+        "Research & curriculum planning"
+      ],
+      "bestFor": "Detailed analysis, curriculum development"
+    },
+    {
+      "id": "gemini",
+      "name": "Google Gemini",
+      "domain": "gemini.google.com",
+      "url": "https://gemini.google.com",
+      "pricing": "Free + $20/mo",
+      "description": "Google's AI with free education features and deep integration with Google Workspace. Includes Gemini in Classroom for educators.",
+      "features": [
+        "Free Gemini in Classroom for educators",
+        "Google Workspace integration",
+        "Canvas for collaborative creation"
+      ],
+      "bestFor": "Google Workspace users, education-focused features"
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity AI",
+      "domain": "perplexity.ai",
+      "url": "https://www.perplexity.ai",
+      "pricing": "Free + $20/mo",
+      "description": "AI-powered search engine with real-time web access. Perfect for current events and fact-checking.",
+      "features": [
+        "Real-time information & sources",
+        "Research with citations",
+        "Current events & news integration"
+      ],
+      "bestFor": "Research, current events, fact-checking"
+    },
+    {
+      "id": "copilot",
+      "name": "Microsoft Copilot",
+      "domain": "copilot.microsoft.com",
+      "url": "https://copilot.microsoft.com",
+      "pricing": "Free + $20/mo",
+      "description": "Microsoft's AI assistant with deep Office integration. Enterprise users get enhanced security, data protection, and compliance features when logged in with work accounts.",
+      "features": [
+        "Microsoft 365 integration",
+        "Enterprise security & compliance",
+        "Document creation & analysis"
+      ],
+      "bestFor": "Microsoft Office users, enterprise security needs"
+    },
+    {
+      "id": "grok",
+      "name": "Grok",
+      "domain": "grok.com",
+      "url": "https://grok.com",
+      "pricing": "Free + $8/mo (X Premium)",
+      "description": "Elon Musk's AI with real-time access to X/Twitter data. Known for its witty personality and current events knowledge.",
+      "features": [
+        "Real-time X/Twitter integration",
+        "Current news & trending topics",
+        "Conversational & witty responses"
+      ],
+      "bestFor": "Current events, social media trends, real-time info"
+    },
+    {
+      "id": "notebooklm",
+      "name": "NotebookLM",
+      "domain": "notebooklm.google.com",
+      "url": "https://notebooklm.google.com",
+      "pricing": "Free",
+      "description": "Upload your documents and get AI-powered summaries, quizzes, and study guides with accurate citations.",
+      "features": [
+        "Document upload & analysis",
+        "Generate study guides & quizzes",
+        "Audio overviews (AI podcasts)"
+      ],
+      "bestFor": "Document analysis, creating study materials"
+    },
+    {
+      "id": "magicschool",
+      "name": "MagicSchool AI",
+      "domain": "magicschool.ai",
+      "url": "https://www.magicschool.ai",
+      "pricing": "Free + $99/yr",
+      "description": "The most popular AI platform for educators with 80+ teacher tools and 50+ student tools. Used by 5M+ teachers worldwide.",
+      "features": [
+        "80+ specialized teacher tools",
+        "Google Classroom integration",
+        "Privacy-first, COPPA compliant"
+      ],
+      "bestFor": "Comprehensive education toolkit"
+    },
+
+    {
+      "id": "curipod",
+      "name": "Curipod",
+      "domain": "curipod.com",
+      "url": "https://curipod.com",
+      "pricing": "Free + Premium",
+      "description": "Create interactive lessons in minutes. AI generates polls, quizzes, and activities to boost student engagement.",
+      "features": [
+        "Interactive polls & activities",
+        "Real-time student responses",
+        "Ready-to-run lessons"
+      ],
+      "bestFor": "Interactive lessons, student engagement"
+    },
+    {
+      "id": "canva",
+      "name": "Canva for Education",
+      "domain": "canva.com",
+      "url": "https://www.canva.com/education/",
+      "pricing": "Free",
+      "description": "Create stunning visual content with AI-powered design tools. Magic Write helps with text generation and brainstorming.",
+      "features": [
+        "AI-powered Magic Write",
+        "Educational templates",
+        "Google Classroom integration"
+      ],
+      "bestFor": "Visual content creation, presentations"
+    },
+    {
+      "id": "khanmigo",
+      "name": "Khanmigo",
+      "domain": "khanacademy.org",
+      "url": "https://www.khanacademy.org/khan-labs",
+      "pricing": "$10/mo",
+      "description": "AI tutor from Khan Academy. Provides personalized learning support with Socratic questioning method.",
+      "features": [
+        "Socratic dialogue approach",
+        "Step-by-step problem solving",
+        "Built on Khan Academy content"
+      ],
+      "bestFor": "Student tutoring, personalized learning"
+    },
+    {
+      "id": "quizizz",
+      "name": "Quizizz",
+      "domain": "quizizz.com",
+      "url": "https://quizizz.com",
+      "pricing": "Free + Premium",
+      "description": "AI-enhanced quiz platform that adapts question difficulty and creates personalized learning paths for students.",
+      "features": [
+        "Adaptive question difficulty",
+        "Personalized learning paths",
+        "Real-world scenario questions"
+      ],
+      "bestFor": "Assessments, gamified learning"
+    },
+    {
+      "id": "gamma",
+      "name": "Gamma",
+      "domain": "gamma.app",
+      "url": "https://gamma.app",
+      "pricing": "Free + $10/mo",
+      "description": "AI presentation maker that creates engaging, interactive presentations instantly. Perfect for educators who need beautiful slides without design skills.",
+      "features": [
+        "AI-powered presentation generation",
+        "Interactive elements & media embedding",
+        "Export to PowerPoint/PDF"
+      ],
+      "bestFor": "Presentations, interactive content creation"
+    }
+  ]
+}
