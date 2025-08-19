@@ -4,7 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI at School — What's OK and What's Not</title>
-
+  
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="students.css">
+  
   <!--
   Content→Policy mapping (source: "Acceptable Use Policy – Students", Autumn 2024)
   - Quick summary & Do/Don't: Appendix 2 (zero-tolerance on GenAI misuse; no photo uploads; harmful/discriminatory content). Also reiterated in ICT Acceptable Use Agreement. 
@@ -15,737 +18,15 @@
   - Sanctions & monitoring: Section 9 (sanctions incl. permanent exclusion; device to police for illegal imagery), Section 6 (monitoring; deleted can be traced), policy footer note (school owns systems; may examine/delete files; withdraw access).
   NOTE: All non-AI AUP topics (BYOD routines, general email etiquette, etc.) are intentionally excluded here unless they directly relate to AI misuse.
   -->
-
-  <style>
-    /* =========================
-       Modern Design System
-       ========================= */
-    :root{
-      /* Colors - Fresh but professional palette */
-      --bg: #fafbfc;
-      --surface: #ffffff;
-      --surface-elevated: #ffffff;
-      --ink: #1a1d23;
-      --ink-muted: #6b7684;
-      --ink-subtle: #9ca3af;
-      --border: #e5e7eb;
-      --border-subtle: #f3f4f6;
-      
-      /* Brand colors */
-      --primary: #4f46e5;
-      --primary-light: #818cf8;
-      --primary-dark: #3730a3;
-      --success: #059669;
-      --success-light: #d1fae5;
-      --danger: #dc2626;
-      --danger-light: #fee2e2;
-      --warning: #d97706;
-      --warning-light: #fef3c7;
-      
-      /* Spacing scale */
-      --space-1: 0.25rem;
-      --space-2: 0.5rem;
-      --space-3: 0.75rem;
-      --space-4: 1rem;
-      --space-5: 1.25rem;
-      --space-6: 1.5rem;
-      --space-8: 2rem;
-      --space-10: 2.5rem;
-      --space-12: 3rem;
-      --space-16: 4rem;
-      --space-20: 5rem;
-      
-      /* Layout */
-      --radius-sm: 0.5rem;
-      --radius: 0.75rem;
-      --radius-lg: 1rem;
-      --radius-xl: 1.5rem;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      
-      --max-width: 1200px;
-      --content-width: 800px;
-    }
-
-    @media (prefers-color-scheme: dark){
-      :root{
-        --bg: #0f1419;
-        --surface: #1a1f2e;
-        --surface-elevated: #252a3a;
-        --ink: #f9fafb;
-        --ink-muted: #d1d5db;
-        --ink-subtle: #9ca3af;
-        --border: #374151;
-        --border-subtle: #1f2937;
-        --primary: #6366f1;
-        --primary-light: #a5b4fc;
-        --success-light: #064e3b;
-        --danger-light: #7f1d1d;
-        --warning-light: #78350f;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
-      }
-    }
-
-    /* =========================
-       Reset & Base Styles
-       ========================= */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      margin: 0 0 var(--space-4) 0;
-      line-height: 1.3;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    h2 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
-    }
-
-    h3 {
-      font-size: clamp(1.25rem, 3vw, 1.5rem);
-    }
-
-    p {
-      margin: 0 0 var(--space-4) 0;
-    }
-
-    ul, ol {
-      margin: 0 0 var(--space-4) 0;
-      padding-left: var(--space-6);
-    }
-
-    li {
-      margin: 0 0 var(--space-2) 0;
-    }
-
-    a {
-      color: var(--primary);
-      text-decoration: none;
-      border-radius: var(--radius-sm);
-      transition: all 0.2s ease;
-    }
-
-    a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
-    }
-
-    /* =========================
-       Layout Components
-       ========================= */
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--space-6);
-    }
-
-    .content-width {
-      max-width: var(--content-width);
-      margin: 0 auto;
-    }
-
-    .section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      padding: var(--space-8);
-      margin-bottom: var(--space-6);
-      min-height: 60vh;
-      display: none;
-      transition: all 0.3s ease;
-    }
-
-    .section.active {
-      display: block;
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    .grid {
-      display: grid;
-      gap: var(--space-6);
-    }
-
-    .grid-2 {
-      grid-template-columns: 1fr;
-    }
-
-    @media (min-width: 768px) {
-      .grid-2 {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    /* =========================
-       Header & Navigation
-       ========================= */
-    .header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-      pointer-events: none;
-    }
-
-    .hero {
-      position: relative;
-      padding: var(--space-16) 0 var(--space-12) 0;
-      text-align: center;
-    }
-
-    .hero h1 {
-      color: white;
-      margin-bottom: var(--space-6);
-    }
-
-    .hero p {
-      font-size: 1.125rem;
-      color: rgba(255, 255, 255, 0.9);
-      max-width: 600px;
-      margin: 0 auto var(--space-8) auto;
-    }
-
-    /* =========================
-       Progress Tracker
-       ========================= */
-    .progress-container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-xl);
-      padding: var(--space-4);
-      margin-bottom: var(--space-8);
-      backdrop-filter: blur(10px);
-    }
-
-    .progress-bar {
-      background: rgba(255, 255, 255, 0.2);
-      height: 8px;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      background: white;
-      height: 100%;
-      width: 14.28%;
-      border-radius: 999px;
-      transition: width 0.5s ease;
-    }
-
-    .progress-steps {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: var(--space-4);
-      font-size: 0.875rem;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .progress-step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      flex: 1;
-    }
-
-    .progress-step.active {
-      color: white;
-      font-weight: 600;
-    }
-
-    .progress-step.completed {
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .step-circle {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: var(--space-2);
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-
-    .step-circle.active {
-      background: white;
-      color: var(--primary);
-    }
-
-    .step-circle.completed {
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--primary);
-    }
-
-    /* =========================
-       Navigation Buttons
-       ========================= */
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: var(--space-8);
-      gap: var(--space-4);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-4) var(--space-6);
-      border: none;
-      border-radius: var(--radius-lg);
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      text-decoration: none;
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: var(--border-subtle);
-      color: var(--ink);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--border);
-      color: var(--ink);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* =========================
-       Special Components
-       ========================= */
-    .do-dont-grid {
-      display: grid;
-      gap: var(--space-6);
-      margin-top: var(--space-8);
-    }
-
-    @media (min-width: 768px) {
-      .do-dont-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .do-dont-section {
-      background: var(--surface-elevated);
-      border-radius: var(--radius-lg);
-      padding: var(--space-6);
-      border: 2px solid transparent;
-    }
-
-    .do-section {
-      border-color: var(--success);
-      background: var(--success-light);
-    }
-
-    .dont-section {
-      border-color: var(--danger);
-      background: var(--danger-light);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      margin-bottom: var(--space-4);
-    }
-
-    .section-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .do-icon {
-      background: var(--success);
-      color: white;
-    }
-
-    .dont-icon {
-      background: var(--danger);
-      color: white;
-    }
-
-    .item-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .item {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
-      margin-bottom: var(--space-4);
-      padding: var(--space-4);
-      background: var(--surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .item-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .item-icon.success {
-      background: var(--success);
-      color: white;
-    }
-
-    .item-icon.danger {
-      background: var(--danger);
-      color: white;
-    }
-
-    /* =========================
-       Expandable Sections
-       ========================= */
-    .expandable {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      margin-bottom: var(--space-4);
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .expandable:hover {
-      border-color: var(--primary);
-    }
-
-    .expandable summary {
-      list-style: none;
-      padding: var(--space-6);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      font-weight: 600;
-      background: var(--surface);
-      transition: all 0.3s ease;
-    }
-
-    .expandable summary:hover {
-      background: var(--border-subtle);
-    }
-
-    .expandable summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .chevron {
-      width: 16px;
-      height: 16px;
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
-    }
-
-    .expandable[open] .chevron {
-      transform: rotate(90deg);
-    }
-
-    .expandable-content {
-      padding: 0 var(--space-6) var(--space-6) var(--space-6);
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    /* =========================
-       Alert/Callout Styles
-       ========================= */
-    .alert {
-      padding: var(--space-6);
-      border-radius: var(--radius-lg);
-      margin: var(--space-6) 0;
-      border-left: 4px solid;
-    }
-
-    .alert-warning {
-      background: var(--warning-light);
-      border-color: var(--warning);
-      color: var(--ink);
-    }
-
-    .alert-title {
-      font-weight: 600;
-      margin-bottom: var(--space-3);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-
-    /* =========================
-       Steps/Process
-       ========================= */
-    .steps {
-      counter-reset: step-counter;
-    }
-
-    .step {
-      counter-increment: step-counter;
-      position: relative;
-      padding-left: var(--space-12);
-      margin-bottom: var(--space-6);
-    }
-
-    .step::before {
-      content: counter(step-counter);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 32px;
-      height: 32px;
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 0.875rem;
-    }
-
-    .step strong {
-      color: var(--primary);
-    }
-
-    /* =========================
-       Utility Classes
-       ========================= */
-    .text-muted {
-      color: var(--ink-muted);
-      font-size: 0.875rem;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .mt-0 { margin-top: 0; }
-    .mt-4 { margin-top: var(--space-4); }
-    .mt-6 { margin-top: var(--space-6); }
-    .mt-8 { margin-top: var(--space-8); }
-
-    .mb-0 { margin-bottom: 0; }
-    .mb-4 { margin-bottom: var(--space-4); }
-    .mb-6 { margin-bottom: var(--space-6); }
-    .mb-8 { margin-bottom: var(--space-8); }
-
-    /* =========================
-       Accessibility
-       ========================= */
-    .skip-link {
-      position: absolute;
-      left: -10000px;
-      top: auto;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-    }
-
-    .skip-link:focus {
-      left: var(--space-6);
-      top: var(--space-6);
-      width: auto;
-      height: auto;
-      padding: var(--space-3) var(--space-4);
-      z-index: 999;
-      background: var(--surface);
-      color: var(--ink);
-      border-radius: var(--radius);
-      outline: 3px solid var(--primary);
-      text-decoration: none;
-    }
-
-    :where(a, summary, button, [tabindex]):focus-visible {
-      outline: 3px solid var(--primary);
-      outline-offset: 2px;
-      border-radius: var(--radius-sm);
-    }
-
-    /* =========================
-       Print Styles
-       ========================= */
-    @media print {
-      @page {
-        size: A4;
-        margin: 14mm;
-      }
-      
-      :root {
-        --bg: #fff;
-        --surface: #fff;
-        --ink: #000;
-        --border: #ddd;
-      }
-      
-      body {
-        background: #fff;
-        color: #000;
-      }
-      
-      .header, .nav-buttons, .progress-container {
-        display: none !important;
-      }
-      
-      .section {
-        display: block !important;
-        box-shadow: none;
-        border-color: #ddd;
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-      
-      a {
-        color: #000 !important;
-        text-decoration: underline;
-      }
-    }
-
-    /* =========================
-       Animations
-       ========================= */
-    @media (prefers-reduced-motion: no-preference) {
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    }
-
-    /* =========================
-       Responsive Design
-       ========================= */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 var(--space-4);
-      }
-      
-      .section {
-        padding: var(--space-6);
-      }
-      
-      .hero {
-        padding: var(--space-12) 0 var(--space-8) 0;
-      }
-      
-      .nav-buttons {
-        flex-direction: column-reverse;
-      }
-      
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .progress-steps {
-        font-size: 0.75rem;
-      }
-
-      .progress-step span {
-        display: none;
-      }
-
-      .progress-step:nth-child(1) span,
-      .progress-step:nth-child(7) span {
-        display: block;
-      }
-    }
-  </style>
 </head>
-<body>
-  <a href="#main" class="skip-link">Skip to main content</a>
 
+<body>
+  <!-- Header -->
   <header class="header">
     <div class="container">
       <div class="hero">
         <h1>AI at School — What's OK and What's Not</h1>
-        <p>Clear rules for using Generative AI safely and responsibly. This covers photos, deepfakes, harmful content, academic integrity, and what to do if something goes wrong.</p>
+        <p>Essential guidance for using AI safely and responsibly at school. This covers photos, deepfakes, harmful content, academic integrity, and what to do if something goes wrong.</p>
         
         <div class="progress-container">
           <div class="progress-bar">
@@ -804,23 +85,29 @@
                 <span class="item-icon success" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                 </span>
-                <div>Think privacy first. Keep people's images and personal details out of AI tools.</div>
+                <div>Think privacy first. Never share photos of people or personal information.</div>
               </li>
               <li class="item">
                 <span class="item-icon success" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                 </span>
-                <div>Use AI to help your learning, not to do your work for you.</div>
+                <div>Use Microsoft Copilot through school accounts when available.</div>
               </li>
               <li class="item">
                 <span class="item-icon success" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                 </span>
-                <div>Tell a member of staff quickly if you see harmful or illegal AI content.</div>
+                <div>Be honest about AI help in your schoolwork.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon success" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </span>
+                <div>Use AI to help your learning, not replace it.</div>
               </li>
             </ul>
           </div>
-          
+
           <div class="do-dont-section dont-section">
             <div class="section-header">
               <div class="section-icon dont-icon">Don't</div>
@@ -837,7 +124,13 @@
                 <span class="item-icon danger" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.3 10.59 10.59 16.89 4.3z"/></svg>
                 </span>
-                <div>Create deepfakes, face-swaps, or AI images that target, demean or discriminate.</div>
+                <div>Create deepfakes or altered portraits of real people.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon danger" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.3 10.59 10.59 16.89 4.3z"/></svg>
+                </span>
+                <div>Create harmful or discriminatory content that offends or discriminates.</div>
               </li>
               <li class="item">
                 <span class="item-icon danger" aria-hidden="true">
@@ -884,47 +177,41 @@
         <h3>Be responsible and honest</h3>
         <ul>
           <li><strong>AI should help your learning, not replace it.</strong> Use AI to understand concepts, get feedback on ideas, or help with research — but the thinking and work should be yours.</li>
-          <li><strong>Always be transparent.</strong> If you use AI to help with an assignment, mention it. When in doubt, ask your teacher.</li>
-          <li><strong>Don't cheat.</strong> Submitting AI-generated work as your own is academic dishonesty and will be treated seriously.</li>
+          <li><strong>Always be transparent.</strong> If you use AI to help with an assignment, mention it. Your teachers need to know so they can support your learning properly.</li>
+          <li><strong>Follow your teacher's instructions.</strong> Some assignments may specifically allow or prohibit AI use. When in doubt, ask!</li>
+        </ul>
+
+        <h3>Recommended approach</h3>
+        <ul>
+          <li><strong>Use Microsoft Copilot</strong> through your school account when available — it has better privacy protections for students.</li>
+          <li><strong>Remember age restrictions:</strong> Most AI platforms require users to be 13+ or 18+. Check terms of service.</li>
+          <li><strong>Keep your prompts school-appropriate</strong> and avoid sharing personal information about yourself or others.</li>
         </ul>
 
         <div class="alert alert-warning">
           <div class="alert-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            Important things to remember
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            Remember
           </div>
-          <ul class="mb-0">
-            <li><strong>Age restrictions:</strong> Most AI platforms require users to be 13+ or 18+. Check before you sign up.</li>
-            <li><strong>At school:</strong> You can use Microsoft Copilot through your school account, which has appropriate safeguards.</li>
-            <li><strong>Data sharing:</strong> Every prompt you send to an AI is sharing your personal data. Think twice before typing sensitive information.</li>
-          </ul>
+          <p class="mb-0">Academic dishonesty includes submitting AI-generated work as your own. Use AI as a learning tool, not a shortcut to avoid doing the work yourself.</p>
         </div>
-
-        <h3>Good practice examples</h3>
-        <ul>
-          <li>Asking AI to explain a difficult concept in simpler terms</li>
-          <li>Getting feedback on essay structure or arguments</li>
-          <li>Brainstorming ideas for a creative project</li>
-          <li>Practicing language skills through conversation</li>
-          <li>Asking for help understanding feedback from teachers</li>
-        </ul>
-
-        <p class="text-muted">Remember: AI tools can make mistakes and may give biased or outdated information. Always verify important facts and think critically about AI responses.</p>
       </div>
     </section>
 
     <!-- Section 4: Examples -->
     <section class="section" id="section-4" aria-labelledby="examples-h">
       <div class="content-width">
-        <h2 id="examples-h">Examples & myth-vs-fact</h2>
-        <div class="grid">
+        <h2 id="examples-h">Examples: What's OK and what's not</h2>
+        <p>Click on each scenario to learn more about what's acceptable and what isn't.</p>
+
+        <div class="examples-container">
           <details class="expandable" id="ex1">
             <summary>
               <svg class="chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
-              <span><strong>"It's only for fun" — uploading a friend's photo to an AI app</strong></span>
+              <span><strong>Uploading a class photo to ChatGPT</strong></span>
             </summary>
             <div class="expandable-content">
-              <p><strong>Not allowed.</strong> You must not upload photos of any student or staff to GenAI platforms. This is treated seriously.</p>
+              <p><strong>Not allowed.</strong> Never upload photos of students or staff to any AI platform. This is treated seriously.</p>
               <p class="text-muted mb-0">Policy mapping: Appendix 2; ICT Acceptable Use Agreement.</p>
             </div>
           </details>
@@ -1057,155 +344,12 @@
           </ul>
         </div>
 
-        <p class="mt-8">Want to review any section? Use the "Previous" button below.</p>
-        
-        <div class="mt-8">
-          <a href="Acceptable Use Policy - Students.pdf" download class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15v-5m0 0l-3 3m3-3l3 3M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17M6 13l6-6 6 6"/></svg>
-            Download Full Policy (PDF)
-          </a>
-        </div>
+        <p class="mt-8">Want to review any section? Use the navigation buttons below to go back to any part of this guide.</p>
       </div>
     </section>
-
-    <!-- Navigation -->
-    <div class="nav-buttons">
-      <button class="btn btn-secondary" id="prevBtn" onclick="previousSection()" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
-        Previous
-      </button>
-      <button class="btn btn-primary" id="nextBtn" onclick="nextSection()">
-        Next
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
   </main>
 
-  <footer class="container" style="padding: var(--space-16) 0 var(--space-8) 0;">
-    <div class="content-width text-center">
-      <p class="text-muted">© Haberdashers' Schools — Student guidance summary. Works offline. No analytics or external requests.</p>
-    </div>
-  </footer>
-
-  <script>
-    // ========== Module Navigation System ==========
-    (function(){
-      const NS = "ai-aup:v3";
-      const store = {
-        get(){ try { return JSON.parse(localStorage.getItem(NS)) || { currentSection: 1, completedSections: [] }; } catch { return { currentSection: 1, completedSections: [] }; } },
-        set(v){ try { localStorage.setItem(NS, JSON.stringify(v)); } catch{} }
-      };
-      let state = store.get();
-      let currentSection = state.currentSection || 1;
-      const totalSections = 7;
-
-      // Initialize
-      showSection(currentSection);
-      updateProgress();
-
-      // Navigation functions
-      window.nextSection = function() {
-        if (currentSection < totalSections) {
-          // Mark current section as completed
-          if (!state.completedSections.includes(currentSection)) {
-            state.completedSections.push(currentSection);
-          }
-          
-          currentSection++;
-          showSection(currentSection);
-          updateProgress();
-          
-          // Save state
-          state.currentSection = currentSection;
-          store.set(state);
-        }
-      };
-
-      window.previousSection = function() {
-        if (currentSection > 1) {
-          currentSection--;
-          showSection(currentSection);
-          updateProgress();
-          
-          // Save state
-          state.currentSection = currentSection;
-          store.set(state);
-        }
-      };
-
-      function showSection(sectionNum) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(section => {
-          section.classList.remove('active');
-        });
-        
-        // Show current section
-        const currentSectionEl = document.getElementById(`section-${sectionNum}`);
-        if (currentSectionEl) {
-          currentSectionEl.classList.add('active');
-          currentSectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        // Update navigation buttons
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        prevBtn.disabled = sectionNum === 1;
-        
-        if (sectionNum === totalSections) {
-          nextBtn.style.display = 'none';
-        } else {
-          nextBtn.style.display = 'inline-flex';
-        }
-      }
-
-      function updateProgress() {
-        const progressFill = document.getElementById('progressFill');
-        const progressSteps = document.querySelectorAll('.progress-step');
-        const stepCircles = document.querySelectorAll('.step-circle');
-        
-        // Update progress bar
-        const progressPercent = (currentSection / totalSections) * 100;
-        progressFill.style.width = `${progressPercent}%`;
-        
-        // Update step indicators
-        progressSteps.forEach((step, index) => {
-          const stepNum = index + 1;
-          const circle = stepCircles[index];
-          
-          step.classList.remove('active', 'completed');
-          circle.classList.remove('active', 'completed');
-          
-          if (stepNum === currentSection) {
-            step.classList.add('active');
-            circle.classList.add('active');
-          } else if (state.completedSections.includes(stepNum) || stepNum < currentSection) {
-            step.classList.add('completed');
-            circle.classList.add('completed');
-            circle.innerHTML = '✓';
-          } else {
-            circle.innerHTML = stepNum;
-          }
-        });
-      }
-
-      // Remember which example panels are open
-      document.querySelectorAll("details[id]").forEach(d=>{
-        if(state[d.id]) d.open = true;
-        d.addEventListener("toggle", ()=>{ state[d.id] = d.open; store.set(state); });
-      });
-
-      // Keyboard navigation
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowRight' || e.key === ' ') {
-          e.preventDefault();
-          if (currentSection < totalSections) nextSection();
-        } else if (e.key === 'ArrowLeft') {
-          e.preventDefault();
-          if (currentSection > 1) previousSection();
-        }
-      });
-    })();
-  </script>
+  <!-- Include external JavaScript -->
+  <script src="students.js"></script>
 </body>
 </html>
