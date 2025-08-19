@@ -204,51 +204,115 @@
         
         /* Main Content */
         .main-content {
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
             padding: 40px 24px;
             display: flex;
-            gap: 32px;
+            gap: 24px;
+            align-items: flex-start;
         }
         
         /* Sidebar */
         .sidebar {
-            width: 280px;
+            width: 220px;
             flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-controls {
+            margin-bottom: 20px;
+        }
+        
+        .collapse-all-btn {
+            width: 100%;
+            padding: 10px 16px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .collapse-all-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #1e293b;
         }
         
         .sidebar-section {
             background: white;
             border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .sidebar-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .sidebar-title:hover {
+            color: #3b82f6;
+        }
+        
+        .collapse-icon {
+            font-size: 0.8rem;
+            color: #6b7280;
+            transition: transform 0.2s ease;
+        }
+        
+        .sidebar-section.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .sidebar-section.collapsed .category-list {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
         }
         
         .category-list {
             list-style: none;
+            margin: 0;
+            padding: 0;
+            max-height: 500px;
+            overflow: hidden;
+            opacity: 1;
+            transition: all 0.3s ease;
         }
         
         .category-item {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         
         .category-link {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
             color: #4b5563;
             text-decoration: none;
             transition: all 0.2s;
+            font-size: 0.9rem;
         }
         
         .category-link:hover {
@@ -262,19 +326,27 @@
         }
         
         .category-icon {
-            width: 20px;
+            width: 16px;
             text-align: center;
+            font-size: 0.8rem;
         }
         
         .category-count {
             margin-left: auto;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #9ca3af;
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
         }
         
         /* Prompts Grid */
         .prompts-section {
             flex: 1;
+            min-width: 0;
+            max-width: none;
         }
         
         .section-header {
@@ -282,10 +354,15 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .results-count {
-            color: #6b7280;
+            color: #374151;
+            font-weight: 500;
         }
         
         .sort-dropdown {
@@ -295,12 +372,13 @@
             background: white;
             color: #374151;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         
         .prompts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
         }
         
         /* Prompt Card */
@@ -313,11 +391,13 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            border: 1px solid #f3f4f6;
         }
         
         .prompt-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #3b82f6;
         }
         
         .prompt-header {
@@ -325,10 +405,11 @@
         }
         
         .prompt-title {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
         
         .prompt-meta {
@@ -336,45 +417,49 @@
             gap: 16px;
             font-size: 0.85rem;
             color: #6b7280;
+            margin-bottom: 16px;
         }
         
         .prompt-meta-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
         
         .prompt-description {
             color: #4b5563;
             line-height: 1.6;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
         
         .prompt-categories {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         
         .category-badge {
-            padding: 4px 12px;
+            padding: 6px 12px;
             background: #eff6ff;
             color: #3b82f6;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid #dbeafe;
         }
         
         .prompt-actions {
             display: flex;
             gap: 12px;
-            padding-top: 16px;
+            padding-top: 20px;
             border-top: 1px solid #f3f4f6;
         }
         
         .prompt-action-btn {
             flex: 1;
-            padding: 8px 16px;
+            padding: 10px 16px;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             background: white;
@@ -386,11 +471,13 @@
             gap: 8px;
             transition: all 0.2s;
             font-size: 0.9rem;
+            font-weight: 500;
         }
         
         .prompt-action-btn:hover {
             background: #f9fafb;
             border-color: #d1d5db;
+            transform: translateY(-1px);
         }
         
         .prompt-action-btn.primary {
@@ -401,6 +488,7 @@
         
         .prompt-action-btn.primary:hover {
             background: #2563eb;
+            transform: translateY(-1px);
         }
         
         /* Modal */
@@ -640,18 +728,57 @@
         }
         
         /* Responsive */
+        @media (max-width: 1200px) {
+            .prompts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+        
         @media (max-width: 1024px) {
             .main-content {
                 flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
             }
             
             .sidebar {
                 width: 100%;
                 order: -1;
+                position: static;
+            }
+            
+            .sidebar-section {
+                display: inline-block;
+                width: calc(33.33% - 20px);
+                margin-right: 20px;
+                vertical-align: top;
+            }
+            
+            .sidebar-section:last-child {
+                margin-right: 0;
+            }
+            
+            .prompts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-section {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 16px;
             }
             
             .prompts-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
             }
         }
         
@@ -676,6 +803,18 @@
             .modal-header,
             .modal-body {
                 padding: 24px;
+            }
+            
+            .main-content {
+                padding: 20px 16px;
+            }
+            
+            .nav-container {
+                padding: 12px 16px;
+            }
+            
+            .search-section {
+                padding: 20px 16px;
             }
         }
     </style>
@@ -733,44 +872,44 @@
     <main class="main-content">
         <!-- Sidebar -->
         <aside class="sidebar">
+            <!-- Collapse/Expand All Button -->
+            <div class="sidebar-controls">
+                <button class="collapse-all-btn" onclick="toggleAllSections()">
+                    <i class="fas fa-compress-alt"></i>
+                    <span>Collapse All</span>
+                </button>
+            </div>
+            
             <!-- Subject Categories -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Subjects</h3>
+            <div class="sidebar-section" data-section="subjects">
+                <h3 class="sidebar-title" onclick="toggleSection('subjects')">
+                    Subjects
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </h3>
                 <ul class="category-list" id="subjectCategories">
                     <!-- Categories will be loaded dynamically -->
                 </ul>
             </div>
             
-            <!-- Purpose Categories -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Purpose</h3>
-                <ul class="category-list" id="purposeCategories">
+            <!-- Phase Categories -->
+            <div class="sidebar-section" data-section="phases">
+                <h3 class="sidebar-title" onclick="toggleSection('phases')">
+                    Phase
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </h3>
+                <ul class="category-list" id="phaseCategories">
                     <!-- Categories will be loaded dynamically -->
                 </ul>
             </div>
             
-            <!-- Difficulty Level -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Difficulty</h3>
-                <ul class="category-list">
-                    <li class="category-item">
-                        <a href="#" class="category-link" data-difficulty="beginner">
-                            <i class="fas fa-circle category-icon" style="color: #10b981;"></i>
-                            <span>Beginner</span>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link" data-difficulty="intermediate">
-                            <i class="fas fa-circle category-icon" style="color: #f59e0b;"></i>
-                            <span>Intermediate</span>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link" data-difficulty="advanced">
-                            <i class="fas fa-circle category-icon" style="color: #ef4444;"></i>
-                            <span>Advanced</span>
-                        </a>
-                    </li>
+            <!-- Type Categories -->
+            <div class="sidebar-section" data-section="types">
+                <h3 class="sidebar-title" onclick="toggleSection('types')">
+                    Type
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </h3>
+                <ul class="category-list" id="typeCategories">
+                    <!-- Categories will be loaded dynamically -->
                 </ul>
             </div>
         </aside>
@@ -782,7 +921,7 @@
                 <select class="sort-dropdown" id="sortDropdown">
                     <option value="newest">Newest First</option>
                     <option value="popular">Most Popular</option>
-                    <option value="rating">Highest Rated</option>
+                    <option value="votes">Highest Rated</option>
                 </select>
             </div>
             
@@ -816,19 +955,16 @@
                 <div class="prompt-details">
                     <div class="prompt-meta" style="margin-bottom: 16px;">
                         <span class="prompt-meta-item">
-                            <i class="fas fa-clock"></i>
-                            Saves <span id="modalTimeSaved">15 mins</span>
+                            <i class="fas fa-user"></i>
+                            by <span id="modalCreatedBy">Anonymous</span>
                         </span>
                         <span class="prompt-meta-item">
-                            <i class="fas fa-robot"></i>
-                            <span id="modalAITool">Any AI</span>
+                            <i class="fas fa-thumbs-up"></i>
+                            <span id="modalVotes">0</span> votes
                         </span>
                     </div>
                     
                     <div id="modalCategories" class="prompt-categories"></div>
-                    
-                    <div id="modalTips" style="margin-top: 24px;"></div>
-                    <div id="modalExample" style="margin-top: 24px;"></div>
                 </div>
             </div>
         </div>
@@ -856,45 +992,34 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="promptText">Prompt Text*</label>
-                        <textarea class="form-textarea" id="promptText" style="min-height: 200px;" required></textarea>
+                        <label class="form-label" for="promptContent">Prompt Content*</label>
+                        <textarea class="form-textarea" id="promptContent" style="min-height: 200px;" required></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Categories</label>
-                        <div class="checkbox-group" id="categoryCheckboxes">
-                            <!-- Categories will be loaded dynamically -->
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="timeSaved">Time Saved</label>
-                        <input type="text" class="form-input" id="timeSaved" placeholder="e.g., 15 mins, 1 hour">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="difficultyLevel">Difficulty Level</label>
-                        <select class="form-select" id="difficultyLevel">
-                            <option value="">Select difficulty</option>
-                            <option value="beginner">Beginner</option>
-                            <option value="intermediate">Intermediate</option>
-                            <option value="advanced">Advanced</option>
+                        <label class="form-label" for="promptSubject">Subject*</label>
+                        <select class="form-select" id="promptSubject" required>
+                            <option value="">Select subject</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="aiTool">AI Tool</label>
-                        <input type="text" class="form-input" id="aiTool" placeholder="e.g., ChatGPT, Claude, Any">
+                        <label class="form-label" for="promptPhase">Phase*</label>
+                        <select class="form-select" id="promptPhase" required>
+                            <option value="">Select phase</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="tips">Tips (Optional)</label>
-                        <textarea class="form-textarea" id="tips" placeholder="Any tips for using this prompt effectively"></textarea>
+                        <label class="form-label" for="promptType">Type*</label>
+                        <select class="form-select" id="promptType" required>
+                            <option value="">Select type</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="exampleOutput">Example Output (Optional)</label>
-                        <textarea class="form-textarea" id="exampleOutput" placeholder="An example of what the AI might generate"></textarea>
+                        <label class="form-label" for="promptCreatedBy">Created By</label>
+                        <input type="text" class="form-input" id="promptCreatedBy" placeholder="Your name (optional)">
                     </div>
                     
                     <div class="form-actions">
@@ -906,17 +1031,36 @@
         </div>
     </div>
 
-    <script>
-        // API Configuration
-        const API_URL = 'http://localhost:3000/api';
+    <!-- Toast Container -->
+    <div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 2000;"></div>
+
+    <script type="module">
+        // Import Firebase modules
+        import { 
+            collection, 
+            addDoc, 
+            getDocs, 
+            doc, 
+            updateDoc, 
+            increment,
+            orderBy,
+            query,
+            where,
+            limit,
+            startAfter,
+            getCountFromServer
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { db } from '../js/firebase.js';
+        import { categories } from '../js/categories.js';
         
         // State
         let prompts = [];
-        let categories = [];
+        let filteredPrompts = [];
         let currentFilters = {
             search: '',
-            category: null,
-            difficulty: null,
+            subject: null,
+            phase: null,
+            type: null,
             sort: 'newest'
         };
         
@@ -928,77 +1072,138 @@
         });
         
         // Load categories
-        async function loadCategories() {
+        function loadCategories() {
+            // Populate sidebar categories
+            const subjectCats = categories.subjects;
+            const phaseCats = categories.phases;
+            const typeCats = categories.types;
+            
+            document.getElementById('subjectCategories').innerHTML = subjectCats.map(cat => `
+                <li class="category-item">
+                    <a href="#" class="category-link" data-category="subject" data-value="${cat}">
+                        <i class="fas fa-tag category-icon"></i>
+                        <span>${cat}</span>
+                        <span class="category-count">0</span>
+                    </a>
+                </li>
+            `).join('');
+            
+            document.getElementById('phaseCategories').innerHTML = phaseCats.map(cat => `
+                <li class="category-item">
+                    <a href="#" class="category-link" data-category="phase" data-value="${cat}">
+                        <i class="fas fa-tag category-icon"></i>
+                        <span>${cat}</span>
+                        <span class="category-count">0</span>
+                    </a>
+                </li>
+            `).join('');
+            
+            document.getElementById('typeCategories').innerHTML = typeCats.map(cat => `
+                <li class="category-item">
+                    <a href="#" class="category-link" data-category="type" data-value="${cat}">
+                        <i class="fas fa-tag category-icon"></i>
+                        <span>${cat}</span>
+                        <span class="category-count">0</span>
+                    </a>
+                </li>
+            `).join('');
+            
+            // Populate form dropdowns
+            document.getElementById('promptSubject').innerHTML = '<option value="">Select subject</option>' + 
+                subjectCats.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+            
+            document.getElementById('promptPhase').innerHTML = '<option value="">Select phase</option>' + 
+                phaseCats.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+            
+            document.getElementById('promptType').innerHTML = '<option value="">Select type</option>' + 
+                typeCats.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+        }
+        
+        // Load prompts from Firebase
+        async function loadPrompts() {
             try {
-                const response = await fetch(`${API_URL}/categories`);
-                categories = await response.json();
+                const promptsRef = collection(db, 'prompts');
+                let q;
                 
-                // Populate sidebar categories
-                const subjectCats = categories.filter(c => c.type === 'subject');
-                const purposeCats = categories.filter(c => c.type === 'purpose');
+                // Apply sorting
+                switch(currentFilters.sort) {
+                    case 'popular':
+                        q = query(promptsRef, orderBy('votes', 'desc'));
+                        break;
+                    case 'newest':
+                        q = query(promptsRef, orderBy('createdAt', 'desc'));
+                        break;
+                    case 'votes':
+                        q = query(promptsRef, orderBy('votes', 'desc'));
+                        break;
+                    default:
+                        q = query(promptsRef, orderBy('createdAt', 'desc'));
+                }
                 
-                document.getElementById('subjectCategories').innerHTML = subjectCats.map(cat => `
-                    <li class="category-item">
-                        <a href="#" class="category-link" data-category="${cat.id}">
-                            <i class="${cat.icon || 'fas fa-tag'} category-icon"></i>
-                            <span>${cat.name}</span>
-                            <span class="category-count">0</span>
-                        </a>
-                    </li>
-                `).join('');
+                const snapshot = await getDocs(q);
+                prompts = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
                 
-                document.getElementById('purposeCategories').innerHTML = purposeCats.map(cat => `
-                    <li class="category-item">
-                        <a href="#" class="category-link" data-category="${cat.id}">
-                            <i class="${cat.icon || 'fas fa-tag'} category-icon"></i>
-                            <span>${cat.name}</span>
-                            <span class="category-count">0</span>
-                        </a>
-                    </li>
-                `).join('');
+                // Apply filters
+                applyFilters();
+                updateCategoryCounts();
                 
-                // Populate form checkboxes
-                document.getElementById('categoryCheckboxes').innerHTML = categories.map(cat => `
-                    <label class="checkbox-label">
-                        <input type="checkbox" value="${cat.id}" name="categories">
-                        <span>${cat.name}</span>
-                    </label>
-                `).join('');
             } catch (error) {
-                console.error('Error loading categories:', error);
+                console.error('Error loading prompts:', error);
+                showToast('Error loading prompts. Please try again.', 'error');
             }
         }
         
-        // Load prompts
-        async function loadPrompts() {
-            try {
-                const params = new URLSearchParams();
-                if (currentFilters.search) params.append('search', currentFilters.search);
-                if (currentFilters.category) params.append('category', currentFilters.category);
-                params.append('sort', currentFilters.sort);
+        // Apply filters
+        function applyFilters() {
+            filteredPrompts = prompts.filter(prompt => {
+                const matchesSearch = !currentFilters.search || 
+                    prompt.title.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
+                    prompt.description.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
+                    prompt.content.toLowerCase().includes(currentFilters.search.toLowerCase());
                 
-                const response = await fetch(`${API_URL}/prompts?${params}`);
-                prompts = await response.json();
+                const matchesSubject = !currentFilters.subject || prompt.subject === currentFilters.subject;
+                const matchesPhase = !currentFilters.phase || prompt.phase === currentFilters.phase;
+                const matchesType = !currentFilters.type || prompt.type === currentFilters.type;
                 
-                displayPrompts();
-                updateResultCount();
-            } catch (error) {
-                console.error('Error loading prompts:', error);
-                document.getElementById('promptsGrid').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-circle empty-icon"></i>
-                        <h3 class="empty-title">Unable to load prompts</h3>
-                        <p class="empty-description">Please check your connection and try again.</p>
-                    </div>
-                `;
-            }
+                return matchesSearch && matchesSubject && matchesPhase && matchesType;
+            });
+            
+            displayPrompts();
+            updateResultCount();
+        }
+        
+        // Update category counts
+        function updateCategoryCounts() {
+            // Update subject counts
+            categories.subjects.forEach(subject => {
+                const count = prompts.filter(p => p.subject === subject).length;
+                const element = document.querySelector(`[data-category="subject"][data-value="${subject}"] .category-count`);
+                if (element) element.textContent = count;
+            });
+            
+            // Update phase counts
+            categories.phases.forEach(phase => {
+                const count = prompts.filter(p => p.phase === phase).length;
+                const element = document.querySelector(`[data-category="phase"][data-value="${phase}"] .category-count`);
+                if (element) element.textContent = count;
+            });
+            
+            // Update type counts
+            categories.types.forEach(type => {
+                const count = prompts.filter(p => p.type === type).length;
+                const element = document.querySelector(`[data-category="type"][data-value="${type}"] .category-count`);
+                if (element) element.textContent = count;
+            });
         }
         
         // Display prompts
         function displayPrompts() {
             const grid = document.getElementById('promptsGrid');
             
-            if (prompts.length === 0) {
+            if (filteredPrompts.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-sparkles empty-icon"></i>
@@ -1012,42 +1217,37 @@
                 return;
             }
             
-            grid.innerHTML = prompts.map(prompt => {
-                const categoryNames = prompt.category_names ? prompt.category_names.split(',') : [];
-                return `
-                    <div class="prompt-card" onclick="viewPrompt(${prompt.id})">
-                        <div class="prompt-header">
-                            <h3 class="prompt-title">${prompt.title}</h3>
-                            <div class="prompt-meta">
-                                ${prompt.time_saved ? `
-                                    <span class="prompt-meta-item">
-                                        <i class="fas fa-clock"></i>
-                                        ${prompt.time_saved}
-                                    </span>
-                                ` : ''}
-                                <span class="prompt-meta-item">
-                                    <i class="fas fa-eye"></i>
-                                    ${prompt.usage_count || 0} uses
-                                </span>
-                            </div>
-                        </div>
-                        <p class="prompt-description">${prompt.description}</p>
-                        <div class="prompt-categories">
-                            ${categoryNames.map(name => `
-                                <span class="category-badge">${name}</span>
-                            `).join('')}
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-action-btn" onclick="event.stopPropagation(); copyPromptText('${prompt.id}')">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                            <button class="prompt-action-btn primary" onclick="event.stopPropagation(); viewPrompt(${prompt.id})">
-                                <i class="fas fa-eye"></i> View
-                            </button>
+            grid.innerHTML = filteredPrompts.map(prompt => `
+                <div class="prompt-card" onclick="viewPrompt('${prompt.id}')">
+                    <div class="prompt-header">
+                        <h3 class="prompt-title">${escapeHtml(prompt.title)}</h3>
+                        <div class="prompt-meta">
+                            <span class="prompt-meta-item">
+                                <i class="fas fa-thumbs-up"></i>
+                                ${prompt.votes || 0} votes
+                            </span>
+                            <span class="prompt-meta-item">
+                                <i class="fas fa-user"></i>
+                                by ${escapeHtml(prompt.createdBy || 'Anonymous')}
+                            </span>
                         </div>
                     </div>
-                `;
-            }).join('');
+                    <p class="prompt-description">${escapeHtml(prompt.description)}</p>
+                    <div class="prompt-categories">
+                        <span class="category-badge">${prompt.subject}</span>
+                        <span class="category-badge">${prompt.phase}</span>
+                        <span class="category-badge">${prompt.type}</span>
+                    </div>
+                    <div class="prompt-actions">
+                        <button class="prompt-action-btn" onclick="event.stopPropagation(); copyPromptText('${prompt.id}')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="prompt-action-btn primary" onclick="event.stopPropagation(); viewPrompt('${prompt.id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
         
         // Setup event listeners
@@ -1059,7 +1259,7 @@
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(() => {
                     currentFilters.search = e.target.value;
-                    loadPrompts();
+                    applyFilters();
                 }, 300);
             });
             
@@ -1078,10 +1278,11 @@
                             currentFilters.sort = 'newest';
                             break;
                         case 'timesaver':
-                            // Implement time saver filter
+                            currentFilters.type = 'Time Saver';
                             break;
                         default:
                             currentFilters.sort = 'newest';
+                            currentFilters.type = null;
                     }
                     loadPrompts();
                 });
@@ -1092,22 +1293,21 @@
                 if (e.target.closest('.category-link')) {
                     e.preventDefault();
                     const link = e.target.closest('.category-link');
-                    const categoryId = link.dataset.category;
-                    const difficulty = link.dataset.difficulty;
+                    const categoryType = link.dataset.category;
+                    const categoryValue = link.dataset.value;
                     
-                    if (categoryId) {
-                        currentFilters.category = currentFilters.category === categoryId ? null : categoryId;
-                    } else if (difficulty) {
-                        currentFilters.difficulty = currentFilters.difficulty === difficulty ? null : difficulty;
-                    }
-                    
-                    // Update active state
-                    document.querySelectorAll('.category-link').forEach(l => l.classList.remove('active'));
-                    if (currentFilters.category || currentFilters.difficulty) {
+                    // Toggle filter
+                    if (currentFilters[categoryType] === categoryValue) {
+                        currentFilters[categoryType] = null;
+                        link.classList.remove('active');
+                    } else {
+                        // Clear other filters of the same type
+                        document.querySelectorAll(`[data-category="${categoryType}"]`).forEach(l => l.classList.remove('active'));
+                        currentFilters[categoryType] = categoryValue;
                         link.classList.add('active');
                     }
                     
-                    loadPrompts();
+                    applyFilters();
                 }
             });
             
@@ -1126,114 +1326,81 @@
         
         // View prompt
         async function viewPrompt(promptId) {
-            try {
-                const response = await fetch(`${API_URL}/prompts/${promptId}`);
-                const prompt = await response.json();
-                
-                document.getElementById('modalPromptTitle').textContent = prompt.title;
-                document.getElementById('modalPromptText').textContent = prompt.prompt_text;
-                document.getElementById('modalTimeSaved').textContent = prompt.time_saved || 'N/A';
-                document.getElementById('modalAITool').textContent = prompt.ai_tool || 'Any AI';
-                
-                // Categories
-                const categoryNames = prompt.category_names ? prompt.category_names.split(',') : [];
-                document.getElementById('modalCategories').innerHTML = categoryNames.map(name => `
-                    <span class="category-badge">${name}</span>
-                `).join('');
-                
-                // Tips
-                if (prompt.tips) {
-                    document.getElementById('modalTips').innerHTML = `
-                        <h4 style="margin-bottom: 8px;"><i class="fas fa-lightbulb"></i> Tips</h4>
-                        <p>${prompt.tips}</p>
-                    `;
-                } else {
-                    document.getElementById('modalTips').innerHTML = '';
-                }
-                
-                // Example
-                if (prompt.example_output) {
-                    document.getElementById('modalExample').innerHTML = `
-                        <h4 style="margin-bottom: 8px;"><i class="fas fa-file-alt"></i> Example Output</h4>
-                        <div style="background: #f9fafb; padding: 16px; border-radius: 8px;">
-                            ${prompt.example_output}
-                        </div>
-                    `;
-                } else {
-                    document.getElementById('modalExample').innerHTML = '';
-                }
-                
-                showModal('viewPromptModal');
-            } catch (error) {
-                console.error('Error viewing prompt:', error);
-            }
+            const prompt = prompts.find(p => p.id === promptId);
+            if (!prompt) return;
+            
+            document.getElementById('modalPromptTitle').textContent = prompt.title;
+            document.getElementById('modalPromptText').textContent = prompt.content;
+            document.getElementById('modalCreatedBy').textContent = prompt.createdBy || 'Anonymous';
+            document.getElementById('modalVotes').textContent = prompt.votes || 0;
+            
+            // Categories
+            document.getElementById('modalCategories').innerHTML = `
+                <span class="category-badge">${prompt.subject}</span>
+                <span class="category-badge">${prompt.phase}</span>
+                <span class="category-badge">${prompt.type}</span>
+            `;
+            
+            showModal('viewPromptModal');
         }
         
         // Copy prompt
         async function copyPrompt() {
             const text = document.getElementById('modalPromptText').textContent;
-            await navigator.clipboard.writeText(text);
-            
-            const button = document.querySelector('.copy-button');
-            button.classList.add('copied');
-            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            
-            setTimeout(() => {
-                button.classList.remove('copied');
-                button.innerHTML = '<i class="fas fa-copy"></i> Copy';
-            }, 2000);
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('Prompt copied to clipboard!', 'success');
+            } catch (error) {
+                console.error('Failed to copy:', error);
+                showToast('Failed to copy prompt.', 'error');
+            }
         }
         
         // Copy prompt text directly
         async function copyPromptText(promptId) {
-            const prompt = prompts.find(p => p.id == promptId);
+            const prompt = prompts.find(p => p.id === promptId);
             if (prompt) {
-                await navigator.clipboard.writeText(prompt.prompt_text);
-                
-                // Track copy
-                fetch(`${API_URL}/prompts/${promptId}/copy`, { method: 'POST' });
-                
-                // Show feedback
-                event.target.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    event.target.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                }, 2000);
+                try {
+                    await navigator.clipboard.writeText(prompt.content);
+                    showToast('Prompt copied to clipboard!', 'success');
+                    
+                    // Track copy (increment usage count)
+                    await updateDoc(doc(db, 'prompts', promptId), {
+                        usageCount: increment(1)
+                    });
+                } catch (error) {
+                    console.error('Failed to copy:', error);
+                    showToast('Failed to copy prompt.', 'error');
+                }
             }
         }
         
-        // Save prompt
+        // Save prompt to Firebase
         async function savePrompt() {
             const formData = {
-                title: document.getElementById('promptTitle').value,
-                description: document.getElementById('promptDescription').value,
-                prompt_text: document.getElementById('promptText').value,
-                time_saved: document.getElementById('timeSaved').value,
-                difficulty_level: document.getElementById('difficultyLevel').value,
-                ai_tool: document.getElementById('aiTool').value,
-                tips: document.getElementById('tips').value,
-                example_output: document.getElementById('exampleOutput').value,
-                categories: Array.from(document.querySelectorAll('input[name="categories"]:checked')).map(cb => cb.value)
+                title: document.getElementById('promptTitle').value.trim(),
+                description: document.getElementById('promptDescription').value.trim(),
+                content: document.getElementById('promptContent').value.trim(),
+                subject: document.getElementById('promptSubject').value,
+                phase: document.getElementById('promptPhase').value,
+                type: document.getElementById('promptType').value,
+                createdBy: document.getElementById('promptCreatedBy').value.trim() || 'Anonymous',
+                votes: 0,
+                usageCount: 0,
+                createdAt: new Date()
             };
             
             try {
-                const response = await fetch(`${API_URL}/prompts`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
+                await addDoc(collection(db, 'prompts'), formData);
                 
-                if (response.ok) {
-                    closeModal('addPromptModal');
-                    document.getElementById('promptForm').reset();
-                    loadPrompts();
-                } else {
-                    alert('Error saving prompt. Please try again.');
-                }
+                closeModal('addPromptModal');
+                document.getElementById('promptForm').reset();
+                showToast('Prompt added successfully!', 'success');
+                await loadPrompts();
+                
             } catch (error) {
                 console.error('Error saving prompt:', error);
-                alert('Error saving prompt. Please try again.');
+                showToast('Error saving prompt. Please try again.', 'error');
             }
         }
         
@@ -1246,6 +1413,9 @@
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
             document.body.style.overflow = '';
+            if (modalId === 'addPromptModal') {
+                document.getElementById('promptForm').reset();
+            }
         }
         
         function showAddPromptModal() {
@@ -1254,7 +1424,36 @@
         
         // Update result count
         function updateResultCount() {
-            document.getElementById('resultCount').textContent = prompts.length;
+            document.getElementById('resultCount').textContent = filteredPrompts.length;
+        }
+        
+        // Utility functions
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                margin-bottom: 10px;
+                animation: slideIn 0.3s ease-out;
+                background-color: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            `;
+            toast.textContent = message;
+            
+            const container = document.getElementById('toastContainer');
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-in forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
         
         // Close modal on backdrop click
@@ -1264,6 +1463,113 @@
                     closeModal(modal.id);
                 }
             });
+        });
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Make functions globally accessible
+        window.viewPrompt = viewPrompt;
+        window.copyPrompt = copyPrompt;
+        window.copyPromptText = copyPromptText;
+        window.showAddPromptModal = showAddPromptModal;
+        window.closeModal = closeModal;
+        window.toggleSection = toggleSection;
+        window.toggleAllSections = toggleAllSections;
+        
+        // Collapsible sections functionality
+        function toggleSection(sectionName) {
+            const section = document.querySelector(`[data-section="${sectionName}"]`);
+            if (section) {
+                section.classList.toggle('collapsed');
+                
+                // Update icon rotation
+                const icon = section.querySelector('.collapse-icon');
+                if (section.classList.contains('collapsed')) {
+                    icon.style.transform = 'rotate(-90deg)';
+                } else {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+                
+                // Save state to localStorage
+                const collapsedSections = JSON.parse(localStorage.getItem('collapsedSections') || '[]');
+                if (section.classList.contains('collapsed')) {
+                    if (!collapsedSections.includes(sectionName)) {
+                        collapsedSections.push(sectionName);
+                    }
+                } else {
+                    const index = collapsedSections.indexOf(sectionName);
+                    if (index > -1) {
+                        collapsedSections.splice(index, 1);
+                    }
+                }
+                localStorage.setItem('collapsedSections', JSON.stringify(collapsedSections));
+            }
+        }
+        
+        function toggleAllSections() {
+            const sections = document.querySelectorAll('.sidebar-section');
+            const allCollapsed = Array.from(sections).every(section => section.classList.contains('collapsed'));
+            const button = document.querySelector('.collapse-all-btn');
+            const buttonIcon = button.querySelector('i');
+            const buttonText = button.querySelector('span');
+            
+            sections.forEach(section => {
+                const sectionName = section.dataset.section;
+                const icon = section.querySelector('.collapse-icon');
+                
+                if (allCollapsed) {
+                    // Expand all
+                    section.classList.remove('collapsed');
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    // Collapse all
+                    section.classList.add('collapsed');
+                    icon.style.transform = 'rotate(-90deg)';
+                }
+            });
+            
+            // Update button text and icon
+            if (allCollapsed) {
+                buttonIcon.className = 'fas fa-compress-alt';
+                buttonText.textContent = 'Collapse All';
+            } else {
+                buttonIcon.className = 'fas fa-expand-alt';
+                buttonText.textContent = 'Expand All';
+            }
+            
+            // Update localStorage
+            const collapsedSections = allCollapsed ? [] : ['subjects', 'phases', 'types'];
+            localStorage.setItem('collapsedSections', JSON.stringify(collapsedSections));
+        }
+        
+        // Restore collapsed state on page load
+        function restoreCollapsedState() {
+            const collapsedSections = JSON.parse(localStorage.getItem('collapsedSections') || '[]');
+            collapsedSections.forEach(sectionName => {
+                const section = document.querySelector(`[data-section="${sectionName}"]`);
+                if (section) {
+                    section.classList.add('collapsed');
+                    const icon = section.querySelector('.collapse-icon');
+                    icon.style.transform = 'rotate(-90deg)';
+                }
+            });
+        }
+        
+        // Initialize collapsed state
+        document.addEventListener('DOMContentLoaded', () => {
+            restoreCollapsedState();
         });
     </script>
 </body>

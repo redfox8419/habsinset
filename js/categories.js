@@ -22,8 +22,6 @@ export const categories = {
     'Key Stage 3',
     'Key Stage 4',
     'Key Stage 5',
-    'Higher Education',
-    'Adult Learning',
     'All Ages'
   ],
   
