@@ -1,6 +1,20 @@
 {
   "tools": [
     {
+      "id": "copilot",
+      "name": "Microsoft Copilot",
+      "domain": "copilot.microsoft.com",
+      "url": "https://copilot.microsoft.com",
+      "pricing": "Free with school account",
+      "description": "Microsoft's AI assistant with deep Office integration. Enterprise users get enhanced security, data protection, and compliance features when logged in with work accounts.",
+      "features": [
+        "Microsoft 365 integration",
+        "Enterprise security & compliance",
+        "Document creation & analysis"
+      ],
+      "bestFor": "Microsoft Office users, enterprise security needs"
+    },
+    {
       "id": "chatgpt",
       "name": "ChatGPT",
       "domain": "chat.openai.com",
@@ -57,20 +71,6 @@
       "bestFor": "Research, current events, fact-checking"
     },
     {
-      "id": "copilot",
-      "name": "Microsoft Copilot",
-      "domain": "copilot.microsoft.com",
-      "url": "https://copilot.microsoft.com",
-      "pricing": "Free + $20/mo",
-      "description": "Microsoft's AI assistant with deep Office integration. Enterprise users get enhanced security, data protection, and compliance features when logged in with work accounts.",
-      "features": [
-        "Microsoft 365 integration",
-        "Enterprise security & compliance",
-        "Document creation & analysis"
-      ],
-      "bestFor": "Microsoft Office users, enterprise security needs"
-    },
-    {
       "id": "grok",
       "name": "Grok",
       "domain": "grok.com",
@@ -112,7 +112,6 @@
       ],
       "bestFor": "Comprehensive education toolkit"
     },
-
     {
       "id": "curipod",
       "name": "Curipod",

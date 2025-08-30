@@ -33,8 +33,12 @@ export const categories = {
     'Time Saver',
     'Communication',
     'Admin Task',
-    'Creative Writing',
     'Analysis',
     'Research'
+  ]
+  ,
+  audience: [
+    'Teacher',
+    'Students'
   ]
 };
