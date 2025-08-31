@@ -23,6 +23,8 @@ import { categories } from './categories.js';
 
 // State
 let prompts = [];
+let deepLinkId = null;
+let deepLinkOpened = false;
 let filteredPrompts = [];
 let currentViewedPromptId = null;
 let currentFilters = {
@@ -33,8 +35,28 @@ let currentFilters = {
   sort: 'newest'
 };
 
+// Minimal inline SVG icon system for consistent, professional icons
+function svgIcon(name, size = 18, stroke = 1.8) {
+  const base = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"`;
+  switch (name) {
+    case 'copy':
+      return `<svg ${base}><rect x="9" y="9" width="10" height="10" rx="2"/><rect x="5" y="5" width="10" height="10" rx="2"/></svg>`;
+    case 'eye':
+      return `<svg ${base}><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    case 'upvote':
+      return `<i class="fas fa-thumbs-up" aria-hidden="true"></i>`;
+    case 'check':
+      return `<svg ${base}><path d="M5 13l4 4L19 7"/></svg>`;
+    default:
+      return '';
+  }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  deepLinkId = params.get('id');
+
   loadCategories();
   loadPrompts();
   setupEventListeners();
@@ -132,6 +154,20 @@ async function loadPrompts() {
     applyFilters();
     updateCategoryCounts();
 
+    // Deep link to a prompt by id (open modal) once after initial load
+    if (deepLinkId && !deepLinkOpened) {
+      const match = prompts.find(p => p.id === deepLinkId);
+      if (match) {
+        deepLinkOpened = true;
+        viewPrompt(deepLinkId);
+        // Optional: scroll to the card
+        setTimeout(() => {
+          const el = document.querySelector(`.prompt-card[onclick*="${deepLinkId}"]`);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+
   } catch (error) {
     console.error('Error loading prompts:', error);
     showToast('Error loading prompts. Please try again.', 'error');
@@ -214,11 +250,11 @@ function displayPrompts() {
         <h3 class="prompt-title">${escapeHtml(prompt.title || '')}</h3>
         <div class="prompt-meta">
           <span class="prompt-meta-item">
-            <i class="fas fa-thumbs-up"></i>
+            ${svgIcon('upvote', 16, 1.7)}
             ${prompt.votes || 0}
           </span>
           <span class="prompt-meta-item">
-            <i class="fas fa-copy"></i>
+            ${svgIcon('copy', 16, 1.7)}
             ${prompt.usageCount || 0}
           </span>
           <span class="prompt-meta-item">
@@ -237,13 +273,13 @@ function displayPrompts() {
       </div>
       <div class="prompt-actions">
         <button class="prompt-action-btn" onclick="event.stopPropagation(); copyPromptText('${prompt.id}')">
-          <i class="fas fa-copy"></i> Copy
+          ${svgIcon('copy')} Copy
         </button>
         <button class="prompt-action-btn primary" onclick="event.stopPropagation(); viewPrompt('${prompt.id}')">
-          <i class="fas fa-eye"></i> View
+          ${svgIcon('eye')} View
         </button>
         <button class="prompt-action-btn" ${hasVoted(prompt.id) ? 'disabled' : ''} onclick="event.stopPropagation(); handleVote('${prompt.id}')">
-          ${hasVoted(prompt.id) ? '✅ Voted' : '👍 Vote'}
+          ${hasVoted(prompt.id) ? `${svgIcon('check')} Voted` : `${svgIcon('upvote')} Vote`}
         </button>
       </div>
     </div>
@@ -363,7 +399,7 @@ async function viewPrompt(promptId) {
   if (btn) {
     const voted = hasVoted(promptId);
     btn.disabled = voted;
-    btn.textContent = voted ? '✅ Voted' : '👍 Vote';
+    renderVoteButton(btn, voted);
     btn.onclick = async (e) => {
       e.preventDefault();
       await handleVote(promptId);
@@ -373,7 +409,7 @@ async function viewPrompt(promptId) {
         document.getElementById('modalVotes').textContent = p.votes || 0;
       }
       btn.disabled = true;
-      btn.textContent = '✅ Voted';
+      renderVoteButton(btn, true);
     };
   }
 }
@@ -398,7 +434,7 @@ async function handleVote(promptId) {
     const btn = document.getElementById('modalVoteButton');
     if (btn) {
       btn.disabled = true;
-      btn.textContent = '✅ Voted';
+      renderVoteButton(btn, true);
     }
     const p2 = prompts.find(x => x.id === promptId);
     if (p2) {
@@ -577,6 +613,11 @@ window.closeModal = closeModal;
 window.toggleSection = toggleSection;
 window.toggleAllSections = toggleAllSections;
 window.handleVote = handleVote;
+
+// Helpers
+function renderVoteButton(btn, voted) {
+  btn.innerHTML = voted ? `${svgIcon('check')} Voted` : `${svgIcon('upvote')} Vote`;
+}
 
 // Collapsible sections functionality
 function toggleSection(sectionName) {

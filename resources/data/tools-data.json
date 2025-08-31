@@ -15,6 +15,20 @@
       "bestFor": "Microsoft Office users, enterprise security needs"
     },
     {
+      "id": "notebooklm",
+      "name": "NotebookLM",
+      "domain": "notebooklm.google.com",
+      "url": "https://notebooklm.google.com",
+      "pricing": "Free",
+      "description": "Upload your documents and get AI-powered summaries, quizzes, and study guides with accurate citations.",
+      "features": [
+        "Document upload & analysis",
+        "Generate study guides & quizzes",
+        "Audio overviews (AI podcasts)"
+      ],
+      "bestFor": "Document analysis, creating study materials"
+    },
+    {
       "id": "chatgpt",
       "name": "ChatGPT",
       "domain": "chat.openai.com",
@@ -84,20 +98,7 @@
       ],
       "bestFor": "Current events, social media trends, real-time info"
     },
-    {
-      "id": "notebooklm",
-      "name": "NotebookLM",
-      "domain": "notebooklm.google.com",
-      "url": "https://notebooklm.google.com",
-      "pricing": "Free",
-      "description": "Upload your documents and get AI-powered summaries, quizzes, and study guides with accurate citations.",
-      "features": [
-        "Document upload & analysis",
-        "Generate study guides & quizzes",
-        "Audio overviews (AI podcasts)"
-      ],
-      "bestFor": "Document analysis, creating study materials"
-    },
+    
     {
       "id": "magicschool",
       "name": "MagicSchool AI",
@@ -111,6 +112,20 @@
         "Privacy-first, COPPA compliant"
       ],
       "bestFor": "Comprehensive education toolkit"
+    },
+    {
+      "id": "gamma",
+      "name": "Gamma",
+      "domain": "gamma.app",
+      "url": "https://gamma.app",
+      "pricing": "Free + $10/mo",
+      "description": "AI presentation maker that creates engaging, interactive presentations instantly. Perfect for educators who need beautiful slides without design skills.",
+      "features": [
+        "AI-powered presentation generation",
+        "Interactive elements & media embedding",
+        "Export to PowerPoint/PDF"
+      ],
+      "bestFor": "Presentations, interactive content creation"
     },
     {
       "id": "curipod",
@@ -167,20 +182,6 @@
         "Real-world scenario questions"
       ],
       "bestFor": "Assessments, gamified learning"
-    },
-    {
-      "id": "gamma",
-      "name": "Gamma",
-      "domain": "gamma.app",
-      "url": "https://gamma.app",
-      "pricing": "Free + $10/mo",
-      "description": "AI presentation maker that creates engaging, interactive presentations instantly. Perfect for educators who need beautiful slides without design skills.",
-      "features": [
-        "AI-powered presentation generation",
-        "Interactive elements & media embedding",
-        "Export to PowerPoint/PDF"
-      ],
-      "bestFor": "Presentations, interactive content creation"
     }
   ]
 }

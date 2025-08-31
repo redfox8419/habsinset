@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Analytics - Habs AI Hub</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .container { max-width: 1100px; margin: 40px auto; padding: 0 16px; }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .page-title { font-size: 28px; font-weight: 700; }
+    .btn { padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-secondary { background: #e5e7eb; color: #111827; }
+    .muted { color: #6b7280; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; }
+    .card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
+    .stat { font-size: 32px; font-weight: 800; }
+    .table { width: 100%; border-collapse: collapse; }
+    .table th, .table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #f3f4f6; }
+    .section { margin-top: 24px; }
+    .hidden { display: none !important; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; background:#f3f4f6; font-size:12px; font-weight:600; }
+    .error { padding:12px 14px; border-radius:8px; background:#fee2e2; color:#991b1b; margin-top:12px; }
+  </style>
+  <script type="module" src="../js/firebase.js"></script>
+  <script type="module" src="../js/admin-analytics.js"></script>
+  <!-- firebase.js initializes the default app used by admin-analytics.js auth imports -->
+  <script>
+    // Prevent FOUC
+    document.documentElement.style.background = '#f9fafb';
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style> body { background:#f9fafb; } </style>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <a href="../index.html" class="muted" style="text-decoration:none"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        <h1 class="page-title">Admin Analytics</h1>
+        <div class="muted">Usage metrics for pages and prompts</div>
+      </div>
+    </div>
+
+    <div id="dashboard">
+      <div class="grid">
+        <div class="card">
+          <h3>Prompt Library Clicks</h3>
+          <div id="statPromptLibrary" class="stat">0</div>
+          <div class="muted">From main page</div>
+        </div>
+        <div class="card">
+          <h3>Ideas Clicks</h3>
+          <div id="statIdeas" class="stat">0</div>
+          <div class="muted">From main page</div>
+        </div>
+        <div class="card">
+          <h3>AI Tools Clicks</h3>
+          <div id="statAiTools" class="stat">0</div>
+          <div class="muted">From main page</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <h3 style="margin:0">Most Voted Prompts</h3>
+            <button id="refreshBtn" class="btn btn-secondary">Refresh</button>
+          </div>
+          <table class="table" id="tableMostVoted">
+            <thead>
+              <tr>
+                <th style="width:56px">#</th>
+                <th>Title</th>
+                <th style="width:120px">Votes</th>
+                <th style="width:120px">Copies</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <h3 style="margin-top:0">Most Copied Prompts</h3>
+          <table class="table" id="tableMostCopied">
+            <thead>
+              <tr>
+                <th style="width:56px">#</th>
+                <th>Title</th>
+                <th style="width:120px">Copies</th>
+                <th style="width:120px">Votes</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

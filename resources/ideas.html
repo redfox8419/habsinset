@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Ideas for Teachers - Habs AI Hub</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+<body>
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Hub
+            </a>
+            <h1 class="page-title">AI Ideas</h1>
+            <p class="page-subtitle">Quick, practical ways to use AI</p>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-primary" onclick="showAddIdeaModal()">
+                    <i class="fas fa-plus"></i> Add Idea
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <div class="ideas-grid" id="ideasGrid">
+                <!-- Ideas will be loaded dynamically -->
+                <div class="loading-message" style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 16px;"></i>
+                    <p>Loading ideas...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="hub-footer">
+            <p>2025 Habs AI Hub • <a href="../index.html">Back to Home</a></p>
+        </footer>
+    </div>
+
+        <!-- View Idea Modal -->
+        <div class="modal" id="viewIdeaModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalIdeaTitle">Idea Title</h2>
+                    <button class="modal-close" onclick="closeModal('viewIdeaModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalIdeaMeta" class="idea-meta" style="margin-bottom: 16px;"></div>
+                    <div class="idea-actions" style="margin-bottom: 16px;">
+                        <button class="btn btn-secondary" id="modalIdeaVoteButton">
+                            <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                            Vote
+                        </button>
+                        <span id="modalIdeaVotes" style="color:#94a3b8; font-size:0.95rem;"></span>
+                    </div>
+                    <div id="modalIdeaBody"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Idea Modal -->
+        <div class="modal" id="addIdeaModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Add New Idea</h2>
+                    <button class="modal-close" onclick="closeModal('addIdeaModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="ideaForm">
+                        <div class="form-group">
+                            <label class="form-label" for="ideaTitle">Title*</label>
+                            <input type="text" class="form-input" id="ideaTitle" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="ideaSummary">Summary*</label>
+                            <textarea class="form-textarea" id="ideaSummary" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="ideaDescription">Description / Guide</label>
+                            <textarea class="form-textarea" id="ideaDescription" style="min-height: 160px;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="ideaReadTime">Read Time (minutes)</label>
+                            <input type="number" class="form-input" id="ideaReadTime" min="0" step="1" placeholder="e.g. 2">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="ideaSteps">Steps (one per line)</label>
+                            <textarea class="form-textarea" id="ideaSteps" placeholder="Step 1...&#10;Step 2..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="ideaExamples">Example Prompts (one per line)</label>
+                            <textarea class="form-textarea" id="ideaExamples" placeholder="Example prompt 1...&#10;Example prompt 2..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="ideaTips">Tips (one per line)</label>
+                            <textarea class="form-textarea" id="ideaTips" placeholder="Tip 1...&#10;Tip 2..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" style="display:flex; align-items:center; gap:8px;">
+                                <input type="checkbox" id="addLinkedPromptToggle"> Add prompt(s) to the library with this idea
+                            </label>
+                            <div id="linkedPromptFields" style="display:none; margin-top: 12px;">
+                                <p style="color:#94a3b8; margin: 0 0 10px 0; font-size: 0.95rem;">These prompts will be added to the Prompt Library and shown with the idea.</p>
+                                <div id="linkedPromptList"></div>
+                                <div style="margin-top: 12px;">
+                                    <button type="button" class="btn btn-secondary" onclick="addLinkedPromptEntry()"><i class="fas fa-plus"></i> Add another prompt</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('addIdeaModal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Idea</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <style>
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .idea-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .idea-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .idea-card h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+        
+        .idea-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            flex-grow: 1;
+        }
+        
+        .idea-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        
+        .idea-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .idea-meta i {
+            font-size: 0.75rem;
+            color: #60a5fa;
+        }
+
+        .idea-actions { display: flex; gap: 12px; align-items: center; }
+        
+        @media (max-width: 640px) {
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .idea-card {
+                padding: 24px;
+            }
+        }
+        
+        /* Modal (dark themed, matching this page) */
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; padding: 40px; overflow-y: auto; }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: #0f172a; border-radius: 16px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; border: 1px solid rgba(255,255,255,0.08); }
+        .modal-header { padding: 28px 28px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .modal-title { font-size: 1.6rem; font-weight: 600; color: #ffffff; margin: 0; }
+        .modal-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.10); color: #cbd5e1; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .modal-close:hover { background: rgba(255,255,255,0.16); color: #ffffff; }
+        .modal-body { padding: 24px 28px 28px; color: #e2e8f0; }
+        .idea-section-title { font-size: 1.1rem; color: #e5e7eb; margin: 20px 0 8px; font-weight: 600; }
+        .idea-full-text { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px; white-space: pre-wrap; line-height: 1.6; color: #e2e8f0; }
+        .idea-list { margin: 0; padding-left: 1.2rem; color: #cbd5e1; }
+        .idea-list li { margin: 6px 0; }
+        .resource-link { color: #60a5fa; text-decoration: none; }
+        .resource-link:hover { text-decoration: underline; }
+
+        /* Simple form styles for dark modal */
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-weight: 600; color: #e5e7eb; margin-bottom: 8px; }
+        .form-input, .form-textarea, .form-select {
+            width: 100%; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; background: rgba(255,255,255,0.04); color: #e2e8f0; font-size: 1rem;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: rgba(96,165,250,0.6); }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        .checkbox-group { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; color: #cbd5e1; }
+        .form-actions { display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .copy-button { position: absolute; top: 12px; right: 12px; padding: 8px 14px; background: linear-gradient(135deg, #60a5fa, #3b82f6); color: #ffffff; border: 1px solid transparent; border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; box-shadow: 0 6px 18px rgba(59,130,246,0.35); }
+        .copy-button:hover { filter: brightness(1.04); }
+        .copy-button.copied { background: #10b981; box-shadow: none; }
+        .lp-entry { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+        .lp-entry-header { display:flex; align-items:center; justify-content: space-between; margin-bottom: 8px; }
+        .lp-entry-title { color:#e5e7eb; font-weight:600; font-size:0.95rem; }
+        .lp-remove-btn { background: rgba(239,68,68,0.15); color:#fecaca; border:1px solid rgba(239,68,68,0.3); padding:6px 10px; border-radius:8px; cursor:pointer; }
+        .lp-remove-btn:hover { background: rgba(239,68,68,0.25); }
+    </style>
+
+    <script type="module" src="../js/ideas-page.js"></script>
+</body>
+</html>

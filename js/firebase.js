@@ -27,3 +27,21 @@ export const recordVote = (promptId) => {
   voted.push(promptId);
   localStorage.setItem('votedPrompts', JSON.stringify(voted));
 };
+
+// Generic local vote tracking helpers
+const hasVotedKeyed = (key, id) => {
+  const voted = JSON.parse(localStorage.getItem(key) || '[]');
+  return voted.includes(id);
+};
+
+const recordVotedKeyed = (key, id) => {
+  const voted = JSON.parse(localStorage.getItem(key) || '[]');
+  if (!voted.includes(id)) {
+    voted.push(id);
+    localStorage.setItem(key, JSON.stringify(voted));
+  }
+};
+
+// Ideas-specific voting
+export const hasVotedIdea = (ideaId) => hasVotedKeyed('votedIdeas', ideaId);
+export const recordIdeaVote = (ideaId) => recordVotedKeyed('votedIdeas', ideaId);

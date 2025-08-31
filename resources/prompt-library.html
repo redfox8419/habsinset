@@ -9,131 +9,108 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="../" class="logo-link">
-                    Habs <strong>AI Hub</strong>
-                </a>
-                <div class="breadcrumb">
-                    <a href="../">Home</a>
-                    <span>/</span>
-                    <span>Prompt Library</span>
-                </div>
-            </div>
-            <div class="nav-right">
-                <button class="add-prompt-btn" onclick="showAddPromptModal()">
-                    <i class="fas fa-plus"></i>
-                    Add Prompt
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Hub
+            </a>
+            <h1 class="page-title">Prompt Library</h1>
+            <p class="page-subtitle">Discover, share, and save time with proven AI prompts created by you</p>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-primary" onclick="showAddPromptModal()">
+                    <i class="fas fa-plus"></i> Add Prompt
                 </button>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Teacher-Created <strong>Prompt Library</strong></h1>
-            <p class="hero-subtitle">Discover, share, and save time with proven AI prompts designed by educators</p>
-        </div>
-    </section>
-
-    <!-- Search and Filters -->
-    <section class="search-section">
-        <div class="search-container">
-            <div class="search-bar">
-                <div class="search-input-wrapper">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search prompts by title, description, or keywords...">
-                    <i class="fas fa-search search-icon"></i>
+        <!-- Content -->
+        <div class="content-section pl-wide">
+            <!-- Search + Filters -->
+            <div class="pl-card">
+                <div class="search-bar">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search prompts by title, description, or keywords...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+                <div class="filter-tabs" id="filterTabs">
+                    <button class="filter-tab active" data-filter="all">All Prompts</button>
+                    <button class="filter-tab" data-filter="popular">Most Popular</button>
+                    <button class="filter-tab" data-filter="newest">Recently Added</button>
+                    <button class="filter-tab" data-filter="timesaver">Quick Wins</button>
                 </div>
             </div>
-            <div class="filter-tabs" id="filterTabs">
-                <button class="filter-tab active" data-filter="all">All Prompts</button>
-                <button class="filter-tab" data-filter="popular">Most Popular</button>
-                <button class="filter-tab" data-filter="newest">Recently Added</button>
-                <button class="filter-tab" data-filter="timesaver">Quick Wins</button>
-            </div>
+
+            <!-- Main Layout -->
+            <main class="main-content">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-controls">
+                        <button class="collapse-all-btn" onclick="toggleAllSections()">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Expand All</span>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-section collapsed" data-section="subjects">
+                        <h3 class="sidebar-title" onclick="toggleSection('subjects')">
+                            Subjects
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <ul class="category-list" id="subjectCategories"></ul>
+                    </div>
+
+                    <div class="sidebar-section collapsed" data-section="phases">
+                        <h3 class="sidebar-title" onclick="toggleSection('phases')">
+                            Phase
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <ul class="category-list" id="phaseCategories"></ul>
+                    </div>
+
+                    <div class="sidebar-section collapsed" data-section="types">
+                        <h3 class="sidebar-title" onclick="toggleSection('types')">
+                            Type
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <ul class="category-list" id="typeCategories"></ul>
+                    </div>
+
+                    <div class="sidebar-section collapsed" data-section="audience">
+                        <h3 class="sidebar-title" onclick="toggleSection('audience')">
+                            Audience
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <ul class="category-list" id="audienceCategories"></ul>
+                    </div>
+                </aside>
+
+                <!-- Prompts Section -->
+                <section class="prompts-section">
+                    <div class="section-header">
+                        <h2 class="results-count">Showing <span id="resultCount">0</span> prompts</h2>
+                        <select class="sort-dropdown" id="sortDropdown">
+                            <option value="newest">Newest First</option>
+                            <option value="popular">Most Popular</option>
+                            <option value="votes">Highest Rated</option>
+                        </select>
+                    </div>
+                    <div class="prompts-grid" id="promptsGrid">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Loading prompts...</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="hub-footer">
+                <p>2025 Habs AI Hub • <a href="../index.html">Back to Home</a></p>
+            </footer>
         </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <!-- Collapse/Expand All Button -->
-            <div class="sidebar-controls">
-                <button class="collapse-all-btn" onclick="toggleAllSections()">
-                    <i class="fas fa-compress-alt"></i>
-                    <span>Collapse All</span>
-                </button>
-            </div>
-            
-            <!-- Subject Categories -->
-            <div class="sidebar-section collapsed" data-section="subjects">
-                <h3 class="sidebar-title" onclick="toggleSection('subjects')">
-                    Subjects
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </h3>
-                <ul class="category-list" id="subjectCategories">
-                    <!-- Categories will be loaded dynamically -->
-                </ul>
-            </div>
-            
-            <!-- Phase Categories -->
-            <div class="sidebar-section collapsed" data-section="phases">
-                <h3 class="sidebar-title" onclick="toggleSection('phases')">
-                    Phase
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </h3>
-                <ul class="category-list" id="phaseCategories">
-                    <!-- Categories will be loaded dynamically -->
-                </ul>
-            </div>
-            
-            <!-- Type Categories -->
-            <div class="sidebar-section collapsed" data-section="types">
-                <h3 class="sidebar-title" onclick="toggleSection('types')">
-                    Type
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </h3>
-                <ul class="category-list" id="typeCategories">
-                    <!-- Categories will be loaded dynamically -->
-                </ul>
-            </div>
-
-            <!-- Audience Categories -->
-            <div class="sidebar-section collapsed" data-section="audience">
-                <h3 class="sidebar-title" onclick="toggleSection('audience')">
-                    Audience
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </h3>
-                <ul class="category-list" id="audienceCategories">
-                    <!-- Categories will be loaded dynamically -->
-                </ul>
-            </div>
-        </aside>
-
-        <!-- Prompts Section -->
-        <section class="prompts-section">
-            <div class="section-header">
-                <h2 class="results-count">Showing <span id="resultCount">0</span> prompts</h2>
-                <select class="sort-dropdown" id="sortDropdown">
-                    <option value="newest">Newest First</option>
-                    <option value="popular">Most Popular</option>
-                    <option value="votes">Highest Rated</option>
-                </select>
-            </div>
-            
-            <div class="prompts-grid" id="promptsGrid">
-                <!-- Loading state -->
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading prompts...</p>
-                </div>
-            </div>
-        </section>
-    </main>
+    </div>
 
     <!-- View Prompt Modal -->
     <div class="modal" id="viewPromptModal">
@@ -148,11 +125,12 @@
                 <div style="position: relative;">
                     <div class="prompt-full-text" id="modalPromptText"></div>
                     <button class="copy-button" onclick="copyPrompt()">
-                        <i class="fas fa-copy"></i> Copy
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="10" height="10" rx="2"/><rect x="5" y="5" width="10" height="10" rx="2"/></svg>
+                        Copy
                     </button>
                 </div>
                 <div class="context-section" id="contextSection" style="margin-top: 16px; display: none;">
-                    <h3 style="font-size: 1.1rem; color: #111827; margin-bottom: 8px;">Context</h3>
+                    <h3 class="modal-section-title">Context</h3>
                     <div class="prompt-full-text" id="modalPromptContext" style="font-family: inherit;"></div>
                 </div>
                 
@@ -173,7 +151,8 @@
                     </div>
                     <div class="prompt-actions" style="margin-bottom: 12px;">
                         <button class="prompt-action-btn" id="modalVoteButton">
-                            👍 Vote
+                            <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                            Vote
                         </button>
                     </div>
                     
