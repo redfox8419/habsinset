@@ -14,7 +14,8 @@ import {
   where,
   limit,
   startAfter,
-  getCountFromServer
+  getCountFromServer,
+  setDoc
 } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 // Local modules
@@ -466,6 +467,17 @@ async function copyPrompt() {
       } catch (e) {
         console.error('Failed to increment usage from modal:', e);
       }
+      // Increment global promptCopies total
+      try {
+        const ref = doc(db, 'analytics', 'pageClicks');
+        await updateDoc(ref, { promptCopies: increment(1) });
+      } catch (e1) {
+        try {
+          await setDoc(doc(db, 'analytics', 'pageClicks'), { promptCopies: increment(1) }, { merge: true });
+        } catch (e2) {
+          console.warn('Failed to increment global promptCopies', e2);
+        }
+      }
     }
   } catch (error) {
     console.error('Failed to copy:', error);
@@ -485,6 +497,17 @@ async function copyPromptText(promptId) {
       await updateDoc(doc(db, 'prompts', promptId), {
         usageCount: increment(1)
       });
+      // Increment global promptCopies total
+      try {
+        const ref = doc(db, 'analytics', 'pageClicks');
+        await updateDoc(ref, { promptCopies: increment(1) });
+      } catch (e1) {
+        try {
+          await setDoc(doc(db, 'analytics', 'pageClicks'), { promptCopies: increment(1) }, { merge: true });
+        } catch (e2) {
+          console.warn('Failed to increment global promptCopies', e2);
+        }
+      }
       const p = prompts.find(x => x.id === promptId);
       if (p) p.usageCount = (p.usageCount || 0) + 1;
       applyFilters();

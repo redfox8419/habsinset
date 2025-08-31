@@ -1,6 +1,7 @@
 // Ideas page: load ideas from Firestore, render cards, and show details modal
-import { collection, getDocs, query, orderBy, addDoc, updateDoc, increment, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { collection, getDocs, query, orderBy, addDoc, updateDoc, increment, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { db, hasVotedIdea, recordIdeaVote } from './firebase.js';
+import { categories } from './categories.js';
 
 let ideas = [];
 
@@ -223,6 +224,26 @@ function viewIdea(id) {
 
   showModal('viewIdeaModal');
 
+  // Track read: increment per-idea reads and global total
+  (async () => {
+    try {
+      await updateDoc(doc(db, 'ideas', id), { reads: increment(1) });
+    } catch (e) {
+      // If document missing (shouldn't be), ignore
+      console.warn('Failed to increment idea reads on doc', e);
+    }
+    try {
+      const ref = doc(db, 'analytics', 'pageClicks');
+      await updateDoc(ref, { ideaReads: increment(1) });
+    } catch (e1) {
+      try {
+        await setDoc(doc(db, 'analytics', 'pageClicks'), { ideaReads: increment(1) }, { merge: true });
+      } catch (e2) {
+        console.warn('Failed to increment global ideaReads', e2);
+      }
+    }
+  })();
+
   // Load and render linked prompts lazily
   if (Array.isArray(idea.linkedPromptIds) && idea.linkedPromptIds.length) {
     renderLinkedPrompts(idea.linkedPromptIds);
@@ -369,6 +390,17 @@ async function copyLinkedPrompt(promptId) {
     await navigator.clipboard.writeText(text);
     // increment usageCount on prompt
     await updateDoc(doc(db, 'prompts', promptId), { usageCount: increment(1) });
+    // increment global promptCopies
+    try {
+      const ref = doc(db, 'analytics', 'pageClicks');
+      await updateDoc(ref, { promptCopies: increment(1) });
+    } catch (e1) {
+      try {
+        await setDoc(doc(db, 'analytics', 'pageClicks'), { promptCopies: increment(1) }, { merge: true });
+      } catch (e2) {
+        console.warn('Failed to increment global promptCopies', e2);
+      }
+    }
     // visual feedback
     const btn = event?.currentTarget;
     if (btn) {
@@ -418,6 +450,41 @@ function addLinkedPromptEntry() {
       <label class="form-label">Context (optional)</label>
       <textarea class="form-textarea lp-context" placeholder="Any context or notes..."></textarea>
     </div>
+    <div class="form-group">
+      <label class="form-label">Subject*</label>
+      <select class="form-select lp-subject">
+        ${['', ...categories.subjects].map((s, i) => i === 0
+          ? '<option value="">Select subject</option>'
+          : `<option value="${s}" ${s === 'General' ? 'selected' : ''}>${s}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phase*</label>
+      <select class="form-select lp-phase">
+        ${['', ...categories.phases].map((p, i) => i === 0
+          ? '<option value="">Select phase</option>'
+          : `<option value="${p}" ${p === 'All Ages' ? 'selected' : ''}>${p}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Type*</label>
+      <select class="form-select lp-type">
+        ${['', ...categories.types].map((t, i) => i === 0
+          ? '<option value="">Select type</option>'
+          : `<option value="${t}" ${t === 'Teaching Resource' ? 'selected' : ''}>${t}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Audience</label>
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" class="lp-aud-teacher" value="Teacher" checked> Teacher
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" class="lp-aud-students" value="Students"> Students
+        </label>
+      </div>
+    </div>
   `;
   list.appendChild(wrapper);
 }
@@ -439,7 +506,16 @@ function collectLinkedPromptEntries() {
     const description = item.querySelector('.lp-description')?.value.trim() || '';
     const content = item.querySelector('.lp-content')?.value.trim() || '';
     const context = item.querySelector('.lp-context')?.value.trim() || '';
-    return { title, description, content, context };
+    const subject = item.querySelector('.lp-subject')?.value || 'General';
+    const phase = item.querySelector('.lp-phase')?.value || 'All Ages';
+    const type = item.querySelector('.lp-type')?.value || 'Teaching Resource';
+    const audTeacher = item.querySelector('.lp-aud-teacher')?.checked;
+    const audStudents = item.querySelector('.lp-aud-students')?.checked;
+    const audience = [
+      ...(audTeacher ? ['Teacher'] : []),
+      ...(audStudents ? ['Students'] : [])
+    ];
+    return { title, description, content, context, subject, phase, type, audience };
   })
   .filter(p => p.title && p.description && p.content)
   .map(p => ({
@@ -447,10 +523,10 @@ function collectLinkedPromptEntries() {
     description: p.description,
     content: p.content,
     context: p.context,
-    subject: 'General',
-    phase: 'All Ages',
-    type: 'Teaching Resource',
-    audience: ['Teacher'],
+    subject: p.subject || 'General',
+    phase: p.phase || 'All Ages',
+    type: p.type || 'Teaching Resource',
+    audience: (Array.isArray(p.audience) && p.audience.length ? p.audience : ['Teacher']),
     createdBy: 'Anonymous',
     votes: 0,
     usageCount: 0,
