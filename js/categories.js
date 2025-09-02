@@ -2,17 +2,21 @@
 export const categories = {
   subjects: [
     'Mathematics',
-    'Science', 
+    'Sciences',
+    'Classics',
     'English',
     'History',
+    'Politics',
+    'Economics',
     'Geography',
     'Languages',
-    'Arts',
+    'Art',
     'Music',
+    'T&P',
     'PE',
-    'Technology',
+    'Design & Technology',
     'PSHE',
-    'General'
+    'All'
   ],
   
   phases: [
@@ -22,6 +26,9 @@ export const categories = {
     'Key Stage 3',
     'Key Stage 4',
     'Key Stage 5',
+    'Primary',
+    'Secondary',
+    'Post-16',
     'All Ages'
   ],
   

@@ -1,5 +1,16 @@
 /* Prompt Library page-specific styles (dark theme to match global) */
 
+/* Ensure native form controls render with dark UI on this page */
+.page-container,
+.pl-card,
+.sidebar,
+.section-header,
+.modal,
+.form-select,
+.sort-dropdown {
+    color-scheme: dark;
+}
+
 /* Make this page content wider like before */
 .pl-wide {
     max-width: 1400px; /* previously used scale */
@@ -113,6 +124,15 @@
 .sort-dropdown {
     padding: 10px 14px; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
     background: rgba(255,255,255,0.04); color: #e2e8f0; cursor: pointer; font-size: 0.9rem;
+}
+/* Edge/Chromium may render the dropdown list with a white OS popup
+   while inheriting light text from the closed control. Ensure readable text. */
+@supports not (color-scheme: dark) {
+  .form-select option,
+  .sort-dropdown option {
+      color: #111;
+      background-color: #fff;
+  }
 }
 
 .prompts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px; }
