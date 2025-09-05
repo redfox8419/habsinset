@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI at School — What's OK and What's Not</title>
+  
+  <!-- Link to external CSS (cache-busted) -->
+  <link rel="stylesheet" href="students.css?v=20250905-1">
+  
+  <!--
+  Content→Policy mapping (source: "Acceptable Use Policy – Students", Autumn 2024)
+  - Quick summary & Do/Don't: Appendix 2 (zero-tolerance on GenAI misuse; no photo uploads; harmful/discriminatory content). Also reiterated in ICT Acceptable Use Agreement. 
+  - Non-negotiables: Appendix 2 (GenAI rules), ICT Acceptable Use Agreement (no misuse of GenAI; no photo uploads), Appendix 4 (Photographs & Images; Sharing of nudes/semi-nudes includes AI; upskirting).
+  - Safeguarding (verbatim-leaning lines): Appendix 4 ("This also includes images created by AI… may be a criminal offence… treated as a safeguarding matter… may involve the police.").
+  - Why this matters: derived from Appendix 2 & Appendix 4 risks (privacy, harm, legal, loss of control).
+  - Reporting: Section 8 (tell a teacher/staff as soon as possible; dealt with under Behaviour Policy / Safeguarding Policy).
+  - Sanctions & monitoring: Section 9 (sanctions incl. permanent exclusion; device to police for illegal imagery), Section 6 (monitoring; deleted can be traced), policy footer note (school owns systems; may examine/delete files; withdraw access).
+  NOTE: All non-AI AUP topics (BYOD routines, general email etiquette, etc.) are intentionally excluded here unless they directly relate to AI misuse.
+  -->
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="hero">
+        <h1>AI at School — What's OK and What's Not</h1>
+        <p>A practical guide to getting the best from AI at school — using it to learn, create and revise — with clear rules that keep everyone safe and treated fairly.</p>
+        
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-steps" id="progressSteps">
+            <div class="progress-step active">
+              <div class="step-circle active">1</div>
+              <span>Summary</span>
+            </div>
+            <div class="progress-step">
+              <div class="step-circle">2</div>
+              <span>Rules</span>
+            </div>
+            <div class="progress-step">
+              <div class="step-circle">3</div>
+              <span>Academic Use</span>
+            </div>
+            <div class="progress-step">
+              <div class="step-circle">4</div>
+              <span>Case studies</span>
+            </div>
+            <div class="progress-step">
+              <div class="step-circle">5</div>
+              <span>Reporting</span>
+            </div>
+            <div class="progress-step">
+              <div class="step-circle">6</div>
+              <span>Sanctions</span>
+            </div>
+            <div class="progress-step">
+              <div class="step-circle">7</div>
+              <span>Complete</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container" tabindex="-1">
+    <!-- Intro panel (pre-module) -->
+    <section id="introPanel" class="intro-panel" role="region" aria-labelledby="intro-h">
+      <div class="content-width">
+        <h2 id="intro-h">Welcome back</h2>
+        <p>From this academic year, students in <strong>Year 9 and above</strong> will have access to <strong>Microsoft Copilot</strong> using their school account. Copilot is suitable for ages <strong>13+</strong> and has been set up for education use.</p>
+        <h3 class="mt-4">Why we've approved Copilot</h3>
+        <ul>
+          <li><strong>School-managed:</strong> You sign in with your school Microsoft account, so use is covered by our policies and protections.</li>
+          <li><strong>Privacy-aware:</strong> It's designed for education with stronger data protection than many public tools. Still, don't share personal or sensitive information.</li>
+          <li><strong>Age-appropriate:</strong> Copilot is available for 13+. Many other Generative AI services set higher minimum ages (often 16+ or 18+).</li>
+        </ul>
+        <div class="alert alert-warning" style="margin-top: 16px;">
+          <div class="alert-title">In school</div>
+          <p class="mb-0">Microsoft Copilot is the approved AI tool on school devices and networks. <strong>Other Generative AI tools (e.g., ChatGPT)</strong> are <strong>not available</strong> in school.</p>
+        </div>
+        <p class="mt-6">Use Copilot to support your learning, not to replace it. The same <strong>Behaviour Policy</strong> and <strong>Academic Integrity</strong> rules apply when using AI.</p>
+        <div class="mt-6">
+          <button id="startModuleBtn" type="button" class="btn btn-primary">Start the module</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: Quick summary -->
+    <section class="section" id="section-1" aria-labelledby="summary-h">
+      <div class="content-width">
+        <h2 id="summary-h">Quick summary</h2>
+        <p>AI can be a brilliant learning tool when used well. It can help you explore ideas, explain tricky topics and improve your work. This guide shows how to use AI responsibly, the red lines you must not cross, and what to do if something goes wrong.</p>
+
+        <div class="do-dont-grid">
+          <div class="do-dont-section do-section">
+            <div class="section-header">
+              <div class="section-icon do-icon">Do</div>
+              <h3 class="mt-0">What you should do</h3>
+            </div>
+            <ul class="item-list">
+              <li class="item">
+                <span class="item-icon success" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </span>
+                <div>Think privacy first. Never share photos of people or personal information.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon success" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </span>
+                <div>Use Microsoft Copilot through school accounts when available.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon success" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </span>
+                <div>Be honest about AI help in your schoolwork.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon success" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </span>
+                <div>Use AI to help your learning, not replace it.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="do-dont-section dont-section">
+            <div class="section-header">
+              <div class="section-icon dont-icon">Don't</div>
+              <h3 class="mt-0">What you must not do</h3>
+            </div>
+            <ul class="item-list">
+              <li class="item">
+                <span class="item-icon danger" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.3 10.59 10.59 16.89 4.3z"/></svg>
+                </span>
+                <div>Upload photos of students or staff to any AI platform.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon danger" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.3 10.59 10.59 16.89 4.3z"/></svg>
+                </span>
+                <div>Create deepfakes or altered portraits of real people.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon danger" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.3 10.59 10.59 16.89 4.3z"/></svg>
+                </span>
+                <div>Create harmful or discriminatory content that offends or discriminates.</div>
+              </li>
+              <li class="item">
+                <span class="item-icon danger" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.3 10.59 10.59 16.89 4.3z"/></svg>
+                </span>
+                <div>Submit AI-generated work as your own or use AI to cheat on assessments.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Section 2: Non-negotiables -->
+    <section class="section" id="section-2" aria-labelledby="rules-h">
+      <div class="content-width">
+        <h2 id="rules-h">Non-negotiables</h2>
+        <p>AI is powerful, but there are clear lines to protect privacy, safety and fairness. These rules apply wherever you use AI — at school, at home and on personal devices.</p>
+        <ul>
+          <li><strong>No uploading photos of students or staff</strong> to any GenAI platform or app. (Zero-tolerance.)</li>
+          <li><strong>No deepfakes or altered portraits of real people</strong> (students, staff, or anyone connected to the School).</li>
+          <li><strong>No harmful or discriminatory AI content</strong> (e.g., abusive, racist, sexist, homophobic, or otherwise offensive).</li>
+          <li><strong>No academic dishonesty</strong> — don't submit AI-generated work as your own or use AI to cheat on assessments.</li>
+        </ul>
+
+        <div class="alert alert-warning">
+          <div class="alert-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Safeguarding — serious lines you must know
+          </div>
+          <p class="mb-0">"Sharing of nudes or semi-nudes (also called youth-produced sexual imagery) <strong>also includes images created by AI</strong>. Sharing may be a criminal offence. The School treats incidents as a safeguarding matter and will investigate thoroughly."</p>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Section 3: Academic use -->
+    <section class="section" id="section-3" aria-labelledby="academic-h">
+      <div class="content-width">
+        <h2 id="academic-h">Using AI for schoolwork</h2>
+        
+        <h3>Be responsible and honest</h3>
+        <ul>
+          <li><strong>AI should help your learning, not replace it.</strong> Use AI to understand concepts, get feedback on ideas, or help with research — but the thinking and work should be yours.</li>
+          <li><strong>Always be transparent.</strong> If you use AI to help with an assignment, mention it. Your teachers need to know so they can support your learning properly.</li>
+          <li><strong>Follow your teacher's instructions.</strong> Some assignments may specifically allow or prohibit AI use. When in doubt, ask!</li>
+        </ul>
+
+        <h3>Recommended approach</h3>
+        <ul>
+          <li><strong>Use Microsoft Copilot</strong> through your school account when available — it has stronger privacy protections for students.</li>
+          <li><strong>Remember age restrictions:</strong> Most AI platforms require users to be 13+ or 18+. Check the terms of use.</li>
+          <li><strong>Keep your prompts school-appropriate</strong> and avoid sharing personal information about yourself or others.</li>
+        </ul>
+
+        <div class="alert alert-warning">
+          <div class="alert-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            Remember
+          </div>
+          <p class="mb-0">Academic dishonesty includes submitting AI-generated work as your own. Use AI as a learning tool, not a shortcut to avoid doing the work yourself.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Case studies -->
+    <section class="section" id="section-4" aria-labelledby="examples-h">
+      <div class="content-width">
+        <h2 id="examples-h">Case studies: Decide the outcome</h2>
+        <p>Read each brief scenario and choose the best response from four options. It’s low‑stakes practice to help you learn the rules.</p>
+
+        <div class="quiz-header">
+          <div class="score-badge" aria-live="polite" aria-atomic="true">
+            <span id="caseScore">0/0 correct</span>
+          </div>
+        </div>
+
+        <div id="caseStudies" class="quiz-cases" role="list"></div>
+      </div>
+    </section>
+
+    <!-- Section 5: Reporting -->
+    <section class="section" id="section-5" aria-labelledby="reporting-h">
+      <div class="content-width">
+        <h2 id="reporting-h">If something goes wrong</h2>
+        <div class="steps">
+          <div class="step">
+            <strong>Tell a teacher or any member of staff</strong> straight away.
+          </div>
+          <div class="step">
+            <strong>Don't share it on.</strong> Keep useful details (what, where, when). Bring your device if asked.
+          </div>
+          <div class="step">
+            <strong>We will help.</strong> The School treats incidents seriously and will support you through the process.
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Section 6: Sanctions & monitoring -->
+    <section class="section" id="section-6" aria-labelledby="sanctions-h">
+      <div class="content-width">
+        <h2 id="sanctions-h">Sanctions and monitoring (AI‑specific)</h2>
+        <ul>
+          <li><strong>Behaviour Policy applies.</strong> Sanctions are proportionate and follow the School's Behaviour Policy.</li>
+          <li><strong>Bullying is still bullying.</strong> Using AI to bully, harass or target someone is treated the same as any other bullying. If it would be wrong in person or online, doing it with AI is equally unacceptable and carries the same consequences under the Behaviour Policy.</li>
+          <li><strong>Academic honesty</strong> Dishonest use of AI is treated the same way as any other misconduct (e.g. cheating or plagiarism). The School’s Behaviour and Sanctions policy applies.</li>
+          <li><strong>Monitoring:</strong> School internet, devices and email are monitored. Use of School-provided AI tools (e.g. Microsoft Copilot) are logged as well. These logs aren’t routinely checked, but may be accessed where there are safeguarding, security, or academic-integrity concerns.</li>
+        </ul>
+        
+      </div>
+    </section>
+
+    <!-- Section 7: Completion -->
+    <section class="section" id="section-7" aria-labelledby="complete-h">
+      <div class="content-width text-center">
+        <h2 id="complete-h">🎉 Module Complete!</h2>
+        <p class="mt-6 mb-8">You've now learned the key rules for using AI safely and responsibly at school. Remember:</p>
+        
+        <div class="alert alert-warning text-center">
+          <h3 class="mt-0">Key takeaways</h3>
+          <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+            <li><strong>Privacy first:</strong> Never upload photos of people</li>
+            <li><strong>Be honest:</strong> Don't submit AI work as your own</li>
+            <li><strong>Ask for help:</strong> Talk to staff if something goes wrong</li>
+            <li><strong>Use school tools:</strong> Microsoft Copilot is safer for students</li>
+          </ul>
+        </div>
+
+        <p class="mt-8">Want to review any section? Use the navigation buttons below to go back to any part of this guide.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Include external JavaScript -->
+  <script src="students.js?v=20250905-1"></script>
+</body>
+</html>
