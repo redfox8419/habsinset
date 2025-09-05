@@ -2,7 +2,7 @@
 // AI at School Navigation System
 // =========================
 
-let currentSection = 1;
+let currentSection = 0;
 let totalSections = 0; // derive from DOM on init
 let sections = [];
 let headerHeight = 0;
@@ -339,16 +339,32 @@ function initialize() {
   injectNavButtons();
   setupMiniProgress();
 
+  // Wire up intro panel
+  const intro = document.getElementById('introPanel');
+  const startBtn = document.getElementById('startModuleBtn');
+  if (intro && startBtn) {
+    startBtn.addEventListener('click', () => {
+      intro.style.display = 'none';
+      goToSection(1);
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    });
+  }
+
   // Render case studies in Section 4
   setupCaseStudies();
 
-  // Handle deep linking via hash
+  // Handle deep linking via hash; only show a section immediately if deep-linked
   const hash = window.location.hash;
-  const initial = hash && /^#section-(\d+)$/.test(hash) ? parseInt(hash.replace('#section-', ''), 10) : 1;
-  goToSection(initial);
-  
-  // Update initial progress
-  updateProgress();
+  const hasDeepLink = /^#section-(\d+)$/.test(hash || '');
+  if (hasDeepLink) {
+    const target = parseInt(hash.replace('#section-', ''), 10);
+    if (intro) intro.style.display = 'none';
+    goToSection(target);
+  } else {
+    // Keep sections hidden until the user starts the module
+    currentSection = 0;
+    updateProgress();
+  }
   
   // Announce to screen readers that the page is ready
   const announcement = document.createElement('div');
@@ -518,6 +534,9 @@ const caseStudiesData = [
     policy: ''
   }
 ];
+
+// Remove policy mapping references from case studies
+try { caseStudiesData.forEach(cs => { if ('policy' in cs) { delete cs.policy; } }); } catch (e) { /* no-op */ }
 
 function setupCaseStudies() {
   const container = document.getElementById('caseStudies');

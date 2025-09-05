@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI at School — What's OK and What's Not</title>
   
-  <!-- Link to external CSS -->
-  <link rel="stylesheet" href="students.css">
+  <!-- Link to external CSS (cache-busted) -->
+  <link rel="stylesheet" href="students.css?v=20250905-1">
   
   <!--
   Content→Policy mapping (source: "Acceptable Use Policy – Students", Autumn 2024)
@@ -47,7 +47,7 @@
             </div>
             <div class="progress-step">
               <div class="step-circle">4</div>
-              <span>Examples</span>
+              <span>Case studies</span>
             </div>
             <div class="progress-step">
               <div class="step-circle">5</div>
@@ -68,8 +68,30 @@
   </header>
 
   <main id="main" class="container" tabindex="-1">
+    <!-- Intro panel (pre-module) -->
+    <section id="introPanel" class="intro-panel" role="region" aria-labelledby="intro-h">
+      <div class="content-width">
+        <h2 id="intro-h">Welcome back</h2>
+        <p>From this academic year, students in <strong>Year 9 and above</strong> will have access to <strong>Microsoft Copilot</strong> using their school account. Copilot is suitable for ages <strong>13+</strong> and has been set up for education use.</p>
+        <h3 class="mt-4">Why we've approved Copilot</h3>
+        <ul>
+          <li><strong>School-managed:</strong> You sign in with your school Microsoft account, so use is covered by our policies and protections.</li>
+          <li><strong>Privacy-aware:</strong> It's designed for education with stronger data protection than many public tools. Still, don't share personal or sensitive information.</li>
+          <li><strong>Age-appropriate:</strong> Copilot is available for 13+. Many other Generative AI services set higher minimum ages (often 16+ or 18+).</li>
+        </ul>
+        <div class="alert alert-warning" style="margin-top: 16px;">
+          <div class="alert-title">In school</div>
+          <p class="mb-0">Microsoft Copilot is the approved AI tool on school devices and networks. <strong>Other Generative AI tools (e.g., ChatGPT)</strong> are <strong>not available</strong> in school.</p>
+        </div>
+        <p class="mt-6">Use Copilot to support your learning, not to replace it. The same <strong>Behaviour Policy</strong> and <strong>Academic Integrity</strong> rules apply when using AI.</p>
+        <div class="mt-6">
+          <button id="startModuleBtn" type="button" class="btn btn-primary">Start the module</button>
+        </div>
+      </div>
+    </section>
+
     <!-- Section 1: Quick summary -->
-    <section class="section active" id="section-1" aria-labelledby="summary-h">
+    <section class="section" id="section-1" aria-labelledby="summary-h">
       <div class="content-width">
         <h2 id="summary-h">Quick summary</h2>
         <p>AI can be a brilliant learning tool when used well. It can help you explore ideas, explain tricky topics and improve your work. This guide shows how to use AI responsibly, the red lines you must not cross, and what to do if something goes wrong.</p>
@@ -142,7 +164,6 @@
           </div>
         </div>
         
-        <p class="text-muted mt-6">Policy mapping: Appendix 2 (GenAI misuse; no photo uploads) and the ICT Acceptable Use Agreement.</p>
       </div>
     </section>
 
@@ -166,7 +187,6 @@
           <p class="mb-0">"Sharing of nudes or semi-nudes (also called youth-produced sexual imagery) <strong>also includes images created by AI</strong>. Sharing may be a criminal offence. The School treats incidents as a safeguarding matter and will investigate thoroughly."</p>
         </div>
         
-        <p class="text-muted">Policy mapping: Appendix 2; Appendix 4 (Sharing of nudes/semi-nudes, upskirting); ICT Acceptable Use Agreement.</p>
       </div>
     </section>
 
@@ -221,7 +241,7 @@
         <h2 id="reporting-h">If something goes wrong</h2>
         <div class="steps">
           <div class="step">
-            <strong>Tell a teacher or any member of staff</strong> straight away (Head of Year is fine too).
+            <strong>Tell a teacher or any member of staff</strong> straight away.
           </div>
           <div class="step">
             <strong>Don't share it on.</strong> Keep useful details (what, where, when). Bring your device if asked.
@@ -230,7 +250,7 @@
             <strong>We will help.</strong> The School treats incidents seriously and will support you through the process.
           </div>
         </div>
-        <p class="text-muted">Policy mapping: Section 8 (report promptly; handled under Behaviour/Safeguarding policies).</p>
+        
       </div>
     </section>
 
@@ -239,11 +259,12 @@
       <div class="content-width">
         <h2 id="sanctions-h">Sanctions and monitoring (AI‑specific)</h2>
         <ul>
-          <li><strong>Behaviour Policy applies.</strong> Sanctions are proportionate; in the most serious cases, permanent exclusion is possible.</li>
-          <li><strong>Academic sanctions</strong> for dishonest use of AI may include redoing work, mark penalties, or formal academic misconduct procedures.</li>
-          <li><strong>Monitoring:</strong> School internet and email use are monitored. Even deleted items can be traced. The School owns its systems and may examine or delete files and withdraw access.</li>
+          <li><strong>Behaviour Policy applies.</strong> Sanctions are proportionate and follow the School's Behaviour Policy.</li>
+          <li><strong>Bullying is still bullying.</strong> Using AI to bully, harass or target someone is treated the same as any other bullying. If it would be wrong in person or online, doing it with AI is equally unacceptable and carries the same consequences under the Behaviour Policy.</li>
+          <li><strong>Academic honesty</strong> Dishonest use of AI is treated the same way as any other misconduct (e.g. cheating or plagiarism). The School’s Behaviour and Sanctions policy applies.</li>
+          <li><strong>Monitoring:</strong> School internet, devices and email are monitored. Use of School-provided AI tools (e.g. Microsoft Copilot) are logged as well. These logs aren’t routinely checked, but may be accessed where there are safeguarding, security, or academic-integrity concerns.</li>
         </ul>
-        <p class="text-muted">Policy mapping: Sections 6 & 9; Appendix 4; academic integrity policies; policy ownership/monitoring note.</p>
+        
       </div>
     </section>
 
@@ -263,12 +284,21 @@
           </ul>
         </div>
 
+        <div class="mt-8">
+          <p class="mb-4"><strong>Next step:</strong> Please complete the short quiz and digitally sign to confirm you understand the Acceptable Use Policy.</p>
+          <a id="msFormLink" class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+             href="https://forms.office.com/Pages/ResponsePage.aspx?id=rtgvlVsXUU-iNWpjAbaX8SjXugjZzydApgZNBLKG_HlUMDFWWFZEUUdaVEhDM1RYUzVGTFlXNUs1Wi4u">
+            Complete the quiz and sign
+          </a>
+          <p class="text-muted mt-6">Tip: Use your school Microsoft account if prompted to sign in.</p>
+        </div>
+
         <p class="mt-8">Want to review any section? Use the navigation buttons below to go back to any part of this guide.</p>
       </div>
     </section>
   </main>
 
   <!-- Include external JavaScript -->
-  <script src="students.js"></script>
+  <script src="students.js?v=20250905-1"></script>
 </body>
 </html>
