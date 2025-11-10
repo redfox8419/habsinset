@@ -26,6 +26,26 @@
 
         <!-- Main Content -->
         <div class="content-section">
+            <div class="ideas-filters">
+                <div class="filter-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="ideaSearch" placeholder="Search ideas..." aria-label="Search ideas">
+                </div>
+                <select id="ideaSubjectFilter" class="filter-select" aria-label="Filter by subject">
+                    <option value="">All subjects</option>
+                </select>
+                <select id="ideaReadTimeFilter" class="filter-select" aria-label="Filter by read time">
+                    <option value="all">All read times</option>
+                    <option value="short">Under 3 min</option>
+                    <option value="medium">4-6 min</option>
+                    <option value="long">7+ min</option>
+                </select>
+                <select id="ideaSortFilter" class="filter-select" aria-label="Sort ideas">
+                    <option value="newest">Newest</option>
+                    <option value="votes">Most voted</option>
+                    <option value="readTime">Shortest read time</option>
+                </select>
+            </div>
             <div class="ideas-grid" id="ideasGrid">
                 <!-- Ideas will be loaded dynamically -->
                 <div class="loading-message" style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">
@@ -37,7 +57,7 @@
 
         <!-- Footer -->
         <footer class="hub-footer">
-            <p>2025 Habs AI Hub • <a href="../index.html">Back to Home</a></p>
+            <p>2025 Habs AI Hub &mdash; <a href="../index.html">Back to Home</a></p>
         </footer>
     </div>
 
@@ -52,10 +72,18 @@
                 </div>
                 <div class="modal-body">
                     <div id="modalIdeaMeta" class="idea-meta" style="margin-bottom: 16px;"></div>
-                    <div class="idea-actions" style="margin-bottom: 16px;">
+                    <div class="idea-actions modal-actions">
                         <button class="btn btn-secondary" id="modalIdeaVoteButton">
                             <i class="fas fa-thumbs-up" aria-hidden="true"></i>
                             Vote
+                        </button>
+                        <button class="btn btn-secondary" id="modalIdeaCopyButton">
+                            <i class="fas fa-copy" aria-hidden="true"></i>
+                            Copy Summary
+                        </button>
+                        <button class="btn btn-secondary" id="modalIdeaLinkButton">
+                            <i class="fas fa-link" aria-hidden="true"></i>
+                            Copy Link
                         </button>
                         <span id="modalIdeaVotes" style="color:#94a3b8; font-size:0.95rem;"></span>
                     </div>
@@ -149,6 +177,48 @@
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
             margin-bottom: 60px;
+        }
+        .ideas-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+        .filter-search {
+            flex: 1 1 240px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(15,23,42,0.65);
+        }
+        .filter-search input {
+            flex: 1;
+            background: transparent;
+            border: 0;
+            color: #e5e7eb;
+            font-size: 0.95rem;
+        }
+        .filter-search input:focus {
+            outline: none;
+        }
+        .filter-select {
+            flex: 1 1 160px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(15,23,42,0.65);
+            color: #e5e7eb;
+        }
+        .modal-actions {
+            margin-bottom: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
         }
         
         .idea-card {
@@ -250,7 +320,7 @@
         .lp-remove-btn { background: rgba(239,68,68,0.15); color:#fecaca; border:1px solid rgba(239,68,68,0.3); padding:6px 10px; border-radius:8px; cursor:pointer; }
         .lp-remove-btn:hover { background: rgba(239,68,68,0.25); }
     </style>
-
+    <script src="../js/a11y-helpers.js"></script>
     <script type="module" src="../js/ideas-page.js"></script>
 </body>
 </html>

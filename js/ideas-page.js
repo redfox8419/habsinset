@@ -4,6 +4,15 @@ import { db, hasVotedIdea, recordIdeaVote } from './firebase.js';
 import { categories } from './categories.js';
 
 let ideas = [];
+let currentIdeaId = null;
+let deepLinkIdeaId = null;
+const ideaFilters = {
+  search: '',
+  subject: '',
+  readTime: 'all',
+  sort: 'newest'
+};
+let searchDebounce = null;
 
 // Inline SVG icon helper for consistent, crisp icons
 function svgIcon(name, size = 18, stroke = 1.8) {
@@ -23,6 +32,11 @@ function svgIcon(name, size = 18, stroke = 1.8) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  deepLinkIdeaId = params.get('idea');
+
+  populateSubjectFilter();
+  setupFilterControls();
   loadIdeas();
 
   // Close modal on backdrop click
@@ -63,6 +77,51 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+function populateSubjectFilter() {
+  const select = document.getElementById('ideaSubjectFilter');
+  if (!select) return;
+  const options = categories.subjects || [];
+  select.innerHTML = '<option value="">All subjects</option>' +
+    options.map(sub => `<option value="${sub}">${sub}</option>`).join('');
+}
+
+function setupFilterControls() {
+  const searchInput = document.getElementById('ideaSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        ideaFilters.search = e.target.value.trim();
+        renderIdeas();
+      }, 300);
+    });
+  }
+
+  const subjectSelect = document.getElementById('ideaSubjectFilter');
+  if (subjectSelect) {
+    subjectSelect.addEventListener('change', (e) => {
+      ideaFilters.subject = e.target.value;
+      renderIdeas();
+    });
+  }
+
+  const readTimeSelect = document.getElementById('ideaReadTimeFilter');
+  if (readTimeSelect) {
+    readTimeSelect.addEventListener('change', (e) => {
+      ideaFilters.readTime = e.target.value || 'all';
+      renderIdeas();
+    });
+  }
+
+  const sortSelect = document.getElementById('ideaSortFilter');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      ideaFilters.sort = e.target.value || 'newest';
+      renderIdeas();
+    });
+  }
+}
+
 async function loadIdeas() {
   const grid = document.getElementById('ideasGrid');
   if (!grid) return;
@@ -80,6 +139,7 @@ async function loadIdeas() {
 
     ideas = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderIdeas();
+    openIdeaFromUrl();
   } catch (error) {
     console.error('Error loading ideas:', error);
     grid.innerHTML = `
@@ -89,6 +149,15 @@ async function loadIdeas() {
       </div>
     `;
   }
+}
+
+function openIdeaFromUrl() {
+  if (!deepLinkIdeaId) return;
+  const match = ideas.find(idea => idea.id === deepLinkIdeaId);
+  if (match) {
+    viewIdea(deepLinkIdeaId);
+  }
+  deepLinkIdeaId = null;
 }
 
 function renderIdeas() {
@@ -105,11 +174,21 @@ function renderIdeas() {
     return;
   }
 
-  grid.innerHTML = ideas.map(idea => {
-    const title = escapeHtml(idea.title || 'Untitled Idea');
-    const summary = escapeHtml(
-      idea.summary || idea.description || ''
-    );
+  const list = getFilteredIdeas();
+
+  if (!list.length) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">
+        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 12px;"></i>
+        <div>No ideas match your filters yet.</div>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = list.map(idea => {
+    const title = highlightIdeaText(idea.title || 'Untitled Idea');
+    const summary = highlightIdeaText(idea.summary || idea.description || '');
     const readTime = idea.readTime ? `${idea.readTime} min read` : '';
     const subject = idea.subject || idea.category || '';
 
@@ -134,9 +213,21 @@ function renderIdeas() {
   }).join('');
 }
 
+function getFilteredIdeas() {
+  const term = (ideaFilters.search || '').toLowerCase();
+  return ideas
+    .filter((idea) => matchesIdeaSearch(idea, term))
+    .filter(matchesIdeaSubject)
+    .filter(matchesIdeaReadTime)
+    .sort(sortIdeas);
+}
+
 function viewIdea(id) {
   const idea = ideas.find(i => i.id === id);
   if (!idea) return;
+
+  currentIdeaId = id;
+  updateIdeaUrl(id);
 
   // Title
   const titleEl = document.getElementById('modalIdeaTitle');
@@ -224,6 +315,22 @@ function viewIdea(id) {
 
   showModal('viewIdeaModal');
 
+  const copyButton = document.getElementById('modalIdeaCopyButton');
+  if (copyButton) {
+    copyButton.onclick = (e) => {
+      e.preventDefault();
+      copyIdeaSummary();
+    };
+  }
+
+  const linkButton = document.getElementById('modalIdeaLinkButton');
+  if (linkButton) {
+    linkButton.onclick = (e) => {
+      e.preventDefault();
+      copyIdeaLink();
+    };
+  }
+
   // Track read: increment per-idea reads and global total
   (async () => {
     try {
@@ -263,6 +370,10 @@ function closeModal(id) {
   if (el) {
     el.classList.remove('active');
     document.body.style.overflow = '';
+    if (id === 'viewIdeaModal') {
+      currentIdeaId = null;
+      updateIdeaUrl(null);
+    }
   }
 }
 
@@ -270,6 +381,170 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text ?? '';
   return div.innerHTML;
+}
+
+function escapeRegExp(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function matchesIdeaSearch(idea, term) {
+  if (!term) return true;
+  const haystack = [
+    idea.title || '',
+    idea.summary || '',
+    idea.description || '',
+    idea.subject || '',
+    idea.category || ''
+  ].join(' ').toLowerCase();
+  return haystack.includes(term);
+}
+
+function matchesIdeaSubject(idea) {
+  if (!ideaFilters.subject) return true;
+  const subject = (idea.subject || idea.category || '').toLowerCase();
+  return subject === ideaFilters.subject.toLowerCase();
+}
+
+function matchesIdeaReadTime(idea) {
+  const minutes = Number(idea.readTime || 0);
+  switch (ideaFilters.readTime) {
+    case 'short':
+      return minutes > 0 && minutes <= 3;
+    case 'medium':
+      return minutes >= 4 && minutes <= 6;
+    case 'long':
+      return minutes >= 7;
+    default:
+      return true;
+  }
+}
+
+function sortIdeas(a, b) {
+  switch (ideaFilters.sort) {
+    case 'votes':
+      return Number(b.votes || 0) - Number(a.votes || 0);
+    case 'readTime':
+      return getIdeaReadTime(a) - getIdeaReadTime(b);
+    case 'newest':
+    default:
+      return getIdeaTimestamp(b) - getIdeaTimestamp(a);
+  }
+}
+
+function getIdeaTimestamp(idea) {
+  const value = idea.createdAt;
+  if (!value) return 0;
+  if (typeof value.toMillis === 'function') return value.toMillis();
+  if (typeof value.seconds === 'number') return value.seconds * 1000;
+  if (typeof value === 'number') return value;
+  const parsed = Date.parse(value);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function getIdeaReadTime(idea) {
+  const minutes = Number(idea.readTime);
+  return Number.isFinite(minutes) && minutes > 0 ? minutes : Number.MAX_SAFE_INTEGER;
+}
+
+function highlightIdeaText(text) {
+  const term = (ideaFilters.search || '').trim();
+  const safe = escapeHtml(text || '');
+  if (!term) return safe;
+  try {
+    const regex = new RegExp(`(${escapeRegExp(term)})`, 'gi');
+    return safe.replace(regex, '<mark>$1</mark>');
+  } catch (error) {
+    console.warn('Highlight failed', error);
+    return safe;
+  }
+}
+
+function updateIdeaUrl(id) {
+  const params = new URLSearchParams(window.location.search);
+  if (id) {
+    params.set('idea', id);
+  } else {
+    params.delete('idea');
+  }
+  const newSearch = params.toString();
+  const newUrl = newSearch ? `${window.location.pathname}?${newSearch}` : window.location.pathname;
+  window.history.replaceState({}, '', newUrl);
+}
+
+function buildIdeaLink(id) {
+  const params = new URLSearchParams(window.location.search);
+  if (id) {
+    params.set('idea', id);
+  } else {
+    params.delete('idea');
+  }
+  const search = params.toString();
+  const base = `${window.location.origin}${window.location.pathname}`;
+  return search ? `${base}?${search}` : base;
+}
+
+async function copyIdeaSummary() {
+  if (!currentIdeaId) return;
+  const idea = ideas.find(i => i.id === currentIdeaId);
+  if (!idea) return;
+  const text = idea.summary || idea.description;
+  if (!text) {
+    showIdeaToast('No summary available to copy.', 'error');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    showIdeaToast('Summary copied!', 'success');
+  } catch (error) {
+    console.error('Failed to copy summary', error);
+    showIdeaToast('Unable to copy summary.', 'error');
+  }
+}
+
+async function copyIdeaLink(id = currentIdeaId) {
+  if (!id) return;
+  try {
+    await navigator.clipboard.writeText(buildIdeaLink(id));
+    showIdeaToast('Link copied!', 'success');
+  } catch (error) {
+    console.error('Failed to copy link', error);
+    showIdeaToast('Unable to copy link.', 'error');
+  }
+}
+
+function getIdeaToastContainer() {
+  let container = document.getElementById('ideaToastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'ideaToastContainer';
+    container.style.position = 'fixed';
+    container.style.top = '20px';
+    container.style.right = '20px';
+    container.style.zIndex = '4000';
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.gap = '10px';
+    document.body.appendChild(container);
+  }
+  return container;
+}
+
+function showIdeaToast(message, type = 'info') {
+  const container = getIdeaToastContainer();
+  const toast = document.createElement('div');
+  toast.style.padding = '0.85rem 1.2rem';
+  toast.style.borderRadius = '10px';
+  toast.style.color = '#fff';
+  toast.style.fontWeight = '600';
+  toast.style.boxShadow = '0 8px 18px rgba(15,23,42,0.35)';
+  toast.style.backgroundColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(40px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 2400);
 }
 
 // expose for inline handlers
@@ -280,6 +555,12 @@ window.handleVoteIdea = handleVoteIdea;
 window.copyLinkedPrompt = copyLinkedPrompt;
 window.addLinkedPromptEntry = addLinkedPromptEntry;
 window.removeLinkedPromptEntry = removeLinkedPromptEntry;
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    ['viewIdeaModal', 'addIdeaModal'].forEach((id) => closeModal(id));
+  }
+});
 
 // Save Idea
 async function saveIdea() {

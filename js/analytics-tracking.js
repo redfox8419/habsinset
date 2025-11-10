@@ -9,6 +9,11 @@ import {
   increment
 } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
+const NAV_DELAY_MS = 120;
+const hostname = window.location.hostname || '';
+const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+const isDev = isLocalhost || hostname.endsWith('.local') || window.location.protocol === 'file:' || hostname === '';
+
 // Map hrefs to metric keys
 const pageKeyForHref = (href) => {
   try {
@@ -43,31 +48,25 @@ async function incrementPageClick(key) {
 }
 
 // Attach click handlers once DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('a.hub-card[href]');
-  cards.forEach((anchor) => {
-    anchor.addEventListener('click', async (ev) => {
-      const key = pageKeyForHref(anchor.getAttribute('href'));
-      if (!key) return; // not a tracked link
+if (isDev) {
+  console.info('[analytics-tracking] Disabled in local/dev environment.');
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('a.hub-card[href]');
+    cards.forEach((anchor) => {
+      anchor.addEventListener('click', () => {
+        const key = pageKeyForHref(anchor.getAttribute('href'));
+        if (!key) return; // not a tracked link
 
-      const openInNewTab = ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0 || anchor.target === '_blank';
-      const href = anchor.href;
-
-      if (openInNewTab) {
-        // Fire and forget so we don't block default behavior
-        incrementPageClick(key).catch(() => {});
-        return; // allow default
-      }
-
-      // Prevent immediate navigation to ensure increment request is sent
-      ev.preventDefault();
-      try {
-        await incrementPageClick(key);
-      } catch (_) {
-        // ignore
-      } finally {
-        window.location.href = href;
-      }
+        try {
+          const tracking = incrementPageClick(key);
+          if (tracking && typeof tracking.catch === 'function') {
+            tracking.catch(() => {});
+          }
+        } catch (err) {
+          console.warn('Click tracking failed before navigation:', err);
+        }
+      });
     });
   });
-});
+}

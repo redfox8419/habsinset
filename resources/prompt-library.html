@@ -55,34 +55,34 @@
                     </div>
 
                     <div class="sidebar-section collapsed" data-section="subjects">
-                        <h3 class="sidebar-title" onclick="toggleSection('subjects')">
-                            Subjects
+                        <button class="sidebar-title" type="button" onclick="toggleSection('subjects')" aria-expanded="false" aria-controls="subjectCategories" data-section-toggle="subjects">
+                            <span>Subjects</span>
                             <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
+                        </button>
                         <ul class="category-list" id="subjectCategories"></ul>
                     </div>
 
                     <div class="sidebar-section collapsed" data-section="phases">
-                        <h3 class="sidebar-title" onclick="toggleSection('phases')">
-                            Phase
+                        <button class="sidebar-title" type="button" onclick="toggleSection('phases')" aria-expanded="false" aria-controls="phaseCategories" data-section-toggle="phases">
+                            <span>Phase</span>
                             <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
+                        </button>
                         <ul class="category-list" id="phaseCategories"></ul>
                     </div>
 
                     <div class="sidebar-section collapsed" data-section="types">
-                        <h3 class="sidebar-title" onclick="toggleSection('types')">
-                            Type
+                        <button class="sidebar-title" type="button" onclick="toggleSection('types')" aria-expanded="false" aria-controls="typeCategories" data-section-toggle="types">
+                            <span>Type</span>
                             <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
+                        </button>
                         <ul class="category-list" id="typeCategories"></ul>
                     </div>
 
                     <div class="sidebar-section collapsed" data-section="audience">
-                        <h3 class="sidebar-title" onclick="toggleSection('audience')">
-                            Audience
+                        <button class="sidebar-title" type="button" onclick="toggleSection('audience')" aria-expanded="false" aria-controls="audienceCategories" data-section-toggle="audience">
+                            <span>Audience</span>
                             <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
+                        </button>
                         <ul class="category-list" id="audienceCategories"></ul>
                     </div>
                 </aside>
@@ -108,7 +108,7 @@
 
             <!-- Footer -->
             <footer class="hub-footer">
-                <p>2025 Habs AI Hub • <a href="../index.html">Back to Home</a></p>
+                <p>2025 Habs AI Hub &mdash; <a href="../index.html">Back to Home</a></p>
             </footer>
         </div>
     </div>
@@ -150,10 +150,18 @@
                             <span id="modalUsageCount">0</span>
                         </span>
                     </div>
-                    <div class="prompt-actions" style="margin-bottom: 12px;">
+                    <div class="prompt-actions" style="margin-bottom: 12px; gap: 10px; flex-wrap: wrap;">
                         <button class="prompt-action-btn" id="modalVoteButton">
-                            <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                            <i class="fas fa-thumbs-up"></i>
                             Vote
+                        </button>
+                        <button class="prompt-action-btn" id="modalCopyLinkButton">
+                            <i class="fas fa-link"></i>
+                            Copy Link
+                        </button>
+                        <button class="prompt-action-btn" id="modalCopilotButton">
+                            <i class="fas fa-rocket"></i>
+                            Open Copilot
                         </button>
                     </div>
                     
@@ -244,6 +252,7 @@
     <!-- Toast Container -->
     <div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 2000;"></div>
     
+    <script src="../js/a11y-helpers.js"></script>
     <script type="module" src="../js/prompt-library-page.js"></script>
 </body>
 </html>

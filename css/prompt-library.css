@@ -98,6 +98,15 @@
     border-bottom: 1px solid rgba(255,255,255,0.08);
     padding-bottom: 8px;
     display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;
+    background: transparent;
+    border: 0;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+}
+.sidebar-title:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
 }
 .collapse-icon { font-size: 0.8rem; color: #94a3b8; transition: transform 0.2s ease; }
 .sidebar-section.collapsed .collapse-icon { transform: rotate(-90deg); }

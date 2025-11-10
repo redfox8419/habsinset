@@ -28,12 +28,16 @@ let deepLinkId = null;
 let deepLinkOpened = false;
 let filteredPrompts = [];
 let currentViewedPromptId = null;
+const DEFAULT_SORT = 'newest';
+const FILTER_PARAM_KEYS = ['search', 'subject', 'phase', 'type', 'audience', 'sort'];
+
 let currentFilters = {
   search: '',
   subject: null,
   phase: null,
   type: null,
-  sort: 'newest'
+  audience: null,
+  sort: DEFAULT_SORT
 };
 
 // Minimal inline SVG icon system for consistent, professional icons
@@ -59,6 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
   deepLinkId = params.get('id');
 
   loadCategories();
+  initializeFiltersFromParams(params);
+  updateCategorySelections();
+  syncFilterTabs();
   loadPrompts();
   setupEventListeners();
   restoreCollapsedState();
@@ -194,6 +201,9 @@ function applyFilters() {
 
   displayPrompts();
   updateResultCount();
+  updateCategorySelections();
+  syncFilterTabs();
+  updateUrlWithFilters();
 }
 
 // Update category counts
@@ -245,46 +255,55 @@ function displayPrompts() {
     return;
   }
 
-  grid.innerHTML = filteredPrompts.map(prompt => `
-    <div class="prompt-card" onclick="viewPrompt('${prompt.id}')">
-      <div class="prompt-header">
-        <h3 class="prompt-title">${escapeHtml(prompt.title || '')}</h3>
-        <div class="prompt-meta">
-          <span class="prompt-meta-item">
-            ${svgIcon('upvote', 16, 1.7)}
-            ${prompt.votes || 0}
-          </span>
-          <span class="prompt-meta-item">
-            ${svgIcon('copy', 16, 1.7)}
-            ${prompt.usageCount || 0}
-          </span>
-          <span class="prompt-meta-item">
-            <i class="fas fa-user"></i>
-            by ${escapeHtml(prompt.createdBy || 'Anonymous')}
-          </span>
+  grid.innerHTML = filteredPrompts.map(prompt => {
+    const titleHtml = highlightText(prompt.title || '');
+    const descriptionHtml = highlightText(truncateText(prompt.description || '', 220));
+    const contextRaw = truncateText(prompt.context || '', 160);
+    const contextHtml = prompt.context
+      ? `<p class="prompt-context"><strong>Context:</strong> ${highlightText(contextRaw)}</p>`
+      : '';
+
+    return `
+      <div class="prompt-card" onclick="viewPrompt('${prompt.id}')">
+        <div class="prompt-header">
+          <h3 class="prompt-title">${titleHtml}</h3>
+          <div class="prompt-meta">
+            <span class="prompt-meta-item">
+              ${svgIcon('upvote', 16, 1.7)}
+              ${prompt.votes || 0}
+            </span>
+            <span class="prompt-meta-item">
+              ${svgIcon('copy', 16, 1.7)}
+              ${prompt.usageCount || 0}
+            </span>
+            <span class="prompt-meta-item">
+              <i class="fas fa-user"></i>
+              by ${escapeHtml(prompt.createdBy || 'Anonymous')}
+            </span>
+          </div>
+        </div>
+        <p class="prompt-description">${descriptionHtml}</p>
+        ${contextHtml}
+        <div class="prompt-categories">
+          <span class="category-badge">${prompt.subject || ''}</span>
+          <span class="category-badge">${prompt.phase || ''}</span>
+          <span class="category-badge">${prompt.type || ''}</span>
+          ${(Array.isArray(prompt.audience) ? prompt.audience : []).map(a=>`<span class="category-badge ${a==='Teacher'?'audience-teacher':'audience-students'}">${a}</span>`).join('')}
+        </div>
+        <div class="prompt-actions">
+          <button class="prompt-action-btn" onclick="event.stopPropagation(); copyPromptText('${prompt.id}')">
+            ${svgIcon('copy')} Copy
+          </button>
+          <button class="prompt-action-btn primary" onclick="event.stopPropagation(); viewPrompt('${prompt.id}')">
+            ${svgIcon('eye')} View
+          </button>
+          <button class="prompt-action-btn" ${hasVoted(prompt.id) ? 'disabled' : ''} onclick="event.stopPropagation(); handleVote('${prompt.id}')">
+            ${hasVoted(prompt.id) ? `${svgIcon('check')} Voted` : `${svgIcon('upvote')} Vote`}
+          </button>
         </div>
       </div>
-      <p class="prompt-description">${escapeHtml(prompt.description || '')}</p>
-      ${prompt.context ? ('<p class="prompt-context"><strong>Context:</strong> ' + escapeHtml(prompt.context).slice(0, 160) + (prompt.context.length > 160 ? '…' : '') + '</p>') : ''}
-      <div class="prompt-categories">
-        <span class="category-badge">${prompt.subject || ''}</span>
-        <span class="category-badge">${prompt.phase || ''}</span>
-        <span class="category-badge">${prompt.type || ''}</span>
-        ${(Array.isArray(prompt.audience) ? prompt.audience : []).map(a=>`<span class=\"category-badge ${a==='Teacher'?'audience-teacher':'audience-students'}\">${a}</span>`).join('')}
-      </div>
-      <div class="prompt-actions">
-        <button class="prompt-action-btn" onclick="event.stopPropagation(); copyPromptText('${prompt.id}')">
-          ${svgIcon('copy')} Copy
-        </button>
-        <button class="prompt-action-btn primary" onclick="event.stopPropagation(); viewPrompt('${prompt.id}')">
-          ${svgIcon('eye')} View
-        </button>
-        <button class="prompt-action-btn" ${hasVoted(prompt.id) ? 'disabled' : ''} onclick="event.stopPropagation(); handleVote('${prompt.id}')">
-          ${hasVoted(prompt.id) ? `${svgIcon('check')} Voted` : `${svgIcon('upvote')} Vote`}
-        </button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 // Setup event listeners
@@ -310,12 +329,15 @@ function setupEventListeners() {
       switch (filter) {
         case 'popular':
           currentFilters.sort = 'popular';
+          currentFilters.type = null;
           break;
         case 'newest':
           currentFilters.sort = 'newest';
+          currentFilters.type = null;
           break;
         case 'timesaver':
           currentFilters.type = 'Time Saver';
+          currentFilters.sort = 'newest';
           break;
         default:
           currentFilters.sort = 'newest';
@@ -411,6 +433,22 @@ async function viewPrompt(promptId) {
       }
       btn.disabled = true;
       renderVoteButton(btn, true);
+    };
+  }
+
+  const copyLinkButton = document.getElementById('modalCopyLinkButton');
+  if (copyLinkButton) {
+    copyLinkButton.onclick = (e) => {
+      e.preventDefault();
+      copyPromptLink(promptId);
+    };
+  }
+
+  const copilotButton = document.getElementById('modalCopilotButton');
+  if (copilotButton) {
+    copilotButton.onclick = (e) => {
+      e.preventDefault();
+      openPromptInCopilot(promptId);
     };
   }
 }
@@ -518,6 +556,39 @@ async function copyPromptText(promptId) {
   }
 }
 
+function buildPromptLink(promptId) {
+  const url = new URL(window.location.href);
+  if (promptId) {
+    url.searchParams.set('id', promptId);
+  }
+  return url.toString();
+}
+
+async function copyPromptLink(promptId = currentViewedPromptId) {
+  if (!promptId) return;
+  try {
+    await navigator.clipboard.writeText(buildPromptLink(promptId));
+    showToast('Prompt link copied!', 'success');
+  } catch (error) {
+    console.error('Failed to copy link:', error);
+    showToast('Failed to copy link.', 'error');
+  }
+}
+
+function openPromptInCopilot(promptId = currentViewedPromptId) {
+  if (!promptId) return;
+  const prompt = prompts.find(p => p.id === promptId);
+  if (!prompt || !prompt.content) {
+    showToast('Prompt content is missing.', 'error');
+    return;
+  }
+  const title = prompt.title ? `${prompt.title}\n\n` : '';
+  const context = prompt.context ? `\n\nContext:\n${prompt.context}` : '';
+  const payload = `${title}${prompt.content}${context}`;
+  const copilotUrl = `https://copilot.microsoft.com/?q=${encodeURIComponent(payload)}`;
+  window.open(copilotUrl, '_blank', 'noopener');
+}
+
 // Save prompt to Firebase
 async function savePrompt() {
   const formData = {
@@ -582,6 +653,88 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function escapeRegExp(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function truncateText(text = '', limit = 160) {
+  if (!text) return '';
+  return text.length > limit ? `${text.slice(0, limit).trimEnd()}...` : text;
+}
+
+function highlightText(text) {
+  const term = (currentFilters.search || '').trim();
+  const safe = escapeHtml(text || '');
+  if (!term) return safe;
+  try {
+    const regex = new RegExp(`(${escapeRegExp(term)})`, 'gi');
+    return safe.replace(regex, '<mark>$1</mark>');
+  } catch (error) {
+    console.warn('Highlight failed', error);
+    return safe;
+  }
+}
+
+function updateUrlWithFilters() {
+  const params = new URLSearchParams(window.location.search);
+  FILTER_PARAM_KEYS.forEach((key) => {
+    const value = currentFilters[key];
+    const shouldDrop = !value || (key === 'sort' && value === DEFAULT_SORT);
+    if (shouldDrop) {
+      params.delete(key);
+    } else {
+      params.set(key, value);
+    }
+  });
+  const newSearch = params.toString();
+  const newUrl = newSearch ? `${window.location.pathname}?${newSearch}` : window.location.pathname;
+  window.history.replaceState({}, '', newUrl);
+}
+
+function initializeFiltersFromParams(params) {
+  if (!params) return;
+  const searchValue = params.get('search');
+  if (searchValue) {
+    currentFilters.search = searchValue;
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = searchValue;
+  }
+  ['subject', 'phase', 'type', 'audience'].forEach((key) => {
+    const value = params.get(key);
+    if (value) currentFilters[key] = value;
+  });
+  const sortValue = params.get('sort');
+  if (sortValue) {
+    currentFilters.sort = sortValue;
+    const dropdown = document.getElementById('sortDropdown');
+    if (dropdown) dropdown.value = sortValue;
+  }
+}
+
+function updateCategorySelections() {
+  document.querySelectorAll('.category-link').forEach((link) => {
+    const type = link.dataset.category;
+    const value = link.dataset.value;
+    if (!type) return;
+    link.classList.toggle('active', currentFilters[type] === value);
+  });
+}
+
+function syncFilterTabs() {
+  const tabs = document.querySelectorAll('.filter-tab');
+  tabs.forEach(tab => tab.classList.remove('active'));
+  let active = 'all';
+  if (currentFilters.type === 'Time Saver') {
+    active = 'timesaver';
+  } else if (currentFilters.sort === 'popular') {
+    active = 'popular';
+  } else if (currentFilters.sort !== DEFAULT_SORT) {
+    active = 'newest';
+  }
+  const target = document.querySelector(`.filter-tab[data-filter="${active}"]`);
+  if (target) target.classList.add('active');
+}
+
 function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.style.cssText = `
@@ -613,6 +766,12 @@ document.querySelectorAll('.modal').forEach(modal => {
   });
 });
 
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    document.querySelectorAll('.modal.active').forEach((modal) => closeModal(modal.id));
+  }
+});
+
 // Add CSS animations
 const style = document.createElement('style');
 style.textContent = `
@@ -642,19 +801,19 @@ function renderVoteButton(btn, voted) {
   btn.innerHTML = voted ? `${svgIcon('check')} Voted` : `${svgIcon('upvote')} Vote`;
 }
 
+function setSectionAria(section) {
+  const trigger = section.querySelector('[data-section-toggle]');
+  if (!trigger) return;
+  const expanded = !section.classList.contains('collapsed');
+  trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+}
+
 // Collapsible sections functionality
 function toggleSection(sectionName) {
   const section = document.querySelector(`[data-section="${sectionName}"]`);
   if (section) {
     section.classList.toggle('collapsed');
-
-    // Update icon rotation
-    const icon = section.querySelector('.collapse-icon');
-    if (section.classList.contains('collapsed')) {
-      icon.style.transform = 'rotate(-90deg)';
-    } else {
-      icon.style.transform = 'rotate(0deg)';
-    }
+    setSectionAria(section);
 
     // Save state to localStorage
     const collapsedSections = JSON.parse(localStorage.getItem('collapsedSections') || '[]');
@@ -680,17 +839,14 @@ function toggleAllSections() {
   const buttonText = button.querySelector('span');
 
   sections.forEach(section => {
-    const icon = section.querySelector('.collapse-icon');
-
     if (allCollapsed) {
       // Expand all
       section.classList.remove('collapsed');
-      icon.style.transform = 'rotate(0deg)';
     } else {
       // Collapse all
       section.classList.add('collapsed');
-      icon.style.transform = 'rotate(-90deg)';
     }
+    setSectionAria(section);
   });
 
   // Update button text and icon
@@ -703,30 +859,34 @@ function toggleAllSections() {
   }
 
   // Update localStorage
-  const collapsedSections = allCollapsed ? [] : ['subjects', 'phases', 'types'];
+  const sectionNames = Array.from(sections)
+    .map(section => section.dataset.section)
+    .filter(Boolean);
+  const collapsedSections = allCollapsed ? [] : sectionNames;
   localStorage.setItem('collapsedSections', JSON.stringify(collapsedSections));
 }
 
 // Restore collapsed state on page load
 function restoreCollapsedState() {
   let collapsedSections = JSON.parse(localStorage.getItem('collapsedSections') || '[]');
-  // Default to all collapsed on first load
+  const defaultCollapsed = ['subjects', 'phases', 'types', 'audience'];
   if (!Array.isArray(collapsedSections) || collapsedSections.length === 0) {
-    collapsedSections = ['subjects', 'phases', 'types'];
+    collapsedSections = defaultCollapsed;
     localStorage.setItem('collapsedSections', JSON.stringify(collapsedSections));
   }
 
-  collapsedSections.forEach(sectionName => {
-    const section = document.querySelector(`[data-section=\"${sectionName}\"]`);
-    if (section) {
+  const sections = document.querySelectorAll('.sidebar-section');
+  sections.forEach(section => {
+    const name = section.dataset.section;
+    if (!name) return;
+    if (collapsedSections.includes(name)) {
       section.classList.add('collapsed');
-      const icon = section.querySelector('.collapse-icon');
-      if (icon) icon.style.transform = 'rotate(-90deg)';
+    } else {
+      section.classList.remove('collapsed');
     }
+    setSectionAria(section);
   });
 
-  // Update the collapse-all button to reflect current state (all collapsed)
-  const sections = document.querySelectorAll('.sidebar-section');
   const allCollapsed = Array.from(sections).every(s => s.classList.contains('collapsed'));
   const button = document.querySelector('.collapse-all-btn');
   if (button) {
