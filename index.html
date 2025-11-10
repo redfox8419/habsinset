@@ -3,753 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Inset Day - AI Tools for Education</title>
+    <title>Habs AI Hub - Your Gateway to AI-Enhanced Teaching</title>
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- GSAP Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <style>
-        /* Minimal additional styles just for the animations */
-        .scroll-container {
-            height: 300vh;
-            width: 100%;
-            position: relative;
-            background-color: #111827;
-        }
-
-        .pathways {
-            margin-top: 100vh;
-            position: relative;
-            margin-top: 0;
-            z-index: 100;
-        }
-        
-        .hero-home {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 10;
-            background-color: #111827;
-        }
-        
-        /* Image containers for animation */
-        .image-container {
-            position: absolute;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: -1;
-        }
-        
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* Left image */
-        .hero-home {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 10;
-            background-color: #111827;
-            overflow: visible;
-        }
-
-        /* Left image - converted px => vw/vh (ref: 1512×865) */
-        .hero-home .img1 {
-            width: 21.16vw;           /* was 320px => 320/1512 * 100 */
-            height: 23.09vh;         /* was 200px => 200/865 * 100 */
-            left: -25.13vw;          /* was -380px => -380/1512 * 100 */
-            top: 100%;               /* keep “100%” as in original */
-            transform: translateY(-50%);
-        }
-
-        /* Top right image */
-        .hero-home .img2 {
-            width: 15.87vw;          /* 240px => 240/1512 * 100 */
-            height: 18.50vh;         /* 160px => 160/865 * 100 */
-            right: -21.16vw;         /* -320px => -320/1512 * 100 */
-            top: 13.87vh;            /* 120px => 120/865 * 100 */
-            bottom: auto;
-        }
-
-        /* Bottom right image */
-        .hero-home .img3 {
-            width: 15.87vw;
-            height: 18.50vh;
-            right: -21.16vw;
-            bottom: 13.87vh;         /* 120px => 120/865 * 100 */
-            top: auto;
-        }
-        
-        .hero-home .img4 {
-            width: 15.87vw;
-            height: 18.50vh;
-            left: -21.16vw;          /* -320px => -320/1512 * 100 */
-            bottom: 13.87vh;
-            top: auto;
-        }
-
-        /* Center top image */
-        .hero-home .img5 {
-            width: 18.52vw;          /* 280px => 280/1512 * 100 */
-            height: 20.81vh;         /* 180px => 180/865 * 100 */
-            left: 50%;
-            top: -23.09vh;           /* -200px => -200/865 * 100 */
-            transform: translateX(-50%);
-        }
-
-        /* Center bottom image */
-        .hero-home .img6 {
-            width: 16.53vw;          /* 250px => 250/1512 * 100 */
-            height: 28.90vh;         /* 250px => 250/865 * 100 */
-            left: 65%;
-            bottom: -26.59vh;        /* -230px => -230/865 * 100 */
-            transform: translateX(-50%);
-        }
-        
-        /* Second section styles */
-        .second-section {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 5; /* Lower than first section but higher than pathways */
-            background-color: #111827;
-            overflow: visible;
-            opacity: 0; /* Start invisible */
-            visibility: hidden; /* Start hidden */
-        }
-        
-        /* Position the second section images to be initially outside the viewport */
-        .second-section .img1 {
-            width: 11.90vw;          /* 180px => 180/1512 * 100 */
-            height: 32.43vh;         /* 280px => 280/865 * 100 */
-            left: -26.46vw;          /* -400px => -400/1512 * 100 */
-            top: 20.81vh;            /* 180px => 180/865 * 100 */
-            opacity: 0;
-        }
-        
-        .second-section .img2 {
-            width: 19.84vw;          /* 300px => 300/1512 * 100 */
-            height: 18.50vh;         /* 160px => 160/865 * 100 */
-            right: -15.87vw;         /* -240px => -240/1512 * 100 */
-            top: 16.18vh;            /* 140px => 140/865 * 100 */
-            opacity: 0;
-        }
-        
-        .second-section .img3 {
-            width: 19.84vw;
-            height: 25.43vh;         /* 220px => 220/865 * 100 */
-            right: -17.19vw;         /* -260px => -260/1512 * 100 */
-            bottom: -71.80vh;        /* -620px => -620/865 * 100 */
-            opacity: 0;
-        }
-        
-        .second-section .img4 {
-            width: 11.90vw;
-            height: 32.43vh;
-            left: -21.16vw;          /* -320px => -320/1512 * 100 */
-            top: 57.80vh;            /* 500px => 500/865 * 100 */
-            opacity: 0;
-        }
-        
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            text-align: center;
-            color: white;
-        }
-        
-        .scroll-arrow {
-            width: 30px;
-            height: 30px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .scroll-arrow:before {
-            content: '';
-            width: 12px;
-            height: 12px;
-            border-right: 2px solid white;
-            border-bottom: 2px solid white;
-            transform: rotate(45deg);
-            position: absolute;
-            left: 9px;
-            animation: arrowBounce 2s infinite;
-        }
-        
-        @keyframes arrowBounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) rotate(45deg);
-            }
-            40% {
-                transform: translateY(-10px) rotate(45deg);
-            }
-            60% {
-                transform: translateY(-5px) rotate(45deg);
-            }
-        }
-        
-        @media screen and (max-width: 1280px) and (max-height: 650px) { 
-            
-            /* top left image */
-            .hero-home .img1 {
-            width: 21.16vw;           /* was 320px => 320/1512 * 100 */
-            height: 23.09vh;         /* was 200px => 200/865 * 100 */
-            left: -21.13vw;          /* was -380px => -380/1512 * 100 */
-            top: 100%;               /* keep “100%” as in original */
-            transform: translateY(-50%);
-        }
-
-        /* bottom right image */
-        .hero-home .img2 {
-            width: 15.87vw;          /* 240px => 240/1512 * 100 */
-            height: 18.50vh;         /* 160px => 160/865 * 100 */
-            right: -21.16vw;         /* -320px => -320/1512 * 100 */
-            top: 28.87vh;            /* 120px => 120/865 * 100 */
-            bottom: auto;
-        }
-
-        /* top right */
-        .hero-home .img3 {
-            width: 15.87vw;
-            height: 18.50vh;
-            right: -21.16vw;
-            bottom: 15.87vh;         /* 120px => 120/865 * 100 */
-            top: auto;
-        }
-        
-        .hero-home .img4 {
-            width: 15.87vw;
-            height: 18.50vh;
-            left: -18.13vw;          /* -320px => -320/1512 * 100 */
-            bottom: 13.87vh;
-            top: auto;
-        }
-
-        /* Center top image */
-        .hero-home .img5 {
-            width: 18.52vw;          /* 280px => 280/1512 * 100 */
-            height: 20.81vh;         /* 180px => 180/865 * 100 */
-            left: 50%;
-            top: -15.00vh;           /* -200px => -200/865 * 100 */
-            transform: translateX(-50%);
-        }
-
-        /* Center bottom image */
-        .hero-home .img6 {
-            width: 16.53vw;          /* 250px => 250/1512 * 100 */
-            height: 28.90vh;         /* 250px => 250/865 * 100 */
-            left: 65%;
-            bottom: -26.59vh;        /* -230px => -230/865 * 100 */
-            transform: translateX(-50%);
-        }
-            
-             }
-
-        @media (max-width: 768px) {
-            .hero-home .img1,
-            .hero-home .img2,
-            .hero-home .img3,
-            .second-section .img1,
-            .second-section .img2,
-            .second-section .img3,
-            .second-section .img4 {
-                display: none; /* Hide images on mobile */
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Loading screen -->
-    <div class="loading-screen">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <div id="header-placeholder" data-path="./js/header.js"></div>
-    </header>
-
-    <!-- Scroll Container -->
-    <div class="scroll-container" id="scroll-container">
-        <!-- Hero Section (Fixed) -->
-        <section class="hero hero-home">
-            <div class="container hero-content">
-                <h1>Welcome to AI Inset Day</h1>
-                <p>A practical resource to help teachers explore what AI has to offer in their teaching practice. Choose your learning pathway and discover potential ways AI might enhance your classroom.</p>
-                
-                <!-- Image containers for animation -->
-                <div class="image-container img1">
-                    <img src="/images/image1.png" alt="AI in education" />
-                </div>
-                
-                <div class="image-container img2">
-                    <img src="/images/image2.png" alt="Teacher using AI" />
-                </div>
-                
-                <div class="image-container img3">
-                    <img src="/images/image3.png" alt="Students learning" />
-                </div>
-                <div class="image-container img4">
-                    <img src="/images/image4.png" alt="Educational AI concepts" />
-                </div>
-                <div class="image-container img5">
-                    <img src="/images/image5.png" alt="AI concept map" />
-                </div>
-                
-                <div class="image-container img6">
-                    <img src="/images/image6.png" alt="Educational technology" />
-                </div>
-            </div>
-            <div class="floating-elements">
-                <div class="floating-element element-1"></div>
-                <div class="floating-element element-2"></div>
-                <div class="floating-element element-3"></div>
-            </div>
-        </section>
-
-        <!-- Second Animated Section -->
-        <section class="second-section">
-            <div class="container hero-content">
-                
-                <!-- Image containers for second section animation -->
-                <div class="image-container img1">
-                    <img src="/images/second1.png" alt="Teacher collaboration" />
-                </div>
-                
-                <div class="image-container img2">
-                    <img src="/images/second2.png" alt="Student engagement" />
-                </div>
-                
-                <div class="image-container img3">
-                    <img src="/images/second3.png" alt="AI tools showcase" />
-                </div>
-                
-                <div class="image-container img4">
-                    <img src="/images/second4.png" alt="Classroom innovation" />
-                </div>
-            </div>
-            <div class="floating-elements">
-                <div class="floating-element element-1"></div>
-                <div class="floating-element element-2"></div>
-                <div class="floating-element element-3"></div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator" id="scrollIndicator">
-        <p>Scroll to explore</p>
-        <div class="scroll-arrow"></div>
-    </div>
-
-    <!-- Pathways Section - USING ORIGINAL MARKUP -->
-    <section class="pathways" id="pathways">
-        <div class="container">
-            <div class="section-heading">
-                <h2>Choose Your Learning Pathway</h2>
-                <p class="pathways-subtitle">Select the path that best fits your needs and experience level. Each pathway includes a sequence of modules designed to build your skills progressively.</p>
+    <!-- Prismatic Burst Background -->
+    <div class="prismatic-burst"></div>
+    <!-- Main Content -->
+    <div class="hub-container">
+        <div class="hub-content">
+            <!-- Header -->
+            <div class="hub-header">
+                <h1 class="hub-title brand-title">Habs AI Hub</h1>
+                <p class="hub-subtitle">Everything you need to enhance your teaching with AI</p>
             </div>
             
-            <div class="pathway-grid">
-                <!-- AI Foundations Pathway -->
-                <div class="card pathway-card">
-                    <div class="card-header"></div>
-                    <div class="card-title">
-                        <h3>AI Foundations</h3>
+            <!-- Three Column Grid -->
+            <div class="hub-grid">
+                <!-- Prompt Library -->
+                <a href="resources/prompt-library.html" class="hub-card" aria-label="Browse the Prompt Library">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
-                    <div class="card-body">
-                        <div class="pathway-icon text-center mb-4">
-                            <i class="fas fa-seedling text-primary fa-3x"></i>
+                    <h2 class="card-title">Prompt Library</h2>
+                    <p class="card-description">A growing collection of tried-and-tested AI prompts created by teachers, for teachers</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Subject-specific prompts</span>
                         </div>
-                        <p>Perfect for beginners! Start with the fundamentals of AI in education, learn basic prompting techniques, and discover how AI can enhance your teaching practice.</p>
-                        
-                        <div class="pathway-features">
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>AI Ethics and Safety for Education</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Basic Prompting Techniques</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>AI Tools for Classroom Use</span>
-                            </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Searchable database</span>
                         </div>
-                        
-                        <div class="card-footer">
-                            <a href="ai-foundations/index.html" class="btn-card">
-                                Start This Pathway
-                            </a>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Community contributions</span>
                         </div>
                     </div>
-                </div>
+                    <span class="explore-link">
+                        Browse Prompts <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
                 
-                <!-- Resource Builder Pathway -->
-                <div class="card pathway-card">
-                    <div class="card-header"></div>
-                    <div class="card-title">
-                        <h3>Resource Builder</h3>
+                <!-- AI Ideas -->
+                <a href="resources/ideas.html" class="hub-card" aria-label="Access AI ideas resources">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
                     </div>
-                    <div class="card-body">
-                        <div class="pathway-icon text-center mb-4">
-                            <i class="fas fa-tools text-secondary fa-3x"></i>
+                    <h2 class="card-title">Ideas</h2>
+                    <p class="card-description">Quick, practical ideas for using AI — short reads with examples and clear explainers.</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>2–3 minute ideas</span>
                         </div>
-                        <p>Great for teachers with some AI experience! Learn advanced prompting techniques and discover how to create beautifully formatted, professional resources using HTML - no coding knowledge required.</p>                        
-                        <div class="pathway-features">
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Structured Prompting Frameworks</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Prompt Chaining and Resource Uploads</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Creating Professional HTML Resources</span>
-                            </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Practical prompts and examples</span>
                         </div>
-                        
-                        <div class="card-footer">
-                            <a href="resource-builder/index.html" class="btn-card">
-                                Start This Pathway
-                            </a>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Short explainers for teachers</span>
                         </div>
                     </div>
-                </div>
+                    <span class="explore-link">
+                        Access Resources <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
                 
-                <!-- Code Creator Pathway -->
-                <div class="card pathway-card">
-                    <div class="card-header"></div>
-                    <div class="card-title">
-                        <h3>Code Creator</h3>
+                <!-- AI Tools -->
+                <a href="resources/ai-tools.html" class="hub-card" aria-label="Explore the AI tools directory">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
                     </div>
-                    <div class="card-body">
-                        <div class="pathway-icon text-center mb-4">
-                            <i class="fas fa-code text-tertiary fa-3x"></i>
+                    <h2 class="card-title">AI Tools</h2>
+                    <p class="card-description">Curated directory of AI tools for education, with direct links and descriptions</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Free & paid options</span>
                         </div>
-                        <p>For educators who want to create interactive content! Learn to use AI to generate engaging HTML applications, self-marking quizzes, and interactive activities - no programming experience required.</p>                        
-                        <div class="pathway-features">
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Creating Interactive HTML Applications</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Building Self-Marking Quizzes</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Customizing and Sharing Web Resources</span>
-                            </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Education-focused tools</span>
                         </div>
-                        
-                        <div class="card-footer">
-                            <a href="code-creator/index.html" class="btn-card">
-                                Start This Pathway
-                            </a>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Quick comparison guide</span>
                         </div>
                     </div>
-                </div>
+                    <span class="explore-link">
+                        Explore Tools <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
             </div>
         </div>
-    </section>
-
-    <!-- Back to Top Button -->
-    <div class="back-to-top" id="backToTopBtn">
-        <i class="fas fa-arrow-up"></i>
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div id="footer-placeholder" data-path="./js/footer.js"></div>
+    <footer class="hub-footer">
+        <p>2025 Habs Innovation AI Hub</p>
     </footer>
-
-    <script>
-        // Loading screen
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.querySelector('.loading-screen').classList.add('fade-out');
-            }, 1000);
-        });
-        
-        // Back to Top Button
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                document.getElementById('backToTopBtn').classList.add('active');
-            } else {
-                document.getElementById('backToTopBtn').classList.remove('active');
-            }
-        });
-
-        document.getElementById('backToTopBtn').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Register ScrollTrigger plugin
-        gsap.registerPlugin(ScrollTrigger);
-
-        // GSAP Animations - ONLY adding animation code here
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get elements
-            const heroSection = document.querySelector('.hero-home');
-            const heroContent = heroSection.querySelector('.hero-content');
-            const floatingElements = heroSection.querySelector('.floating-elements');
-            
-            // Get image containers for first section
-            const imageContainers = [
-                heroSection.querySelector('.img1'),
-                heroSection.querySelector('.img2'),
-                heroSection.querySelector('.img3'),
-                heroSection.querySelector('.img4'),
-                heroSection.querySelector('.img5'),
-                heroSection.querySelector('.img6')
-            ];
-            
-            // Get second section elements
-            const secondSection = document.querySelector('.second-section');
-            const secondContent = secondSection.querySelector('.hero-content');
-            const secondFloatingElements = secondSection.querySelector('.floating-elements');
-            
-            // Get image containers for second section
-            const secondImageContainers = [
-                secondSection.querySelector('.img1'),
-                secondSection.querySelector('.img2'),
-                secondSection.querySelector('.img3'),
-                secondSection.querySelector('.img4')
-            ];
-            
-            // Create a master timeline for both sections
-            const masterTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '#scroll-container',
-                    start: 'top top',
-                    end: '+=1600', // Total scroll distance for both sections
-                    scrub: 1,
-                    pin: true, // Pin the scroll container for both animations
-                    anticipatePin: 1
-                }
-            });
-            
-            // First section exit animations
-            masterTimeline.to(imageContainers[0], { 
-                x: '6.61vw',  /* 100px => 100/1512*100 */
-                y: '11.56vh', /* 100px => 100/865*100 */
-                scale: 1.4, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            masterTimeline.to(imageContainers[1], { 
-                x: '-6.61vw', 
-                y: '11.56vh', 
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            masterTimeline.to(imageContainers[2], { 
-                x: '1.32vw',   /* 20px => 20/1512*100 */
-                y: '-17.34vh', /* -150px => -150/865*100 */
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            // Set initial flip for image 5
-            gsap.set(imageContainers[5], {
-                scaleX: -1 // Start with the image flipped
-            });
-            
-            masterTimeline.to(imageContainers[4], { 
-                x: '19.84vw',  /* 300px => 300/1512*100 */
-                y: '5.78vh',  /* -50px => -50/865*100 */
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            masterTimeline.to(imageContainers[5], {
-                x: '-13.22vw', /* -200px => -200/1512*100 */
-                scaleX: -1, 
-                scaleY: 1, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            masterTimeline.to(imageContainers[3], { 
-                x: '13.22vw',  /* 200px => 200/1512*100 */
-                y: '-17.34vh', /* -150px => -150/865*100 */
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5
-            }, 0);
-            
-            // First section text animations
-            masterTimeline.to(heroContent.querySelector('h1'), { 
-                y: '-17.34vh',  /* -150px => -150/865*100 */
-                scale: 1.5, 
-                opacity: 0, 
-                duration: 0.5 
-            }, 0.3);
-            
-            masterTimeline.to(heroContent.querySelector('p'), { 
-                y: '11.56vh',   /* 100px => 100/865*100 */
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.5 
-            }, 0.35);
-            
-            masterTimeline.to(floatingElements, { 
-                opacity: 0, 
-                duration: 0.5 
-            }, 0.3);
-            
-            // Hide first section completely at this point
-            masterTimeline.to(heroSection, {
-                autoAlpha: 0,
-                duration: 0.1
-            }, 0.8);
-            
-            // Fade in second section
-            masterTimeline.to(secondSection, {
-                opacity: 1,
-                visibility: 'visible',
-                duration: 0.3
-            }, 0.8);
-            
-            // Second section entrance animations
-            masterTimeline.fromTo(
-                secondImageContainers[0],
-                { x: '-26.46vw', opacity: 0 }, /* -400px => -400/1512*100 */
-                { x: '21.83vw',  opacity: 1, duration: 0.4 }, /* 330px => 330/1512*100 */
-                0.9
-            );
-            
-            masterTimeline.fromTo(
-                secondImageContainers[1],
-                { x: '26.46vw', y: '9.25vh', opacity: 0 },  /* 400px => 26.46vw, 80px => 9.25vh */
-                { x: '-19.17vw', y: '13.87vh', opacity: 1, duration: 0.4 }, /* -290px => -290/1512*100, 120px => 120/865*100 */
-                1.0
-            );
-            
-            masterTimeline.fromTo(
-                secondImageContainers[2],
-                { x: '26.46vw', y: '13.87vh', opacity: 0 }, 
-                { x: '-19.17vw', y: '9.25vh', opacity: 1, duration: 0.4 },
-                1.1
-            );
-            
-            masterTimeline.fromTo(
-                secondImageContainers[3],
-                { x: '-26.46vw', opacity: 0 },
-                { x: '19.17vw', opacity: 1, duration: 0.4 },
-                1.2
-            );
-            
-            // Leave second section visible for a moment
-            masterTimeline.to({}, {duration: 0.3}, 1.4);
-            
-            // Second section exit animations
-            masterTimeline.to(secondImageContainers[0], { 
-                x: '6.61vw',      /* 100px => 100/1512*100 */
-                y: '-5.78vh',     /* -50px => -50/865*100 */
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.4
-            }, 1.5);
-            
-            masterTimeline.to(secondImageContainers[1], { 
-                x: '-7.94vw',     /* -120px => -120/1512*100 */
-                y: '9.25vh',      /* 80px => 80/865*100 */
-                scale: 1.4, 
-                opacity: 0, 
-                duration: 0.4
-            }, 1.5);
-            
-            masterTimeline.to(secondImageContainers[2], { 
-                x: '-3.30vw',     /* -50px => -50/1512*100 */
-                y: '20.81vh',     /* 180px => 180/865*100 */
-                scale: 1.2, 
-                opacity: 0, 
-                duration: 0.4
-            }, 1.5);
-            
-            masterTimeline.to(secondImageContainers[3], { 
-                x: '9.92vw',      /* 150px => 150/1512*100 */
-                y: '9.25vh',      /* 80px => 80/865*100 */
-                scale: 1.3, 
-                opacity: 0, 
-                duration: 0.4
-            }, 1.5);
-            
-            masterTimeline.to(secondFloatingElements, { 
-                opacity: 0, 
-                duration: 0.4
-            }, 1.6);
-            
-            // Hide second section and show pathways at end
-            masterTimeline.to(secondSection, {
-                autoAlpha: 0,
-                duration: 0.1,
-                onComplete: () => {
-                    // Check if this is the first visit
-                    if (!localStorage.getItem('aiQuizCompleted')) {
-                        // First visit - show the quiz
-                        createQuizModal();
-                        
-                        // Hide pathways until quiz is completed
-                        gsap.set('.pathways', { 
-                            visibility: 'hidden'
-                        });
-                    } else {
-                        // Return visit - show pathways immediately
-                        gsap.set('.pathways', { 
-                            y: 0,
-                            visibility: 'visible'
-                        });
-                    }
-                }
-            }, 1.9);
-            
-            // Scroll indicator - keep this exactly as it was
-            gsap.to('#scrollIndicator', {
-                opacity: 0,
-                scrollTrigger: {
-                    trigger: '#scroll-container',
-                    start: '5% top',
-                    end: '10% top',
-                    scrub: true
-                }
-            });
-        });
-    </script>
-    
-    <!-- Include the AI quiz script if it exists -->
-    <script src="js/ai-quiz.js"></script>
-    <script src="../js/header.js"></script>
-    <script src="../js/footer.js"></script>
 </body>
+<script src="js/pixel-cards.js"></script>
+<script type="module" src="js/analytics-tracking.js"></script>
 </html>

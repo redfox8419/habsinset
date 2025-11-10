@@ -1,0 +1,9 @@
+{
+  "name": "habs-prompt-library",
+  "version": "1.0.0",
+  "description": "Prompt Library for Habs AI Hub",
+  "private": true,
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}

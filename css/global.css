@@ -1,18 +1,739 @@
 /* ===================================
-   GLOBAL CSS - Main entry point
-   Imports all other stylesheets
+   GLOBAL CSS - EXTRACTED FROM CURRENT INDEX.HTML
+   Based on the existing Habs AI Hub design
    =================================== */
 
-/* Import base variables */
-@import url('variables.css');
+/* FONT & BASE SETUP */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Import base styles */
-@import url('base.css');
+*, *::before, *::after {
+    box-sizing: inherit;
+}
 
-/* Import component styles */
-@import url('components.css');
+/* REMOVE DEFAULT HEADER (as per current design) */
+header {
+    display: none;
+}
 
-/* Import utility classes */
-@import url('utilities.css');
+/* MAIN BODY STYLING */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+}
 
-/* Page-specific styles can override anything above */
+/* ANIMATED BACKGROUND */
+body::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.03) 0%, transparent 70%);
+    animation: pulse 30s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(180deg); }
+}
+
+/* Brand palette for hero underline */
+:root {
+    --habs-red:   #e1524d;  /* tweak if you have official hex */
+    --habs-purple:#6f719e;  /* middle */
+    --habs-blue:  #6fb0d6;  /* light blue */
+}
+
+/* PRISMATIC BURST BACKGROUND (Home only) */
+.prismatic-burst {
+    position: fixed;
+    inset: -10%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    filter: blur(50px) saturate(120%);
+    contain: layout paint size style;
+    will-change: transform;
+    /* Brand-focused prismatic field: red | purple | light blue */
+    background:
+      radial-gradient(780px circle at 18% 22%, rgba(225, 82, 77, 0.28), rgba(225, 82, 77, 0) 60%),
+      radial-gradient(720px circle at 82% 20%, rgba(111, 176, 214, 0.26), rgba(111, 176, 214, 0) 62%),
+      radial-gradient(680px circle at 28% 78%, rgba(111, 113, 158, 0.24), rgba(111, 113, 158, 0) 60%),
+      radial-gradient(960px circle at 70% 70%, rgba(111, 113, 158, 0.14), rgba(111, 113, 158, 0) 72%),
+      radial-gradient(900px circle at 50% 50%, rgba(225, 82, 77, 0.10), rgba(225, 82, 77, 0) 70%);
+    animation: prismaticFloat 38s ease-in-out infinite alternate;
+    transform: translateZ(0);
+}
+
+@keyframes prismaticFloat {
+    0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50%  { transform: translate3d(0, -20px, 0) rotate(180deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(360deg); }
+}
+
+/* MAIN CONTAINER SYSTEM */
+.hub-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.hub-content {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* TITLE SECTION */
+.hub-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+
+
+.hub-title {
+    font-size: clamp(2.25rem, 4vw, 3.75rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+    letter-spacing: -0.005em; /* avoid overlap while staying compact */
+    line-height: 1.1;
+    font-family: 'Plus Jakarta Sans', 'Outfit', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    position: relative; /* enable decorative underline */
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
+}
+
+.hub-title strong {
+    font-weight: 600;
+    color: var(--habs-purple);
+}
+
+/* Tri‑color brand accent for the letters "AI" */
+.brand-tricolor {
+    background: linear-gradient(90deg,
+        var(--habs-red) 0%,
+        var(--habs-purple) 55%,
+        var(--habs-blue) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: saturate(0.95) brightness(1.05);
+}
+
+/* Decorative, subtle animated underline beneath the title */
+.hub-title::after {
+    content: '';
+    display: block;
+    width: clamp(200px, 42%, 360px);
+    height: 8px;
+    margin: 18px auto 0;
+    border-radius: 999px;
+    /* Layer 1: static brand gradient (red -> purple -> light blue)
+       Layer 2: animated white sheen for subtle motion */
+    background:
+      linear-gradient(90deg,
+        var(--habs-red) 0%,
+        var(--habs-purple) 50%,
+        var(--habs-blue) 100%
+      ),
+      linear-gradient(90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.35) 50%,
+        rgba(255,255,255,0) 100%
+      );
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 100%, 200% 100%;
+    background-position: 50% 50%, 0% 50%;
+    filter: blur(0.25px);
+    opacity: 0.95;
+    animation: hubUnderlineSweep 8s ease-in-out infinite;
+}
+
+/* (previous animated text gradient removed for cleaner brand treatment) */
+
+@keyframes hubUnderlineSweep {
+    0%   { background-position: 50% 50%, 0% 50%;   opacity: 0.9; }
+    50%  { background-position: 50% 50%, 100% 50%; opacity: 1;   }
+    100% { background-position: 50% 50%, 0% 50%;   opacity: 0.9; }
+}
+
+/* Pixel effect target for titles */
+.pixel-target {
+    position: relative;
+    display: inline-block;
+    isolation: isolate; /* ensure internal z-index stacking */
+}
+
+.pixel-target .pixel-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2; /* overlay above text */
+    mix-blend-mode: lighten;
+}
+
+.pixel-target > span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Prevent line wraps so canvas text mask aligns precisely */
+.pixel-target { white-space: nowrap; }
+
+.hub-subtitle {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    color: #a7b3c4;
+    font-weight: 300;
+    max-width: 56ch;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* THREE COLUMN GRID SYSTEM */
+.hub-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+}
+
+/* CARD SYSTEM - Core Design */
+.hub-card {
+    /* Gradient ring border with soft fill */
+    border: 1px solid transparent;
+    background: 
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)) padding-box,
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)) border-box;
+    border-radius: 24px;
+    padding: 48px 32px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* Pixel canvas layer sits behind inner content */
+.hub-card .pixel-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hub-card > *:not(canvas.pixel-canvas) {
+    position: relative;
+    z-index: 1;
+}
+
+/* CARD GRADIENT OVERLAYS */
+.hub-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.hub-card:nth-child(2)::before {
+    background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+}
+
+.hub-card:nth-child(3)::before {
+    background: radial-gradient(circle at top left, rgba(244, 63, 94, 0.1) 0%, transparent 50%);
+}
+
+/* CARD HOVER EFFECTS */
+.hub-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: transparent; /* preserve gradient ring */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.hub-card:hover::before {
+    opacity: 1;
+}
+
+.hub-card:hover .card-icon {
+    transform: translateY(-4px);
+}
+
+.hub-card:hover .explore-link {
+    gap: 12px;
+    color: white;
+}
+
+.hub-card:hover .explore-link::after {
+    transform: scaleX(1);
+}
+
+/* CARD CONTENT ELEMENTS */
+.card-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+    color: #60a5fa;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.hub-card:nth-child(2) .card-icon {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+    color: #34d399;
+}
+
+.hub-card:nth-child(3) .card-icon {
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.2) 0%, rgba(244, 63, 94, 0.1) 100%);
+    color: #f87171;
+}
+
+.card-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+}
+
+.card-description {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 280px;
+}
+
+.card-features {
+    width: 100%;
+    margin-bottom: 32px;
+    flex-grow: 1;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #e5eef9;
+    text-align: left;
+}
+
+.feature-item i {
+    color: #60a5fa;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.hub-card:nth-child(2) .feature-item i {
+    color: #34d399;
+}
+
+.hub-card:nth-child(3) .feature-item i {
+    color: #f87171;
+}
+
+.explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #cbd5e1;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 1.05rem;
+    margin-top: auto;
+    position: relative;
+}
+
+.explore-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--habs-red), var(--habs-purple), var(--habs-blue));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+/* FOOTER */
+.hub-footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #64748b;
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hub-footer a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.hub-footer a:hover {
+    color: #60a5fa;
+}
+
+.footer-divider {
+    margin: 0 12px;
+    color: #475569;
+}
+
+/* ===================================
+   ADDITIONAL STYLES FOR LINKED PAGES
+   Extending the design system for sub-pages
+   =================================== */
+
+/* PAGE LAYOUTS - For pages linked from the cards */
+.page-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+    position: relative;
+}
+
+.page-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.03) 0%, transparent 70%);
+    animation: pulse 30s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* PAGE HEADER */
+.page-header {
+    padding: 60px 20px 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* CONTENT SECTIONS */
+.content-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative;
+    z-index: 1;
+}
+
+/* MINI CARDS - For content sections */
+.mini-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.mini-card h3 {
+    color: white;
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.mini-card p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* BUTTONS - Matching the design system */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(99,102,241,0.45);
+    outline-offset: 2px;
+}
+
+/* Solid primary (brand blue) */
+.btn-primary {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(59,130,246,0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+    box-shadow: 0 10px 26px rgba(59,130,246,0.45);
+}
+
+/* Glass/secondary (translucent) */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.10);
+    color: #cbd5e1;
+    border-color: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Outline (subtle ring) */
+.btn-outline {
+    background: transparent;
+    color: #e2e8f0;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-outline:hover {
+    background: rgba(255,255,255,0.06);
+    color: #ffffff;
+}
+
+/* Ghost (minimal, for toolbar/actions) */
+.btn-ghost {
+    background: transparent;
+    color: #cbd5e1;
+}
+
+.btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+    color: #ffffff;
+}
+
+/* Icon-only button */
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.10);
+    color: #cbd5e1;
+    border: 1px solid rgba(255,255,255,0.18);
+}
+
+.btn-icon:hover { background: rgba(255,255,255,0.16); color:#fff; }
+
+/* Sizes */
+.btn-sm { padding: 8px 14px; border-radius: 10px; font-size: 0.9rem; }
+.btn-lg { padding: 14px 26px; border-radius: 14px; font-size: 1.05rem; }
+.btn-block { width: 100%; display: inline-flex; }
+
+/* BACK LINK */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #60a5fa;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .hub-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+        max-width: 900px;
+    }
+}
+@media (max-width: 968px) {
+    .hub-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 500px;
+    }
+    
+    .hub-card {
+        padding: 40px 32px;
+    }
+}
+
+@media (max-width: 640px) {
+    .hub-title {
+        font-size: 2.5rem;
+    }
+    .hub-title::after {
+        height: 6px;
+        margin-top: 14px;
+        width: min(240px, 65%);
+    }
+    
+    .hub-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hub-header {
+        margin-bottom: 48px;
+    }
+    
+    .hub-container {
+        padding: 40px 20px;
+    }
+    
+    .card-title {
+        font-size: 1.5rem;
+    }
+    
+    .card-description {
+        font-size: 0.95rem;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .page-header {
+        padding: 40px 20px 30px;
+    }
+    
+    .mini-card {
+        padding: 24px;
+    }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hub-title strong,
+    .hub-title::after {
+        animation: none !important;
+    }
+}
+
+/* Focus outlines for accessibility */
+.hub-card:focus-visible {
+    outline: 3px solid var(--habs-purple);
+    outline-offset: 3px;
+}
+
+.hub-grid > .hub-card:nth-child(1):focus-visible { outline-color: var(--habs-blue); }
+.hub-grid > .hub-card:nth-child(3):focus-visible { outline-color: var(--habs-red); }
+/* Solid brand accents for individual letters */
+.brand-red  { color: var(--habs-red); }
+.brand-blue { color: var(--habs-blue); }
+
+/* Subtle tri‑color gradient for "Habs" */
+.brand-habs {
+    background: linear-gradient(90deg,
+        var(--habs-blue) 0%,
+        var(--habs-purple) 55%,
+        var(--habs-red) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: saturate(0.85) brightness(1.06);
+}
+
+/* Subtle tri‑color gradient across the full title */
+.brand-title {
+    background: linear-gradient(90deg,
+        var(--habs-red) 0%,
+        var(--habs-purple) 50%,
+        var(--habs-blue) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    /* Slightly richer colors while staying elegant */
+    filter: saturate(1.2) brightness(1.08) contrast(1.03);
+}

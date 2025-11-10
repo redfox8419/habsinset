@@ -3,438 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free AI Tools for Teachers - AI Inset Day</title>
+    <title>AI Tools for Teachers - Habs AI Hub</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Hub
+            </a>
+            <h1 class="page-title">AI Tools for Teachers</h1>
+            <p class="page-subtitle">Curated directory of the best AI tools for education, with honest reviews and direct links</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <div id="tools-container" class="tools-grid">
+                <!-- Tools will be loaded dynamically -->
+                <div class="loading-message" style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 16px;"></i>
+                    <p>Loading AI tools...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="hub-footer">
+            <p>2025 Habs AI Hub • <a href="../index.html">Back to Home</a></p>
+        </footer>
+    </div>
+
     <style>
-        /* AI Tools page specific styles */
-        .section-container {
-            margin-bottom: 60px;
-            scroll-margin-top: 100px;
-        }
-        
-        .check {
-            color: var(--secondary);
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        
-        .cross {
-            color: var(--tertiary);
-            margin-right: 8px;
-        }
-        
-        .tools-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tools-table th {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .tools-table td {
-            padding: 15px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .tools-table tr {
-            background-color: white;
-        }
-        
-        .tools-table tr:nth-child(even) {
-            background-color: var(--light);
-        }
-        
-        .tools-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .tool-name {
-            display: flex;
-            align-items: center;
-        }
-        
-        .tool-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            margin-right: 15px;
-            background-color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 20px;
-        }
-        
-        .tool-title {
-            font-weight: 600;
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .tool-title:hover {
-            text-decoration: underline;
-        }
-        
-        .tool-provider {
-            font-size: 12px;
-            color: var(--neutral);
-        }
-        
-        .feature-cell {
-            text-align: center;
-        }
-        
-        .cards-grid {
+        /* Tool-specific styles extending the global system */
+        .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
         }
         
         .tool-card {
-            background-color: white;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            height: 100%;
             display: flex;
             flex-direction: column;
         }
         
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
         }
         
-        .card-content {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .card-header {
+        .tool-header {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
         
-        .card-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            margin-right: 15px;
-            background-color: #e5e7eb;
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
-            font-size: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .card-title-section {
-            flex-grow: 1;
-        }
-        
-        .card-title {
+        .tool-info h4 {
+            color: white;
+            font-size: 1.25rem;
+            margin: 0 0 4px 0;
             font-weight: 600;
-            font-size: 1.3rem;
-            color: var(--dark);
-            margin-bottom: 5px;
         }
         
-        .card-category {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background-color: rgba(2, 132, 199, 0.1);
-            color: var(--primary);
+        .tool-price {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 500;
         }
         
-        .card-description {
-            color: var(--neutral);
-            margin-bottom: 20px;
+        .tool-description {
+            color: #cbd5e1;
             line-height: 1.6;
+            margin-bottom: 20px;
             flex-grow: 1;
         }
         
-        .card-footer {
+        .tool-features {
+            margin-bottom: 20px;
+        }
+        
+        .feature-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-top: auto;
-        }
-        
-        .free-tag {
-            color: var(--secondary);
+            gap: 10px;
+            margin-bottom: 8px;
             font-size: 0.9rem;
-            font-weight: 600;
+            color: #e2e8f0;
         }
         
-        .card-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
+        .feature-row i {
+            color: #34d399;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        .tool-verdict {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #cbd5e1;
             font-size: 0.9rem;
         }
         
-        .card-link:hover {
-            text-decoration: underline;
+        .tool-verdict strong {
+            color: #60a5fa;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .cards-grid {
+        @media (max-width: 640px) {
+            .tools-grid {
                 grid-template-columns: 1fr;
             }
             
-            .tools-table {
-                display: block;
-                overflow-x: auto;
+            .tool-card {
+                padding: 20px;
             }
         }
     </style>
-</head>
-<body>
-    <!-- Loading screen -->
-    <div class="loading-screen">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <div id="header-placeholder" data-path="./js/header.js"></div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero hero-medium">
-        <div class="container hero-content">
-            <h1>Free AI Tools for Teachers</h1>
-            <p>Enhance your teaching with these AI-powered tools. From generating content to providing feedback, these resources can save time and expand your educational capabilities.</p>
-        </div>
-        <div class="floating-elements">
-            <div class="floating-element element-1"></div>
-            <div class="floating-element element-2"></div>
-            <div class="floating-element element-3"></div>
-        </div>
-    </section>
-
-    <!-- Main Content with reordered and modified table -->
-    <section class="main-content">
-        <div class="container">
-            <!-- LLM Tools Section -->
-            <div id="language-models" class="section-container">
-                <div class="section-heading">
-                    <h2>Large Language Models</h2>
-                    <p>While not exhaustive, below is a selection of some of the best AI assistants currently available. They broadly offer similar functionality, but each has its own quirks and pros and cons, so it’s worth experimenting. If you’re using free versions, you may find the rate limits restrictive, so trying a few models might be worthwhile.</p>
-                </div>
-                
-                <div class="table-container">
-                    <table class="tools-table">
-                        <thead>
-                            <tr>
-                                <th>Tool</th>
-                                <th>Description</th>
-                                <th>Requires Sign-In</th>
-                                <th>Enhanced Features with Sign-In</th>
-                                <th>Frontier Models</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-comment-dots"></i></div>
-                                        <div>
-                                            <a href="https://chat.openai.com" target="_blank" class="tool-title">ChatGPT</a>
-                                            <div class="tool-provider">OpenAI</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Versatile AI assistant that can help with brainstorming lesson ideas, creating educational content, answering student questions, and simplifying complex topics. For more powerful results, select the thinking or reasoning option to enhance its capabilities.</td>
-                                <td class="feature-cell"><span class="cross">✗</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-rocket"></i></div>
-                                        <div>
-                                            <a href="https://grok.com" target="_blank" class="tool-title">Grok</a>
-                                            <div class="tool-provider">xAI</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Conversational AI known for its unique personality and creative approach. Good for brainstorming novel ideas and unconventional teaching approaches.</td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-brain"></i></div>
-                                        <div>
-                                            <a href="https://gemini.google.com" target="_blank" class="tool-title">Gemini</a>
-                                            <div class="tool-provider">Google</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Multimodal AI that excels at processing both text and images. Useful for creating learning materials, explaining concepts with visual examples, and research tasks.</td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-window-maximize"></i></div>
-                                        <div>
-                                            <a href="https://copilot.microsoft.com" target="_blank" class="tool-title">Copilot</a>
-                                            <div class="tool-provider">Microsoft</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Multimodal AI developed by Microsoft, capable of handling text, images, and more. Signing in with your work account unlocks enhanced features and ensures privacy, allowing you to safely upload and work with sensitive data.</td>
-                                <td class="feature-cell"><span class="cross">✗</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-cube"></i></div>
-                                        <div>
-                                            <a href="https://www.deepseek.com" target="_blank" class="tool-title">Deepseek</a>
-                                            <div class="tool-provider">Deepseek AI</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Specialized AI for in-depth research and technical topics. Particularly strong for computer science, mathematics, and coding applications in education.</td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-code"></i></div>
-                                        <div>
-                                            <a href="https://ai.google.dev/" target="_blank" class="tool-title">Google AI Studio</a>
-                                            <div class="tool-provider">Google</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>A developer-friendly platform that provides access to Google's cutting-edge AI models. While designed with developers in mind, it remains user-friendly enough for educators and non-technical users. Uniquely, it offers access to many of Google's frontier and top-tier models completely free, setting it apart from other tools.</td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-robot"></i></div>
-                                        <div>
-                                            <a href="https://claude.ai" target="_blank" class="tool-title">Claude</a>
-                                            <div class="tool-provider">Anthropic</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Powerful AI assistant known for thoughtful, nuanced responses and longer context windows. Great for content generation, research assistance, and lesson planning.</td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tool-name">
-                                        <div class="tool-logo"><i class="fas fa-search"></i></div>
-                                        <div>
-                                            <a href="https://perplexity.ai" target="_blank" class="tool-title">Perplexity</a>
-                                            <div class="tool-provider">Perplexity AI</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Research-focused AI with real-time search capabilities. Excellent for fact-checking, exploring topics in depth, and discovering teaching resources with citations.</td>
-                                <td class="feature-cell"><span class="cross">✗</span></td>
-                                <td class="feature-cell"><span class="check">✓</span></td>
-                                <td class="feature-cell"><span class="cross">✗</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-
-    <!-- Back to Top Button -->
-    <div class="back-to-top" id="backToTopBtn">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div id="footer-placeholder" data-path="./js/footer.js"></div>
-    </footer>
 
     <script>
-        // Loading screen
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.querySelector('.loading-screen').classList.add('fade-out');
-            }, 1000);
-        });
-        
-        // Back to Top Button functionality
-        window.addEventListener('scroll', function() {
-            // Back to Top Button
-            if (window.scrollY > 300) {
-                document.getElementById('backToTopBtn').classList.add('active');
-            } else {
-                document.getElementById('backToTopBtn').classList.remove('active');
+        // Load and render AI tools from external JSON data
+        async function loadTools() {
+            try {
+                const response = await fetch('data/tools-data.json');
+                const toolsData = await response.json();
+                renderTools(toolsData.tools);
+            } catch (error) {
+                console.error('Error loading tools:', error);
+                document.getElementById('tools-container').innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: #f87171; padding: 40px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 16px;"></i>
+                        <p>Failed to load AI tools. Please refresh the page.</p>
+                    </div>
+                `;
             }
-        });
+        }
 
-        document.getElementById('backToTopBtn').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+        function renderTools(tools) {
+            const container = document.getElementById('tools-container');
+            container.innerHTML = '';
 
-        // Navigation Smooth Scroll
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+            tools.forEach(tool => {
+                const toolCard = createToolCard(tool);
+                container.appendChild(toolCard);
             });
-        });
+        }
+
+        function createToolCard(tool) {
+            const card = document.createElement('div');
+            card.className = 'tool-card';
+
+            const featuresHTML = tool.features.map(feature => `
+                <div class="feature-row">
+                    <i class="fas fa-check"></i>
+                    <span>${feature}</span>
+                </div>
+            `).join('');
+
+            const buttonText = tool.name === 'Khanmigo' ? 'Learn More' : `Try ${tool.name}`;
+            const buttonClass = ['Canva for Education', 'Khanmigo', 'Quizizz', 'Gamma'].includes(tool.name) 
+                ? 'btn btn-secondary' 
+                : 'btn btn-primary';
+
+            card.innerHTML = `
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <img src="https://www.google.com/s2/favicons?domain=${tool.domain}&sz=48" 
+                             alt="${tool.name}" 
+                             style="width: 32px; height: 32px; border-radius: 6px;"
+                             onerror="this.style.display='none'">
+                    </div>
+                    <div class="tool-info">
+                        <h4>${tool.name}</h4>
+                        <span class="tool-price">${tool.pricing}</span>
+                    </div>
+                </div>
+                <p class="tool-description">${tool.description}</p>
+                <div class="tool-features">
+                    ${featuresHTML}
+                </div>
+                <div class="tool-verdict">
+                    <strong>Best for:</strong> ${tool.bestFor}
+                </div>
+                <a href="${tool.url}" target="_blank" class="${buttonClass}">
+                    ${buttonText} <i class="fas fa-external-link-alt"></i>
+                </a>
+            `;
+
+            return card;
+        }
+
+        // Load tools when page loads
+        document.addEventListener('DOMContentLoaded', loadTools);
     </script>
-    <script src="../js/header.js"></script>
-    <script src="../js/footer.js"></script>
 </body>
 </html>
