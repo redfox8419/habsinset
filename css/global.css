@@ -220,11 +220,11 @@ body::before {
 .hub-card {
     /* Gradient ring border with soft fill */
     border: 1px solid transparent;
-    background: 
+    background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)) padding-box,
         linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)) border-box;
-    border-radius: 24px;
-    padding: 48px 32px;
+    border-radius: 20px;
+    padding: 40px 28px;
     text-align: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
@@ -234,7 +234,7 @@ body::before {
     align-items: center;
     position: relative;
     overflow: hidden;
-    min-height: 500px;
+    min-height: 480px;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
 }
@@ -305,18 +305,18 @@ body::before {
 
 /* CARD CONTENT ELEMENTS */
 .card-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 20px;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    margin-bottom: 24px;
+    font-size: 1.875rem;
+    margin-bottom: 20px;
     transition: all 0.3s ease;
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
     color: #60a5fa;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .hub-card:nth-child(2) .card-icon {
@@ -330,24 +330,24 @@ body::before {
 }
 
 .card-title {
-    font-size: 1.75rem;
+    font-size: 1.625rem;
     font-weight: 500;
     color: white;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     letter-spacing: -0.01em;
 }
 
 .card-description {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: #94a3b8;
     line-height: 1.6;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     max-width: 280px;
 }
 
 .card-features {
     width: 100%;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     flex-grow: 1;
 }
 
@@ -486,9 +486,9 @@ body::before {
 /* MINI CARDS - For content sections */
 .mini-card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -512,9 +512,9 @@ body::before {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border-radius: 12px;
+    gap: 6px;
+    padding: 10px 16px;
+    border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -542,13 +542,13 @@ body::before {
 .btn-primary {
     background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
     color: #ffffff;
-    box-shadow: 0 6px 18px rgba(59,130,246,0.35);
+    box-shadow: 0 4px 12px rgba(59,130,246,0.3);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     filter: brightness(1.03);
-    box-shadow: 0 10px 26px rgba(59,130,246,0.45);
+    box-shadow: 0 6px 18px rgba(59,130,246,0.4);
 }
 
 /* Glass/secondary (translucent) */
@@ -591,13 +591,13 @@ body::before {
 
 /* Icon-only button */
 .btn-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(255,255,255,0.10);
     color: #cbd5e1;
     border: 1px solid rgba(255,255,255,0.18);
@@ -606,8 +606,8 @@ body::before {
 .btn-icon:hover { background: rgba(255,255,255,0.16); color:#fff; }
 
 /* Sizes */
-.btn-sm { padding: 8px 14px; border-radius: 10px; font-size: 0.9rem; }
-.btn-lg { padding: 14px 26px; border-radius: 14px; font-size: 1.05rem; }
+.btn-sm { padding: 6px 12px; border-radius: 6px; font-size: 0.875rem; }
+.btn-lg { padding: 12px 20px; border-radius: 10px; font-size: 1.05rem; }
 .btn-block { width: 100%; display: inline-flex; }
 
 /* BACK LINK */
@@ -640,9 +640,9 @@ body::before {
         gap: 20px;
         max-width: 500px;
     }
-    
+
     .hub-card {
-        padding: 40px 32px;
+        padding: 36px 28px;
     }
 }
 

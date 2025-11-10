@@ -51,12 +51,12 @@
     --info: #3b82f6;
     --info-light: #dbeafe;
     
-    /* Border radiuses */
+    /* Border radiuses - Refined for sleeker appearance */
     --radius: 4px;
     --radius-md: 6px;
     --radius-lg: 8px;
-    --radius-xl: 12px;
-    --radius-2xl: 16px;
+    --radius-xl: 10px;
+    --radius-2xl: 12px;
     
     /* Shadow definitions */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
