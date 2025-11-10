@@ -36,100 +36,117 @@
     </div>
 
     <style>
-        /* Tool-specific styles extending the global system */
+        /* Tool-specific styles extending the global system - More refined */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 28px;
             margin-bottom: 60px;
         }
-        
+
         .tool-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+            border-radius: 18px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         }
-        
+
         .tool-card:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25),
+                        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
         }
         
         .tool-header {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 18px;
+            margin-bottom: 18px;
         }
-        
+
         .tool-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
         }
-        
+
+        .tool-card:hover .tool-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
         .tool-info h4 {
             color: white;
-            font-size: 1.25rem;
-            margin: 0 0 4px 0;
-            font-weight: 600;
+            font-size: 1.35rem;
+            margin: 0 0 6px 0;
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
-        
+
         .tool-price {
             font-size: 0.875rem;
             color: #94a3b8;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         .tool-description {
-            color: #cbd5e1;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            color: #d1d5db;
+            line-height: 1.65;
+            margin-bottom: 22px;
             flex-grow: 1;
+            font-size: 1rem;
         }
-        
+
         .tool-features {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
-        
+
         .feature-row {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: #e2e8f0;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            line-height: 1.5;
         }
-        
+
         .feature-row i {
             color: #34d399;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             flex-shrink: 0;
+            margin-top: 3px;
         }
-        
+
         .tool-verdict {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            color: #cbd5e1;
-            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            color: #d1d5db;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.6;
         }
-        
+
         .tool-verdict strong {
             color: #60a5fa;
+            font-weight: 700;
         }
         
         @media (max-width: 640px) {
